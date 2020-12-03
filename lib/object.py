@@ -178,7 +178,7 @@ def load_script(path):
         if comment == 0:
             continue
         elif comment != -1:
-            line = line[0:comment]
+            line = line[0:comment].strip()
         line = line.strip()
         
         if line[0] == '[':

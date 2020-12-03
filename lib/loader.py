@@ -47,15 +47,13 @@ def load_script(path):
     segname = ''
     for line in f:
         line = line.strip()
-        print(line)
-
         if len(line) == 0:
             continue
         comment = find(line, '；')
         if comment == 0:
             continue
         elif comment != -1:
-            line = line[0:comment]
+            line = line[0:comment].strip()
         if line[0] == '[':
             print(line)
             segname = line[1:-1].strip()

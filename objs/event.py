@@ -1,15 +1,15 @@
+from lib.hangul import postPosition1, han_iga, han_obj
+from objs.rank import RANK
+from objs.oneitem import ONEITEM
+from objs.skill import MUGONG
+from objs.room import getRoom
+from lib.func import getStrCnt, getInt, stripANSI
+from lib.func import loadScriptFile
+from include.define import *
+import copy
+import time
+
 def doEvent(self, mob, key, words):
-    from lib.hangul import postPosition1, han_iga, han_obj
-    from objs.rank import RANK
-    from objs.oneitem import ONEITEM
-    from objs.skill import MUGONG
-    from objs.room import getRoom
-    from lib.func import getStrCnt, getInt, stripANSI
-    from lib.func import loadScriptFile
-    from include.define import *
-    import copy
-    import time
-    
     tab = 0
     rank1 = 0
     rank2 = 0
@@ -47,7 +47,7 @@ def doEvent(self, mob, key, words):
                 sline = sline.replace('$변수:1', words[1])
 
             func = line.split()[0]
-            #self.sendLine( line )
+            # self.sendLine( line )
             if func == '$이벤트확인!':
                 if self.checkEvent(sline[13:].strip()) == True:
                     searchEnd = True
@@ -135,7 +135,7 @@ def doEvent(self, mob, key, words):
                     for a in aclist:
                         acline += a + '\r\n'
                     item['반응이름'] = acline[:-2]
-                        
+
             elif func == '$아이템확장설정지움':  # 낙양성:이름맨 (크래프트)
                 item = self.getItemName(words[1])
                 if item != None and len(words) == 3:
@@ -172,13 +172,13 @@ def doEvent(self, mob, key, words):
                     searchEnd = True
             elif func == '$위치이동':
                 roomName = sline[10:].strip()
-                #try:
-                d = str( mob['난이도'] )
+                # try:
+                d = str(mob['난이도'])
                 if d != '':
                     idx = roomName.find(':')
                     if idx != -1:
                         roomName = roomName[:idx] + d + roomName[idx:]
-                #except:
+                # except:
                 #    pass
                 room = getRoom(roomName)
                 if room == None:
@@ -202,7 +202,7 @@ def doEvent(self, mob, key, words):
                         self.skillList.remove(m)
             elif func == '$무공개수확인':
                 if len(self.skillList) < getInt(sline[14:]):
-                    searchEnd = True                        
+                    searchEnd = True
             elif func == '$무공확인':
                 if self.checkMugong(sline[10:]) == False:
                     searchEnd = True
@@ -229,7 +229,7 @@ def doEvent(self, mob, key, words):
                     buf1, buf2, buf3 = mob.makeFightScript(s['무공스크립'], self)
                     self.sendLine(buf2)
             elif func == '$전투강제시작':
-    		if mob.act == ACT_DEATH:
+                if mob.act == ACT_DEATH:
                     self.sendLine('☞ 무슨 말인지 모르겠어요. *^_^*')
                     return
                 if self.act == ACT_FIGHT:
@@ -267,9 +267,9 @@ def doEvent(self, mob, key, words):
             elif func == '$몹상태설정':
                 mob.setAct(sline[12:].strip())
             elif func == '$체력소모':
-                self.minusHP( getInt(sline[10:].strip()) )
+                self.minusHP(getInt(sline[10:].strip()))
             elif func == '$체력감소':
-                self.minusHP( getInt(sline[10:].strip()) )
+                self.minusHP(getInt(sline[10:].strip()))
             elif func == '$변수확인':
                 var = sline.split()
                 c = getInt(var[1])
@@ -290,15 +290,15 @@ def doEvent(self, mob, key, words):
                     self.set('성격', '정파')
                 elif self.get('성격') == '정파':
                     self.set('성격', '사파')
-                
+
             elif func == '$성별확인':
                 if self.get('성별') == '남':
                     searchEnd = True
-                    
+
             elif func == '$남자설정':
                 self.set('성별', '남')
             elif func == '$여자설정':
-                self.set('성별', '여')                                
+                self.set('성별', '여')
             elif func == '$특성치설정':
                 var = sline.split()
                 c = getInt(var[2])
@@ -358,7 +358,7 @@ def doEvent(self, mob, key, words):
             elif func == '$순위기록':
                 ws = sline.split(None, 2)
                 if len(ws) != 3:
-                    #print '!!!!'
+                    # print '!!!!'
                     searchEnd = True
                     continue
                 value = self[ws[2]]
@@ -366,7 +366,7 @@ def doEvent(self, mob, key, words):
                     value = -1
                 rank1 = RANK.read_rank(ws[2], self['이름'])
                 rank2 = RANK.write_rank(ws[2], self['이름'], value, int(ws[1]))
-                #print rank1, rank2
+                # print rank1, rank2
                 if rank2 == 0:
                     searchEnd = True
             elif func == '$순위갱신':
@@ -375,10 +375,10 @@ def doEvent(self, mob, key, words):
                     l = ws[1].replace('[공]', '당신')
                     self.sendLine(postPosition1(l))
                     l = ws[1].replace('[공]', self['이름'])
-                    self.channel.sendToAll1(postPosition1(l), ex = self, noPrompt = True)
+                    self.channel.sendToAll1(postPosition1(l), ex=self, noPrompt=True)
                     broadcast = True
             elif func == '$순위확인':
-                
+
                 ws = sline.split(None, 2)
                 if len(ws) != 3:
                     searchEnd = True
@@ -448,7 +448,7 @@ def doEvent(self, mob, key, words):
                     searchEnd = True
             elif func == '$비전설정':
                 self.setAttr('비전이름', sline.split()[1])
-            elif func == '$비전수련확인': # 낙양성:무공맨 (비전노인)
+            elif func == '$비전수련확인':  # 낙양성:무공맨 (비전노인)
                 if self['비전수련'] == '':
                     searchEnd = True
             elif func == '$비전종류확인':
@@ -473,7 +473,7 @@ def doEvent(self, mob, key, words):
                 if var[1] != var[2]:
                     searchEnd = True
             elif func == '$비전수련가능확인!':
-                var = sline.split() 
+                var = sline.split()
                 if var[1] in var[2:]:
                     searchEnd = True
             elif func == '$비전수련삭제':
@@ -510,28 +510,29 @@ def doEvent(self, mob, key, words):
             elif func == '$스크립트호출':
                 scr = sline[13:].strip()
                 self.INTERACTIVE = 0
-                #from objs.autoscript import autoScript
+                # from objs.autoscript import autoScript
                 self.autoscript = self.autoScript()
                 self.autoscript.start(loadScriptFile(scr), self)
                 return
             elif func == '$올숙확인':
                 if getInt(self['올숙완료']) == 1:
-                    searchEnd = False 
+                    searchEnd = False
                     continue
                 searchEnd = True
             elif func == '$올숙확인!':
                 if getInt(self['올숙완료']) == 0:
-                    searchEnd = False 
+                    searchEnd = False
                     continue
                 searchEnd = True
             elif func == '$올숙자격확인':
-                if self['1 숙련도'] >= 1000 and self['2 숙련도'] >= 1000 and self['3 숙련도'] >= 1000 and self['4 숙련도'] >= 1000 and self['5 숙련도'] >= 1000: 
-                    searchEnd = False 
+                if self['1 숙련도'] >= 1000 and self['2 숙련도'] >= 1000 and self['3 숙련도'] >= 1000 and self[
+                    '4 숙련도'] >= 1000 and self['5 숙련도'] >= 1000:
+                    searchEnd = False
                     continue
                 searchEnd = True
             elif func == '$특성치복사':
                 oldattr = mob.attr
-                #mob.attr = copy.deepcopy(oldattr)
+                # mob.attr = copy.deepcopy(oldattr)
                 mob.attr = {}
                 for k in list(oldattr.keys()):
                     mob.attr[k] = oldattr[k]
@@ -582,7 +583,7 @@ def doEvent(self, mob, key, words):
                     if it.inUse == False and stripANSI(it['이름']) == words[1]:
                         words[1] = it['이름']
                         break
-                        
+
                 if words[1] in self.itemSkillMap:
                     nCount = self.itemSkillMap[words[1]]
                 sub['[아이템사용횟수]'] = str(nCount)
@@ -593,5 +594,5 @@ def doEvent(self, mob, key, words):
                 line = line.replace(su, sub[su])
             self.sendLine(postPosition1(line))
     if broadcast:
-        self.channel.sendToAll1('', ex = self)
+        self.channel.sendToAll1('', ex=self)
     return True
