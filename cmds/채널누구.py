@@ -1,0 +1,47 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        mode = False
+        msg = ''
+        cnt = 0
+        
+        for c in ob.adultCH:
+            if c['Åõ¸í»óÅÂ'] == 1:
+                continue
+            if c['ÀÌ¸§'] != '' and c.state == ACTIVE:
+                if mode and c['¼Ò¼Ó'] != ob['¼Ò¼Ó']:
+                    continue
+                nick = c['¹«¸²º°È£']
+                
+                if nick == '':
+                    buf = '[[0;37m%s[0;37m]' % '¹«¸í°´'
+                else:
+                    if c['¼º°Ý'] == 'Á¤ÆÄ':
+                        buf = '[[1;32m%s[0;37m]' % nick
+                    elif c['¼º°Ý'] == '±âÀÎ':
+                        buf = '[[1;33m%s[0;37m]' % nick
+                    elif c['¼º°Ý'] == '¼±ÀÎ':
+                        buf = '[[1;36m%s[0;37m]' % nick
+                    else:
+                        buf = '<[1;31m%s[0;37m>' % nick
+                    
+                msg += '  %-26s %-10s' % (buf, c['ÀÌ¸§'])
+                cnt += 1
+                if cnt % 3 == 0:
+                    msg += '\r\n'
+        if cnt % 3 == 0:
+            msg = msg[:-2]
+        ob.sendLine('¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤')
+        ob.sendLine('¦¢[7m%-74s[0;37m¦¢' % ' ¢·     ¹«       ¸²       Å©       ·¡       ÇÁ       Æ®      £±-£±     ¢¹');
+        ob.sendLine('¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥')
+        ob.sendLine(msg);
+        ob.sendLine(' ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        if mode:
+            ob.sendLine(' ¡Ú ÃÑ %d¸íÀÇ [1m¡¼[36m%s[37m¡½[0;37mÆÄ ¹«¸²ÀÎÀÌ È°µ¿ÇÏ°í ÀÖ½À´Ï´Ù.' % (cnt, ob['¼Ò¼Ó']))
+        else:
+            ob.sendLine(' ¡Ú ÃÑ %d¸íÀÇ ¹«¸²ÀÎÀÌ È°µ¿ÇÏ°í ÀÖ½À´Ï´Ù.' % cnt)
+

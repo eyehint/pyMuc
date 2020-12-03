@@ -1,0 +1,62 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+    #level = 1000
+    def cmd(self, ob, line):
+    #    if getInt(ob['∞¸∏Æ¿⁄µÓ±ﬁ']) < 1000:
+    #        ob.sendLine('¢— π´Ωº ∏ª¿Œ¡ˆ ∏∏£∞⁄æÓø‰. *^_^*')
+    #        return
+        if len(line) == 0:
+            ob.sendLine('¢— ªÁøÎπ˝: [π∞«∞¿Ã∏ß] º“∞¢')
+            return
+        i = 1
+        c = 0
+        
+        args = line.split()
+        if len(args) >= 2:
+            i = getInt(args[1])
+        if i < 1:
+            i = 1
+        if i > 100:
+            i = 100
+        name = args[0]
+        order = getInt(name)
+        if order != 0:
+            for i in range( len(name) ):
+                if name[i].isdigit() == False:
+                    name = name[i:]
+                    break
+        else:
+            order = 1
+        if order != 1:
+            i = 1
+        objs = copy.copy(ob.objs)
+        n = 0
+        for obj in objs:
+            if c >= i:
+                break
+            if name != obj.get('¿Ã∏ß') and name not in obj.get('π›¿¿¿Ã∏ß').splitlines():
+                continue
+
+            if obj.inUse:
+                continue
+            
+            n += 1
+            if n < order:
+                continue
+
+            c += 1
+            name = obj['¿Ã∏ß']
+            ob.remove(obj)
+            if obj.isOneItem():
+                ONEITEM.destroy(obj.index)
+        if c == 0:
+            ob.sendLine('¢— ±◊∑± æ∆¿Ã≈€¿Ã º“¡ˆ«∞ø° æ¯æÓø‰.')
+        elif c == 1:
+            ob.sendLine('¥ÁΩ≈¿Ã [36m%s[37m%s º“∞¢«ÿπˆ∏≥¥œ¥Ÿ.' % (name, han_obj(name)))
+            ob.sendRoom('%s [36m%s[37m%s º“∞¢«ÿπˆ∏≥¥œ¥Ÿ.' % (ob.han_iga(), name, han_obj(name)))
+        else:
+            ob.sendLine('¥ÁΩ≈¿Ã [36m%s[37m %d∞≥∏¶ º“∞¢«ÿπˆ∏≥¥œ¥Ÿ.' % (name, c))
+            ob.sendRoom('%s [36m%s[37m %d∞≥∏¶ º“∞¢«ÿπˆ∏≥¥œ¥Ÿ.' % (ob.han_iga(), name, c))

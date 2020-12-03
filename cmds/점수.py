@@ -1,0 +1,84 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+from include.ansi import *
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        write = ob.sendLine
+        get = ob.get
+        write('¢Ñ ' + ob.getDesc(True))
+        write('¦È¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Â')
+        write('¦¢[0m[44m[1m[37m ¢¹¢º¢¹¢º¢¹¢º      ´ç½ÅÀÇ ÇöÀç »óÅÂ      ¢¸¢·¢¸¢·¢¸¢· [0m[40m[37m¦¢')
+        write('¦¼¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¸¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¾')
+        write('¦¢ [·¹  º§]        [%6d] ¦¢ [³ª  ÀÌ]          %6d ¦¢' % (get('·¹º§'), get('³ªÀÌ')) )
+        temp = '%d/%d' % (ob.getHp(), ob.getMaxHp())
+        tmp = get('¼º°Ý')
+        if tmp == '':
+            tmp = '----------'
+        write('¦¢ [Ã¼  ·Â] %15s ¦¢ [¼º  °Ý]      %10s ¦¢' % (temp, tmp))
+        temp = 0
+        
+        write('¦¢ [  Èû  ]  %5d + %6d ¦¢ [¼º  º°]              %2s ¦¢' % (ob.getAttPower(), ob.getStr(), get('¼ºº°')) )
+        tmp = get('¼Ò¼Ó')
+        if tmp == '':
+            tmp = '----------'
+        write('¦¢ [¸Ë  Áý] %6d + %6d ¦¢ [¼Ò  ¼Ó]      %10s ¦¢' % (ob.getArmor(), ob.getArm(), tmp) )
+        tmp = get('Á÷À§')
+        if tmp == '':
+            tmp = '----------'
+        else:
+            g = GUILD[ob['¼Ò¼Ó']]
+            if '%s¸íÄª' % ob['Á÷À§'] in g:
+                tmp = g['%s¸íÄª' % ob['Á÷À§']]
+            else:
+                tmp = ob['Á÷À§']
+        write('¦¢ [¹Î  Ã¸] %15d ¦¢ [Á÷  À§]      %10s ¦¢' % (ob.getDex(), tmp) )
+        write('¦¢ [Ù¤  ñé] %15d ¦¢ [üÞ  ù­] %15d ¦¢' % (ob.getHit(), ob.getMiss()))
+        write('¦¢ [ù±  ß¯] %15d ¦¢ [  ê¡  ] %15d ¦¢' % (ob.getCritical(), ob.getCriticalChance()))
+        tmp = get('¹è¿ìÀÚ')
+        if tmp == '':
+            tmp = '----------'
+        temp = '%d/%d' % (ob.getMp(), ob.getMaxMp())
+        #write('¦¢ [³»  °ø] %15d ¦¢ [¹è¿ìÀÚ]      %10s ¦¢' % (ob.getMp(), tmp) )
+        write('¦¢ [³»  °ø] %15s ¦¢ [¹è¿ìÀÚ]      %10s ¦¢' % (temp, tmp) )
+
+        temp = '%d/%d' % (ob.getItemWeight(), ob.getStr() * 10)
+        write('¦¢ [Çö  °æ] %15d ¦¢ [¼ÒÁöÇ°] %15s ¦¢' % (ob['ÇöÀç°æÇèÄ¡'], temp) )
+        anger = getInt(ob['ºÐ³ë'])
+        if anger >= 100:
+            temp = '[1;31m%d[0;37m' % anger
+        else:
+            temp = '%d' % anger
+        write('¦¢ [¸ñ  °æ] %15d ¦¢ [ºÐ  ³ë]             %3s ¦¢' % (ob.getTotalExp(), temp))
+        write('¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦©')
+        write('¦¢[0m[47m[30m [Àº  Àü]    %40d [0m[40m[37m¦¢' % get('ÀºÀü'))
+        if ob['±ÝÀü'] == '':
+            ob['±ÝÀü'] = 0
+        if ob['±ÝÀü'] > 0:
+            write('¦¢[0m[43m[30m [±Ý  Àü]    %40d [0m[40m[37m¦¢' % get('±ÝÀü'))
+        write('¦Æ¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ä')
+        if ob['¼Ò¼Ó'] != '':
+            g = GUILD[ob['¼Ò¼Ó']]
+            if '%s¸íÄª' % ob['Á÷À§'] in g:
+                buf = g['%s¸íÄª' % ob['Á÷À§']]
+            else:
+                buf = ob['Á÷À§']
+            temp = ''
+            if ob['¹æÆÄº°È£'] != '':
+                temp = '(%s)' % ob['¹æÆÄº°È£']
+            write('¡Ú %s%s [1m¡¼%s¡½[0m ¹®ÆÄÀÇ [1m%s%s[0m ÀÔ´Ï´Ù.' % \
+                ('´ç½Å', han_un('´ç½Å'), ob['¼Ò¼Ó'], buf, temp ))
+        from lib.script import get_hp_script, get_mp_script
+        write( '¡Ú ' + han_parse('´ç½Å', get_hp_script(ob)) )
+        p = ob.getInsureCount()
+        if p == 0:
+            ob.sendLine('¡Ú ´ç½ÅÀÇ Ç¥±¹º¸ÇèÀº È¿·ÂÀÌ ¾ø½À´Ï´Ù.')
+        else:
+            ob.sendLine('¡Ú ´ç½ÅÀº %d¹øÀÇ Ç¥±¹º¸Çè ÇýÅÃÀ» ¹ÞÀ¸½Ç ¼ö ÀÖ½À´Ï´Ù.' % p)
+        write( '¡Ú ' + han_parse('´ç½Å', get_mp_script(ob)) )
+
+        p = getInt(ob['Æ¯¼ºÄ¡'])
+        if p != 0:
+            ob.sendLine('¡Ú ´ç½ÅÀº %d°³ÀÇ ¿©À¯ Æ¯¼ºÄ¡¸¦ º¸À¯ÇÏ°í ÀÖ½À´Ï´Ù.' % p)

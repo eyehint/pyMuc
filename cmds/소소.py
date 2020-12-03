@@ -1,0 +1,47 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        target = ob
+        if line != '' and getInt(ob['°ü¸®ÀÚµî±Þ']) >= 1000:
+            target = ob.env.findObjName(line)
+            if target == None or is_player(target) == False:
+                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                return
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('[0m[44m[1m[37m  ¢·     ¼Ò     Áö     Ç°     ¢¹  [0m[37m[40m')
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        if target.getInvenItemCount() == 0:
+            ob.sendLine('[36m¢Ñ ¾Æ¹«°Íµµ ¾ø½À´Ï´Ù.[37m')
+        else:
+            nStr = {} # { ' ': 1, ' ':2,  ... }
+            for obj in target.objs:
+                if obj.inUse:
+                    continue
+
+                if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ') and getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
+                    continue
+                c = 0
+                try:
+                    c = nStr[obj.get('ÀÌ¸§')]
+                except:
+                    nStr[obj.get('ÀÌ¸§')] = 0
+                nStr[obj.get('ÀÌ¸§')] = c + 1
+                    
+            for iName in nStr:
+                c = nStr[iName]
+                if c == 1:
+                    ob.sendLine( '[36m' + iName + '[37m')
+                else:
+                    ob.sendLine( '[36m' + iName + ' [36m%d°³[37m' % c)
+            
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('[0m[47m[30m¢º ÀºÀü : %20d °³ [0m[37m[40m' % target.get('ÀºÀü'))
+        if ob['±ÝÀü'] == '':
+            ob['±ÝÀü'] = 0
+        if ob['±ÝÀü'] > 0:
+            ob.sendLine('[0m[47m[30m¢º ±ÝÀü : %20d °³ [0m[37m[40m' % ob['±ÝÀü'])
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')

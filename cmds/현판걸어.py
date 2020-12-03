@@ -1,0 +1,82 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if line == '':
+            ob.sendLine('¢Ñ »ç¿ë¹ý : [¹æÆÄÀÌ¸§] ÇöÆÇ°É¾î')
+            return
+        if len(line) > 10 or len(line) < 2:
+            ob.sendLine('¹æÆÄÀÌ¸§ÀÌ ³Ê¹« ±æ¾î¿ä!.')
+            return
+        if len(line) < 2:
+            ob.sendLine('¹æÆÄÀÌ¸§ÀÌ ³Ê¹« Âª¾Æ¿ä!.')
+            return
+        if ob.env.checkAttr('¹æÆÄÀÚ¸®') == False:
+            ob.sendLine('¢Ñ ÀÌ°÷¿£ ÇöÆÇÀ» °É ¼ö ¾ø½À´Ï´Ù.')
+            return
+        if ob.env['¹æÆÄÁÖÀÎ'] != '':
+            ob.sendLine('¢Ñ ÀÌ°÷¿£ ÇöÆÇÀ» °É ¼ö ¾ø½À´Ï´Ù.')
+            return
+        if ob['¼Ò¼Ó'] != '':
+            ob.sendLine('¢Ñ ´ç½ÅÀº ¹æÆÄ¸¦ ¼¼¿ï ¼ö ¾ø½À´Ï´Ù.')
+            return
+        if ob['¹æÆÄ±ÝÁö'] != '':
+            ob.sendLine('¢Ñ ´ç½ÅÀº ¹æÆÄ¸¦ ¼¼¿ï ¼ö ¾ø½À´Ï´Ù.')
+            return
+        if ob['·¹º§'] < 400:
+            ob.sendLine('¢Ñ ´ç½ÅÀº ¹æÆÄ¸¦ ¼¼¿ï ¼ö ¾ø½À´Ï´Ù.')
+            return
+        if ob['ÀºÀü'] < MAIN_CONFIG['¹æÆÄ¼¼¿ïÀºÀü']:
+            ob.sendLine('¢Ñ ¹æÆÄ¸¦ ¼¼¿ì´Âµ¥´Â ÀºÀü 10,000,000°³ ÀÌ»óÀÌ ÇÊ¿äÇÕ´Ï´Ù.')
+            return
+            
+        for guild in GUILD.attr:
+            if GUILD.attr[guild]['ÀÌ¸§'] == line:
+                ob.sendLine('¢Ñ Á¸ÀçÇÏ´Â ¹æÆÄÀÌ¸§ÀÔ´Ï´Ù.')
+                return
+        g = {}
+        g['ÀÌ¸§'] = line
+        g['¹æÁÖÀÌ¸§'] = ob['ÀÌ¸§']
+        g['¹æÆÄ¿ø¼ö'] = 1
+        g['¹æÆÄ¸Ê'] = ob.env.index
+        g['¹æÁÖ¸íÄª'] = '¹æÁÖ'
+        g['ºÎ¹æÁÖ¸íÄª'] = 'ºÎ¹æÁÖ'
+        g['Àå·Î¸íÄª'] = 'Àå·Î'
+        g['¹æÆÄÀÎ¸íÄª'] = '¹æÆÄÀÎ'
+        GUILD.attr[line] = g
+        GUILD.save()
+        ob['¼Ò¼Ó'] = line
+        ob['Á÷À§'] = '¹æÁÖ'
+        ob.env['¹æÆÄÁÖÀÎ'] = line
+        ob.env.save()
+        for enter in ob.env['¹æÆÄÀÔ±¸'].splitlines():
+            if enter.find(':') == -1:
+                path = ob.env.zone + ':' + enter
+            else:
+                path = enter
+            room = getRoom(path)
+            if room == None:
+                continue
+            room['¹æÆÄÁÖÀÎ'] = line
+            room.save()
+            
+        item = getItem('º¸°üÇÔ').clone()
+        ob.insert(item)
+        ob['ÀºÀü'] -= MAIN_CONFIG['¹æÆÄ¼¼¿ïÀºÀü']
+        ob.sendLine('´ç½ÅÀÌ ÇöÆÇÀ» ¼¼¿ì´Âµ¥ ÀºÀü %d°³¸¦ »ç¿ëÇÕ´Ï´Ù.' % MAIN_CONFIG['¹æÆÄ¼¼¿ïÀºÀü'])
+        
+        buf = MAIN_CONFIG['¹æÆÄ»ý¼º¸Þ¼¼Áö¸Ó¸®']
+        if ob['¼º°Ý'] == 'Á¤ÆÄ':
+            buf += '[[1;32m%s[0;37m] [1;36m%s[37m%s ¹æÆÄ ¡º' % ( ob['¹«¸²º°È£'], ob['ÀÌ¸§'], han_iga(ob['ÀÌ¸§']) )
+        elif ob['¼º°Ý'] == '»çÆÄ':
+            buf += '[[1;31m%s[0;37m] [1;36m%s[37m%s ¹æÆÄ ¡º' % ( ob['¹«¸²º°È£'], ob['ÀÌ¸§'], han_iga(ob['ÀÌ¸§']) )
+        else:
+            buf += '[[1m%s[0m] [1;36m%s[37m%s ¹æÆÄ ¡º' % ( '¹«¼Ò¼Ó', ob['ÀÌ¸§'], han_iga(ob['ÀÌ¸§']) )
+        buf += '%s¡»%s Ã¢¼³Çß½À´Ï´Ù.[0m' % (line, han_obj(line))
+        buf += MAIN_CONFIG['¹æÆÄ»ý¼º¸Þ¼¼Áö²¿¸®']
+        ob.sendLine(buf)
+        ob.channel.sendToAll(buf, ex = ob)
+

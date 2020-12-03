@@ -1,0 +1,153 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        words = line.split()
+        if len(words) < 2:
+            ob.sendLine('¢— ªÁøÎπ˝: [¥ÎªÛ] [π∞«∞] ¡÷¥Ÿ')
+            return
+        if words[1] == '¿∫¿¸':
+            obj = ob.env.findObjName(words[0])
+            if obj == None or is_player(obj) == False:
+                ob.sendLine('¢— π∞«∞¿ª ∞«≥ª¡Ÿ π´∏≤¿Œ¿ª √£¿ª ºˆ æ¯æÓø‰. ^^')
+                return
+            if len(words) < 3:
+                cnt = 1
+            else:
+                cnt = getInt(words[2])
+                if cnt <= 0:
+                    cnt = 1
+            if ob['¿∫¿¸'] == 0:
+                ob.sendLine('¢— µ∑¿Ã ∏¿⁄∂Û≥◊ø‰. ^^')
+                return
+            if ob['¿∫¿¸'] < cnt:
+                cnt = ob['¿∫¿¸']
+            ob['¿∫¿¸'] -= cnt
+            obj['¿∫¿¸'] += cnt
+            ob.sendLine('¥ÁΩ≈¿Ã %sø°∞‘ ¿∫¿¸ %d∞≥∏¶ ¡›¥œ¥Ÿ.' % (obj.getNameA(), cnt))
+            obj.sendLine('\r\n%s ¥ÁΩ≈ø°∞‘ ¿∫¿¸ %d∞≥∏¶ ¡›¥œ¥Ÿ.' % (ob.han_iga(), cnt))
+            obj.lpPrompt()
+            ob.sendRoom('%s %sø°∞‘ ¿∫¿¸ %d∞≥∏¶ ¡›¥œ¥Ÿ.' % (ob.han_iga(), obj.getNameA(), cnt), ex = obj)
+            return
+        if words[1] == '±›¿¸':
+            obj = ob.env.findObjName(words[0])
+            if obj == None or is_player(obj) == False:
+                ob.sendLine('¢— π∞«∞¿ª ∞«≥ª¡Ÿ π´∏≤¿Œ¿ª √£¿ª ºˆ æ¯æÓø‰. ^^')
+                return
+            if len(words) < 3:
+                cnt = 1
+            else:
+                cnt = getInt(words[2])
+                if cnt <= 0:
+                    cnt = 1
+            if ob['±›¿¸'] == '':
+                ob['±›¿¸'] = 0
+            if ob['±›¿¸'] == 0:
+                ob.sendLine('¢— µ∑¿Ã ∏¿⁄∂Û≥◊ø‰. ^^')
+                return
+            if ob['±›¿¸'] < cnt:
+                cnt = ob['±›¿¸']
+            ob['±›¿¸'] -= cnt
+            if obj['±›¿¸'] == '':
+                obj['±›¿¸'] = 0
+          
+            obj['±›¿¸'] += cnt
+            ob.sendLine('¥ÁΩ≈¿Ã %sø°∞‘ ±›¿¸ %d∞≥∏¶ ¡›¥œ¥Ÿ.' % (obj.getNameA(), cnt))
+            obj.sendLine('\r\n%s ¥ÁΩ≈ø°∞‘ ±›¿¸ %d∞≥∏¶ ¡›¥œ¥Ÿ.' % (ob.han_iga(), cnt))
+            obj.lpPrompt()
+            ob.sendRoom('%s %sø°∞‘ ±›¿¸ %d∞≥∏¶ ¡›¥œ¥Ÿ.' % (ob.han_iga(), obj.getNameA(), cnt), ex = obj)
+            return
+        name = words[1]
+        
+        order = getInt(name)
+        if order != 0:
+            for i in range( len(name) ):
+                if name[i].isdigit() == False:
+                    name = name[i:]
+                    break
+        else:
+            order = 1
+        #print order, name
+        
+        obj = ob.findObjName(name, order)
+        if obj == None:
+            ob.sendLine('¢— ±◊∑± æ∆¿Ã≈€¿Ã º“¡ˆ«∞ø° æ¯æÓø‰.')
+            return
+        name = obj['¿Ã∏ß']
+        target = ob.env.findObjName(words[0])
+        if target == None or not is_player(target):
+            ob.sendLine('¢— π∞«∞¿ª ∞«≥ª¡Ÿ π´∏≤¿Œ¿ª √£¿ª ºˆ æ¯æÓø‰. ^^')
+            return
+        if target == ob:
+            ob.sendLine('¥ÁΩ≈¿Ã [36m' + obj['¿Ã∏ß'] + '[37m' + han_obj(obj['¿Ã∏ß']) + ' ∞°¡ˆ∞Ì ¿Â≥≠«’¥œ¥Ÿ. \'@_@\'')
+            return
+        i = 1
+        c = 0
+        if len(words) >= 3:
+            i = getInt(words[2])
+        if i < 1:
+            i = 1
+        if i > 50:
+            i = 50
+        if order != 1:
+            i = 1
+        objs = copy.copy(ob.objs)
+        n = 0
+        for obj in objs:
+            if c >= i:
+                break
+            if not(name == obj.get('¿Ã∏ß') or name in obj['π›¿¿¿Ã∏ß']):
+                continue
+            if obj.checkAttr('æ∆¿Ã≈€º”º∫', '√‚∑¬æ»«‘'):
+                continue
+            if obj.inUse:
+                continue
+            n += 1
+            if n < order:
+                continue
+            if obj.checkAttr('æ∆¿Ã≈€º”º∫', '¡Ÿºˆæ¯¿Ω'):
+                if c == 0:
+                    ob.sendLine('¢— ±◊ π∞∞«¿∫ ¡Ÿ ºˆ æ¯æÓø‰. ^^')
+                    return
+                continue
+            if target.getItemWeight() + obj['π´∞‘'] > target.getStr() * 10:
+                if c == 0:
+                    ob.sendLine('[1m' + target['¿Ã∏ß'] + '[0;37m' + han_iga(target['¿Ã∏ß']) + \
+                        ' π´∞≈øˆº≠ πﬁ¡ˆ ∏¯«’¥œ¥Ÿ.')
+                    target.sendLine('\r\n[1m' + ob['¿Ã∏ß'] + '[0;37m' + han_iga(ob['¿Ã∏ß']) + ' ¡Ÿ∑¡¥¬ ' + 
+                        '[36m' + obj['¿Ã∏ß'] + '[37m' + han_obj(obj['¿Ã∏ß']) + ' π´∞≈øˆº≠ πﬁ¡ˆ ∏¯«’¥œ¥Ÿ.')
+                    target.lpPrompt()
+                    return
+                break
+            if target.getItemCount() >= getInt(MAIN_CONFIG['ªÁøÎ¿⁄æ∆¿Ã≈€∞πºˆ']):
+                if c == 0:
+                    ob.sendLine('[1m' + target['¿Ã∏ß'] + '[0;37m' + han_iga(target['¿Ã∏ß']) + \
+                        ' ºˆ∑Æ «—∞Ë∑Œ πﬁ¡ˆ ∏¯«’¥œ¥Ÿ.')
+                    target.sendLine('\r\n[1m' + ob['¿Ã∏ß'] + '[0;37m' + han_iga(ob['¿Ã∏ß']) + ' ¡Ÿ∑¡¥¬ ' + \
+                        '[36m' + obj['¿Ã∏ß'] + '[37m' + han_obj(obj['¿Ã∏ß']) + ' ºˆ∑Æ «—∞Ë∑Œ πﬁ¡ˆ ∏¯«’¥œ¥Ÿ.')
+                    target.lpPrompt()
+                    return
+                break
+            c += 1
+            ob.remove(obj)
+            target.insert(obj)
+            if obj.isOneItem():
+                ONEITEM.have(obj.index, target['¿Ã∏ß'])
+
+        if c == 0:
+            ob.sendLine('¢— ±◊∑± æ∆¿Ã≈€¿Ã º“¡ˆ«∞ø° æ¯æÓø‰.')
+        elif c == 1:
+            ob.sendLine('¥ÁΩ≈¿Ã [1m' + target['¿Ã∏ß'] + '[0;37mø°∞‘ [36m' + name + '[37m' + han_obj(name) + ' ¡›¥œ¥Ÿ.')
+            target.sendLine('\r\n[1m' + ob['¿Ã∏ß'] + '[0;37m' + han_iga(ob['¿Ã∏ß']) + ' ¥ÁΩ≈ø°∞‘ [36m' + name + '[37m' + han_obj(name) + ' ¡›¥œ¥Ÿ.')
+            ob.sendRoom('%s %sø°∞‘ [36m%s[37m%s ¡›¥œ¥Ÿ.' % ( ob.han_iga(), target.getNameA(), name, han_obj(name)), ex = target)
+            target.lpPrompt()
+        else:
+            ob.sendLine('¥ÁΩ≈¿Ã [1m' + target['¿Ã∏ß'] + '[0;37mø°∞‘ [36m' + name + '[37m' + ' %d∞≥∏¶ ¡›¥œ¥Ÿ.' % c)
+            target.sendLine('\r\n[1m' + ob['¿Ã∏ß'] + '[0;37m' + han_iga(ob['¿Ã∏ß']) + ' ¥ÁΩ≈ø°∞‘ [36m' + name + '[37m' + ' %d∞≥∏¶ ¡›¥œ¥Ÿ.' % c)
+            target.lpPrompt()
+            ob.sendRoom('%s %sø°∞‘ [36m%s[37m %d∞≥∏¶ ¡›¥œ¥Ÿ.' % ( ob.han_iga(), target.getNameA(), name, c), ex = target)
+
+

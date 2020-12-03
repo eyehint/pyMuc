@@ -1,0 +1,20 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        ob.sendLine('[1m ¡Ú ´ç½ÅÀÇ ¹«±â ¼÷·Ãµµ ¡Ú[0m[40m[37m')
+        ob.sendLine('¦®¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¯')
+        ob.sendLine('¦¢¢·  °Ë  ¢¹¦¢[1m%10d[0m[40m[37m¦¢' % getInt(ob['1 ¼÷·Ãµµ']))
+        ob.sendLine('¦§¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦©')
+        ob.sendLine('¦¢¢·  µµ  ¢¹¦¢[1m%10d[0m[40m[37m¦¢' % getInt(ob['2 ¼÷·Ãµµ']))
+        ob.sendLine('¦§¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦©')
+        ob.sendLine('¦¢¢·  Ã¢  ¢¹¦¢[1m%10d[0m[40m[37m¦¢' % getInt(ob['3 ¼÷·Ãµµ']))
+        ob.sendLine('¦§¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦©')
+        ob.sendLine('¦¢¢· ±âÅ¸ ¢¹¦¢[1m%10d[0m[40m[37m¦¢' % getInt(ob['4 ¼÷·Ãµµ']))
+        ob.sendLine('¦§¦¡¦¡¦¡¦¡¦¡¦«¦¡¦¡¦¡¦¡¦¡¦©')
+        ob.sendLine('¦¢¢· ¸Ç¼Õ ¢¹¦¢[1m%10d[0m[40m[37m¦¢' % getInt(ob['5 ¼÷·Ãµµ']))
+        ob.sendLine('¦±¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦°')
+

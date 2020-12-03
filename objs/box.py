@@ -1,0 +1,198 @@
+# -*- coding: euc-kr -*-
+
+import os
+import glob
+import time
+
+from objs.object import Object
+
+from lib.hangul import *
+from lib.loader import load_script, save_script
+from objs.item import Item, getItem, is_item
+from lib.func import *
+
+class Box(Object):
+    
+    def __init__(self):
+        Object.__init__(self)
+        
+    def __del__(self):
+        pass
+        #self.save()
+        #print 'Delete!!! ' + self.getName()
+        
+    def create(self, index):
+        #print(path)
+        self.index = index
+        self.path = 'data/box/' + index + '.box'
+        scr = load_script(self.path)
+        if scr == None:
+            return False
+        try:
+            self.attr = scr['»óÀÚÁ¤º¸']
+        except:
+            return False
+        
+        items = None
+        if '¾ÆÀÌÅÛ' not in scr:
+            return True
+
+        items = scr['¾ÆÀÌÅÛ']
+
+        if type(items) == dict:
+            items = [items]
+
+        for item in items:
+            obj = getItem(str(item['ÀÎµ¦½º']))
+            if obj == None:
+                print 'º¸°üÇÔ¾ÆÀÌÅÛ ·Îµù ½ÇÆĞ : %s' % str(item['ÀÎµ¦½º'])
+            if obj != None:
+                obj = obj.deepclone()
+                if 'È®Àå ÀÌ¸§' in item:
+                    obj.set('È®Àå ÀÌ¸§', item['È®Àå ÀÌ¸§'])
+                if 'ÀÌ¸§' in item:
+                    obj['ÀÌ¸§'] = item['ÀÌ¸§']
+                if '¹İÀÀÀÌ¸§' in item:
+                    obj['¹İÀÀÀÌ¸§'] = item['¹İÀÀÀÌ¸§']
+                if '°ø°İ·Â' in item:
+                    obj['°ø°İ·Â'] = item['°ø°İ·Â']
+                if '¹æ¾î·Â' in item:
+                    obj['¹æ¾î·Â'] = item['¹æ¾î·Â']
+                if '±â·®' in item:
+                    obj['±â·®'] = item['±â·®']
+                if '¿É¼Ç' in item:
+                    obj.set('¿É¼Ç', item['¿É¼Ç'])
+                if '¾ÆÀÌÅÛ¼Ó¼º' in item:
+                    obj.set('¾ÆÀÌÅÛ¼Ó¼º', item['¾ÆÀÌÅÛ¼Ó¼º'])
+                if '½Ã°£' in item:
+                    obj.set('½Ã°£', item['½Ã°£'])
+                self.insert(obj)
+            
+    def save(self):
+        o = {}
+        o['»óÀÚÁ¤º¸'] = self.attr
+        
+        items = []
+        for item in self.objs:
+            obj = {}
+            obj['ÀÎµ¦½º'] = item.index
+            obj['ÀÌ¸§'] = item.get('ÀÌ¸§')
+            obj['¹İÀÀÀÌ¸§'] = item.get('¹İÀÀÀÌ¸§').splitlines()
+            if item.get('°ø°İ·Â') != '':
+                obj['°ø°İ·Â'] = item.get('°ø°İ·Â')
+            if item.get('¹æ¾î·Â') != '':
+                obj['¹æ¾î·Â'] = item.get('¹æ¾î·Â')
+            if item.get('±â·®') != '':
+                obj['±â·®'] = item.get('±â·®')
+            if item.get('¿É¼Ç') != '':
+                obj['¿É¼Ç'] = item.get('¿É¼Ç').splitlines()
+            if item.get('¾ÆÀÌÅÛ¼Ó¼º') != '':
+                obj['¾ÆÀÌÅÛ¼Ó¼º'] = item.get('¾ÆÀÌÅÛ¼Ó¼º').splitlines()
+            if item.get('È®Àå ÀÌ¸§') != '':
+                obj['È®Àå ÀÌ¸§'] = item.get('È®Àå ÀÌ¸§')
+            if item.get('½Ã°£') != '':
+                obj['½Ã°£'] = item.get('½Ã°£')
+            items.append(obj)
+
+        o['¾ÆÀÌÅÛ'] = items
+        
+        try:
+            f = open(self.path, 'w')
+        except:
+            return False
+        save_script(f, o)
+        f.close()
+        return True
+        
+    def viewShort(self):
+        return '%s (%d/%d)' % (self['ÀÌ¸§'], len(self.objs), int(self['º¸°ü¼ö·®']))
+        
+    def view(self, ob):
+        p = int(self['º¸°ü¼ö·®'])
+        pm = self['º¸°üÁõ°¡ÀºÀü']
+        pp = self['º¸°üÃÖ´ë¼ö·®']
+        
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        buf = '¢· %sÀÇ %s ¢¹' % (self['ÁÖÀÎ'], self['ÀÌ¸§'])
+        ob.sendLine('[1m[44m[37m%-78s[0m[40m[37m' % buf)
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        c = 0
+        nCnt = {}
+        for item in self.objs:
+            c += 1
+            nc = 0
+            try:
+                nc = nCnt[item['ÀÌ¸§']]
+            except:
+                nCnt[item['ÀÌ¸§']] = 0
+            nCnt[item['ÀÌ¸§']] = nc + 1
+        if c == 0:
+            ob.sendLine('¢Ñ ¾Æ¹«°Íµµ ¾ø½À´Ï´Ù.')
+        else:
+            msg = ''
+            c = 0
+            for name in nCnt:
+                nc = nCnt[name]
+                if nc == 1:
+                    buf = name
+                else:
+                    buf = '%s %d°³' % (name, nc)
+                c += 1
+                msg += '[1;36m¡¤[0;36m%-20s[0;37m  ' % buf
+                if c % 3 == 0:
+                    msg += '\r\n'
+            if c % 3 == 0:
+                msg = msg[:-2]
+            ob.sendLine(msg)
+        if self['º¸°ü¼ö·®'] == self['º¸°üÃÖ´ë¼ö·®']:
+            buf = '¡ß ¼ö·® (%d/%d)' % ( len(self.objs), self['º¸°ü¼ö·®'])
+        else:
+            buf = '¡ß ¼ö·® (%d/%d)  ¡ß ÃÖ´ë¼ö·® (%d)  ¡ß È®Àå¿¡ ÇÊ¿äÇÑ ÀºÀü (%d/%d)' % ( len(self.objs), self['º¸°ü¼ö·®'], \
+            self['º¸°üÃÖ´ë¼ö·®'], getInt(self['ÀºÀü']), self['º¸°üÁõ°¡ÀºÀü'])
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('[0m[47m[30m%-78s[0m[40m[37m' % buf)
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+
+        
+    def destroy(self):
+        self.env.remove(self)
+        self.env = None
+        del self
+        
+    def getNameA(self):
+        return '[36m' + self.get('ÀÌ¸§') + '[37m'
+        
+    def isFull(self):
+        l = len(self.objs)
+        if l >= self['º¸°ü¼ö·®']:
+            return True
+        return False
+        
+    def isExpandable(self):
+        if self['º¸°ü¼ö·®'] == self['º¸°üÃÖ´ë¼ö·®']:
+            return False
+        return True
+        
+    def addMoney(self, money):
+        if self['ÀºÀü'] == '':
+            self['ÀºÀü'] = 0
+        self['ÀºÀü'] += money
+        a = self['º¸°üÃÖ´ë¼ö·®'] - self['º¸°ü¼ö·®']
+        req = self['º¸°üÁõ°¡ÀºÀü']
+        cnt = self['ÀºÀü'] / req
+        if cnt == 0:
+            return money
+        if cnt > a:
+            cnt = a
+        self['ÀºÀü'] -= cnt * req
+        self['º¸°ü¼ö·®'] += cnt
+        if self['º¸°ü¼ö·®'] == self['º¸°üÃÖ´ë¼ö·®']:
+            if self['ÀºÀü'] != 0:
+                m = self['ÀºÀü']
+                self['ÀºÀü'] = 0
+                return money - m
+        return money
+        
+def is_box(obj):
+    return isinstance(obj, Box)
+

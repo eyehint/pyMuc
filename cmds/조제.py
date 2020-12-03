@@ -1,0 +1,82 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [ÀÌ¸§] Á¶Á¦')
+            return
+        found = False
+        doctor = False
+        for mob in ob.env.objs:
+            if is_mob(mob) == False:
+                continue
+            if 'ÀÇ¿ø' in mob['¹ÝÀÀÀÌ¸§'].splitlines():
+                doctor = True
+                key = 'Á¶Á¦ %s' % line
+                if key in mob.attr:
+                    found = True
+                    break
+        if doctor == False:
+            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ¾àÀ» Á¶Á¦ÇÒ¸¸ÇÑ ÀÇ¿øÀÌ ¾ø¾î¿ä. ^^')
+            return
+        if found == False:
+            ob.sendLine('¢Ñ ±×·¯ÇÑ °ÍÀ» Á¶Á¦ÇÒ ÀÇ¿øÀÌ ¾ø¾î¿ä. ^^')
+            return
+        take = []
+        for l in mob[key].splitlines():
+            words = l.split()
+            if len(words) < 2:
+                continue
+            if words[0][0] == '+':
+                give = words[0][1:]
+                ngive = int(words[1])
+            else:
+                take.append( (words[0] , int(words[1])) )
+        indexs = []
+        for obj in ob.objs:
+            if obj.inUse:
+                continue
+            indexs.append(obj.index)
+        
+        for i in take:
+            c = 0
+            for j in range(0, i[1]):
+                if i[0] in indexs:
+                    c += 1
+                    indexs.remove(i[0])
+                    continue
+                break
+            if c != i[1]:
+                ob.sendLine('%s ¸»ÇÕ´Ï´Ù. "À½.. ºÎÁ·ÇÑ°Ô ÀÖ´Ù³×... Àç·á¸¦ ´õ ±¸ÇØ¿À°Ô³ª"' % mob.han_iga())
+                return
+        msg = ''
+        items = []
+        for i in range(0, ngive):
+            item = getItem(give)
+            if item == None:
+                ob.sendLine('%s ¸»ÇÕ´Ï´Ù. "À½.. Àç·á°¡ ´Ù ¶³¾îÁ®¼­ ÇÑµ¿¾È Á¶Á¦°¡ Èûµé°Ú¾î..."' % mob.han_iga())
+                return
+            item = item.clone()
+            items.append(item)
+            msg += '%s ´ç½Å¿¡°Ô %s ÁÝ´Ï´Ù.' % (mob.han_iga(), item.han_obj())
+        ob.sendLine('´ç½ÅÀÌ %s¿¡°Ô [36m%s[37m%s ¸¸µé¼ö ÀÖ´Â Àç·áµéÀ» °Ç³×ÁÝ´Ï´Ù.' % ( mob.getNameA(), line, han_obj(line)))
+        ob.sendLine('%s Àç·áµéÀ» °¡Áö°í ½É¿ÀÇÑ ±â¸¦ ºÒ¾î ³ÖÀ¸¸ç ÀÛ¾÷ÇÕ´Ï´Ù.'% mob.han_iga())
+        ob.sendLine(msg)
+        objs = copy.copy(ob.objs)
+        for i in take:
+            c = 0
+            for j in range(0, i[1]):
+                self.delItem(ob, i[0]) 
+        for i in items:
+            ob.insert(i)
+
+    def delItem(self, ob, index):
+        for obj in ob.objs:
+            if obj.inUse:
+                continue
+            if obj.index == index:
+                ob.objs.remove(obj)
+                return

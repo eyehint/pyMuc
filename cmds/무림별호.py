@@ -1,0 +1,59 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        line = line.strip()
+        if len(line) == 0 or len(line.split()) > 1:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [º°È£ÀÌ¸§] ¹«¸²º°È£')
+            return
+        
+        if ob['¹«¸²º°È£'] != '':
+            ob.sendLine('¢Ñ ÀÌ¹Ì º°È£¸¦ ¸¸µé¾ú¾î¿ä. ^^')
+            return
+            
+        if ob.checkEvent('¹«¸²º°È£¼³Á¤') == False:
+            ob.sendLine('¢Ñ ¾ÆÁ÷Àº ¹«¸²º°È£¸¦ ¹ÞÀ» ¼ö ¾ø¾î¿ä. ^^')
+            return
+        if len(line) < 3:
+            ob.sendLine('¢Ñ »ç¿ëÇÏ½Ã·Á´Â º°È£°¡ ³Ê¹« Âª¾Æ¿ä.')
+            return
+        if len(line) > 10:
+            ob.sendLine('¢Ñ »ç¿ëÇÏ½Ã·Á´Â º°È£°¡ ³Ê¹« ±æ¾î¿ä.')
+            return
+            
+        if line in NICKNAME.attr:
+            ob.sendLine('¢Ñ ´Ù¸¥ ¹«¸²ÀÎÀÌ »ç¿ëÁßÀÎ º°È£ÀÔ´Ï´Ù. ^^')
+            return
+        ob['¹«¸²º°È£'] = line
+        
+        if ob.checkEvent('¹«¸²º°È£ »çÆÄ'):
+            ob['¼º°Ý'] = '»çÆÄ'
+            buf = '[1m¢Ñ [[31m»çÆÄ[37m] '
+        else:
+            ob['¼º°Ý'] = 'Á¤ÆÄ'
+            buf = '[1m¢Ñ [[32mÁ¤ÆÄ[37m] '
+            
+        NICKNAME[line] = ob['ÀÌ¸§']
+        NICKNAME.save()
+        
+        ob.delEvent('¹«¸²º°È£¼³Á¤')
+        ob.delEvent('¹«¸²º°È£ »çÆÄ')
+        ob.delEvent('¹«¸²º°È£ Á¤ÆÄ')
+        
+        msg = '[1m%s%s [1mÀÚ½ÅÀÇ º°È£¸¦ ¡º[33m%s[37m¡»%s ÄªÇÏ±â ½ÃÀÛÇÕ´Ï´Ù.[0;37m' % ( buf, ob.han_iga(), line, han_uro(line))
+        ob.channel.sendToAll(msg, ex = ob)
+        ob.sendLine(msg + '\r\n')
+        
+        ob.makeHome()
+        roomName = '»ç¿ëÀÚ¸Ê:%s' % ob['ÀÌ¸§']
+        ob['±ÍÈ¯Áö¸Ê'] = roomName
+        ob.save()
+        room = getRoom(roomName)
+        if room == None:
+            ob.sendLine('¢Ñ »ç¿ëÀÚ¸Ê »ý¼º¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù.')
+            return
+        
+        ob.enterRoom(room, '±ÍÈ¯', '±ÍÈ¯')

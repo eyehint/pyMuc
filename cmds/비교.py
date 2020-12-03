@@ -1,0 +1,39 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] ºñ±³')
+            return
+        obj = ob.env.findObjName(line)
+        if is_mob(obj) == False and is_player(obj) == False:
+            ob.sendLine('ÀÚ½ÅÀÇ »óÅÂ¸¦ ÅëÅºÇØ ÇÕ´Ï´Ù. @_@')
+            return
+        if obj == None or obj['¸÷Á¾·ù'] == 7:
+            ob.sendLine('¢Ñ ±×·± ºñ±³´ë»óÀÌ ¾ø¾î¿ä. ^^')
+            return
+        if ob == obj:
+            ob.sendLine('ÀÚ½ÅÀÇ »óÅÂ¸¦ ÅëÅºÇØ ÇÕ´Ï´Ù. @_@')
+            return
+        if ob.checkConfig('ºñ±³°ÅºÎ') or (is_player(obj) and obj.checkConfig('ºñ±³°ÅºÎ')):
+            ob.sendLine('¢Ñ ÁøÁ¤ÇÑ ½ÂºÎ¶õ ºñ¹«¸¦ ÅëÇØ¼­ ¾Ë ¼ö ÀÖ´Â °Í ÀÌÁö')
+            return
+        
+        mT, c1, c2 = ob.getAttackPoint(obj)
+        uT, c1, c2 = obj.getAttackPoint(ob)
+        if is_player(obj):
+            mH = obj['ÃÖ°íÃ¼·Â'] / mT
+        else:
+            mH = obj['Ã¼·Â'] / mT
+        uH = ob['ÃÖ°íÃ¼·Â'] / uT
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('¢º [1m%s[0;37m%sÀÇ »ó´ëºñ±³' % ( obj['ÀÌ¸§'] , han_wa(obj['ÀÌ¸§']) ))
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('¢Ñ ´ç½ÅÀÇ ½Â·ü ¿ÀÂ÷¢°%d' % uH)
+        ob.sendLine('¢Ñ »ó´ëÀÇ ½Â·ü ¿ÀÂ÷¢°%d' % mH)
+        ob.sendLine('¢Ñ ½Â  ·ü ¿ÀÂ÷ °á°ú¢°%d' % (uH-mH))
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+

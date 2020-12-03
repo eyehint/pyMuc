@@ -1,0 +1,38 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+    level = 2000
+    def cmd(self, ob, line):
+        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
+            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+            return
+        if len(line) == 0:
+            ob.sendLine('»ç¿ë¹ý: [¾ÆÀÌÅÛ ÀÌ¸§] [°¹¼ö] »ý¼º')
+            return
+        var = line.split()
+        if len(var) == 1:
+            cnt = 1
+        else:
+            cnt = int(var[1])
+
+        item = getItem(var[0])
+
+        if item == None:
+            ob.sendLine('* »ý¼º ½ÇÆÐ!!!')
+            return
+            
+        if item.isOneItem():
+            if item.isOneThere():
+                ob.sendLine('[´ÜÀÏ¾ÆÀÌÅÛ] %s ÀÌ¹Ì »ý¼ºµÇ¾î ÀÖ½À´Ï´Ù.' % item.han_iga())
+                return
+            else:
+                ONEITEM.have(item.index, ob['ÀÌ¸§'])
+        for i in range(cnt):
+            item = item.deepclone()
+            ob.objs.append(item)
+            if item['Á¾·ù'] == 'È£À§':
+                item.hp = item['Ã¼·Â']
+        
+        ob.sendLine('[1;32m* [' + item.get('ÀÌ¸§') + '] »ý¼º µÇ¾ú½À´Ï´Ù.[0;37m')

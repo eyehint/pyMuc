@@ -1,0 +1,188 @@
+# -*- coding: euc-kr -*-
+
+from include.path import *
+from include.define import *
+from lib.object import *
+from lib.hangul import *
+from objs.cmd import Command
+from lib.comm import broadcast
+from lib.cmd import parse_command
+
+def userlist(ob):
+    list = 'ÃÑ (' + str(len(ob.clients)) + ')\r\n'        
+    #list = ''
+    for c in ob.channel.clients:
+        if len(c.get('ÀÌ¸§')) != 0:
+            list += ', ' + c.get('ÀÌ¸§')
+        else: 
+            list += ', <Á¢¼ÓÁß>'
+                                                                   
+    ob.sendLine(list);
+
+
+def get_name(self, name, *args):
+    if len(name) == 0:
+        self.write('\r\nÀÌ¸§ : ')
+        return
+    if is_han(name) == False:
+        self.write('\r\nÇÑ±Û ÀÔ·Â¸¸ °¡´ÉÇÕ´Ï´Ù.\r\ÀÌ¸§ : ')
+        return
+    if name == '¼Õ´Ô':
+        self.newidx = 0
+        newbie_msg(self)
+        self.input_to(DoNothing)
+        return
+    
+    res = self.load(USER_PATH + name)
+    if res == False:
+        self.write('\r\n±×·± »ç¿ëÀÚ´Â ¾ø½À´Ï´Ù.\r\nÀÌ¸§ : ')
+        return
+    #self.set('ÀÌ¸§', name)
+    self.write('\r\n¾ÏÈ£ : ')
+    self.loginRetry = 0
+    self.input_to(get_pass)
+
+
+def get_pass(self, line, *args):
+    self.loginRetry += 1
+    if len(line) == 0 or self.get('¾ÏÈ£') != line:
+        if self.loginRetry >= 3:
+            self.write('\r\n')
+            self.channel.transport.loseConnection()
+            return
+        self.write('\r\nÀß¸øµÈ ¾ÏÈ£ ÀÔ´Ï´Ù.\r\n¾ÏÈ£ : ')
+        return    
+    #self.sendLine('\r\n¶Ç ¿À¼Ì±¸¸¸¿ä^^ ¹İ°¡¿ö¿ä')
+    del self.loginRetry
+    
+    self.write('[2;28r[2J')
+
+    self.state = ACTIVE
+    self.channel.clients.append(self)
+    self.channel.echoON()
+    broadcast(self.get('ÀÌ¸§') + '´ÔÀÌ µé¾î¿À¼Ì½À´Ï´Ù.', self)
+    
+    from lib.io import cat
+    cat(self, 'data/text/notice.txt')
+    self.sendLine('[Enter] Å°¸¦ ´©¸£¼¼¿ä.')
+    self.input_to(showNotice)
+    self.start_heart_beat()
+
+
+def showNotice(self, line, *args):
+    room = get_room('½ÃÀÛ/½ÃÀÛ')
+    if room != None:
+        room.append(self)
+
+    self.INTERACTIVE = 1
+    self.input_to(parse_command)
+
+
+def newbie_msg(self):
+    from twisted.internet import reactor
+    
+    self.newidx += 1
+    
+    if self.newidx == 1:
+        self.write('[2J') # CLEAR SCREEN
+    elif self.newidx == 2:
+        self.sendLine('\r\n¿Ê±êÀ» °¡º±°Ô Àû½Ã´Â °¡¶ûºñ°¡ ÃËÃËÈ÷ ³»¸®´Â »õº® .......')
+    elif self.newidx == 3:
+        self.sendLine('\r\n¾îµÒÀ» ±úÆ®¸®´Â Ã³ÀıÇÑ ºñ¸í ¼Ò¸®¸¦ µÚ·Î ÇÏ°í »ı»ç¸¦ °Ç Å»ÃâÀ» ÇÏ´Â ÀÌµéÀÌ')
+        self.sendLine('ÀÖ¾ú´Ù.')
+    elif self.newidx == 4:
+        self.sendLine('\r\nµÎ ¸íÀÇ »ç³»¿Í °« ¼¼»ìÀ» ³Ñ¾úÀ» ¸¸ÇÑ ¾ÆÀÌ....')
+    elif self.newidx == 5:
+        self.sendLine('\r\nÇÑ ³²ÀÚ´Â Áß³âÀÇ °ÇÀåÇÑ ¸ğ½ÀÀÌ³ª ¿ÂÅë ÇÇ·Î ¹°µé¾î ÀÖ¾ú°í ´Ù¸¥ ÇÑ ³²ÀÚ´Â')
+        self.sendLine('½ÉÇÑ ºÎ»óÀ» ÀÔÀº µí º¹ºÎ¸¦ ¿Ş¼ÕÀ¸·Î °¨½Î°í ¿À¸¥ ¼Õ¿£ °ËÀ» Áã°í ÀÖÀ¸³ª')
+        self.sendLine('¾î±ú¿¡¼­ ºÎÅÍ Èê·¯³»¸° ÇÇ°¡ °Ë½ÅÀ» Å¸°í ²÷ÀÓ ¾øÀÌ Èê·¯ ³»¸®°í ÀÖ¾ú´Ù.')
+    elif self.newidx == 6:
+        self.sendLine('\r\nÀÏÁÖ°¡ ¸»ÇÕ´Ï´Ù. "¼Ò·æ!, ³ª´Â ´õ ÀÌ»ó °¥¼ö°¡ ¾øÀ» °Í °°³×...".')
+        self.sendLine('                 "¾î¼­ ¼ÒÁÖÀÎÀ» ¸ğ½Ã°í  ÀÌ °÷À» ºüÁ®³ª°¡°Ô ....."')
+    elif self.newidx == 7:
+        self.sendLine('\r\n                 "¾î¼­ ¼ÒÁÖÀÎÀ» ¸ğ½Ã°í  ÀÌ °÷À» ºüÁ®³ª°¡°Ô ....."')
+    elif self.newidx == 8:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 9:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 10:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 11:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 12:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 13:
+        self.sendLine('\r\n[Enter] Å°¸¦ ´©¸£¼¼¿ä.\r\n')
+        self.input_to(NextPage)
+        return
+    elif self.newidx == 14:
+        self.sendLine('\r\n±×·¯´ø ¾î´À³¯...')
+    elif self.newidx == 15:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 16:
+        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+    elif self.newidx == 17:
+        self.sendLine('\r\n»ç¿ëÇÒ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.\r\nÀÌ¸§ : ')
+        self.input_to(getNewname)
+        return
+    
+    reactor.callLater(1, newbie_msg, self)
+
+
+def DoNothing(self, line, *args):
+    return
+
+
+def NextPage(self, line, *args):
+    from twisted.internet import reactor
+    self.write('[2J') # CLEAR SCREEN
+    self.input_to(DoNothing)
+    reactor.callLater(3, newbie_msg, self)
+    return
+    
+
+def getNewname(self, name, *args):
+    if len(name) == 0:
+        self.write('\r\nÇÑ±ÛÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.\r\nÀÌ¸§ : ')
+        return
+    if is_han(name) == False:
+        self.write('\r\nÇÑ±Û ÀÔ·Â¸¸ °¡´ÉÇÕ´Ï´Ù.\r\nÀÌ¸§ : ')
+        return
+    if name == '¼Õ´Ô':
+        self.write('\r\n»ç¿ëÇÒ ¼ö ¾ø´Â ÀÌ¸§ÀÔ´Ï´Ù.\r\nÀÌ¸§ : ')
+        return
+    import os
+    if os.path.exists(USER_PATH + name) == True:
+        self.write('\r\nÀÌ¹Ì »ç¿ëÁßÀÎ ÀÌ¸§ÀÔ´Ï´Ù.\r\nÀÌ¸§ : ')
+        return
+    self.set('ÀÌ¸§', name)
+    self.write('\r\n»ç¿ëÇÏ½Ç ¾ÏÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+    self.input_to(getNewpass)
+
+def getNewpass(self, line, *args):
+    if len(line) < 3:
+        self.write('\r\n3ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+        return
+    self.set('¾ÏÈ£', line)
+    self.write('\r\nÇÑ¹ø ´õ ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+    self.input_to(getNewpass2)
+
+
+def getNewpass2(self, line, *args):
+    if line != self.get('¾ÏÈ£'):
+        self.write('\r\nÀÌÀü ÀÔ·Â°ú ´Ù¸¨´Ï´Ù.\r\n»ç¿ëÇÏ½Ç ¾ÏÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+        self.input_to(getNewpass)
+        return
+    self.init_body()
+    self.save(USER_PATH + self.get('ÀÌ¸§'))
+    self.write('[2;28r[2J')
+    self.state = ACTIVE
+    self.channel.clients.append(self)
+    self.channel.echoON()
+    broadcast(self.get('ÀÌ¸§') + '´ÔÀÌ µé¾î¿À¼Ì½À´Ï´Ù.', self)
+    
+    from lib.io import cat
+    cat(self, 'data/text/notice.txt')
+    self.sendLine('[Enter] Å°¸¦ ´©¸£¼¼¿ä.')
+    self.input_to(showNotice)
+    self.start_heart_beat()

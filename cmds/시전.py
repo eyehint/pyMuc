@@ -1,0 +1,260 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cool1(self, ob, name):
+        ob.cooltime[name] = 2
+        if name == '´ÉÆÄ¹Ìº¸':
+            if ob.act != ACT_DEATH:
+                ob.sendLine('\n´ç½ÅÀÌ ÆîÃÄ³õÀº [1;36mÒó÷îÚ°ÜÆ[;37mÀÇ ½Å¹ýÀ» ¸ØÃä´Ï´Ù.')
+            ob._miss -= 350
+        elif name == '¿ª±Ù°æ':
+            if ob.act != ACT_DEATH:
+                ob._str -= 500
+                ob._arm -= 500
+                ob._maxhp -= 50
+                ob.sendLine('\n´ç½ÅÀÌ ÆîÃÄ³½ [1;33mæ¶ÐÉÌè[0;37mÀÇ ¸ðµç [1;32mê¡Ñ¨ú¼Íí[0;37m [1;31mé©ÌÁ[0;37mÀ» °ÅµÎ¾î µéÀÔ´Ï´Ù.')
+            if ob['Ã¼·Â'] > ob.getMaxHp():
+                ob['Ã¼·Â'] = ob.getMaxHp()
+
+        reactor.callLater(5, self.cool2, ob, name)
+        return
+
+    def cool2(self, ob, name):
+        ob.cooltime[name] = 0
+        return
+
+    def cmd(self, ob, line):
+        from objs.skill import MUGONG
+        if ob.act == ACT_REST:
+            ob.sendLine('¢Ñ ¿î±âÁ¶½ÄÁß¿£ ¹«°øÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            return
+
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó|¹«°øÀÌ¸§] ½ÃÀü')
+            return
+
+        words = line.split()
+        l = len(words)
+        if l == 1:
+            mName = line
+            tName = ''
+            if ob.act == ACT_FIGHT and len(ob.target) > 0:
+                mob = ob.target[0]
+        else:
+            mName = words[1]
+            if words[0] == '.':
+                words[0] = '1'
+            mob = ob.env.findObjName(words[0])
+            if mob == None:
+                ob.sendLine('¢Ñ ±×·± »ó´ë°¡ ¾ø½À´Ï´Ù.')
+                return
+            if is_player(mob) == False and is_mob(mob) == False:
+                ob.sendLine('¢Ñ ±×·± »ó´ë°¡ ¾ø½À´Ï´Ù.')
+                return
+            if mob.act == ACT_DEATH:
+                ob.sendLine('¢Ñ ±×·± »ó´ë°¡ ¾ø½À´Ï´Ù.')
+                return
+            if mob['ÀÌ¸§'] != '¶ËÆÄ¸®' and len(mob.target) != 0 and ob not in mob.target:
+                ob.sendLine('¢Ñ ±×·± »ó´ë°¡ ¾ø½À´Ï´Ù.')
+                return
+            #if mob['¸÷Á¾·ù'] == 5:
+            #    ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            #    return
+        """
+        if line in [ '´ÉÆÄ¹Ìº¸', '¿ª±Ù°æ']:
+            try:
+                cool = ob.cooltime
+                if line in cool:
+                    c = cool[line]
+                else:
+                    c = 0
+                    cool[line] = 0
+            except:
+                ob.cooltime = {}
+                cool = ob.cooltime
+                cool[line] = 0
+                c = 0
+            for c1 in cool:
+                if cool[c1] == 1:
+                    ob.sendLine('[1;37m´ç½ÅÀÇ ³»°¡Áø±â°¡ Èð¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                    return
+            if c != 0:
+                ob.sendLine('[1;37m´ç½ÅÀÇ ³»°¡Áø±â°¡ Èð¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                return
+            if ob['³»°ø'] < 1000:
+                ob.sendLine('[1;37m´ç½ÅÀÇ ³»°¡Áø±â°¡ Èð¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                return
+
+            ob['³»°ø'] -= 1000
+
+            from twisted.internet import reactor
+            if line == '´ÉÆÄ¹Ìº¸':
+                ob._miss += 350
+                ob.sendLine('´ç½ÅÀÌ ¹ß°ÉÀ½À» [1;37mÎßó©[0;37mÇÏ¸ç [1;36mÒó÷îÚ°ÜÆ[;37m¸¦ Àç»¡¸® ÆîÃÄ³À´Ï´Ù.')
+                reactor.callLater(2, self.cool1, ob, line)
+            elif line == '¿ª±Ù°æ':
+                ob._arm += 500
+                ob._maxhp += 50
+                ob._str += 500
+                ob.sendLine('´ç½ÅÀÌ [1;33mæ¶ÐÉÌè[0;37mÀÇ ¸ðµç [1;32mê¡Ñ¨ú¼Íí[0;37m [1;31mé©ÌÁ[0;37mÀ» ÆîÃÄ³À´Ï´Ù.')
+                reactor.callLater(3, self.cool1, ob, line)
+
+            ob.cooltime[line] = 1
+            return
+        """
+        s = None
+        if mName in ob.skillList:
+            s = MUGONG[mName]
+        else:
+            for sName in ob.skillList:
+                if sName.find(mName) == 0:
+                    s = MUGONG[sName]
+                    break
+        if s == None:
+            ob.sendLine('¢Ñ ±×·± ¹«°øÀ» ½ÀµæÇÑ ÀûÀÌ ¾ø½À´Ï´Ù.')
+            return
+        if s == '':
+            ob.sendLine('¢Ñ ¾ÆÁ÷ »ç¿ëÇÒ ¼ö ¾ø´Â ¹«°øÀÔ´Ï´Ù.')
+            return
+        
+        if s['Á¾·ù'] == 'ÀüÅõ':
+            if l == 1 and ob.act == ACT_STAND:
+                ob.sendLine('¢Ñ ¹«°øÀ» ÆîÄ¥ ¼ö ÀÖ´Â »ó´ë°¡ ÇÊ¿äÇÕ´Ï´Ù.')
+                return
+            if is_item(mob) or is_box(mob):
+                ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+                return
+            if ob.skill != None:
+                ob.sendLine('[1;37m´ç½ÅÀÇ ³»°¡Áø±â°¡ Èð¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                return
+            if ob.act == ACT_FIGHT and mob not in ob.target:
+                ob.sendLine('¢Ñ ÇöÀçÀÇ ºñ¹«¿¡ ½Å°æÀ» ÁýÁßÇÏ¼¼¿ä. @_@')
+                return
+            if is_player(mob) and ob.env.checkAttr('»ç¿ëÀÚÀüÅõ±ÝÁö'):
+                ob.sendLine('¢Ñ Áö±ÝÀº [1m[31m»ì°Ì[0m[37m[40mÀ» ÀÏÀ¸Å°±â¿¡ ºÎÀûÇÕÇÑ »óÈ² ÀÌ¶ó³×')
+                return
+            # »ç¿ëÀÚ ÀüÅõ Áö¿ø½Ã »èÁ¦
+            if is_player(mob):
+                ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+                return
+            if mob not in ob.target and mob['¸÷Á¾·ù'] != 1:
+                ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+                return
+            if ob.getMp() < s.mp or ob['Ã¼·Â'] <  (ob['ÃÖ°íÃ¼·Â'] * s.hp) / 100 or ob['Ã¼·Â'] < (ob['ÃÖ°íÃ¼·Â'] * s.maxhp) / 100:
+                ob.sendLine('[1;37m´ç½ÅÀÌ ³»°øÁø±â¸¦ ²ø¾î ¸ðÀ¸Áö¸¸ ±â°¡ Èð¾îÁ® ¹ö¸³´Ï´Ù.[0;37m')
+                return
+            ob['³»°ø'] -= s.mp
+            ob['Ã¼·Â'] -=  (ob['ÃÖ°íÃ¼·Â'] * s.hp) / 100
+            ob.getSkill(s.name)
+            ob.skill.init()
+            
+            buf1, buf2, buf3 = ob.makeFightScript(s['¹«°ø½ºÅ©¸³'], mob)
+            ob.sendLine(buf1)
+            ob.addStr(s.bonus, False)
+            if ob.act == ACT_STAND:
+                ob.sendRoom(buf3, noPrompt = True)
+            else:
+                ob.sendRoomFightScript(buf3)
+            if mob not in ob.target:
+                ob.setFight(mob)
+            if ob.getDex() >= 4200:
+                ob._advance = True
+                ob.doFight(True)
+        else:
+            if l == 1:
+                mob = ob
+            attr = s['¼Ó¼º'].splitlines()
+            if 'ÀÚ½Å±ÝÁö' in attr and mob == ob:
+                ob.sendLine('¢Ñ ÀÚ½Å¿¡°Ô »ç¿ëÇÒ ¼ö ¾ø´Â ¹«°øÀÔ´Ï´Ù. ^^')
+                return
+            if 'Å¸ÀÎ±ÝÁö' in attr and mob != ob:
+                ob.sendLine('¢Ñ ÀÚ½Å¸¸ »ç¿ëÇÒ ¼ö ÀÖ´Â ¹«°øÀÔ´Ï´Ù. ^^')
+                return
+            if is_item(mob) or is_box(mob):
+                ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+                return
+            for ss in mob.skills:
+                # °°Àº ¹«°ø È¤Àº °°Àº °è¿­ÀÇ ¹«°øÀ» µÎ¹øÀÌ»ó »ç¿ëÇÒ¼ö ¾ø´Ù. ¼Ó¼º¿¡¼­ °è¿­±ÝÁö¸¦ °¡Á®¿ÂµÚ ºñ±³ÇÊ¿ä
+                if s.name == ss.name or s['°è¿­'] == ss.getAntiType():
+                    ob.sendLine('[1m´ç½ÅÀÌ ³»°øÁø±â¸¦ ²ø¾î ¸ðÀ¸Áö¸¸ ±â°¡ Èð¾îÁ® ¹ö¸³´Ï´Ù.[0;37m')
+                    return
+            for ss in ob.skills:
+                # °°Àº ¹«°ø È¤Àº °°Àº °è¿­ÀÇ ¹«°øÀ» µÎ¹øÀÌ»ó »ç¿ëÇÒ¼ö ¾ø´Ù. ¼Ó¼º¿¡¼­ °è¿­±ÝÁö¸¦ °¡Á®¿ÂµÚ ºñ±³ÇÊ¿ä
+                if s.name == ss.name or s['°è¿­'] == ss.getAntiType():
+                    ob.sendLine('[1m´ç½ÅÀÌ ³»°øÁø±â¸¦ ²ø¾î ¸ðÀ¸Áö¸¸ ±â°¡ Èð¾îÁ® ¹ö¸³´Ï´Ù.[0;37m')
+                    return
+            if ob.getMp() < s.mp:
+                ob.sendLine('[1m´ç½ÅÀÌ ³»°øÁø±â¸¦ ²ø¾î ¸ðÀ¸Áö¸¸ ±â°¡ Èð¾îÁ® ¹ö¸³´Ï´Ù.[0;37m')
+                return
+            if  ob['Ã¼·Â'] < (ob['ÃÖ°íÃ¼·Â'] * s.hp) / 100 or ob['Ã¼·Â'] < (ob['ÃÖ°íÃ¼·Â'] * s.maxhp) / 100:
+                ob.sendLine('[1m´ç½ÅÀÇ ³»°øÁø±â°¡ Èð¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                return
+            ob['³»°ø'] -= s.mp
+            ob['Ã¼·Â'] -= (ob['ÃÖ°íÃ¼·Â'] * s.hp) / 100
+            s = copy.copy(s)
+            ob.skillUp(s)
+            t = ob.skillMap[s.name][0]
+            
+            mob._str += s._str
+            mob._dex += s._dex
+            mob._arm += s._arm
+            against = ''
+            for at in attr:
+                if at.find('»ó´ë¹«°ø') == 0:
+                    aName = at[9:]
+                    against = MUGONG[aName].clone()
+                    break
+            
+            if against != '':
+                chance = ob.getAttackChance(mob)
+
+                if s['°è¿­'] == '³»°øÈí¼ö' and mob.getMp() > 0:
+                    if chance >= randint(0, 100):
+                        try:
+                            plus = mob.mp * against._mp / 100 * -1
+                            if plus + ob['³»°ø'] > ob['ÃÖ°í³»°ø']:
+                                plus = ob['ÃÖ°í³»°ø'] - ob['³»°ø']
+                            ob['³»°ø'] += plus
+                            mob.mp -= plus
+                        except:
+                            plus = mob['³»°ø'] * against._mp / 100 * -1
+                            if plus + ob['³»°ø'] > ob['ÃÖ°í³»°ø']:
+                                plus = ob['ÃÖ°í³»°ø'] - ob['³»°ø']
+                            ob['³»°ø'] += plus
+                            mob['³»°ø'] -= plus
+                elif s['°è¿­'] == '³»°ø°¨¼Ò':    
+                    mob._mp += against._mp
+                    mob._maxmp += against._maxmp
+                    mob.skills.append(against)
+                    if is_mob(mob):
+                        against.end_time = time.time() + against['¹æ¾î½Ã°£'] + against['¹æ¾î½Ã°£Áõ°¡Ä¡'] * (t - 1)
+                    else:
+                        against.start_time = against['¹æ¾î½Ã°£'] + against['¹æ¾î½Ã°£Áõ°¡Ä¡'] * (t - 1)
+                ob.skills.append(s)
+            else:
+                mob.skills.append(s)
+                
+            
+            
+            if is_mob(mob):
+                s.end_time = time.time() + s['¹æ¾î½Ã°£'] + s['¹æ¾î½Ã°£Áõ°¡Ä¡'] * (t - 1)
+            s.start_time = s['¹æ¾î½Ã°£'] + s['¹æ¾î½Ã°£Áõ°¡Ä¡'] * (t - 1)
+            buf1, buf2, buf3 = ob.makeFightScript(s['¹«°ø½ºÅ©¸³'], mob)
+            try:
+                ob.sendLine(buf1 + ' ([1;36m+ %d[0;37m)' % plus)
+            except:
+                ob.sendLine(buf1)
+
+#if mob != ob:
+#                mob.sendLine(buf2)
+#                mob.lpPrompt()
+                
+            if mob != ob and is_player(mob):
+                mob.sendLine('\r\n' + buf2)
+                mob.lpPrompt()
+                ob.sendFightScriptRoom(buf3, ex = mob)
+            else:
+                ob.sendFightScriptRoom(buf3)

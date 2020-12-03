@@ -1,0 +1,146 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ı: [¾ÆÀÌÅÛ ÀÌ¸§] Âø¿ë')
+            return
+        msg = ''
+
+        if line == '¸ğµÎ' or line == 'ÀüºÎ':
+            cnt = 0
+            i = 0
+            for obj in ob.objs:
+                #ob.objs.remove(ob.objs[i])
+                #obj.move_object(ob.env)
+                if obj.inUse:
+                    continue
+                if obj.get('Á¾·ù') != '¹æ¾î±¸' and obj.get('Á¾·ù') != '¹«±â':
+                    continue
+                if ob.checkArmed(obj.get('°èÃş')):
+                    continue
+                if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¿Ã¼÷Ãµ¹«±â'):
+                    if self.checkSuk(ob, 1000) == False:
+                        continue
+                if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¿Ã¼÷ÀÌÃµ¹«±â'):
+                    if self.checkSuk(ob, 2000) == False:
+                        continue
+                ob.armor += getInt(obj['¹æ¾î·Â'])
+                ob.attpower += getInt(obj['°ø°İ·Â'])
+                option = obj.getOption()
+                if option != None:
+                    for op in option:
+                        if op == 'Èû':
+                            ob._str += option[op]
+                        elif op == '¹ÎÃ¸¼º':
+                            ob._dex += option[op]
+                        elif op == '¸ËÁı':
+                            ob._arm += option[op]
+                        elif op == 'Ã¼·Â':
+                            ob._maxhp += option[op]
+                        elif op == '³»°ø':
+                            ob._maxmp += option[op]
+                        elif op == 'ÇÊ»ì':
+                            ob._critical += option[op]
+                        elif op == '¿î':
+                            ob._criticalChance += option[op]
+                        elif op == 'È¸ÇÇ':
+                            ob._miss += option[op]
+                        elif op == '¸íÁß':
+                            ob._hit += option[op]
+                        elif op == '°æÇèÄ¡':
+                            ob._exp += option[op]
+                        elif op == '¸¶¹ı¹ß°ß':
+                            ob._magicChance += option[op]
+
+                if obj['Á¾·ù'] == '¹«±â':
+                    ob.weaponItem = obj
+                s = obj.getUseScript()
+                if s == '':
+                    ob.sendLine('´ç½ÅÀÌ [36m' + obj.get('ÀÌ¸§') + '[37m' + han_obj(obj.get('ÀÌ¸§')) + ' Âø¿ëÇÕ´Ï´Ù.')
+                    #ob.sendRoom('%s %s Âø¿ëÇÕ´Ï´Ù.' % (ob.han_iga(), obj.han_obj()))
+                    msg += '%s %s Âø¿ëÇÕ´Ï´Ù.\r\n' % (ob.han_iga(), obj.han_obj())
+                else:
+                    ob.sendLine('´ç½ÅÀÌ ' + s)
+                    #ob.sendRoom('%s %s' % (ob.han_iga(),s))
+                    msg += '%s %s\r\n' % (ob.han_iga(),s)
+                    
+                obj.inUse = True
+                cnt = cnt + 1
+                   
+            if cnt == 0:
+                ob.sendLine('¢Ñ ´õÀÌ»ó Âø¿ëÇÒ Àåºñ°¡ ¾ø¾î¿ä.')
+            else:
+                ob.sendRoom(msg[:-2])
+        else:
+            name, order = getNameOrder(line)
+            item = ob.findObjInven(name, order)
+            if item == None or item.inUse:
+                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                return
+
+            if item.get('Á¾·ù') != '¹æ¾î±¸' and item.get('Á¾·ù') != '¹«±â':
+                ob.sendLine('¢Ñ Âø¿ëÇÒ ¼ö ÀÖ´Â°ÍÀÌ ¾Æ´Ï¿¡¿ä.')
+                return
+                
+            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¿Ã¼÷Ãµ¹«±â'):
+                if self.checkSuk(ob, 1000) == False:
+                    ob.sendLine('¢Ñ ´ç½ÅÀÇ ´É·ÂÀ¸·Î´Â Âø¿ëÀÌ ºÒ°¡´ÉÇØ¿ä.')
+                    return
+
+            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¿Ã¼÷ÀÌÃµ¹«±â'):
+                if self.checkSuk(ob, 2000) == False:
+                    ob.sendLine('¢Ñ ´ç½ÅÀÇ ´É·ÂÀ¸·Î´Â Âø¿ëÀÌ ºÒ°¡´ÉÇØ¿ä.')
+                    return
+    
+            # check if already wear same place
+            if ob.checkArmed(item.get('°èÃş')):
+                ob.sendLine('¢Ñ ´õ ÀÌ»ó Âø¿ëÀÌ ºÒ°¡´ÉÇØ¿ä.')
+                return
+            item.inUse = True
+            ob.armor += getInt(item['¹æ¾î·Â'])
+            ob.attpower += getInt(item['°ø°İ·Â'])
+            option = item.getOption()
+            if option != None:
+                for op in option:
+                    if op == 'Èû':
+                        ob._str += option[op]
+                    elif op == '¹ÎÃ¸¼º':
+                        ob._dex += option[op]
+                    elif op == '¸ËÁı':
+                        ob._arm += option[op]
+                    elif op == 'Ã¼·Â':
+                        ob._maxhp += option[op]
+                    elif op == '³»°ø':
+                        ob._maxmp += option[op]
+                    elif op == 'ÇÊ»ì':
+                        ob._critical += option[op]
+                    elif op == '¿î':
+                        ob._criticalChance += option[op]
+                    elif op == 'È¸ÇÇ':
+                        ob._miss += option[op]
+                    elif op == '¸íÁß':
+                        ob._hit += option[op]
+                    elif op == '°æÇèÄ¡':
+                        ob._exp += option[op]
+                    elif op == '¸¶¹ı¹ß°ß':
+                        ob._magicChance += option[op]
+            if item['Á¾·ù'] == '¹«±â':
+                ob.weaponItem = item
+            s = item.getUseScript()
+            if s == '':
+                ob.sendLine('´ç½ÅÀÌ [36m' + item.get('ÀÌ¸§') + '[37m' + han_obj(item.get('ÀÌ¸§')) + ' Âø¿ëÇÕ´Ï´Ù.')
+                ob.sendRoom('%s %s Âø¿ëÇÕ´Ï´Ù.' % (ob.han_iga(), item.han_obj()))
+            else:
+                ob.sendLine('´ç½ÅÀÌ ' + s)
+                ob.sendRoom('%s %s' % (ob.han_iga(),s))
+            return
+        
+
+    def checkSuk(self, ob, min):
+        if ob['1 ¼÷·Ãµµ'] >= min and ob['2 ¼÷·Ãµµ'] >= min and ob['3 ¼÷·Ãµµ'] >= min and ob['4 ¼÷·Ãµµ'] >= min and ob['5 ¼÷·Ãµµ'] >= min:
+            return True
+        return False

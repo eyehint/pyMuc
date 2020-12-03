@@ -1,0 +1,186 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        words = line.split()
+        if len(line) == 0 or len(words) < 2:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [º¸°üÇÔÀÌ¸§] [¹°Ç°] ²¨³»')
+            return
+        box = ob.env.findObjName(words[0])
+        if box == None or is_box(box) == False:
+            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+            return
+            
+        if words[1] == '¸ðµÎ':
+            objs = copy.copy(box.objs)
+            c = 0
+            nCnt = {}
+            for item in objs:
+                if ob.getItemWeight() + item['¹«°Ô'] > ob.getStr() * 10:
+                    if c == 0:
+                        ob.sendLine('¢Ñ ÀÚ³×ÀÇ ÈûÀ¸·Î´Â ´õÀÌ»ó °¡Áú ¼ö ¾ø´Ù³×')
+                        return
+                    break
+                if ob.getItemCount() > getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']):
+                    if c == 0:
+                        ob.sendLine('¢Ñ ÀÚ³×°¡ °¡Áú ¹°Ç°ÀÇ ÇÑ°è¶ó³×')
+                        return
+                    break
+                box.remove(item)
+                ob.insert(item)
+                if item.isOneItem():
+                    ONEITEM.have(item.index, ob['ÀÌ¸§'])
+                nc = 0
+                try:
+                    nc = nCnt[item['ÀÌ¸§']]
+                except:
+                    nCnt[item['ÀÌ¸§']] = 0
+                nCnt[item['ÀÌ¸§']] = nc + 1
+                c += 1
+            if c == 0:
+                ob.sendLine('¢Ñ ´õ ÀÌ»ó ²¨³¾ ¹°°ÇÀÌ ¾ø¾î¿ä. ^^')
+                return
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.' % (box.getNameA(), name, han_obj(name)))
+                        msg += '%s %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                    else:
+                        ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m %d°³¸¦ ²¨³À´Ï´Ù.' % (box.getNameA(), name, nc))
+                        msg += '%s %s¿¡¼­ [36m%s[37m %d°³¸¦ ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+                ob.sendRoom(msg[:-2])
+            box.save()
+            return
+        if words[1] == '¾àÃÊ':
+            objs = copy.copy(box.objs)
+            c = 0
+            nCnt = {}
+            for item in objs:
+                if item['±¸¸ÅÀÌ¸§'] != '¾àÃÊ':
+                    continue
+                if ob.getItemWeight() + item['¹«°Ô'] > ob.getStr() * 10:
+                    if c == 0:
+                        ob.sendLine('¢Ñ ÀÚ³×ÀÇ ÈûÀ¸·Î´Â ´õÀÌ»ó °¡Áú ¼ö ¾ø´Ù³×')
+                        return
+                    break
+                if ob.getItemCount() > getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']):
+                    if c == 0:
+                        ob.sendLine('¢Ñ ÀÚ³×°¡ °¡Áú ¹°Ç°ÀÇ ÇÑ°è¶ó³×')
+                        return
+                    break
+                box.remove(item)
+                ob.insert(item)
+                if item.isOneItem():
+                    ONEITEM.have(item.index, ob['ÀÌ¸§'])
+                nc = 0
+                try:
+                    nc = nCnt[item['ÀÌ¸§']]
+                except:
+                    nCnt[item['ÀÌ¸§']] = 0
+                nCnt[item['ÀÌ¸§']] = nc + 1
+                c += 1
+            if c == 0:
+                ob.sendLine('¢Ñ ´õ ÀÌ»ó ²¨³¾ ¹°°ÇÀÌ ¾ø¾î¿ä. ^^')
+                return
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.' % (box.getNameA(), name, han_obj(name)))
+                        msg += '%s %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                    else:
+                        ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m %d°³¸¦ ²¨³À´Ï´Ù.' % (box.getNameA(), name, nc))
+                        msg += '%s %s¿¡¼­ [36m%s[37m %d°³¸¦ ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+                ob.sendRoom(msg[:-2])
+            box.save()
+            return
+
+        count = 1
+        if len(words) > 2:
+            count = getInt(words[2])
+        item = None 
+        order = -1
+        if words[1].isdigit():
+            idx = getInt(words[1])
+            if len(box.objs) - idx >= 0:
+                item = box.objs[idx - 1]
+                order = 0
+                name = item['ÀÌ¸§']
+        if item == None: 
+            item = box.findObjName(words[1])
+        if item == None:
+            name, order = getNameOrder(words[1])
+            item = box.findObjInven(name, order) 
+            if item == None:
+                ob.sendLine('¢Ñ ±×·± ¹°°ÇÀÌ ¾ø¾î¿ä. ^^')
+                return
+            count = 1
+        
+        if order != -1 and item != None:
+            if ob.getItemWeight() + item['¹«°Ô'] > ob.getStr() * 10:
+                ob.sendLine('¢Ñ ÀÚ³×ÀÇ ÈûÀ¸·Î´Â ´õÀÌ»ó °¡Áú ¼ö ¾ø´Ù³×')
+                return
+            if ob.getItemCount() > getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']):
+                ob.sendLine('¢Ñ ÀÚ³×°¡ °¡Áú ¹°Ç°ÀÇ ÇÑ°è¶ó³×')
+                return
+            box.remove(item)
+            ob.insert(item)
+            if item.isOneItem():
+                ONEITEM.have(item.index, ob['ÀÌ¸§'])
+            ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.' % (box.getNameA(), item['ÀÌ¸§'], han_obj(name)))
+            msg = '%s %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), item['ÀÌ¸§'], han_obj(name))
+            ob.sendRoom(msg[:-2])
+            box.save()
+            return
+
+        objs = copy.copy(box.objs)
+        c = 0
+        nCnt = {}
+        for item in objs:
+            if words[1] != item['ÀÌ¸§'] and words[1] not in item['¹ÝÀÀÀÌ¸§'].splitlines():
+                continue
+            if ob.getItemWeight() + item['¹«°Ô'] > ob.getStr() * 10:
+                if c == 0:
+                    ob.sendLine('¢Ñ ÀÚ³×ÀÇ ÈûÀ¸·Î´Â ´õÀÌ»ó °¡Áú ¼ö ¾ø´Ù³×')
+                    return
+                break
+            if ob.getItemCount() > getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']):
+                if c == 0:
+                    ob.sendLine('¢Ñ ÀÚ³×°¡ °¡Áú ¹°Ç°ÀÇ ÇÑ°è¶ó³×')
+                    return
+                break
+            box.remove(item)
+            ob.insert(item)
+            if item.isOneItem():
+                ONEITEM.have(item.index, ob['ÀÌ¸§'])
+            nc = 0
+            try:
+                nc = nCnt[item['ÀÌ¸§']]
+            except:
+                nCnt[item['ÀÌ¸§']] = 0
+            nCnt[item['ÀÌ¸§']] = nc + 1
+            c += 1
+            if c == count:
+                break
+        if c == 0:
+            ob.sendLine('¢Ñ ´õÀÌ»ó ²¨³¾ ¹°°ÇÀÌ ¾ø¾î¿ä. ^^')
+            return
+        else:
+            msg = ''
+            for name in nCnt:
+                nc = nCnt[name]
+                if nc == 1:
+                    ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.' % (box.getNameA(), name, han_obj(name)))
+                    msg += '%s %s¿¡¼­ [36m%s[37m%s ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                else:
+                    ob.sendLine('´ç½ÅÀÌ %s¿¡¼­ [36m%s[37m %d°³¸¦ ²¨³À´Ï´Ù.' % (box.getNameA(), name, nc))
+                    msg += '%s %s¿¡¼­ [36m%s[37m %d°³¸¦ ²¨³À´Ï´Ù.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+            ob.sendRoom(msg[:-2])
+        box.save()
+        

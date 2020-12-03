@@ -1,0 +1,60 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ı: [³»¿ë] ¿ÜÄ§(,)')
+            return
+        if len(line) > 160:
+            ob.sendLine('¢Ñ ³Ê¹« ±æ¾î¿ä. ^^')
+            return
+            
+        if ob.checkConfig('¿ÜÄ§°ÅºÎ'):
+            ob.sendLine('¢Ñ ¿ÜÄ§°ÅºÎÁß¿£ ¿ÜÄ¥ ¼ö ¾ø¾î¿ä. ^^')
+            return
+        if ob.act == ACT_REST:
+            ob.sendLine('¢Ñ ¿î±âÁ¶½ÄÁß¿¡ ¿ÜÄ¡°Ô µÇ¸é ±â°¡ ÈåÆ®·¯Áı´Ï´Ù.')
+            return
+        if ob.env.noComm():
+            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            return
+        if ob['¼º°İ'] == '¼±ÀÎ':
+            type = '[1;36mÃ¢·æÈÄ[0;37m'
+        elif ob['¼º°İ'] == '±âÀÎ':
+            type = '[1;32m»çÀÚÈÄ[0;37m'
+        else:
+            type = '[32m¿Ü Ä§[37m'
+
+        msg = time.strftime('[%H:%M] ', time.localtime()) + ob.getNameA() + '(%s) : %s' % (type, line)
+        msg1 = ob.getNameA() + '(%s) : %s' % (type, line)
+        Player.chatHistory.append(msg)
+        if len(Player.chatHistory) > 22:
+            Player.chatHistory.__delitem__(0)
+        # Àâ´ã ·Î±×¸¦ ÆÄÀÏ·Î!!!
+        from client import Client
+        for ply in Client.players:
+            if ply.state != ACTIVE:
+                continue
+            if ply.checkConfig('¿ÜÄ§°ÅºÎ'):
+                continue
+            if ply.checkConfig('Àâ´ã½Ã°£º¸±â'):
+                buf = msg
+            else:
+                buf = msg1
+            if ply == ob:
+                ply.sendLine(buf + ' [1;32m¹Ö¹ÖÀÌÁö··~[0;37m')
+            else:
+                ply.sendLine('\r\n' + buf + ' [1;32m¹Ö¹ÖÀÌÁö··~[0;37m')
+                ply.lpPrompt()
+
+    def checkConfig(self, ob, config):
+        kl = ob['¼³Á¤»óÅÂ'].splitlines()
+        for k in kl:
+            if k.find(config) == 0:
+                if len(k.split()) > 1 and k.split()[1] == '1':
+                    return True
+                break
+        return False

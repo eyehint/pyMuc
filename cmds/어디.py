@@ -1,0 +1,23 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) != 0:
+            for ply in ob.channel.players:
+                if ply.env == None or ply.state != ACTIVE or ply['Åõ¸í»óÅÂ'] == 1:
+                    continue
+                if ply['ÀÌ¸§'] == line:
+                    ob.sendLine('[1m%-10s[0;37m ¢¹ %s' % ( line, ply.env['ÀÌ¸§']))
+                    return
+            ob.sendLine('¢Ñ È°µ¿ÁßÀÎ ±×·± ¹«¸²ÀÎÀÌ ¾ø¾î¿ä. ^^')
+            return
+        else:
+            for ply in ob.channel.players:
+                if ply['Åõ¸í»óÅÂ'] == 1:
+                    continue
+                if ply.env != None and ply.env.zone == ob.env.zone:
+                    ob.sendLine('[1m%-10s[0;37m ¢¹ %s' % ( ply['ÀÌ¸§'], ply.env['ÀÌ¸§']))
+

@@ -1,0 +1,20 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        mob = ob.env.findObjName('Ç¥µÎ')
+        if mob == None:
+            ob.sendLine('¢Ñ ÀÌ°÷¿¡ Ç¥±¹¹«»ç°¡ ¾ø³×¿ä.')
+            return
+        p = ob['º¸Çè·á']
+        c1 = ob['·¹º§'] * MAIN_CONFIG['º¸Çè·á´Ü°¡']
+        c2 = c1 * MAIN_CONFIG['º¸ÇèÃâÀå·ü'] / 100
+        msg = '´ç½ÅÀÇ º¸Çè·á ÃÑ¾×Àº ÀºÀü [1m%d[0;37m°³ÀÌ¸ç\r\nº¸Çè ÇıÅÃÀº [1m%d[0m[40m[37m¹ø ¹ŞÀ¸½Ç ¼ö ÀÖ½À´Ï´Ù.\r\n' %(p, ob.getInsureCount())
+        msg += 'º¸ÇèÇıÅÃÀÌ Àû¿ëµÇ´Â ±İ¾×Àº ÀºÀü [1m%d[0;37m°³ ÀÌ»óÀÌ¸ç\r\n' % c1
+        msg += 'ÇÑ¹øÀÇ ÃâÀå Ã³¸®½Ã¿£ ÀºÀü [1m%d[0;37m°³°¡ ¼Ò¿äµË´Ï´Ù.' % c2
+        ob.sendLine(msg)
+            
+

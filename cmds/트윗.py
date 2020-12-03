@@ -1,0 +1,112 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢— ªÁøÎπ˝: [≥ªøÎ] ø‹ƒß(,)')
+            return
+        if len(line) > 160:
+            ob.sendLine('¢— ≥ π´ ±ÊæÓø‰. ^^')
+            return
+            
+        if ob.checkConfig('ø‹ƒß∞≈∫Œ'):
+            ob.sendLine('¢— ø‹ƒß∞≈∫Œ¡ﬂø£ ø‹ƒ• ºˆ æ¯æÓø‰. ^^')
+            return
+        if ob.act == ACT_REST:
+            ob.sendLine('¢— øÓ±‚¡∂Ωƒ¡ﬂø° ø‹ƒ°∞‘ µ«∏È ±‚∞° »Â∆Æ∑Ø¡˝¥œ¥Ÿ.')
+            return
+        if ob.env.noComm():
+            ob.sendLine('¢— ¿Ã¡ˆø™ø°º≠¥¬ æÓ∂∞«— ≈ÎΩ≈µµ ∫“∞°¥…«’¥œ¥Ÿ.')
+            return
+
+        type = '[1;34mtwitter[0;37m'
+
+        timemsg = time.strftime('[%H:%M] ', time.localtime())
+        msg = ob.getNameA() + '(%s) : %s' % (type, line)
+
+        m1 = self.ANSI(msg, True)
+        m2 = self.ANSI(msg, False)
+
+        Player.chatHistory.append(timemsg + m1 + '[0;37m')
+        if len(Player.chatHistory) > 24:
+            Player.chatHistory.__delitem__(0)
+
+        # ¿‚¥„ ∑Œ±◊∏¶ ∆ƒ¿œ∑Œ!!!
+        from client import Client
+        for ply in Client.players:
+            if ply.state != ACTIVE:
+                continue
+            if ply.checkConfig('ø‹ƒß∞≈∫Œ'):
+                continue
+            if ply.checkConfig('¿‚¥„Ω√∞£∫∏±‚'):
+                if ply.checkConfig('ªÁøÎ¿⁄æ»Ω√∞≈∫Œ'):
+                    buf = timemsg + m2
+                else:
+                    buf = timemsg + m1
+            else:
+                if ply.checkConfig('ªÁøÎ¿⁄æ»Ω√∞≈∫Œ'):
+                    buf = m2
+                else:
+                    buf = m1
+            if ply == ob:
+                ply.sendLine(buf + '[0;37;40m')
+            else:
+                ply.sendLine('\r\n' + buf + '[0;37;40m')
+                ply.lpPrompt()
+
+        _content = unicode(stripANSI(m2), 'euc-kr').encode('utf-8')
+        queue.put(_content)
+
+    def checkConfig(self, ob, config):
+        kl = ob['º≥¡§ªÛ≈¬'].splitlines()
+        for k in kl:
+            if k.find(config) == 0:
+                if len(k.split()) > 1 and k.split()[1] == '1':
+                    return True
+                break
+        return False
+
+    def ANSI(self, msg, conv):
+        buf = msg
+        if conv == True:
+            buf = buf.replace('{π‡}', '[1m')
+            buf = buf.replace('{æÓ}', '[0m')
+            buf = buf.replace('{∞À}', '[30m')
+            buf = buf.replace('{ª°}', '[31m')
+            buf = buf.replace('{√ }', '[32m')
+            buf = buf.replace('{≥Î}', '[33m')
+            buf = buf.replace('{∆ƒ}', '[34m')
+            buf = buf.replace('{¿⁄}', '[35m')
+            buf = buf.replace('{«œ}', '[36m')
+            buf = buf.replace('{»Ú}', '[37m')
+            buf = buf.replace('{πË∞À}', '[40m')
+            buf = buf.replace('{πËª°}', '[41m')
+            buf = buf.replace('{πË√ }', '[42m')
+            buf = buf.replace('{πË≥Î}', '[43m')
+            buf = buf.replace('{πË∆ƒ}', '[44m')
+            buf = buf.replace('{πË¿⁄}', '[45m')
+            buf = buf.replace('{πË«œ}', '[46m')
+            buf = buf.replace('{πË»Ú}', '[47m')
+        else:
+            buf = buf.replace('{π‡}', '')
+            buf = buf.replace('{æÓ}', '')
+            buf = buf.replace('{∞À}', '')
+            buf = buf.replace('{ª°}', '')
+            buf = buf.replace('{√ }', '')
+            buf = buf.replace('{≥Î}', '')
+            buf = buf.replace('{∆ƒ}', '')
+            buf = buf.replace('{¿⁄}', '')
+            buf = buf.replace('{«œ}', '')
+            buf = buf.replace('{»Ú}', '')
+            buf = buf.replace('{πË∞À}', '')
+            buf = buf.replace('{πËª°}', '')
+            buf = buf.replace('{πË√ }', '')
+            buf = buf.replace('{πË≥Î}', '')
+            buf = buf.replace('{πË∆ƒ}', '')
+            buf = buf.replace('{πË¿⁄}', '')
+            buf = buf.replace('{πË«œ}', '')
+            buf = buf.replace('{πË»Ú}', '')
+        return buf

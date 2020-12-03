@@ -1,0 +1,22 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if ob['Á÷À§'] != '¹æÁÖ':
+            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+            return
+        words = line.split()
+        l = ['¹æÁÖ', 'ºÎ¹æÁÖ', 'Àå·Î', '¹æÆÄÀÎ']
+        if line == '' or len(words) < 2 or words[0] not in l:
+            ob.sendLine('¢Ñ »ç¿ë¹ı : [¹æÁÖ|ºÎ¹æÁÖ|Àå·Î|¹æÆÄÀÎ] [ÀÌ¸§] ¸íÄª¼³Á¤')
+            return
+
+        GUILD[ob['¼Ò¼Ó']]['%s¸íÄª' % words[0]] = words[1]
+        GUILD.save()
+        print GUILD[ob['¼Ò¼Ó']]['%s¸íÄª' % words[0]]
+        msg = '%s %sÀÇ ¸íÄªÀ» [1m%s[0;37m%s º¯°æÇÏ¿© ¼±Æ÷ÇÕ´Ï´Ù.' % (ob.han_iga(), words[0], words[1], han_uro(words[1]))
+        ob.sendGroup(msg, prompt = True)
+        

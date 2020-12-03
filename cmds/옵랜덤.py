@@ -1,0 +1,27 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    level = 2000
+    def cmd(self, ob, line):
+        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
+            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+            return
+        words = line.split()
+        if line == '':
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] ¿É·£´ý')
+            return
+        name, order = getNameOrder(words[0])
+        item = ob.findObjInven(name, order)
+        if item == None:
+            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            return
+
+        item.applyMagic(ob['·¹º§'], 6)
+        ob.sendLine('¢Ñ ¼³Á¤µÇ¾ú½À´Ï´Ù.')
+        #n = stripANSI(item['ÀÌ¸§'])
+        item['ÀÌ¸§'] = '[1;34m' + item['ÀÌ¸§'] + '[0;37m'
+
+        

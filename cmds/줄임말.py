@@ -1,0 +1,48 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            if len(ob.alias) == 0:
+                ob.sendLine('¢Ñ ÁÙÀÓ¸»ÀÌ ¼³Á¤µÇ¾î ÀÖÁö ¾Ê¾Æ¿ä. ^^')
+                return
+            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            ob.sendLine('[47m[30m¢· ÁÙÀÓ¸» ¢¹                                                                  [40m[37m')
+            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            msg = ''
+            for key in ob.alias:
+                msg += '[%s] %s\r\n' % (key, ob.alias[key])
+            ob.write(msg)
+            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            return
+
+        wlist = line.split(None, 1)
+        key = wlist[0]
+        #ÀÎ¼ö°¡ ÇÏ³ª¸é ÁÙÀÓ¸» »èÁ¦
+        if len(wlist) == 1:
+            if ob.delAlias(key):
+                ob.sendLine('¢Ñ ÁÙÀÓ¸»À» Á¦°ÅÇÏ¿´¾î¿ä. ^^')
+            return
+        
+        data = wlist[1].strip()
+
+        wlist = data.split(';')
+        if key in wlist:
+            ob.sendLine('¢Ñ ÁßÃ¸µÈ ÁÙÀÓ¸»Àº »ç¿ëÇÒ ¼ö ¾ø¾î¿ä. ^^')
+            return
+        for word in wlist:
+            if word in ob.alias:
+                ob.sendLine('¢Ñ ÁßÃ¸µÈ ÁÙÀÓ¸»Àº »ç¿ëÇÒ ¼ö ¾ø¾î¿ä. ^^')
+                return
+        if len(ob.alias) >= 100:
+            ob.sendLine('¢Ñ ÁÙÀÓ¸»ÀÌ ³Ê¹« ¸¹¾Æ¿ä. ^^')
+            return
+            
+        
+        if ob.setAlias(key, data):
+            ob.sendLine('¢Ñ ÁÙÀÓ¸»À» ¼³Á¤ÇÏ¿´¾î¿ä. ^^')
+        
+

@@ -1,0 +1,48 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ı: [³»¿ë] Ã¤³ÎÀâ´ã([)')
+            return
+        if ob not in ob.adultCH:
+            ob.sendLine('¢Ñ ¸ÕÀú Ã¤³Î¿¡ ÀÔÀåÇÏ¼¼¿ä.')
+            return
+        if len(line) > 160:
+            ob.sendLine('¢Ñ ³Ê¹« ±æ¾î¿ä. ^^')
+            return
+            
+        if ob.checkConfig('¿ÜÄ§°ÅºÎ'):
+            ob.sendLine('¢Ñ ¿ÜÄ§°ÅºÎÁß¿£ ¿ÜÄ¥ ¼ö ¾ø¾î¿ä. ^^')
+            return
+        if ob.act == ACT_REST:
+            ob.sendLine('¢Ñ ¿î±âÁ¶½ÄÁß¿¡ ¿ÜÄ¡°Ô µÇ¸é ±â°¡ ÈåÆ®·¯Áı´Ï´Ù.')
+            return
+        if ob.env.noComm():
+            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            return
+
+        buf = '[1;31m¨ç¨ï[0;37m ' + ob.getNameA() + ': %s' % line
+
+        for ply in ob.adultCH:
+            if ply.state != ACTIVE:
+                continue
+            if ply.checkConfig('¿ÜÄ§°ÅºÎ'):
+                continue
+            if ply == ob:
+                ply.sendLine(buf)
+            else:
+                ply.sendLine('\r\n' + buf)
+                ply.lpPrompt()
+
+    def checkConfig(self, ob, config):
+        kl = ob['¼³Á¤»óÅÂ'].splitlines()
+        for k in kl:
+            if k.find(config) == 0:
+                if len(k.split()) > 1 and k.split()[1] == '1':
+                    return True
+                break
+        return False

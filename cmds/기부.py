@@ -1,0 +1,41 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if line == '':
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [±Ý¾×] ±âºÎ')
+            return
+        mob = ob.env.findObjName('Ç¥µÎ')
+        if mob == None:
+            ob.sendLine('¢Ñ ÀÌ°÷¿¡ Ç¥±¹¹«»ç°¡ ¾ø³×¿ä.')
+            return
+        m = getInt(line)
+        if m <= 0:
+            ob.sendLine('¢Ñ ÀºÀü 1°³ ÀÌ»ó ÀÔ±Ý ÇÏ¼Å¾ß ÇØ¿ä.')
+            return
+        if m > ob['ÀºÀü']:
+            m = ob['ÀºÀü']
+        ob['ÀºÀü'] -= m
+        mob['ÀºÀü'] += m
+        msg = '´ç½ÅÀÌ ÀºÀü %d°³¸¦ Ç¥±¹¹«»ç¿¡°Ô ±âÅ¹ÇÕ´Ï´Ù.\r\n' % m
+        msg += 'ÇöÀç±îÁö ¸ð¿©Áø ±âºÎ±Ý ÃÑ¾×Àº ÀºÀü [1m%d[0;37m°³ ÀÔ´Ï´Ù.' %(mob['ÀºÀü'])
+        ob.sendLine(msg)
+
+        msg = '[¸÷Á¤º¸]\n\n'
+        l = mob.attr.keys()
+        l.sort()
+        for at in l:
+            msg += '#%s\n' % at
+            for m in str(mob.attr[at]).splitlines():
+                msg += ':%s\n' % m
+            msg += '\n'
+
+        try:
+            f = open(mob.path, 'w')
+        except:
+            return False
+        f.write(msg)
+        f.close()

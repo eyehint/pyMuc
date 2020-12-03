@@ -1,0 +1,166 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [¾ÆÀÌÅÛ ÀÌ¸§] ¹ö·Á')
+            return
+        
+        if ob.env == None:
+            ob.sendLine('¢Ñ ¾Æ¹«°Íµµ ¹ö¸±¼ö ¾ø½À´Ï´Ù.')
+            return
+            
+        if line.find('ÀºÀü') == 0:
+            ob.sendLine('¢Ñ ÀºÀüÀº ¹ö¸± ¼ö ¾ø¾î¿ä. ^^')
+            return
+            
+        if line == '¸ðµÎ' or line == 'ÀüºÎ':
+            cnt = 0
+            objs = copy.copy(ob.objs)
+            nCnt = {}
+            nFail = {}
+            for obj in objs:
+                if is_item(obj):
+                    if obj.inUse:
+                        continue
+                    if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¹ö¸®Áö¸øÇÔ'):
+                        continue
+                    if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                        continue
+                    ob.remove(obj)
+                    
+                    cnt += 1
+                    if ob.env.getItemCount() < 50:
+                        ob.env.insert(obj)
+                        obj.drop()
+                        if obj.isOneItem():
+                            ONEITEM.drop(obj.index, ob['ÀÌ¸§'])
+                        nc = 0
+                        try:
+                            nc = nCnt[obj.get('ÀÌ¸§')]
+                        except:
+                            nCnt[obj.get('ÀÌ¸§')] = 0
+                        nCnt[obj.get('ÀÌ¸§')] = nc + 1
+                    else:
+                        if obj.isOneItem():
+                            ONEITEM.destroy(obj.index)
+                        nc = 0
+                        try:
+                            nc = nFail[obj.get('ÀÌ¸§')]
+                        except:
+                            nFail[obj.get('ÀÌ¸§')] = 0
+                        nFail[obj.get('ÀÌ¸§')] = nc + 1
+                        obj.env = None
+                        del obj
+            if cnt == 0:
+                ob.sendLine('¢Ñ ´õÀÌ»ó ¹ö¸± ¹°°ÇÀÌ ¾ø´Ù³×')
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m' + han_obj(name) + ' ¹ö¸³´Ï´Ù.')
+                        msg += '%s [36m%s[37m%s ¹ö¸³´Ï´Ù.\r\n' % (ob.han_iga(), name, han_obj(name))
+                    else:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m %d°³¸¦ ¹ö¸³´Ï´Ù.' % nc)
+                        msg += '%s [36m%s[37m %d°³¸¦ ¹ö¸³´Ï´Ù.\r\n' % (ob.han_iga(), name, nc)
+                for name in nFail:
+                    nc = nFail[name]
+                    if nc == 1:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m' + han_obj(name) + ' ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.')
+                        msg += '%s [36m%s[37m%s ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.\r\n' % (ob.han_iga(), name, han_obj(name))
+                    else:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m %d°³¸¦ ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.' % nc)
+                        msg += '%s [36m%s[37m %d°³¸¦ ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.\r\n' % (ob.han_iga(), name, nc)
+                ob.sendRoom(msg[:-2])
+        else:
+            i = 1
+            c = 0
+            nCnt = {}
+            nFail = {}
+            
+            args = line.split()
+            if len(args) >= 2:
+                i = getInt(args[1])
+            if i < 1:
+                i = 1
+            if i > 50:
+                i = 50
+            name = args[0]
+            order = getInt(name)
+            if order != 0:
+                for i in range( len(name) ):
+                    if name[i].isdigit() == False:
+                        name = name[i:]
+                        break
+            else:
+                order = 1
+            if order != 1:
+                i = 1
+            objs = copy.copy(ob.objs)
+            n = 0
+            for obj in objs:
+                if c >= i:
+                    break
+                if name != obj.get('ÀÌ¸§') and name not in obj.get('¹ÝÀÀÀÌ¸§').splitlines():
+                    continue
+                if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                        continue
+                if obj.inUse:
+                    continue
+                n += 1
+                if n < order:
+                    continue
+                if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¹ö¸®Áö¸øÇÔ'):
+                    if c == 0:
+                        ob.sendLine('¢Ñ ±× ¹°°ÇÀº ¹ö¸± ¼ö ¾ø¾î¿ä. ^^')
+                        return
+                    continue
+                c += 1
+                ob.remove(obj)
+                if ob.env.getItemCount() < 50:
+                    ob.env.insert(obj)
+                    obj.drop()
+                    if obj.isOneItem():
+                        ONEITEM.drop(obj.index, ob['ÀÌ¸§'])
+                    nc = 0
+                    try:
+                        nc = nCnt[obj.get('ÀÌ¸§')]
+                    except:
+                        nCnt[obj.get('ÀÌ¸§')] = 0
+                    nCnt[obj.get('ÀÌ¸§')] = nc + 1
+                else:
+                    if obj.isOneItem():
+                        ONEITEM.destroy(obj.index)
+                    nc = 0
+                    try:
+                        nc = nFail[obj.get('ÀÌ¸§')]
+                    except:
+                        nFail[obj.get('ÀÌ¸§')] = 0
+                    nFail[obj.get('ÀÌ¸§')] = nc + 1
+                
+                #ob.sendLine('´ç½ÅÀÌ ' + obj.get('ÀÌ¸§') + han_obj(obj.get('ÀÌ¸§')) + ' ¹ö¸³´Ï´Ù.')
+            if c == 0:
+                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m' + han_obj(name) + ' ¹ö¸³´Ï´Ù.')
+                        msg += '%s [36m%s[37m%s ¹ö¸³´Ï´Ù.\r\n' % (ob.han_iga(), name, han_obj(name))
+                    else:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m %d°³¸¦ ¹ö¸³´Ï´Ù.' % nc)
+                        msg += '%s [36m%s[37m %d°³¸¦ ¹ö¸³´Ï´Ù.\r\n' % (ob.han_iga(), name, nc)
+                for name in nFail:
+                    nc = nFail[name]
+                    if nc == 1:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m' + han_obj(name) + ' ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.')
+                        msg += '%s [36m%s[37m%s ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.\r\n' % (ob.han_iga(), name, han_obj(name))
+                    else:
+                        ob.sendLine('´ç½ÅÀÌ [36m' + name + '[37m %d°³¸¦ ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.' % nc)
+                        msg += '%s [36m%s[37m %d°³¸¦ ¹ö¸®ÀÚ ¹Ù·Î ºÎ¼­Áý´Ï´Ù.\r\n' % (ob.han_iga(), name, nc)
+                ob.sendRoom(msg[:-2])

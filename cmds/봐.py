@@ -1,0 +1,78 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+from lib.hangul import *
+
+class CmdObj(Command):
+
+    def view(self, obj, ob):
+        p = int(obj['∫∏∞¸ºˆ∑Æ'])
+        pm = obj['∫∏∞¸¡ı∞°¿∫¿¸']
+        pp = obj['∫∏∞¸√÷¥Îºˆ∑Æ']
+        
+        ob.sendLine('¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨')
+        buf = '¢∑ %s¿« %s ¢π' % (obj['¡÷¿Œ'], obj['¿Ã∏ß'])
+        ob.sendLine('[1m[44m[37m%-78s[0m[40m[37m' % buf)
+        ob.sendLine('¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°')
+        c = 0
+        msg = ''
+        for item in obj.objs:
+            c += 1
+            s = item['¿Ã∏ß'] + ' ' + item.getOptionStr()
+            s = '[%4d] %s' % (c, s)
+            s1 = stripANSI(s)
+            space = ' ' * (38 - len(s1))
+            msg += '%-38s' % (s + space)
+            #msg += '°§%-24s' % (s + space)
+            #msg += '[1;36m°§[0;36m%-38s[0;37m  ' % (item['¿Ã∏ß'] + ' ' + item.getOptionStr())
+            if c % 2 == 0:
+                msg += '\r\n'
+        if msg != '':
+            ob.sendLine(msg)
+
+        if c == 0:
+            ob.sendLine('¢— æ∆π´∞Õµµ æ¯Ω¿¥œ¥Ÿ.')
+
+        if obj['∫∏∞¸ºˆ∑Æ'] == obj['∫∏∞¸√÷¥Îºˆ∑Æ']:
+            buf = '°ﬂ ºˆ∑Æ (%d/%d)' % ( len(obj.objs), obj['∫∏∞¸ºˆ∑Æ'])
+        else:
+            buf = '°ﬂ ºˆ∑Æ (%d/%d)  °ﬂ √÷¥Îºˆ∑Æ (%d)  °ﬂ »Æ¿Âø° « ø‰«— ¿∫¿¸ (%d/%d)' % ( len(obj.objs), obj['∫∏∞¸ºˆ∑Æ'], \
+            obj['∫∏∞¸√÷¥Îºˆ∑Æ'], getInt(obj['¿∫¿¸']), obj['∫∏∞¸¡ı∞°¿∫¿¸'])
+        ob.sendLine('¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°')
+        ob.sendLine('[0m[47m[30m%-78s[0m[40m[37m' % buf)
+        ob.sendLine('¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨¶¨')
+
+    def cmd(self, ob, line):
+        if len(line) == 0:
+            ob.viewMapData()
+            return
+        if ob.env == None:
+            print ob['¿Ã∏ß']
+            return
+
+        words = line.split()
+        if line == '»£¿ß' or (len(words) > 1 and words[1] == '»£¿ß'):
+            ob.do_command(line, True)
+            return
+        name, order = getNameOrder(line)
+
+        
+        if line == '≥™':
+            obj = ob
+        else:
+            obj = ob.findObjInven(name, order)
+
+        if obj == None:
+            obj = ob.env.findObjName(line)
+            if obj == None:
+                ob.sendLine('¢— ¥ÁΩ≈¿« æ»±§¿∏∑Œ¥¬ ±◊∑±∞Õ¿ª ∫ººˆ æ¯¥Ÿ≥◊')
+                return
+        if getInt(ob['∞¸∏Æ¿⁄µÓ±ﬁ']) >= 1000 and is_player(obj) == False:
+            ob.sendLine('Index : %s' % obj.index)
+        if (line == 'π´±‚∞Ì' or line == '»≠√ ¿Â' or line == '«—ø¡¿Â') and is_box(obj):
+            self.view(obj, ob)
+        else:
+            obj.view(ob)
+        if is_player(obj) and obj != ob:
+            obj.sendLine('\r\n%s ¥ÁΩ≈¿ª ªÏ∆Ï∫æ¥œ¥Ÿ.' % ob.han_iga())
+            obj.lpPrompt()

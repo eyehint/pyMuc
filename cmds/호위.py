@@ -1,0 +1,48 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+from lib.hangul import *
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if line == '':
+            name = '´ç½Å'
+            target = ob
+        else:
+            target = ob.env.findObjName(line)
+            if target == None or is_player(target) == False:
+                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                return
+            name = target['ÀÌ¸§']
+        c = 0
+        tmp = ''
+        for obj in target.objs:
+            if obj['Á¾·ù'] == 'È£À§':
+                try:
+                    a = obj.hp
+                except:
+                    obj.hp = obj['Ã¼·Â']
+                guard = obj
+                c += 1
+                hp = (obj.hp * 100 )/ getItem(obj.index)['Ã¼·Â']
+                
+                tmp += '[1;32m¡¤[0;36m%2d.%s[0;37m ¢° %s (%d)\r\n' % (c, obj['ÀÌ¸§'], ob.strBar[hp/10] , hp)
+        
+        if c == 0:
+            if target == ob:
+                ob.sendLine('´ç½ÅÀº È£À§¸¦ °Å´À¸®Áö ¾Ê°í ÀÖ½À´Ï´Ù.')
+            else:
+                ob.sendLine('%s È£À§¸¦ °Å´À¸®Áö ¾Ê°í ÀÖ½À´Ï´Ù.' % target.han_un())
+            return
+        msg = '¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬\r\n'
+        buf = '¢Ñ %sÀÇ È£À§ : %s, È£À§¼ö : %d, ºÐ³ë : %d' % (name, guard['ÀÌ¸§'], c, getInt(target['ºÐ³ë']))
+        msg += '[1;44m%-56s[0;40m\r\n' % buf
+        msg += '¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\r\n'
+        msg += guard['¼³¸í2'] + '\r\n'
+        msg += '¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\r\n'
+        msg += tmp
+        msg += '¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬'
+        ob.sendLine(msg)
+
+

@@ -1,0 +1,40 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if line != '' and getInt(ob['°ü¸®ÀÚµî±Þ']) >= 1000:
+            target = ob.env.findObjName(line)
+            if target == None or is_item(target):
+                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                return
+        else:
+            target = ob
+        
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        buf = ' [1m[32m¬¨ [37m%s[0;37mÀÇ ¹«°øÁý°á »óÅÂ [1m[32m¬¨[0m[37m' % target['ÀÌ¸§']
+        ob.sendLine(buf)
+        
+        if len(target.skills) == 0:
+            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            ob.sendLine(MAIN_CONFIG['¹«°ø½ÃÀü¾øÀ½'])
+            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            return
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        for s in target.skills:
+            inc = 1
+            if s.name in target.skillMap:
+                inc = target.skillMap[s.name][0]
+            n = s['¹æ¾î½Ã°£'] + s['¹æ¾î½Ã°£Áõ°¡Ä¡'] * (inc - 1)
+            t = s.start_time
+            cnt = len(target.strBar)
+            a = t * 10 / n
+            if a < 0:
+                a = 0
+            if a >= cnt:
+                a = cnt - 1
+            buf = '%5d¢°%s' % (t, target.strBar[a])
+            ob.sendLine('[1m[40m[36m¡¤[0m[40m[37m%-14s¦¢%-12s¦¢ %s' % (s.name, s['¹æ¾î»óÅÂÃâ·Â'], buf)) 
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦º¦¬¦¬¦¬¦¬¦¬¦¬¦º¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')

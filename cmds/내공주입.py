@@ -1,0 +1,50 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+from lib.hangul import *
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        c = 0
+        tmp = ''
+        n, guard = self.getGuardNum(ob)
+        if n == 0:
+            ob.sendLine('¢Ñ È£À§¸¦ °Å´À¸®Áö ¾Ê°í ÀÖ½À´Ï´Ù.')
+            return
+        for obj in guard:
+            maxhp = getItem(obj.index)['Ã¼·Â']
+            if obj.hp >= maxhp:
+                continue
+            mp = ob['Èû'] * obj['³»°ø°¨¼Ò'] / 100
+            if ob['³»°ø'] - mp < 0:
+                if c == 0:
+                    ob.sendLine('¢Ñ ³»°¡Áø±â¸¦ ÁÖÀÔÇÒ ³»°øÀÌ ºÎÁ·ÇÕ´Ï´Ù.')
+                    return
+                break
+            ob['³»°ø'] -= mp
+            c += 1
+            hp = maxhp * obj['Ã¼·ÂÁõ°¡'] / 100
+            obj.hp += hp
+            if obj.hp >= maxhp:
+                obj.hp = maxhp
+
+            tmp += '´ç½ÅÀÌ %s¿¡°Ô ³»°¡Áø±â¸¦ ÁÖÀÔÇÏ¿© Ã¼·ÂÀ» È¸º¹ ½ÃÅµ´Ï´Ù. ([1;36m+%d[0;37m)\r\n' % (obj['ÀÌ¸§'], hp)
+        
+        if c == 0:
+            ob.sendLine('¢Ñ È¸º¹ÇÒ È£À§°¡ ¾ø½À´Ï´Ù.')
+            return
+
+        ob.sendLine(tmp)
+        ob.sendLine('´ç½ÅÀÌ ¼Ò¸ðµÈ Áø±â¸¦ ´Ù½º¸³´Ï´Ù. ([1;32m-%d[0;37m)' % (mp * c))
+        
+    def getGuardNum(self, ob):
+        n = 0
+        guard = []
+        for obj in ob.objs:
+            if obj['Á¾·ù'] == 'È£À§':
+                n += 1
+                guard.append(obj)
+        return n, guard
+
+

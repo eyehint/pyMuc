@@ -1,0 +1,64 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if line != '' and getInt(ob['°ü¸®ÀÚµî±Þ']) >= 1000:
+            target = ob.env.findObjName(line)
+            if target == None or is_item(target):
+                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                return
+        else:
+            target = ob
+        
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        if target == ob:
+            buf = '¢· ´ç½ÅÀÇ ¹«°ø ¢¹'
+        else:
+            buf = '¢· %sÀÇ ¹«°ø ¢¹' % target['ÀÌ¸§']
+        ob.sendLine('[0m[47m[30m%-78s[0m[40m[37m' % buf)
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('[1m[40m[32m¢¹ ÀÏ¹Ý¹«°ø[0m[40m[37m')
+        msg = ''
+        if len(target.skillList) == 0:
+            ob.sendLine('¢Ñ ±ú¿ìÄ£ ¹«°øÀÌ ¾ø½À´Ï´Ù.')
+        else:
+            c = 0
+            for m in target.skillList:
+                if m not in target.skillMap:
+                    s = 1
+                else:
+                    s = target.skillMap[m][0]
+                buf = '%s(%d¼º)' % (m, s)
+                msg += ' ¡Þ %-20s ' % buf
+                c += 1
+                if c % 3 == 0:
+                    msg += '\r\n'
+            if c % 3 == 0:
+                msg = msg[:-2]
+            ob.sendLine(msg)
+        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        
+        ob.sendLine('[1m[40m[32m¢¹ ºñÀü[0m[40m[37m')
+        buf = target['ºñÀü¼ö·Ã']
+        lines = target['ºñÀüÀÌ¸§'].splitlines()
+        if buf == '' and len(lines) == 0:
+            ob.sendLine('¢Ñ ¿ÀÀÇ¸¦ ±ú¿ìÄ£ ¹«°øÀÌ ¾ø½À´Ï´Ù.')
+        else:
+            if buf != '':
+                msg = '[1m[33m%s[0m[40m[37m(¼ö·ÃÁß)\r\n' % buf
+            else:
+                msg = ''
+            c = 0
+            for m in lines:
+                msg += ' ¡Þ %-20s ' % m
+                c += 1
+                if c % 3 == 0:
+                    msg += '\r\n'
+            if c % 3 == 0:
+                msg = msg[:-2]
+            ob.sendLine(msg)
+        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        

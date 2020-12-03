@@ -1,0 +1,60 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if line == '':
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [±Ý¾×] ¼ö·É')
+            return
+        mob = ob.env.findObjName('Ç¥µÎ')
+        if mob == None:
+            ob.sendLine('¢Ñ ÀÌ°÷¿¡ Ç¥±¹¹«»ç°¡ ¾ø³×¿ä.')
+            return
+        m = getInt(line)
+        if m <= 0:
+            ob.sendLine('¢Ñ ÀºÀü 1°³ ÀÌ»ó ÀÔ·Â ÇÏ¼Å¾ß ÇØ¿ä.')
+            return
+        if ob['·¹º§'] > 500:
+            ob.sendLine('¢Ñ ÃæºÐÇÑ ´É·ÂÀÌ ÀÖ¾î º¸ÀÌ´Âµ¥¿ä???')
+            return
+        if m > 10000000:
+            ob.sendLine('¢Ñ ³Ê¹« ¿å½ÉÀÌ Å©±º¿ä???')
+            return
+        if m > mob['ÀºÀü']:
+            ob.sendLine('¢Ñ ±âºÎ±ÝÀÌ ¸ðÀß¶ó¿ä^^;')
+            return
+        if getInt(ob['¼ö·É¾×']) >= 1000000000:
+            ob.sendLine('¢Ñ ´õÀÌ»ó ¼ö·ÉÀº °ï¶õÇØ¿ä^^;')
+            return
+        if getInt(ob['¼ö·É¾×']) + m >= 1000000000:
+            ob.sendLine('¢Ñ ÇÑµµ ÃÊ°ú¿¡¿ä!!!')
+            return
+        if getInt(ob['¸¶Áö¸·¼ö·É']) + 86400 > time.time():
+            ob.sendLine('¢Ñ ¶Ç ¿À¼Ì¾î¿ä???')
+            return
+
+        ob['¸¶Áö¸·¼ö·É'] = time.time()
+        ob['ÀºÀü'] += m
+        ob['¼ö·É¾×'] = getInt(ob['¼ö·É¾×']) + m
+        mob['ÀºÀü'] -= m
+        msg = '´ç½ÅÀÌ ÀºÀü %d°³¸¦ Ç¥±¹¹«»ç¿¡°Ô ¼ö·ÉÇÕ´Ï´Ù.\r\n' % m
+        msg += 'ÇöÀç±îÁö ¼ö·ÉÇÑ ±âºÎ±Ý ÃÑ¾×Àº ÀºÀü [1m%d[0;37m°³ ÀÔ´Ï´Ù.' %(ob['¼ö·É¾×'])
+        ob.sendLine(msg)
+
+        msg = '[¸÷Á¤º¸]\n\n'
+        l = mob.attr.keys()
+        l.sort()
+        for at in l:
+            msg += '#%s\n' % at
+            for m in str(mob.attr[at]).splitlines():
+                msg += ':%s\n' % m
+            msg += '\n'
+
+        try:
+            f = open(mob.path, 'w')
+        except:
+            return False
+        f.write(msg)
+        f.close()

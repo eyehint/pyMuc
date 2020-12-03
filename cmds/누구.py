@@ -1,0 +1,56 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        mode = False
+        msg = ''
+        cnt = 0
+        if line == 'πÊ' or line == 'πÊ∆ƒ':
+            if ob['º“º”'] == '':
+                ob.sendLine('¢— ¥ÁΩ≈¿∫ º“º”¿Ã æ¯Ω¿¥œ¥Ÿ.')
+                return
+            mode = True
+        
+        for c in ob.channel.players:
+            if c['≈ı∏ÌªÛ≈¬'] == 1:
+                continue
+            if c['¿Ã∏ß'] != '' and c.state == ACTIVE:
+                if mode and c['º“º”'] != ob['º“º”']:
+                    continue
+                nick = c['π´∏≤∫∞»£']
+                
+                if nick == '':
+                    buf = '[[0;37m%s[0;37m]' % 'π´∏Ì∞¥'
+                else:
+                    bright = 1
+                    if c['∑π∫ß√ ±‚»≠'] != '':
+                       bright = 0
+
+                    if c['º∫∞›'] == '¡§∆ƒ':
+                        buf = '[[%d;32m%s[0;37m]' % (bright, nick)
+                    elif c['º∫∞›'] == '±‚¿Œ':
+                        buf = '[[%d;33m%s[0;37m]' % (bright, nick)
+                    elif c['º∫∞›'] == 'º±¿Œ':
+                        buf = '[[%d;36m%s[0;37m]' % (bright, nick)
+                    else:
+                        buf = '<[%d;31m%s[0;37m>' % (bright, nick)
+                    
+                msg += '  %-26s %-10s' % (buf, c['¿Ã∏ß'])
+                cnt += 1
+                if cnt % 3 == 0:
+                    msg += '\r\n'
+        if cnt % 3 == 0:
+            msg = msg[:-2]
+        ob.sendLine('¶£¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶§')
+        ob.sendLine('¶¢[7m%-74s[0;37m¶¢' % ' ¢∑     π´       ∏≤       ≈©       ∑°       «¡       ∆Æ      £±-£±     ¢π');
+        ob.sendLine('¶¶¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶•')
+        ob.sendLine(msg);
+        ob.sendLine(' ¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°¶°')
+        if mode:
+            ob.sendLine(' °⁄ √— %d∏Ì¿« [1m°º[36m%s[37m°Ω[0;37m∆ƒ π´∏≤¿Œ¿Ã »∞µø«œ∞Ì ¿÷Ω¿¥œ¥Ÿ.' % (cnt, ob['º“º”']))
+        else:
+            ob.sendLine(' °⁄ √— %d∏Ì¿« π´∏≤¿Œ¿Ã »∞µø«œ∞Ì ¿÷Ω¿¥œ¥Ÿ.' % cnt)
+

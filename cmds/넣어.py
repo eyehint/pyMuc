@@ -1,0 +1,273 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        words = line.split()
+        if len(line) == 0 or len(words) < 2:
+            ob.sendLine('¢— ªÁøÎπ˝: [∫∏∞¸«‘¿Ã∏ß] [π∞«∞] ≥÷æÓ')
+            return
+        box = ob.env.findObjName(words[0])
+        if box == None or is_box(box) == False:
+            ob.sendLine('¢— ¥ÁΩ≈¿« æ»±§¿∏∑Œ¥¬ ±◊∑±∞Õ¿ª ∫ººˆ æ¯¥Ÿ≥◊')
+            return
+            
+        if words[1] == '¿∫¿¸':
+            if box.isExpandable() == False:
+                ob.sendLine('¢— ¥ı ¿ÃªÛ ºˆ∑Æ¿« ¡ı∞°∞° æ»µ«ø‰. ^^')
+                return
+            if len(words) < 3:
+                m = 1
+            else:
+                m = getInt(words[2])
+            if m <= 0:
+                m = 1
+            if ob['¿∫¿¸'] < m:
+                ob.sendLine('¢— µ∑¿Ã ∏¿⁄∂Û≥◊ø‰. ^^')
+                return
+            n = box.addMoney(m)
+            ob['¿∫¿¸'] -= n
+            ob.sendLine('¥ÁΩ≈¿Ã %sø° ¿∫¿¸ %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.' % ( box.getNameA(), n ))
+            ob.sendRoom('%s %sø° ¿∫¿¸ %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.' % ( ob.han_iga(), box.getNameA(), n))
+            box.save()
+            return
+        if words[1] == '∏µŒ':
+            objs = copy.copy(ob.objs)
+            c = 0
+            nCnt = {}
+            for item in objs:
+                if box.isFull():
+                    if c == 0:
+                        ob.sendLine('¢— ∫∏∞¸«‘ø° ¥ı ¿ÃªÛ ≥÷¿ª ºˆ æ¯æÓø‰. ^^')
+                        return
+                    break
+                if item['¡æ∑˘'] not in box['∫∏∞¸¡æ∑˘'].splitlines():
+                    continue
+                if item.checkAttr('æ∆¿Ã≈€º”º∫', '∫∏∞¸∏¯«‘'):
+                    continue
+                if box.checkAttr('æ∆¿Ã≈€º”º∫', '∞¯øÎ∫∏∞¸«‘') and \
+                    (item.checkAttr('æ∆¿Ã≈€º”º∫', '¡Ÿºˆæ¯¿Ω') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', 'πˆ∏Æ¡ˆ∏¯«‘') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', '∆»¡ˆ∏¯«‘') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', '∫Œºˆ¡ˆ∏¯«‘')):
+                    continue
+                if item.inUse:
+                    continue
+                ob.remove(item)
+                box.insert(item)
+                if item.isOneItem():
+                    ONEITEM.keep(item.index, ob['¿Ã∏ß'] + ' %s' % box['¿Ã∏ß'])
+                nc = 0
+                try:
+                    nc = nCnt[item['¿Ã∏ß']]
+                except:
+                    nCnt[item['¿Ã∏ß']] = 0
+                nCnt[item['¿Ã∏ß']] = nc + 1
+                c += 1
+            if c == 0:
+                ob.sendLine('¢— ¥ı¿ÃªÛ ∫∏∞¸«“ π∞∞«¿Ã æ¯æÓø‰. ^^')
+                return
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, han_obj(name)))
+                        msg += '%s %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                    else:
+                        ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, nc))
+                        msg += '%s %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+                ob.sendRoom(msg[:-2])
+            box.save()
+            return
+        if words[1] == 'º”º∫æ∆¿Ã≈€':
+            objs = copy.copy(ob.objs)
+            c = 0
+            nCnt = {}
+            for item in objs:
+                if box.isFull():
+                    if c == 0:
+                        ob.sendLine('¢— ∫∏∞¸«‘ø° ¥ı ¿ÃªÛ ≥÷¿ª ºˆ æ¯æÓø‰. ^^')
+                        return
+                    break
+                if item['¡æ∑˘'] not in box['∫∏∞¸¡æ∑˘'].splitlines():
+                    continue
+                if item.checkAttr('æ∆¿Ã≈€º”º∫', '∫∏∞¸∏¯«‘'):
+                    continue
+                if box.checkAttr('æ∆¿Ã≈€º”º∫', '∞¯øÎ∫∏∞¸«‘') and \
+                    (item.checkAttr('æ∆¿Ã≈€º”º∫', '¡Ÿºˆæ¯¿Ω') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', 'πˆ∏Æ¡ˆ∏¯«‘') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', '∆»¡ˆ∏¯«‘') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', '∫Œºˆ¡ˆ∏¯«‘')):
+                    continue
+                if item.inUse:
+                    continue
+                if item.getOption() == None:
+                    continue
+                ob.remove(item)
+                box.insert(item)
+                if item.isOneItem():
+                    ONEITEM.keep(item.index, ob['¿Ã∏ß'] + ' %s' % box['¿Ã∏ß'])
+                nc = 0
+                try:
+                    nc = nCnt[item['¿Ã∏ß']]
+                except:
+                    nCnt[item['¿Ã∏ß']] = 0
+                nCnt[item['¿Ã∏ß']] = nc + 1
+                c += 1
+            if c == 0:
+                ob.sendLine('¢— ¥ı¿ÃªÛ ∫∏∞¸«“ π∞∞«¿Ã æ¯æÓø‰. ^^')
+                return
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, han_obj(name)))
+                        msg += '%s %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                    else:
+                        ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, nc))
+                        msg += '%s %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+                ob.sendRoom(msg[:-2])
+            box.save()
+            return
+        if words[1] == 'æ‡√ ':
+            objs = copy.copy(ob.objs)
+            c = 0
+            nCnt = {}
+            for item in objs:
+                if box.isFull():
+                    if c == 0:
+                        ob.sendLine('¢— ∫∏∞¸«‘ø° ¥ı ¿ÃªÛ ≥÷¿ª ºˆ æ¯æÓø‰. ^^')
+                        return
+                    break
+                if item['¡æ∑˘'] not in box['∫∏∞¸¡æ∑˘'].splitlines():
+                    continue
+                if item.checkAttr('æ∆¿Ã≈€º”º∫', '∫∏∞¸∏¯«‘'):
+                    continue
+                if box.checkAttr('æ∆¿Ã≈€º”º∫', '∞¯øÎ∫∏∞¸«‘') and \
+                    (item.checkAttr('æ∆¿Ã≈€º”º∫', '¡Ÿºˆæ¯¿Ω') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', 'πˆ∏Æ¡ˆ∏¯«‘') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', '∆»¡ˆ∏¯«‘') or \
+                    item.checkAttr('æ∆¿Ã≈€º”º∫', '∫Œºˆ¡ˆ∏¯«‘')):
+                    continue
+                if item.inUse:
+                    continue
+                if item['±∏∏≈¿Ã∏ß'] != 'æ‡√ ':
+                    continue
+                ob.remove(item)
+                box.insert(item)
+                if item.isOneItem():
+                    ONEITEM.keep(item.index, ob['¿Ã∏ß'] + ' %s' % box['¿Ã∏ß'])
+                nc = 0
+                try:
+                    nc = nCnt[item['¿Ã∏ß']]
+                except:
+                    nCnt[item['¿Ã∏ß']] = 0
+                nCnt[item['¿Ã∏ß']] = nc + 1
+                c += 1
+            if c == 0:
+                ob.sendLine('¢— ¥ı¿ÃªÛ ∫∏∞¸«“ π∞∞«¿Ã æ¯æÓø‰. ^^')
+                return
+            else:
+                msg = ''
+                for name in nCnt:
+                    nc = nCnt[name]
+                    if nc == 1:
+                        ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, han_obj(name)))
+                        msg += '%s %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                    else:
+                        ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, nc))
+                        msg += '%s %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+                ob.sendRoom(msg[:-2])
+            box.save()
+            return
+        itm = None 
+        item = ob.findObjInven(words[1])
+        if item == None:
+            name, order = getNameOrder(words[1])
+            itm = item = ob.findObjInven(name, order) 
+            if item == None:
+                ob.sendLine('¢— ±◊∑± æ∆¿Ã≈€¿Ã º“¡ˆ«∞ø° æ¯æÓø‰.')
+                return
+            
+        if item['¡æ∑˘'] not in box['∫∏∞¸¡æ∑˘'].splitlines():
+            ob.sendLine('¢— ∫∏∞¸ «“ ºˆ æ¯¥¬ π∞«∞¿‘¥œ¥Ÿ. ^^')
+            return
+        
+        if item.checkAttr('æ∆¿Ã≈€º”º∫', '∫∏∞¸∏¯«‘'):
+            ob.sendLine('¢— ∫∏∞¸ «“ ºˆ æ¯¥¬ π∞«∞¿‘¥œ¥Ÿ. ^^')
+            return
+            
+        if box.checkAttr('æ∆¿Ã≈€º”º∫', '∞¯øÎ∫∏∞¸«‘') and \
+            (item.checkAttr('æ∆¿Ã≈€º”º∫', '¡Ÿºˆæ¯¿Ω') or \
+            item.checkAttr('æ∆¿Ã≈€º”º∫', 'πˆ∏Æ¡ˆ∏¯«‘') or \
+            item.checkAttr('æ∆¿Ã≈€º”º∫', '∆»¡ˆ∏¯«‘') or \
+            item.checkAttr('æ∆¿Ã≈€º”º∫', '∫Œºˆ¡ˆ∏¯«‘')):
+                ob.sendLine('¢— ∫∏∞¸ «“ ºˆ æ¯¥¬ π∞«∞¿‘¥œ¥Ÿ. ^^')
+                return
+        count = 1
+        if len(words) > 2:
+            count = getInt(words[2])
+        
+        if itm != None:
+            count = 1
+        objs = copy.copy(ob.objs)
+        c = 0
+        nCnt = {}
+        oCnt = 1
+        for item in objs:
+            if itm == None:
+                if words[1] != item['¿Ã∏ß'] and words[1] not in item['π›¿¿¿Ã∏ß'].splitlines():
+                    continue
+            else:
+                if name != item['¿Ã∏ß'] and name not in item['π›¿¿¿Ã∏ß'].splitlines():
+                    continue
+
+            if itm != None:
+                if order != oCnt:
+                    oCnt += 1
+                    continue
+
+            if box.isFull():
+                if c == 0:
+                    ob.sendLine('¢— ∫∏∞¸«‘ø° ¥ı ¿ÃªÛ ≥÷¿ª ºˆ æ¯æÓø‰. ^^')
+                    return
+                break
+            if item['¡æ∑˘'] not in box['∫∏∞¸¡æ∑˘'].splitlines():
+                continue
+            if item.checkAttr('æ∆¿Ã≈€º”º∫', '∫∏∞¸∏¯«‘'):
+                continue
+            if item.inUse:
+                continue
+            ob.remove(item)
+            box.insert(item)
+            if item.isOneItem():
+                ONEITEM.keep(item.index, ob['¿Ã∏ß'] + ' %s' % box['¿Ã∏ß'])
+            nc = 0
+            try:
+                nc = nCnt[item['¿Ã∏ß']]
+            except:
+                nCnt[item['¿Ã∏ß']] = 0
+            nCnt[item['¿Ã∏ß']] = nc + 1
+            c += 1
+            if c == count:
+                break
+        if c == 0:
+            ob.sendLine('¢— ¥ı¿ÃªÛ ∫∏∞¸«“ π∞∞«¿Ã æ¯æÓø‰. ^^')
+            return
+        else:
+            msg = ''
+            for name in nCnt:
+                nc = nCnt[name]
+                if nc == 1:
+                    ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, han_obj(name)))
+                    msg += '%s %sø° [36m%s[37m%s ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, han_obj(name))
+                else:
+                    ob.sendLine('¥ÁΩ≈¿Ã %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.' % (box.getNameA(), name, nc))
+                    msg += '%s %sø° [36m%s[37m %d∞≥∏¶ ∫∏∞¸«’¥œ¥Ÿ.\r\n' % (ob.han_iga(), box.getNameA(), name, nc)
+            ob.sendRoom(msg[:-2])
+        box.save()
+        

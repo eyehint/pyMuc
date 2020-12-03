@@ -1,0 +1,58 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+from lib.hangul import *
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+    
+        if len(line) == 0:
+            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] °ø°İ')
+            return
+        
+        if ob.env.checkAttr('ÀüÅõ±İÁö'):
+            ob.sendLine('¢Ñ ÀÌ°÷¿¡¼± ¸ğµç ÀüÅõ°¡ ±İÁöµÇ¾î ÀÖ¾î¿ä. ^^')
+            return
+            
+        if line.find('½ÃÃ¼') != -1:
+            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            return
+            
+        mob = ob.env.findObjName(line)
+
+        if mob == None:
+            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            return
+
+        if is_item(mob) or is_box(mob) or is_player(mob):
+            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            return
+        if is_player(mob) and ob.env.checkAttr('»ç¿ëÀÚÀüÅõ±İÁö'):
+            ob.sendLine('¢Ñ Áö±İÀº [1m[31m»ì°Ì[0m[37m[40mÀ» ÀÏÀ¸Å°±â¿¡ ºÎÀûÇÕÇÑ »óÈ² ÀÌ¶ó³×')
+            return
+            
+        if is_player(mob) == False and mob['¸÷Á¾·ù'] != 1:
+            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            return
+        if mob.act > ACT_FIGHT:
+            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            return
+        
+        #if mob['ÀÌ¸§'] != '¶ËÆÄ¸®' and len(mob.target) != 0 and ob not in mob.target:
+        #    ob.sendLine('¢Ñ ±×·± »ó´ë°¡ ¾ø½À´Ï´Ù.')
+        #    return
+
+        if mob in ob.target:
+            ob.sendLine('¢Ñ ÀÌ¹Ì °ø°İÁßÀÌ¿¡¿ä. ^_^')
+            return
+        
+        if len(ob.target) != 0:
+            ob.sendLine('¢Ñ ÇöÀçÀÇ ºñ¹«¿¡ ½Å°æÀ» ÁıÁßÇÏ¼¼¿ä. @_@')
+            return
+        ob.setFight(mob)
+        if is_player(mob):
+            mob.fightMode = True
+
+        #ob.sendLine('´ç½ÅÀº ' + mob.get('ÀÌ¸§') + han_obj(mob.get('ÀÌ¸§')) + \
+        #    ' °ø°İÇÏ±â ½ÃÀÛÇÕ´Ï´Ù.')

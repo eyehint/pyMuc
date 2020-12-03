@@ -1,0 +1,32 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        from objs.skill import MUGONG
+        
+        if line == '':
+            if ob['ÀÚµ¿¹«°ø'] == '':
+                ob.sendLine('¢Ñ ÀÚµ¿¹«°ø : ¾øÀ½')
+                return
+            else:
+                ob.sendLine('¢Ñ ÀÚµ¿¹«°ø : [[1;37m%s[0;37m]' % ob['ÀÚµ¿¹«°ø'])
+                return
+        s = None
+        if line in ob.skillList:
+            s = MUGONG[line]
+        else:
+            for sName in ob.skillList:
+                if sName.find(line) == 0:
+                    s = MUGONG[sName]
+                    break
+        if s == None or s == '':
+            ob.sendLine('¢Ñ ±×·± ¹«°øÀ» ½ÀµæÇÑ ÀûÀÌ ¾ø½À´Ï´Ù.')
+            return
+        if s['Á¾·ù'] != 'ÀüÅõ':
+            ob.sendLine('¢Ñ ÀÚµ¿¹«°øÀ» ÇÒ ¼ö ¾ø´Â ¹«°øÀÔ´Ï´Ù.')
+            return
+        ob['ÀÚµ¿¹«°ø'] = s.name
+        ob.sendLine('¢Ñ ÀÚµ¿¹«°øÀ» ÁöÁ¤ÇÏ¿´½À´Ï´Ù.')

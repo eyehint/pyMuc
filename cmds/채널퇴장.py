@@ -1,0 +1,17 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if ob not in ob.adultCH:
+            ob.sendLine('¢— ∏’¿˙ √§≥Œø° ¿‘¿Â«œººø‰.')
+            return
+        ob.adultCH.remove(ob)
+	buf = '\r\n[1;31m®Á®Ô[0;37m ' + ob.getNameA() + '¥‘¿Ã ≈¿Â«œºÃΩ¿¥œ¥Ÿ.'
+	for ply in ob.adultCH:
+	    if ob != ply:
+		ply.sendLine(buf)
+		ply.lpPrompt()
+        ob.sendLine('¢— √§≥Œø°º≠ ≈¿Â«’¥œ¥Ÿ.')

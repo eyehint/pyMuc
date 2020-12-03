@@ -1,0 +1,83 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+from lib.hangul import *
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+
+        if ob.act != ACT_FIGHT or len(ob.target) == 0:
+            ob.sendLine('¢Ñ Áö±ÝÀº [1m[31m»ì°Ì[0m[37m[40mÀ» ÀÏÀ¸Å°±â¿¡ ºÎÀûÇÕÇÑ »óÈ² ÀÌ¶ó³×')
+            return
+        if ob['ºÐ³ë'] < 100:
+            ob.sendLine('¢Ñ ´ç½ÅÀº ¾ÆÁ÷ [1;40;31mºÐ³ë[0;40;37m¸¦ Ç¥ÃâÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            return
+        n, guard = self.getGuardNum(ob)
+        if n < 1:
+            ob.sendLine('¢Ñ ´ç½ÅÀÌ [1;40;31mºÐ³ë[0;40;37m¸¦ ½º½º·Î ´Ù½º¸³´Ï´Ù.')
+            ob['ºÐ³ë'] -= 100
+            return
+        mob = None
+        if line != '':
+            mob = ob.env.findObjName(line)
+            if mob == None:
+                ob.sendLine('¢Ñ °ø°ÝÇÒ ±×·± ´ë»óÀÌ ¾ø½À´Ï´Ù.')
+                return
+            if mob not in ob.target:
+                ob.sendLine('¢Ñ ÇöÀçÀÇ ºñ¹«¿¡ ½Å°æÀ» ÁýÁßÇÏ¼¼¿ä. @_@')
+                return
+        ob['ºÐ³ë'] -= 100
+        if mob == None:
+            for mob in ob.target:
+                if mob.env != ob.env:
+                    continue
+                break
+        if mob == None:
+            ob.sendLine('¢Ñ °ø°ÝÇÒ ±×·± ´ë»óÀÌ ¾ø½À´Ï´Ù.')
+            return
+        msg = ''
+        msg1 = guard[0]['»ç¿ë½ºÅ©¸³']
+        msg2 = guard[0]['°ø°Ý½ºÅ©¸³']
+        msg3 = guard[0]['½ÇÆÐ½ºÅ©¸³']
+        buf1, buf2, buf3 = ob.makeFightScript(msg1, mob, guard[0])
+        ob.sendLine(buf1 + '\r\n')
+        msg += buf3 + '\r\n'
+        for g in guard:
+            c = 100 + g['¸íÁß·Â'] - ( mob['·¹º§'] - ob['·¹º§'] + 90 ) / 3
+            if g.hp < 1 or randint(0, 99) > c:
+                buf1, buf2, buf3 = ob.makeFightScript(msg3, mob, g)
+                ob.sendLine(buf1)
+                msg += buf3 + '\r\n'
+            else:
+                if randint(0, 1) == 0:
+                    dmg = (ob['Èû'] * g['°ø°Ý·Â']) / 100 + randint(0, 9)
+                else:
+                    dmg = (ob['Èû'] * g['°ø°Ý·Â']) / 100 - randint(0, 9)
+                    
+                if dmg < 1:
+                    dmg = 1
+                g.hp -= (dmg * g['Ã¼·Â°¨¼Ò']) / 100
+                if g.hp < 0:
+                    g.hp = 0
+                buf1, buf2, buf3 = ob.makeFightScript(msg2, mob, g)
+
+                if mob.hp <= 1:
+                    dmg = 0
+
+                ob.sendLine(buf1 + ' [1;36m%d[0;37m' % dmg)
+                msg += buf3 + '\r\n'
+            
+                mob.hp -= dmg
+                if mob.hp < 0:
+                    mob.hp = 1
+                    break
+
+    def getGuardNum(self, ob):
+        n = 0
+        guard = []
+        for obj in ob.objs:
+            if obj['Á¾·ù'] == 'È£À§':
+                n += 1
+                guard.append(obj)
+        return n, guard

@@ -1,0 +1,69 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        if ob.env.index != '³«¾ç¼º:11':
+            ob.sendLine('Á¤º¸¼öÁý¼Ò¿¡¼­ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+            return
+            
+        if line == '':
+            self.viewMemo(ob)
+            #ob.sendLine('¾ÆÁ÷ ÂÊÁö±â´ÉÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            return
+        words = line.split(None, 1)
+        if len(words) < 2:
+            ob.sendLine('¢Ñ »ç¿ë¹ý: [ÀÌ¸§] [Á¦¸ñ] ÂÊÁö')
+            return
+        found = False
+        name = words[0]
+        subject = words[1]
+        for ply in ob.channel.players:
+            if ply['ÀÌ¸§'] == name:
+                found = True
+                break
+        if found:
+            ob.sendLine('Á¢¼ÓÁßÀÎ »ç¿ëÀÚ¿¡°Ô´Â º¸³¾ ¼ö ¾ø½À´Ï´Ù.')
+            return
+            
+        ply = Player()
+        if ply.load(name) == False:
+            ob.sendLine('Á¸ÀçÇÏÁö¾Ê´Â »ç¿ëÀÚÀÔ´Ï´Ù.')
+            return
+            
+        if '¸Þ¸ð:%s' % ob['ÀÌ¸§'] in ply.memo:
+            ob.sendLine('ÇÑ¹ø º¸³Â´ø »ç¿ëÀÚ¿¡°Ô´Â ´Ù½Ã º¸³¾ ¼ö ¾ø½À´Ï´Ù.')
+            return
+        ob._memo = {}
+        ob._memo['Á¦¸ñ'] = words[1]
+        ob._memo['½Ã°£'] = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime())
+        ob._memo['ÀÛ¼ºÀÚ'] = ob['ÀÌ¸§']
+        ob._memo['³»¿ë'] = ''
+        ply.memo['¸Þ¸ð:%s' % ob['ÀÌ¸§']] = ob._memo
+        ply.save(False)
+        ob._memoWho = ply
+        ob._memoBody = ''
+        msg = '[%s]´Ô¿¡°Ô ÂÊÁö¸¦ ÀÛ¼ºÇÕ´Ï´Ù. ³¡³»½Ã·Á¸é \'.\'¸¦ Ä¡¼¼¿ä.\r\nºÐ·® Á¦ÇÑÀº 10ÁÙÀÔ´Ï´Ù.\r\n:' % name
+        ob.write(msg)
+        ob.INTERACTIVE = 0
+        ob.input_to(ob.write_memo)
+
+        
+    def viewMemo(self, ob):
+        if len(ob.memo) == 0:
+            ob.sendLine('µµÂøÇÑ ÂÊÁö°¡ ¾ø½À´Ï´Ù.')
+            return
+        msg = '¦£¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¤\r\n'
+        msg += '¦¢¢·                    ¹«           ¸²           Ã¸                    ¢¹¦¢\r\n'
+        msg += '¦¦¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¥\r\n'
+        for m in ob.memo:
+            memo = ob.memo[m]
+            msg += '[33mº¸ ³½ ÀÌ[37m : %s\r\n' % memo['ÀÛ¼ºÀÚ']
+            msg += '[33mÁ¦    ¸ñ[37m : %s\r\n' % memo['Á¦¸ñ']
+            msg += '[33mÀÛ¼º½Ã°¢[37m : %s\r\n\r\n' % memo['½Ã°£']
+            msg += '%s\r\n' % memo['³»¿ë']
+            msg += ' ¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\r\n'
+        ob.sendLine(msg[:-2])
+        ob.memo = {}

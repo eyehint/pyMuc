@@ -1,0 +1,23 @@
+# -*- coding: euc-kr -*-
+
+from objs.cmd import Command
+
+class CmdObj(Command):
+
+    def cmd(self, ob, line):
+        from objs.skill import MUGONG
+        
+        if line == '':
+            if ob['ºñÀü¼³Á¤'] == '':
+                ob.sendLine('¢Ñ ºñÀü : ¾øÀ½')
+                return
+            else:
+                ob.sendLine('¢Ñ ºñÀü : [[1;37m%s[0;37m]' % ob['ºñÀü¼³Á¤'])
+                return
+        s = None
+        vision = ob['ºñÀüÀÌ¸§'].splitlines()
+        if line not in vision:
+            ob.sendLine('¢Ñ ´ç½ÅÀº ±×·± ºñÀüÀ» ¹è¿îÀûÀÌ ¾ø½À´Ï´Ù.')
+            return
+        ob['ºñÀü¼³Á¤'] = line
+        ob.sendLine('¢Ñ ºñÀüÀ» ÁöÁ¤ÇÏ¿´½À´Ï´Ù.')
