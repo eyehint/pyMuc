@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import copy
 from lib.func import getInt, stripANSI
 from lib.hangul import han_iga, han_obj, han_un
@@ -7,14 +5,14 @@ from lib.hangul import han_iga, han_obj, han_un
 class Object:
 
     def __init__(self):
-        # ÇöÀç ¿ÀºêÁ§Æ®ÀÇ ¼Ó¼º¸Ê
+        # í˜„ì¬ ì˜¤ë¸Œì íŠ¸ì˜ ì†ì„±ë§µ
         self.attr = {}
         self.temp = {}
         
-        # ÇöÀç ¿ÀºêÁ§Æ®¸¦ °¡Áö´Â »óÀ§ ¿ÀºêÁ§Æ®
+        # í˜„ì¬ ì˜¤ë¸Œì íŠ¸ë¥¼ ê°€ì§€ëŠ” ìƒìœ„ ì˜¤ë¸Œì íŠ¸
         self.env = None
         
-        # ÇöÀç ¿ÀºêÁ§Æ®°¡ °¡Áö´Â ÇÏÀ§ ¿ÀºêÁ§Æ® ¸®½ºÆ®
+        # í˜„ì¬ ì˜¤ë¸Œì íŠ¸ê°€ ê°€ì§€ëŠ” í•˜ìœ„ ì˜¤ë¸Œì íŠ¸ ë¦¬ìŠ¤íŠ¸
         self.objs = []
         
     def __del__(self):
@@ -49,7 +47,7 @@ class Object:
         return stripANSI(self[key])
     
     def getName(self):
-        return self.get('ÀÌ¸§')
+        return self.get('ì´ë¦„')
         
     def getInt(self, key):
         try:
@@ -100,19 +98,19 @@ class Object:
         pass
         
     def han_iga(self):
-        return self.getNameA() + han_iga(self['ÀÌ¸§'])
+        return self.getNameA() + han_iga(self['ì´ë¦„'])
         
     def han_obj(self):
-        return self.getNameA() + han_obj(self['ÀÌ¸§'])
+        return self.getNameA() + han_obj(self['ì´ë¦„'])
         
     def han_un(self):
-        return self.getNameA() + han_un(self['ÀÌ¸§'])
+        return self.getNameA() + han_un(self['ì´ë¦„'])
         
     def findObjName(self, name, order = 1):
         n = 0
         for obj in self.objs:
-            if obj.get('ÀÌ¸§') == name or name in obj.get('¹İÀÀÀÌ¸§').splitlines():
-                if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+            if obj.get('ì´ë¦„') == name or name in obj.get('ë°˜ì‘ì´ë¦„').splitlines():
+                if obj.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 n += 1
                 if n == order:
@@ -122,7 +120,7 @@ class Object:
     def findObjInven(self, name, order = 1):
         n = 0
         for obj in self.objs:
-            if obj.get('ÀÌ¸§') == name or name in obj.get('¹İÀÀÀÌ¸§').splitlines():
+            if obj.get('ì´ë¦„') == name or name in obj.get('ë°˜ì‘ì´ë¦„').splitlines():
                 if obj.inUse:
                     continue
                 n += 1
@@ -133,7 +131,7 @@ class Object:
     def findObjInUse(self, name, order = 1):
         n = 0
         for obj in self.objs:
-            if obj.get('ÀÌ¸§') == name or name in obj.get('¹İÀÀÀÌ¸§').splitlines():
+            if obj.get('ì´ë¦„') == name or name in obj.get('ë°˜ì‘ì´ë¦„').splitlines():
                 if obj.inUse == False:
                     continue
                 n += 1

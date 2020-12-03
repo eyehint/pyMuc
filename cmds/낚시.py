@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from twisted.internet import reactor
 
@@ -7,14 +5,14 @@ class CmdObj(Command):
 
     def down(self, ob):
         ob.set('cooltime', 0)
-        ob.sendLine('³¬½ÃÁÙ¿¡ ¾öÃ»³­°ÍÀÌ °É¸°°Í °°´Ù...')
+        ob.sendLine('ë‚šì‹œì¤„ì— ì—„ì²­ë‚œê²ƒì´ ê±¸ë¦°ê²ƒ ê°™ë‹¤...')
         reactor.callLater(3, self.down1, ob)
 
     def down1(self, ob):
         ob.set('cooltime', 0)
-        ob.sendLine('Á¨Àå! ³¬½ÃÁÙÀÌ ²÷¾îÁ³´Ù.')
+        ob.sendLine('ì  ì¥! ë‚šì‹œì¤„ì´ ëŠì–´ì¡Œë‹¤.')
 
     def cmd(self, ob, line):
-        ob.sendLine('³¬½Ã¹Ù´Ã¿¡ ¹Ì³¢¸¦ ³¢¿ì°í ³¬½Ã´ë¸¦ µå¸®¿ó´Ï´Ù.')
+        ob.sendLine('ë‚šì‹œë°”ëŠ˜ì— ë¯¸ë¼ë¥¼ ë¼ìš°ê³  ë‚šì‹œëŒ€ë¥¼ ë“œë¦¬ì›ë‹ˆë‹¤.')
         reactor.callLater(3, self.down, ob)
         return

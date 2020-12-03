@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import os
 import glob
 import random
@@ -19,16 +17,16 @@ from lib.func import *
 class Room(Object): 
 
     Zones = {}
-    reverseDir = { 'µ¿': '¼­',
-                   '¼­': 'µ¿',
-                   '³²': 'ºÏ',
-                   'ºÏ': '³²',
-                   'ºÏµ¿': '³²¼­',
-                   'ºÏ¼­': '³²µ¿',
-                   '³²µ¿': 'ºÏ¼­',
-                   '³²¼­': 'ºÏµ¿',
-                   'À§': '¾Æ·¡',
-                   '¾Æ·¡': 'À§', 
+    reverseDir = { 'ë™': 'ì„œ',
+                   'ì„œ': 'ë™',
+                   'ë‚¨': 'ë¶',
+                   'ë¶': 'ë‚¨',
+                   'ë¶ë™': 'ë‚¨ì„œ',
+                   'ë¶ì„œ': 'ë‚¨ë™',
+                   'ë‚¨ë™': 'ë¶ì„œ',
+                   'ë‚¨ì„œ': 'ë¶ë™',
+                   'ìœ„': 'ì•„ë˜',
+                   'ì•„ë˜': 'ìœ„', 
                  }
     def __init__(self):
         Object.__init__(self)
@@ -45,16 +43,16 @@ class Room(Object):
         if scr == None:
             return False
         try:
-            self.attr = scr['¸ÊÁ¤º¸']
+            self.attr = scr['ë§µì •ë³´']
         except:
             return False 
 
-        for boxName in self['¼³Ä¡¸®½ºÆ®'].splitlines():
+        for boxName in self['ì„¤ì¹˜ë¦¬ìŠ¤íŠ¸'].splitlines():
             box = Box()
-            if self['¹æÆÄÁÖÀÎ'] != '':
-                box.create('%s_%s' % (self['¹æÆÄÁÖÀÎ'], boxName))
+            if self['ë°©íŒŒì£¼ì¸'] != '':
+                box.create('%s_%s' % (self['ë°©íŒŒì£¼ì¸'], boxName))
             else:
-                box.create('%s_%s' % (self['ÁÖÀÎ'], boxName))
+                box.create('%s_%s' % (self['ì£¼ì¸'], boxName))
             self.insert(box)
         self.init()
         
@@ -67,7 +65,7 @@ class Room(Object):
         if path == None:
             path = self.path
         o = {}
-        o['¸ÊÁ¤º¸'] = self.attr
+        o['ë§µì •ë³´'] = self.attr
         try:
             f = open(path, 'w')
         except:
@@ -91,7 +89,7 @@ class Room(Object):
         self.shortExitStr = ''
         self.longExitStr = ''
         
-        exits = self.get('Ãâ±¸')
+        exits = self.get('ì¶œêµ¬')
         lines = exits.splitlines()
         for line in lines:
             s = line.split()
@@ -108,62 +106,62 @@ class Room(Object):
         c = 0
         for exitName in self.exitList:
             if exitName[-1] == '$':
-                #print '¼û°ÜÁø Ãâ±¸!'
+                #print 'ìˆ¨ê²¨ì§„ ì¶œêµ¬!'
                 continue
             c = c + 1
             str = str + exitName + ' '
         if c == 0:
-            str = '¾øÀ½'
+            str = 'ì—†ìŒ'
                 
-        self.shortExitStr = '\r\n[Ãâ±¸] : ' + str
+        self.shortExitStr = '\r\n[ì¶œêµ¬] : ' + str
 
         c = 0
         str1 = ''
         for exitName in self.exitList:
             if exitName[-1] == '$':
-                #print '¼û°ÜÁø Ãâ±¸!'
+                #print 'ìˆ¨ê²¨ì§„ ì¶œêµ¬!'
                 continue
             c = c + 1
-            str1 = str1 + '[32m' + exitName +  '[37m¢°'
+            str1 = str1 + '[32m' + exitName +  '[37mË'
         str1 = str1[:-2]
         if c == 0:
-            str = '\r\n  ¡Û  ¾î´À ÂÊÀ¸·Îµµ ÀÌµ¿ÇÒ ¼ö ¾ø½À´Ï´Ù.\r\n'
+            str = '\r\n  â—‹  ì–´ëŠ ìª½ìœ¼ë¡œë„ ì´ë™í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.\r\n'
         else:
-            if 'ºÏ¼­' in self.exitList:
-                str = '[32m¢Ø[37m'
+            if 'ë¶ì„œ' in self.exitList:
+                str = '[32mâ†–[37m'
             else:
                 str = '  '
-            if 'ºÏ' in self.exitList:
-                str = str + '[32m¡â[37m'
+            if 'ë¶' in self.exitList:
+                str = str + '[32mâ–³[37m'
             else:
                 str = str + '  '
-            if 'ºÏµ¿' in self.exitList:
-                str = str + '[32m¢Ö[37m\r\n'
+            if 'ë¶ë™' in self.exitList:
+                str = str + '[32mâ†—[37m\r\n'
             else:
                 str = str + '\r\n'
  
-            if '¼­' in self.exitList:
-                str = str + '[32m¢·[37m'
+            if 'ì„œ' in self.exitList:
+                str = str + '[32mâ—[37m'
             else:
                 str = str + '  '
-            str = str + '¡Û'
-            if 'µ¿' in self.exitList:
-                str = str + '[32m¢¹[37m'
+            str = str + 'â—‹'
+            if 'ë™' in self.exitList:
+                str = str + '[32mâ–·[37m'
             else:
                 str = str + '  '
-            # print Ãâ±¸
-            str += ' ¡²' + str1 + '¡³ÂÊÀ¸·Î ÀÌµ¿ÇÒ ¼ö ÀÖ½À´Ï´Ù.\r\n'
+            # print ì¶œêµ¬
+            str += ' ã€”' + str1 + 'ã€•ìª½ìœ¼ë¡œ ì´ë™í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.\r\n'
                 
-            if '³²¼­' in self.exitList:
-                str = str + '[32m¢×[37m'
+            if 'ë‚¨ì„œ' in self.exitList:
+                str = str + '[32mâ†™[37m'
             else:
                 str = str + '  '
-            if '³²' in self.exitList:
-                str = str + '[32m¡ä[37m'
+            if 'ë‚¨' in self.exitList:
+                str = str + '[32mâ–½[37m'
             else:
                 str = str + '  '
-            if '³²µ¿' in self.exitList:
-                str = str + '[32m¢Ù[37m'
+            if 'ë‚¨ë™' in self.exitList:
+                str = str + '[32mâ†˜[37m'
             else:
                 str = str + '  '
                 
@@ -182,9 +180,9 @@ class Room(Object):
         
         i = fileName.find(':')
         if i == -1:
-            fileName = self.get('Á¸ÀÌ¸§') + ':' + fileName
+            fileName = self.get('ì¡´ì´ë¦„') + ':' + fileName
         else:
-            diff = self['Á¸ÀÌ¸§'][-1]
+            diff = self['ì¡´ì´ë¦„'][-1]
             if diff.isdigit():
                 fileName = fileName[:i] + diff + fileName[i:]
 
@@ -204,9 +202,9 @@ class Room(Object):
         
         i = fileName.find(':')
         if i == -1:
-            fileName = self.get('Á¸ÀÌ¸§') + ':' + fileName
+            fileName = self.get('ì¡´ì´ë¦„') + ':' + fileName
         else:
-            diff = self['Á¸ÀÌ¸§'][-1]
+            diff = self['ì¡´ì´ë¦„'][-1]
             if diff.isdigit():
                 fileName = fileName[:i] + diff + fileName[i:]
 
@@ -226,36 +224,36 @@ class Room(Object):
         for n in self.Exits:
             e1.append(n)
             
-        if 'µ¿' in e1:
-            self.exitList.append('µ¿')
-            e1.remove('µ¿')
-        if '¼­' in e1:
-            self.exitList.append('¼­')
-            e1.remove('¼­')
-        if '³²' in e1:
-            self.exitList.append('³²')
-            e1.remove('³²')
-        if 'ºÏ' in e1:
-            self.exitList.append('ºÏ')
-            e1.remove('ºÏ')
-        if 'À§' in e1:
-            self.exitList.append('À§')
-            e1.remove('À§')
-        if '¾Æ·¡' in e1:
-            self.exitList.append('¾Æ·¡')
-            e1.remove('¾Æ·¡')
-        if '³²µ¿' in e1:
-            self.exitList.append('³²µ¿')
-            e1.remove('³²µ¿')
-        if '³²¼­' in e1:
-            self.exitList.append('³²¼­')
-            e1.remove('³²¼­')
-        if 'ºÏµ¿' in e1:
-            self.exitList.append('ºÏµ¿')
-            e1.remove('ºÏµ¿')
-        if 'ºÏ¼­' in e1:
-            self.exitList.append('ºÏ¼­')
-            e1.remove('ºÏ¼­')
+        if 'ë™' in e1:
+            self.exitList.append('ë™')
+            e1.remove('ë™')
+        if 'ì„œ' in e1:
+            self.exitList.append('ì„œ')
+            e1.remove('ì„œ')
+        if 'ë‚¨' in e1:
+            self.exitList.append('ë‚¨')
+            e1.remove('ë‚¨')
+        if 'ë¶' in e1:
+            self.exitList.append('ë¶')
+            e1.remove('ë¶')
+        if 'ìœ„' in e1:
+            self.exitList.append('ìœ„')
+            e1.remove('ìœ„')
+        if 'ì•„ë˜' in e1:
+            self.exitList.append('ì•„ë˜')
+            e1.remove('ì•„ë˜')
+        if 'ë‚¨ë™' in e1:
+            self.exitList.append('ë‚¨ë™')
+            e1.remove('ë‚¨ë™')
+        if 'ë‚¨ì„œ' in e1:
+            self.exitList.append('ë‚¨ì„œ')
+            e1.remove('ë‚¨ì„œ')
+        if 'ë¶ë™' in e1:
+            self.exitList.append('ë¶ë™')
+            e1.remove('ë¶ë™')
+        if 'ë¶ì„œ' in e1:
+            self.exitList.append('ë¶ì„œ')
+            e1.remove('ë¶ì„œ')
         
         for n1 in e1:
             self.exitList.append(n1)
@@ -267,7 +265,7 @@ class Room(Object):
         for obj in self.objs:
             if is_mob(obj) == False:
                 continue
-            if obj['¹°°ÇÆÇ¸Å'] != '' or obj['¹°°Ç±¸ÀÔ'] != '':
+            if obj['ë¬¼ê±´íŒë§¤'] != '' or obj['ë¬¼ê±´êµ¬ì…'] != '':
                 return obj
         return None
         
@@ -287,7 +285,7 @@ class Room(Object):
             for obj in self.objs:
                 if is_mob(obj) == False:
                     continue
-                if obj.get('¸÷Á¾·ù') == 7:
+                if obj.get('ëª¹ì¢…ë¥˜') == 7:
                     continue
                 if obj.act == ACT_DEATH or obj.act == ACT_REGEN:
                     continue
@@ -306,20 +304,20 @@ class Room(Object):
             order = 1
         d = 0
         for obj in self.objs:
-            if obj['Åõ¸í»óÅÂ'] == 1:
+            if obj['íˆ¬ëª…ìƒíƒœ'] == 1:
                 continue
-            if is_mob(obj) and name != '½ÃÃ¼' and (obj.act == ACT_DEATH or obj.act == ACT_REGEN):
+            if is_mob(obj) and name != 'ì‹œì²´' and (obj.act == ACT_DEATH or obj.act == ACT_REGEN):
                 continue
-            if name == '½ÃÃ¼' and is_item(obj) == False and is_box(obj) == False and obj.act == ACT_DEATH:
+            if name == 'ì‹œì²´' and is_item(obj) == False and is_box(obj) == False and obj.act == ACT_DEATH:
                 c += 1
                 if c == order:
                     return obj
-            elif obj.get('ÀÌ¸§') == name or name in obj.get('¹İÀÀÀÌ¸§').splitlines():
+            elif obj.get('ì´ë¦„') == name or name in obj.get('ë°˜ì‘ì´ë¦„').splitlines():
                 c += 1
                 if c == order:
                     return obj
             else:
-                for alias in obj.get('¹İÀÀÀÌ¸§').splitlines():
+                for alias in obj.get('ë°˜ì‘ì´ë¦„').splitlines():
                     if alias.find(name) == 0:
                         d += 1
                         if d == order:
@@ -343,7 +341,7 @@ class Room(Object):
     def printPrompt(self, ex = None, newline = True):
         from objs.player import is_player
         for obj in self.objs:
-            if is_player(obj) and ex != obj['ÀÌ¸§']:
+            if is_player(obj) and ex != obj['ì´ë¦„']:
                 if newline:
                     obj.sendLine('')
                 obj.lpPrompt()
@@ -372,9 +370,9 @@ class Room(Object):
             for item in itemMap:
                 cnt = itemMap[item]
                 if cnt == 1:
-                    itemMsg += '%s ¸ÕÁö°¡ µÇ¾î »ç¶óÁı´Ï´Ù.\r\n' % item
+                    itemMsg += '%s ë¨¼ì§€ê°€ ë˜ì–´ ì‚¬ë¼ì§‘ë‹ˆë‹¤.\r\n' % item
                 else:
-                    itemMsg += '%s %d°³°¡ ¸ÕÁö°¡ µÇ¾î »ç¶óÁı´Ï´Ù.\r\n' % (item[:-2], cnt)
+                    itemMsg += '%s %dê°œê°€ ë¨¼ì§€ê°€ ë˜ì–´ ì‚¬ë¼ì§‘ë‹ˆë‹¤.\r\n' % (item[:-2], cnt)
             self.writeRoom('\r\n' + itemMsg[:-2])
             updated = True 
         if updated:
@@ -394,13 +392,13 @@ class Room(Object):
         
     def loadAttr(self):
         self.mapAttr = []
-        attrs = self['¸Ê¼Ó¼º'].splitlines()
+        attrs = self['ë§µì†ì„±'].splitlines()
         for attr in attrs:
             self.mapAttr.append(attr)
-            if attr.find('ÀÎ¿øÁ¦ÇÑ') == 0:
+            if attr.find('ì¸ì›ì œí•œ') == 0:
                 self.limitNum = getInt(attr[8:].strip())
                 continue
-            if attr.find('¸í·É±İÁö') == 0:
+            if attr.find('ëª…ë ¹ê¸ˆì§€') == 0:
                 self.limitCmds = attr[8:].split()
                 continue
             
@@ -410,7 +408,7 @@ class Room(Object):
         return False
     
     def noComm(self):
-        return self.checkAttr('¸ğµçÅë½Å±İÁö')
+        return self.checkAttr('ëª¨ë“ í†µì‹ ê¸ˆì§€')
         
     def getItemCount(self):
         n = 0
@@ -442,13 +440,13 @@ def getRoom(path):
         ret = room.create(path)
         if ret == False:
             return None
-        room['Á¸ÀÌ¸§'] = zoneName
+        room['ì¡´ì´ë¦„'] = zoneName
         zone[roomName] = room
 
     return room
     
 def loadAllMap():
-    log('¸Ê ·ÎµùÁß... Àá½Ã¸¸ ±â´Ù·ÁÁÖ¼¼¿ä.')
+    log('ë§µ ë¡œë”©ì¤‘... ì ì‹œë§Œ ê¸°ë‹¤ë ¤ì£¼ì„¸ìš”.')
     pwd = os.getcwd()
     c = 0
     dirs = os.listdir('data/map')
@@ -464,7 +462,7 @@ def loadAllMap():
             room = getRoom(dir + ':' + file[:-4])
             if room != None:
                 c = c + 1
-    log(str(c) + '°³ÀÇ ¸ÊÀÌ ·ÎµùµÇ¾ú½À´Ï´Ù.')
+    log(str(c) + 'ê°œì˜ ë§µì´ ë¡œë”©ë˜ì—ˆìŠµë‹ˆë‹¤.')
 
 def is_room(obj):
     return isinstance(obj, Room)

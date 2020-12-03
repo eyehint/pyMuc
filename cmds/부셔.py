@@ -1,12 +1,10 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¹°Ç°ÀÌ¸§] [¼ö·®] ºÎ½¤')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë¬¼í’ˆì´ë¦„] [ìˆ˜ëŸ‰] ë¶€ìˆ´')
             return
         i = 1
         c = 0
@@ -34,9 +32,9 @@ class CmdObj(Command):
         for obj in objs:
             if c >= i:
                 break
-            if name != obj.get('ÀÌ¸§') and name not in obj.get('¹İÀÀÀÌ¸§').splitlines():
+            if name != obj.get('ì´ë¦„') and name not in obj.get('ë°˜ì‘ì´ë¦„').splitlines():
                 continue
-            if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+            if obj.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                 continue
             if obj.inUse:
                 continue
@@ -44,21 +42,21 @@ class CmdObj(Command):
             n += 1
             if n < order:
                 continue
-            if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ºÎ¼öÁö¸øÇÔ'):
+            if obj.checkAttr('ì•„ì´í…œì†ì„±', 'ë¶€ìˆ˜ì§€ëª»í•¨'):
                 if c == 0:
-                    ob.sendLine('¢Ñ ºÎ¼ÅÁöÁö ¾Ê³×¿ä. ^^')
+                    ob.sendLine('â˜ ë¶€ì…”ì§€ì§€ ì•Šë„¤ìš”. ^^')
                     return
                 continue
             c += 1
-            name = obj['ÀÌ¸§']
+            name = obj['ì´ë¦„']
             ob.remove(obj)
             if obj.isOneItem():
                 ONEITEM.destroy(obj.index)
         if c == 0:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
         elif c == 1:
-            ob.sendLine('´ç½ÅÀÌ [36m%s[37m%s ºÎ¼Å¹ö¸³´Ï´Ù.' % (name, han_obj(name)))
-            ob.sendRoom('%s [36m%s[37m%s ºÎ¼Å¹ö¸³´Ï´Ù.' % (ob.han_iga(), name, han_obj(name)))
+            ob.sendLine('ë‹¹ì‹ ì´ [36m%s[37m%s ë¶€ì…”ë²„ë¦½ë‹ˆë‹¤.' % (name, han_obj(name)))
+            ob.sendRoom('%s [36m%s[37m%s ë¶€ì…”ë²„ë¦½ë‹ˆë‹¤.' % (ob.han_iga(), name, han_obj(name)))
         else:
-            ob.sendLine('´ç½ÅÀÌ [36m%s[37m %d°³¸¦ ºÎ¼Å¹ö¸³´Ï´Ù.' % (name, c))
-            ob.sendRoom('%s [36m%s[37m %d°³¸¦ ºÎ¼Å¹ö¸³´Ï´Ù.' % (ob.han_iga(), name, c))
+            ob.sendLine('ë‹¹ì‹ ì´ [36m%s[37m %dê°œë¥¼ ë¶€ì…”ë²„ë¦½ë‹ˆë‹¤.' % (name, c))
+            ob.sendRoom('%s [36m%s[37m %dê°œë¥¼ ë¶€ì…”ë²„ë¦½ë‹ˆë‹¤.' % (ob.han_iga(), name, c))

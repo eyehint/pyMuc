@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
@@ -7,12 +5,12 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         words = line.split()
         if len(words) < 2:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [Á¸ÀÌ¸§] [¹æÀÌ¸§] ¹æÁ¦ÀÛ')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ì¡´ì´ë¦„] [ë°©ì´ë¦„] ë°©ì œìž‘')
             return
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^')
             return
-        ob.write('ÀÛ¼ºÀ» ¸¶Ä¡½Ã·Á¸é \'.\' ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\r\n:')
+        ob.write('ìž‘ì„±ì„ ë§ˆì¹˜ì‹œë ¤ë©´ \'.\' ë¥¼ ìž…ë ¥í•˜ì„¸ìš”.\r\n:')
         ob.INTERACTIVE = 0
         ob._lineData = ''
         ob._lineDataTarget = 'map/' + words[0] + '/'+ words[1] + '.map'

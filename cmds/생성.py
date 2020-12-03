@@ -1,15 +1,13 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if len(line) == 0:
-            ob.sendLine('»ç¿ë¹ý: [¾ÆÀÌÅÛ ÀÌ¸§] [°¹¼ö] »ý¼º')
+            ob.sendLine('ì‚¬ìš©ë²•: [ì•„ì´í…œ ì´ë¦„] [ê°¯ìˆ˜] ìƒì„±')
             return
         var = line.split()
         if len(var) == 1:
@@ -20,19 +18,19 @@ class CmdObj(Command):
         item = getItem(var[0])
 
         if item == None:
-            ob.sendLine('* »ý¼º ½ÇÆÐ!!!')
+            ob.sendLine('* ìƒì„± ì‹¤íŒ¨!!!')
             return
             
         if item.isOneItem():
             if item.isOneThere():
-                ob.sendLine('[´ÜÀÏ¾ÆÀÌÅÛ] %s ÀÌ¹Ì »ý¼ºµÇ¾î ÀÖ½À´Ï´Ù.' % item.han_iga())
+                ob.sendLine('[ë‹¨ì¼ì•„ì´í…œ] %s ì´ë¯¸ ìƒì„±ë˜ì–´ ìžˆìŠµë‹ˆë‹¤.' % item.han_iga())
                 return
             else:
-                ONEITEM.have(item.index, ob['ÀÌ¸§'])
+                ONEITEM.have(item.index, ob['ì´ë¦„'])
         for i in range(cnt):
             item = item.deepclone()
             ob.objs.append(item)
-            if item['Á¾·ù'] == 'È£À§':
-                item.hp = item['Ã¼·Â']
+            if item['ì¢…ë¥˜'] == 'í˜¸ìœ„':
+                item.hp = item['ì²´ë ¥']
         
-        ob.sendLine('[1;32m* [' + item.get('ÀÌ¸§') + '] »ý¼º µÇ¾ú½À´Ï´Ù.[0;37m')
+        ob.sendLine('[1;32m* [' + item.get('ì´ë¦„') + '] ìƒì„± ë˜ì—ˆìŠµë‹ˆë‹¤.[0;37m')

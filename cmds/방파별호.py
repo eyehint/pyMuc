@@ -1,37 +1,35 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['¼Ò¼Ó'] == '':
-            ob.sendLine('¢Ñ ´ç½ÅÀº ¼Ò¼ÓÀÌ ¾ø½À´Ï´Ù.')
+        if ob['ì†Œì†'] == '':
+            ob.sendLine('â˜ ë‹¹ì‹ ì€ ì†Œì†ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        if ob['Á÷À§'] != '¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
         words = line.split()
         if len(words) != 2:
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [´ë»ó] [¹«¸²º°È£] ¹æÆÄº°È£')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ëŒ€ìƒ] [ë¬´ë¦¼ë³„í˜¸] ë°©íŒŒë³„í˜¸')
             return
             
         obj = ob.env.findObjName(words[0])
         if obj == None  or is_player(obj) == False:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ±×·± ¹«¸²ÀÎÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì´ê³³ì— ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        if obj['¼Ò¼Ó'] != ob['¼Ò¼Ó']:
-            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¼Ò¼ÓÀÌ ¾Æ´Õ´Ï´Ù.')
+        if obj['ì†Œì†'] != ob['ì†Œì†']:
+            ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì†Œì†ì´ ì•„ë‹™ë‹ˆë‹¤.')
             return
         if obj == ob:
-            buf3 = 'ÀÚ½Å'
+            buf3 = 'ìì‹ '
         else:
-            buf3 = obj['ÀÌ¸§']
+            buf3 = obj['ì´ë¦„']
         if len(words[1]) > 10:
-            ob.sendLine('¢Ñ »ç¿ëÇÏ½Ã·Á´Â º°È£°¡ ³Ê¹« ±æ¾î¿ä.')
+            ob.sendLine('â˜ ì‚¬ìš©í•˜ì‹œë ¤ëŠ” ë³„í˜¸ê°€ ë„ˆë¬´ ê¸¸ì–´ìš”.')
             return
             
-        obj['¹æÆÄº°È£'] = words[1]
-        ob.sendLine('´ç½ÅÀÌ [1m%s[0;37mÀÇ ¹æÆÄº°È£¸¦ ¡º[1;32m%s[0;37m¡»%s ÇÔÀ» ¼±Æ÷ÇÕ´Ï´Ù.' % (buf3, words[1], han_uro(words[1])))
-        ob.sendGroup('%s [1m%s[0;37mÀÇ ¹æÆÄº°È£¸¦ ¡º[1;32m%s[0;37m¡»%s ÇÔÀ» ¼±Æ÷ÇÕ´Ï´Ù.' % (ob.han_iga(), buf3, words[1], han_uro(words[1])), prompt = True, ex = ob)
-        
+        obj['ë°©íŒŒë³„í˜¸'] = words[1]
+        ob.sendLine('ë‹¹ì‹ ì´ [1m%s[0;37mì˜ ë°©íŒŒë³„í˜¸ë¥¼ ã€[1;32m%s[0;37mã€%s í•¨ì„ ì„ í¬í•©ë‹ˆë‹¤.' % (buf3, words[1], han_uro(words[1])))
+        ob.sendGroup('%s [1m%s[0;37mì˜ ë°©íŒŒë³„í˜¸ë¥¼ ã€[1;32m%s[0;37mã€%s í•¨ì„ ì„ í¬í•©ë‹ˆë‹¤.' % (ob.han_iga(), buf3, words[1], han_uro(words[1])), prompt = True, ex = ob)
+

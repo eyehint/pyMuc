@@ -1,41 +1,39 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢— ªÁøÎπ˝: [≥ªøÎ] ø‹ƒß(,)')
+            ob.sendLine('‚òû ÏÇ¨Ïö©Î≤ï: [ÎÇ¥Ïö©] Ïô∏Ïπ®(,)')
             return
         if len(line) > 160:
-            ob.sendLine('¢— ≥ π´ ±ÊæÓø‰. ^^')
+            ob.sendLine('‚òû ÎÑàÎ¨¥ Í∏∏Ïñ¥Ïöî. ^^')
             return
             
-        if ob.checkConfig('ø‹ƒß∞≈∫Œ'):
-            ob.sendLine('¢— ø‹ƒß∞≈∫Œ¡ﬂø£ ø‹ƒ• ºˆ æ¯æÓø‰. ^^')
+        if ob.checkConfig('Ïô∏Ïπ®Í±∞Î∂Ä'):
+            ob.sendLine('‚òû Ïô∏Ïπ®Í±∞Î∂ÄÏ§ëÏóî Ïô∏Ïπ† Ïàò ÏóÜÏñ¥Ïöî. ^^')
             return
         if ob.act == ACT_REST:
-            ob.sendLine('¢— øÓ±‚¡∂Ωƒ¡ﬂø° ø‹ƒ°∞‘ µ«∏È ±‚∞° »Â∆Æ∑Ø¡˝¥œ¥Ÿ.')
+            ob.sendLine('‚òû Ïö¥Í∏∞Ï°∞ÏãùÏ§ëÏóê Ïô∏ÏπòÍ≤å ÎêòÎ©¥ Í∏∞Í∞Ä ÌùêÌä∏Îü¨ÏßëÎãàÎã§.')
             return
         if ob.env == None:
             return
 
         if ob.env.noComm():
-            ob.sendLine('¢— ¿Ã¡ˆø™ø°º≠¥¬ æÓ∂∞«— ≈ÎΩ≈µµ ∫“∞°¥…«’¥œ¥Ÿ.')
+            ob.sendLine('‚òû Ïù¥ÏßÄÏó≠ÏóêÏÑúÎäî Ïñ¥Îñ†Ìïú ÌÜµÏã†ÎèÑ Î∂àÍ∞ÄÎä•Ìï©ÎãàÎã§.')
             return
         bright = 1
-        if ob['∑π∫ß√ ±‚»≠'] != '':
+        if ob['Î†àÎ≤®Ï¥àÍ∏∞Ìôî'] != '':
             bright = 0
-        if ob['º∫∞›'] == 'º±¿Œ':
-            type = '[%d;36m√¢∑Ê»ƒ[0;37m' % bright
-            if ob['∞¸∏Æ¿⁄µÓ±ﬁ'] != '':
-                if ob['∞¸∏Æ¿⁄µÓ±ﬁ'] >= 2000:
-                    type = '[0;35mªÁ¿⁄»ƒ[0;37m'
-        elif ob['º∫∞›'] == '±‚¿Œ':
-            type = '[1;32mªÁ¿⁄»ƒ[0;37m'
+        if ob['ÏÑ±Í≤©'] == 'ÏÑ†Ïù∏':
+            type = '[%d;36mÏ∞ΩÎ£°ÌõÑ[0;37m' % bright
+            if ob['Í¥ÄÎ¶¨ÏûêÎì±Í∏â'] != '':
+                if ob['Í¥ÄÎ¶¨ÏûêÎì±Í∏â'] >= 2000:
+                    type = '[0;35mÏÇ¨ÏûêÌõÑ[0;37m'
+        elif ob['ÏÑ±Í≤©'] == 'Í∏∞Ïù∏':
+            type = '[1;32mÏÇ¨ÏûêÌõÑ[0;37m'
         else:
-            type = '[32mø‹ ƒß[37m'
+            type = '[32mÏô∏ Ïπ®[37m'
 
         timemsg = time.strftime('[%H:%M] ', time.localtime())
         msg = ob.getNameA() + '(%s) : %s' % (type, line)
@@ -47,20 +45,20 @@ class CmdObj(Command):
         if len(Player.chatHistory) > 24:
             Player.chatHistory.__delitem__(0)
 
-        # ¿‚¥„ ∑Œ±◊∏¶ ∆ƒ¿œ∑Œ!!!
+        # Ïû°Îã¥ Î°úÍ∑∏Î•º ÌååÏùºÎ°ú!!!
         from client import Client, queue
         for ply in Client.players:
             if ply.state != ACTIVE:
                 continue
-            if ply.checkConfig('ø‹ƒß∞≈∫Œ'):
+            if ply.checkConfig('Ïô∏Ïπ®Í±∞Î∂Ä'):
                 continue
-            if ply.checkConfig('¿‚¥„Ω√∞£∫∏±‚'):
-                if ply.checkConfig('ªÁøÎ¿⁄æ»Ω√∞≈∫Œ'):
+            if ply.checkConfig('Ïû°Îã¥ÏãúÍ∞ÑÎ≥¥Í∏∞'):
+                if ply.checkConfig('ÏÇ¨Ïö©ÏûêÏïàÏãúÍ±∞Î∂Ä'):
                     buf = timemsg + m2
                 else:
                     buf = timemsg + m1
             else:
-                if ply.checkConfig('ªÁøÎ¿⁄æ»Ω√∞≈∫Œ'):
+                if ply.checkConfig('ÏÇ¨Ïö©ÏûêÏïàÏãúÍ±∞Î∂Ä'):
                     buf = m2
                 else:
                     buf = m1
@@ -73,7 +71,7 @@ class CmdObj(Command):
         queue.put(_content)
 
     def checkConfig(self, ob, config):
-        kl = ob['º≥¡§ªÛ≈¬'].splitlines()
+        kl = ob['ÏÑ§Ï†ïÏÉÅÌÉú'].splitlines()
         for k in kl:
             if k.find(config) == 0:
                 if len(k.split()) > 1 and k.split()[1] == '1':
@@ -84,41 +82,41 @@ class CmdObj(Command):
     def ANSI(self, msg, conv):
         buf = msg
         if conv == True:
-            buf = buf.replace('{π‡}', '[1m')
-            buf = buf.replace('{æÓ}', '[0m')
-            buf = buf.replace('{∞À}', '[30m')
-            buf = buf.replace('{ª°}', '[31m')
-            buf = buf.replace('{√ }', '[32m')
-            buf = buf.replace('{≥Î}', '[33m')
-            buf = buf.replace('{∆ƒ}', '[34m')
-            buf = buf.replace('{¿⁄}', '[35m')
-            buf = buf.replace('{«œ}', '[36m')
-            buf = buf.replace('{»Ú}', '[37m')
-            buf = buf.replace('{πË∞À}', '[40m')
-            buf = buf.replace('{πËª°}', '[41m')
-            buf = buf.replace('{πË√ }', '[42m')
-            buf = buf.replace('{πË≥Î}', '[43m')
-            buf = buf.replace('{πË∆ƒ}', '[44m')
-            buf = buf.replace('{πË¿⁄}', '[45m')
-            buf = buf.replace('{πË«œ}', '[46m')
-            buf = buf.replace('{πË»Ú}', '[47m')
+            buf = buf.replace('{Î∞ù}', '[1m')
+            buf = buf.replace('{Ïñ¥}', '[0m')
+            buf = buf.replace('{Í≤Ä}', '[30m')
+            buf = buf.replace('{Îπ®}', '[31m')
+            buf = buf.replace('{Ï¥à}', '[32m')
+            buf = buf.replace('{ÎÖ∏}', '[33m')
+            buf = buf.replace('{Ìåå}', '[34m')
+            buf = buf.replace('{Ïûê}', '[35m')
+            buf = buf.replace('{Ìïò}', '[36m')
+            buf = buf.replace('{Ìù∞}', '[37m')
+            buf = buf.replace('{Î∞∞Í≤Ä}', '[40m')
+            buf = buf.replace('{Î∞∞Îπ®}', '[41m')
+            buf = buf.replace('{Î∞∞Ï¥à}', '[42m')
+            buf = buf.replace('{Î∞∞ÎÖ∏}', '[43m')
+            buf = buf.replace('{Î∞∞Ìåå}', '[44m')
+            buf = buf.replace('{Î∞∞Ïûê}', '[45m')
+            buf = buf.replace('{Î∞∞Ìïò}', '[46m')
+            buf = buf.replace('{Î∞∞Ìù∞}', '[47m')
         else:
-            buf = buf.replace('{π‡}', '')
-            buf = buf.replace('{æÓ}', '')
-            buf = buf.replace('{∞À}', '')
-            buf = buf.replace('{ª°}', '')
-            buf = buf.replace('{√ }', '')
-            buf = buf.replace('{≥Î}', '')
-            buf = buf.replace('{∆ƒ}', '')
-            buf = buf.replace('{¿⁄}', '')
-            buf = buf.replace('{«œ}', '')
-            buf = buf.replace('{»Ú}', '')
-            buf = buf.replace('{πË∞À}', '')
-            buf = buf.replace('{πËª°}', '')
-            buf = buf.replace('{πË√ }', '')
-            buf = buf.replace('{πË≥Î}', '')
-            buf = buf.replace('{πË∆ƒ}', '')
-            buf = buf.replace('{πË¿⁄}', '')
-            buf = buf.replace('{πË«œ}', '')
-            buf = buf.replace('{πË»Ú}', '')
+            buf = buf.replace('{Î∞ù}', '')
+            buf = buf.replace('{Ïñ¥}', '')
+            buf = buf.replace('{Í≤Ä}', '')
+            buf = buf.replace('{Îπ®}', '')
+            buf = buf.replace('{Ï¥à}', '')
+            buf = buf.replace('{ÎÖ∏}', '')
+            buf = buf.replace('{Ìåå}', '')
+            buf = buf.replace('{Ïûê}', '')
+            buf = buf.replace('{Ìïò}', '')
+            buf = buf.replace('{Ìù∞}', '')
+            buf = buf.replace('{Î∞∞Í≤Ä}', '')
+            buf = buf.replace('{Î∞∞Îπ®}', '')
+            buf = buf.replace('{Î∞∞Ï¥à}', '')
+            buf = buf.replace('{Î∞∞ÎÖ∏}', '')
+            buf = buf.replace('{Î∞∞Ìåå}', '')
+            buf = buf.replace('{Î∞∞Ïûê}', '')
+            buf = buf.replace('{Î∞∞Ìïò}', '')
+            buf = buf.replace('{Î∞∞Ìù∞}', '')
         return buf

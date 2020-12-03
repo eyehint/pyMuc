@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,12 +5,12 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         words = line.split()
         if len(words) < 2:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] [¹°Ç°] ÁÖ´Ù')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ] [ë¬¼í’ˆ] ì£¼ë‹¤')
             return
-        if words[1] == 'ÀºÀü':
+        if words[1] == 'ì€ì „':
             obj = ob.env.findObjName(words[0])
             if obj == None or is_player(obj) == False:
-                ob.sendLine('¢Ñ ¹°Ç°À» °Ç³»ÁÙ ¹«¸²ÀÎÀ» Ã£À» ¼ö ¾ø¾î¿ä. ^^')
+                ob.sendLine('â˜ ë¬¼í’ˆì„ ê±´ë‚´ì¤„ ë¬´ë¦¼ì¸ì„ ì°¾ì„ ìˆ˜ ì—†ì–´ìš”. ^^')
                 return
             if len(words) < 3:
                 cnt = 1
@@ -20,22 +18,22 @@ class CmdObj(Command):
                 cnt = getInt(words[2])
                 if cnt <= 0:
                     cnt = 1
-            if ob['ÀºÀü'] == 0:
-                ob.sendLine('¢Ñ µ·ÀÌ ¸ğÀÚ¶ó³×¿ä. ^^')
+            if ob['ì€ì „'] == 0:
+                ob.sendLine('â˜ ëˆì´ ëª¨ìë¼ë„¤ìš”. ^^')
                 return
-            if ob['ÀºÀü'] < cnt:
-                cnt = ob['ÀºÀü']
-            ob['ÀºÀü'] -= cnt
-            obj['ÀºÀü'] += cnt
-            ob.sendLine('´ç½ÅÀÌ %s¿¡°Ô ÀºÀü %d°³¸¦ Áİ´Ï´Ù.' % (obj.getNameA(), cnt))
-            obj.sendLine('\r\n%s ´ç½Å¿¡°Ô ÀºÀü %d°³¸¦ Áİ´Ï´Ù.' % (ob.han_iga(), cnt))
+            if ob['ì€ì „'] < cnt:
+                cnt = ob['ì€ì „']
+            ob['ì€ì „'] -= cnt
+            obj['ì€ì „'] += cnt
+            ob.sendLine('ë‹¹ì‹ ì´ %sì—ê²Œ ì€ì „ %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % (obj.getNameA(), cnt))
+            obj.sendLine('\r\n%s ë‹¹ì‹ ì—ê²Œ ì€ì „ %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % (ob.han_iga(), cnt))
             obj.lpPrompt()
-            ob.sendRoom('%s %s¿¡°Ô ÀºÀü %d°³¸¦ Áİ´Ï´Ù.' % (ob.han_iga(), obj.getNameA(), cnt), ex = obj)
+            ob.sendRoom('%s %sì—ê²Œ ì€ì „ %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % (ob.han_iga(), obj.getNameA(), cnt), ex = obj)
             return
-        if words[1] == '±İÀü':
+        if words[1] == 'ê¸ˆì „':
             obj = ob.env.findObjName(words[0])
             if obj == None or is_player(obj) == False:
-                ob.sendLine('¢Ñ ¹°Ç°À» °Ç³»ÁÙ ¹«¸²ÀÎÀ» Ã£À» ¼ö ¾ø¾î¿ä. ^^')
+                ob.sendLine('â˜ ë¬¼í’ˆì„ ê±´ë‚´ì¤„ ë¬´ë¦¼ì¸ì„ ì°¾ì„ ìˆ˜ ì—†ì–´ìš”. ^^')
                 return
             if len(words) < 3:
                 cnt = 1
@@ -43,22 +41,22 @@ class CmdObj(Command):
                 cnt = getInt(words[2])
                 if cnt <= 0:
                     cnt = 1
-            if ob['±İÀü'] == '':
-                ob['±İÀü'] = 0
-            if ob['±İÀü'] == 0:
-                ob.sendLine('¢Ñ µ·ÀÌ ¸ğÀÚ¶ó³×¿ä. ^^')
+            if ob['ê¸ˆì „'] == '':
+                ob['ê¸ˆì „'] = 0
+            if ob['ê¸ˆì „'] == 0:
+                ob.sendLine('â˜ ëˆì´ ëª¨ìë¼ë„¤ìš”. ^^')
                 return
-            if ob['±İÀü'] < cnt:
-                cnt = ob['±İÀü']
-            ob['±İÀü'] -= cnt
-            if obj['±İÀü'] == '':
-                obj['±İÀü'] = 0
+            if ob['ê¸ˆì „'] < cnt:
+                cnt = ob['ê¸ˆì „']
+            ob['ê¸ˆì „'] -= cnt
+            if obj['ê¸ˆì „'] == '':
+                obj['ê¸ˆì „'] = 0
           
-            obj['±İÀü'] += cnt
-            ob.sendLine('´ç½ÅÀÌ %s¿¡°Ô ±İÀü %d°³¸¦ Áİ´Ï´Ù.' % (obj.getNameA(), cnt))
-            obj.sendLine('\r\n%s ´ç½Å¿¡°Ô ±İÀü %d°³¸¦ Áİ´Ï´Ù.' % (ob.han_iga(), cnt))
+            obj['ê¸ˆì „'] += cnt
+            ob.sendLine('ë‹¹ì‹ ì´ %sì—ê²Œ ê¸ˆì „ %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % (obj.getNameA(), cnt))
+            obj.sendLine('\r\n%s ë‹¹ì‹ ì—ê²Œ ê¸ˆì „ %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % (ob.han_iga(), cnt))
             obj.lpPrompt()
-            ob.sendRoom('%s %s¿¡°Ô ±İÀü %d°³¸¦ Áİ´Ï´Ù.' % (ob.han_iga(), obj.getNameA(), cnt), ex = obj)
+            ob.sendRoom('%s %sì—ê²Œ ê¸ˆì „ %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % (ob.han_iga(), obj.getNameA(), cnt), ex = obj)
             return
         name = words[1]
         
@@ -74,15 +72,15 @@ class CmdObj(Command):
         
         obj = ob.findObjName(name, order)
         if obj == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        name = obj['ÀÌ¸§']
+        name = obj['ì´ë¦„']
         target = ob.env.findObjName(words[0])
         if target == None or not is_player(target):
-            ob.sendLine('¢Ñ ¹°Ç°À» °Ç³»ÁÙ ¹«¸²ÀÎÀ» Ã£À» ¼ö ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ë¬¼í’ˆì„ ê±´ë‚´ì¤„ ë¬´ë¦¼ì¸ì„ ì°¾ì„ ìˆ˜ ì—†ì–´ìš”. ^^')
             return
         if target == ob:
-            ob.sendLine('´ç½ÅÀÌ [36m' + obj['ÀÌ¸§'] + '[37m' + han_obj(obj['ÀÌ¸§']) + ' °¡Áö°í Àå³­ÇÕ´Ï´Ù. \'@_@\'')
+            ob.sendLine('ë‹¹ì‹ ì´ [36m' + obj['ì´ë¦„'] + '[37m' + han_obj(obj['ì´ë¦„']) + ' ê°€ì§€ê³  ì¥ë‚œí•©ë‹ˆë‹¤. \'@_@\'')
             return
         i = 1
         c = 0
@@ -99,35 +97,35 @@ class CmdObj(Command):
         for obj in objs:
             if c >= i:
                 break
-            if not(name == obj.get('ÀÌ¸§') or name in obj['¹İÀÀÀÌ¸§']):
+            if not(name == obj.get('ì´ë¦„') or name in obj['ë°˜ì‘ì´ë¦„']):
                 continue
-            if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+            if obj.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                 continue
             if obj.inUse:
                 continue
             n += 1
             if n < order:
                 continue
-            if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÁÙ¼ö¾øÀ½'):
+            if obj.checkAttr('ì•„ì´í…œì†ì„±', 'ì¤„ìˆ˜ì—†ìŒ'):
                 if c == 0:
-                    ob.sendLine('¢Ñ ±× ¹°°ÇÀº ÁÙ ¼ö ¾ø¾î¿ä. ^^')
+                    ob.sendLine('â˜ ê·¸ ë¬¼ê±´ì€ ì¤„ ìˆ˜ ì—†ì–´ìš”. ^^')
                     return
                 continue
-            if target.getItemWeight() + obj['¹«°Ô'] > target.getStr() * 10:
+            if target.getItemWeight() + obj['ë¬´ê²Œ'] > target.getStr() * 10:
                 if c == 0:
-                    ob.sendLine('[1m' + target['ÀÌ¸§'] + '[0;37m' + han_iga(target['ÀÌ¸§']) + \
-                        ' ¹«°Å¿ö¼­ ¹ŞÁö ¸øÇÕ´Ï´Ù.')
-                    target.sendLine('\r\n[1m' + ob['ÀÌ¸§'] + '[0;37m' + han_iga(ob['ÀÌ¸§']) + ' ÁÙ·Á´Â ' + 
-                        '[36m' + obj['ÀÌ¸§'] + '[37m' + han_obj(obj['ÀÌ¸§']) + ' ¹«°Å¿ö¼­ ¹ŞÁö ¸øÇÕ´Ï´Ù.')
+                    ob.sendLine('[1m' + target['ì´ë¦„'] + '[0;37m' + han_iga(target['ì´ë¦„']) + \
+                        ' ë¬´ê±°ì›Œì„œ ë°›ì§€ ëª»í•©ë‹ˆë‹¤.')
+                    target.sendLine('\r\n[1m' + ob['ì´ë¦„'] + '[0;37m' + han_iga(ob['ì´ë¦„']) + ' ì¤„ë ¤ëŠ” ' + 
+                        '[36m' + obj['ì´ë¦„'] + '[37m' + han_obj(obj['ì´ë¦„']) + ' ë¬´ê±°ì›Œì„œ ë°›ì§€ ëª»í•©ë‹ˆë‹¤.')
                     target.lpPrompt()
                     return
                 break
-            if target.getItemCount() >= getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']):
+            if target.getItemCount() >= getInt(MAIN_CONFIG['ì‚¬ìš©ìì•„ì´í…œê°¯ìˆ˜']):
                 if c == 0:
-                    ob.sendLine('[1m' + target['ÀÌ¸§'] + '[0;37m' + han_iga(target['ÀÌ¸§']) + \
-                        ' ¼ö·® ÇÑ°è·Î ¹ŞÁö ¸øÇÕ´Ï´Ù.')
-                    target.sendLine('\r\n[1m' + ob['ÀÌ¸§'] + '[0;37m' + han_iga(ob['ÀÌ¸§']) + ' ÁÙ·Á´Â ' + \
-                        '[36m' + obj['ÀÌ¸§'] + '[37m' + han_obj(obj['ÀÌ¸§']) + ' ¼ö·® ÇÑ°è·Î ¹ŞÁö ¸øÇÕ´Ï´Ù.')
+                    ob.sendLine('[1m' + target['ì´ë¦„'] + '[0;37m' + han_iga(target['ì´ë¦„']) + \
+                        ' ìˆ˜ëŸ‰ í•œê³„ë¡œ ë°›ì§€ ëª»í•©ë‹ˆë‹¤.')
+                    target.sendLine('\r\n[1m' + ob['ì´ë¦„'] + '[0;37m' + han_iga(ob['ì´ë¦„']) + ' ì¤„ë ¤ëŠ” ' + \
+                        '[36m' + obj['ì´ë¦„'] + '[37m' + han_obj(obj['ì´ë¦„']) + ' ìˆ˜ëŸ‰ í•œê³„ë¡œ ë°›ì§€ ëª»í•©ë‹ˆë‹¤.')
                     target.lpPrompt()
                     return
                 break
@@ -135,19 +133,19 @@ class CmdObj(Command):
             ob.remove(obj)
             target.insert(obj)
             if obj.isOneItem():
-                ONEITEM.have(obj.index, target['ÀÌ¸§'])
+                ONEITEM.have(obj.index, target['ì´ë¦„'])
 
         if c == 0:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
         elif c == 1:
-            ob.sendLine('´ç½ÅÀÌ [1m' + target['ÀÌ¸§'] + '[0;37m¿¡°Ô [36m' + name + '[37m' + han_obj(name) + ' Áİ´Ï´Ù.')
-            target.sendLine('\r\n[1m' + ob['ÀÌ¸§'] + '[0;37m' + han_iga(ob['ÀÌ¸§']) + ' ´ç½Å¿¡°Ô [36m' + name + '[37m' + han_obj(name) + ' Áİ´Ï´Ù.')
-            ob.sendRoom('%s %s¿¡°Ô [36m%s[37m%s Áİ´Ï´Ù.' % ( ob.han_iga(), target.getNameA(), name, han_obj(name)), ex = target)
+            ob.sendLine('ë‹¹ì‹ ì´ [1m' + target['ì´ë¦„'] + '[0;37mì—ê²Œ [36m' + name + '[37m' + han_obj(name) + ' ì¤ë‹ˆë‹¤.')
+            target.sendLine('\r\n[1m' + ob['ì´ë¦„'] + '[0;37m' + han_iga(ob['ì´ë¦„']) + ' ë‹¹ì‹ ì—ê²Œ [36m' + name + '[37m' + han_obj(name) + ' ì¤ë‹ˆë‹¤.')
+            ob.sendRoom('%s %sì—ê²Œ [36m%s[37m%s ì¤ë‹ˆë‹¤.' % ( ob.han_iga(), target.getNameA(), name, han_obj(name)), ex = target)
             target.lpPrompt()
         else:
-            ob.sendLine('´ç½ÅÀÌ [1m' + target['ÀÌ¸§'] + '[0;37m¿¡°Ô [36m' + name + '[37m' + ' %d°³¸¦ Áİ´Ï´Ù.' % c)
-            target.sendLine('\r\n[1m' + ob['ÀÌ¸§'] + '[0;37m' + han_iga(ob['ÀÌ¸§']) + ' ´ç½Å¿¡°Ô [36m' + name + '[37m' + ' %d°³¸¦ Áİ´Ï´Ù.' % c)
+            ob.sendLine('ë‹¹ì‹ ì´ [1m' + target['ì´ë¦„'] + '[0;37mì—ê²Œ [36m' + name + '[37m' + ' %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % c)
+            target.sendLine('\r\n[1m' + ob['ì´ë¦„'] + '[0;37m' + han_iga(ob['ì´ë¦„']) + ' ë‹¹ì‹ ì—ê²Œ [36m' + name + '[37m' + ' %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % c)
             target.lpPrompt()
-            ob.sendRoom('%s %s¿¡°Ô [36m%s[37m %d°³¸¦ Áİ´Ï´Ù.' % ( ob.han_iga(), target.getNameA(), name, c), ex = target)
+            ob.sendRoom('%s %sì—ê²Œ [36m%s[37m %dê°œë¥¼ ì¤ë‹ˆë‹¤.' % ( ob.han_iga(), target.getNameA(), name, c), ex = target)
 
 

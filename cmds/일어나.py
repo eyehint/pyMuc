@@ -1,15 +1,13 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if ob.act == ACT_REST:
-            ob.sendLine('´ç½ÅÀÌ ¿î±âÁ¶½ÄÀ» ¸¶Ä¡¸ç ¹ú¶± ÀÏ¾î¼·´Ï´Ù.')
-            ob.sendRoom('%s ¿î±âÁ¶½ÄÀ» ¸¶Ä¡¸ç ¹ú¶± ÀÏ¾î¼·´Ï´Ù.' % ob.han_iga())
+            ob.sendLine('ë‹¹ì‹ ì´ ìš´ê¸°ì¡°ì‹ì„ ë§ˆì¹˜ë©° ë²Œë–¡ ì¼ì–´ì„­ë‹ˆë‹¤.')
+            ob.sendRoom('%s ìš´ê¸°ì¡°ì‹ì„ ë§ˆì¹˜ë©° ë²Œë–¡ ì¼ì–´ì„­ë‹ˆë‹¤.' % ob.han_iga())
             ob.act = ACT_STAND
         elif ob.act == ACT_STAND:
-            ob.sendLine('¢Ñ ÀÌ¹Ì ¼­ÀÖ´Â »óÅÂÀÔ´Ï´Ù. ^^')
+            ob.sendLine('â˜ ì´ë¯¸ ì„œìˆëŠ” ìƒíƒœì…ë‹ˆë‹¤. ^^')
         else:
-            ob.sendLine('¢Ñ ¿î±âÁ¶½ÄÁßÀÎ »óÅÂ°¡ ¾Æ´Õ´Ï´Ù.')
+            ob.sendLine('â˜ ìš´ê¸°ì¡°ì‹ì¤‘ì¸ ìƒíƒœê°€ ì•„ë‹™ë‹ˆë‹¤.')

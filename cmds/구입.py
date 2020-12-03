@@ -1,12 +1,10 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¹°Ç°ÀÌ¸§] [¼ö·®] ±¸ÀÔ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë¬¼í’ˆì´ë¦„] [ìˆ˜ëŸ‰] êµ¬ì…')
             return
         words = line.split()
         count = 1
@@ -19,91 +17,91 @@ class CmdObj(Command):
         found = False
         mob = ob.env.findMerchant()
         if mob == None:
-            ob.sendLine('¢Ñ Ç°¸ñÀ» º¸¿©ÁÙ »óÀÎÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ í’ˆëª©ì„ ë³´ì—¬ì¤„ ìƒì¸ì´ ì—†ì–´ìš”. ^^')
             return
         item = None
-        for l in mob['¹°°ÇÆÇ¸Å'].splitlines():
+        for l in mob['ë¬¼ê±´íŒë§¤'].splitlines():
             w = l.split()
             index = w[0]
             percent = int(w[1])
             item = getItem(index)
             if item == None:
                 continue
-            if item['ÀÌ¸§'] == words[0] or words[0] in item['¹İÀÀÀÌ¸§'].splitlines():
+            if item['ì´ë¦„'] == words[0] or words[0] in item['ë°˜ì‘ì´ë¦„'].splitlines():
                 found = True
                 break
         if found == False:
-            ob.sendLine('¢Ñ ±×·± ¹°°ÇÀº ÆÈÁö ¾Ê¾Æ¿ä. ^_^')
+            ob.sendLine('â˜ ê·¸ëŸ° ë¬¼ê±´ì€ íŒ”ì§€ ì•Šì•„ìš”. ^_^')
             return
-        if item['Á¾·ù'] == 'È£À§':
+        if item['ì¢…ë¥˜'] == 'í˜¸ìœ„':
             self.buyGuardMob(ob, item)
             return
         c = 0
-        p = getInt(item['ÆÇ¸Å°¡°İ']) * 100 / percent
+        p = getInt(item['íŒë§¤ê°€ê²©']) * 100 / percent
         for i in range(count):
-            if ob.getItemCount() >= getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']):
+            if ob.getItemCount() >= getInt(MAIN_CONFIG['ì‚¬ìš©ìì•„ì´í…œê°¯ìˆ˜']):
                 if c == 0:
-                    ob.sendLine('¢Ñ ÀÚ³×°¡ °¡Áú ¹°Ç°ÀÇ ÇÑ°è¶ó³×')
+                    ob.sendLine('â˜ ìë„¤ê°€ ê°€ì§ˆ ë¬¼í’ˆì˜ í•œê³„ë¼ë„¤')
                     return
                 break
-            if ob.getItemWeight() + item['¹«°Ô'] > ob.getStr() * 10:
+            if ob.getItemWeight() + item['ë¬´ê²Œ'] > ob.getStr() * 10:
                 if c == 0:
-                    ob.sendLine('¢Ñ ¹«°Å¿ö¼­ ´õ ÀÌ»ó °¡Áú ¼ö ¾ø¾î¿ä. ^^')
+                    ob.sendLine('â˜ ë¬´ê±°ì›Œì„œ ë” ì´ìƒ ê°€ì§ˆ ìˆ˜ ì—†ì–´ìš”. ^^')
                     return
                 break
-            money = ob['ÀºÀü']
+            money = ob['ì€ì „']
             if money < p:
                 if c == 0:
-                    ob.sendLine('¢Ñ µ·ÀÌ ¸ğÀÚ¶ó³×¿ä. ^^')
+                    ob.sendLine('â˜ ëˆì´ ëª¨ìë¼ë„¤ìš”. ^^')
                     return
                 break
             money -= p
-            ob['ÀºÀü'] = money
+            ob['ì€ì „'] = money
             c += 1
             obj = copy.deepcopy(item)
             ob.insert(obj)
         if c == 0:
-            ob.sendLine('¢Ñ ¹«°Å¿ö¼­ ´õ ÀÌ»ó °¡Áú ¼ö ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ë¬´ê±°ì›Œì„œ ë” ì´ìƒ ê°€ì§ˆ ìˆ˜ ì—†ì–´ìš”. ^^')
         else:
-            ob.sendLine('´ç½ÅÀÌ %s %d°³¸¦ ÀºÀü %d°³¿¡ ±¸ÀÔÇÕ´Ï´Ù.' % ( item.getNameA(), c, c * p))
-            ob.sendRoom('%s %s %d°³¸¦ ÀºÀü %d°³¿¡ ±¸ÀÔÇÕ´Ï´Ù.' % (ob.han_iga(), item.getNameA(), c, c * p))
+            ob.sendLine('ë‹¹ì‹ ì´ %s %dê°œë¥¼ ì€ì „ %dê°œì— êµ¬ì…í•©ë‹ˆë‹¤.' % ( item.getNameA(), c, c * p))
+            ob.sendRoom('%s %s %dê°œë¥¼ ì€ì „ %dê°œì— êµ¬ì…í•©ë‹ˆë‹¤.' % (ob.han_iga(), item.getNameA(), c, c * p))
             
     def buyGuardMob(self, ob, item):
-        chI = ob['¼º°İ']
-        chU = item['±¸¸Å¼Ó¼º']
-        if chI != '±âÀÎ' and chI != '¼±ÀÎ':
-            if chU == '»çÆÄ' and chI != chU:
-                ob.sendLine('¢Ñ ÇØ´ç È£À§´Â »çÆÄ¿ø¸¸ »ç¿ë °¡´ÉÇÕ´Ï´Ù.')
+        chI = ob['ì„±ê²©']
+        chU = item['êµ¬ë§¤ì†ì„±']
+        if chI != 'ê¸°ì¸' and chI != 'ì„ ì¸':
+            if chU == 'ì‚¬íŒŒ' and chI != chU:
+                ob.sendLine('â˜ í•´ë‹¹ í˜¸ìœ„ëŠ” ì‚¬íŒŒì›ë§Œ ì‚¬ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤.')
                 return
-            if chU == 'Á¤ÆÄ' and chI != chU:
-                ob.sendLine('¢Ñ ÇØ´ç È£À§´Â Á¤ÆÄ¿ø¸¸ »ç¿ë °¡´ÉÇÕ´Ï´Ù.')
+            if chU == 'ì •íŒŒ' and chI != chU:
+                ob.sendLine('â˜ í•´ë‹¹ í˜¸ìœ„ëŠ” ì •íŒŒì›ë§Œ ì‚¬ìš© ê°€ëŠ¥í•©ë‹ˆë‹¤.')
                 return
-        lines = item['±¸¸ÅÁ¶°Ç'].splitlines()
+        lines = item['êµ¬ë§¤ì¡°ê±´'].splitlines()
         if len(lines) == 0:
-            ob.sendLine('¢Ñ ÇØ´ç È£À§¸¦ »ì¼ö°¡ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ í•´ë‹¹ í˜¸ìœ„ë¥¼ ì‚´ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.')
             return
             
-        #±¸¸Å·¹º§
+        #êµ¬ë§¤ë ˆë²¨
         maxLv = 0
         count = 0
         for obj in ob.objs:
-            if obj['Á¾·ù'] == 'È£À§':
-                if obj['ÀÌ¸§'] == item['ÀÌ¸§']:
+            if obj['ì¢…ë¥˜'] == 'í˜¸ìœ„':
+                if obj['ì´ë¦„'] == item['ì´ë¦„']:
                     count += 1
-                lv = obj['±¸¸Å·¹º§']
+                lv = obj['êµ¬ë§¤ë ˆë²¨']
                 if lv > maxLv:
                     maxLv = lv
-        if item['±¸¸Å·¹º§'] < maxLv:
-            ob.sendLine('¢Ñ ÇØ´ç È£À§¸¦ »ì¼ö°¡ ¾ø½À´Ï´Ù.(·¹º§)')
+        if item['êµ¬ë§¤ë ˆë²¨'] < maxLv:
+            ob.sendLine('â˜ í•´ë‹¹ í˜¸ìœ„ë¥¼ ì‚´ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.(ë ˆë²¨)')
             return
         limit = 0
-        for attr in item['¾ÆÀÌÅÛ¼Ó¼º'].splitlines():
-            if attr.find('¼ÒÁöÇÑ°è') == 0:
+        for attr in item['ì•„ì´í…œì†ì„±'].splitlines():
+            if attr.find('ì†Œì§€í•œê³„') == 0:
                 limit = getInt(attr.split()[1])
                 break
         
         if count >= limit:
-            ob.sendLine('¢Ñ ÇØ´ç È£À§¸¦ »ì¼ö°¡ ¾ø½À´Ï´Ù.(µ¿Á¾°³¼öÁ¦ÇÑ)')
+            ob.sendLine('â˜ í•´ë‹¹ í˜¸ìœ„ë¥¼ ì‚´ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.(ë™ì¢…ê°œìˆ˜ì œí•œ)')
             return
             
         match = False
@@ -111,7 +109,7 @@ class CmdObj(Command):
             words = line.split()
             l = len(words)
             if l == 2:
-                if words[0] == '¾àÃÊ':
+                if words[0] == 'ì•½ì´ˆ':
                     n = self.getHurbNum(ob)
                 else:
                     n = self.getGuardNum(ob, words[0])
@@ -135,38 +133,38 @@ class CmdObj(Command):
             else:
                 continue
         if match == False:
-            ob.sendLine('¢Ñ ÇØ´ç È£À§¸¦ »ì¼ö°¡ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ í•´ë‹¹ í˜¸ìœ„ë¥¼ ì‚´ìˆ˜ê°€ ì—†ìŠµë‹ˆë‹¤.')
             return
-        if gName == '¾àÃÊ':
+        if gName == 'ì•½ì´ˆ':
             self.delHerb(ob, nNum)
         else:
             n = 0
             objs = copy.copy(ob.objs)
             for obj in objs:
-                if obj['ÀÌ¸§'] == gName:
+                if obj['ì´ë¦„'] == gName:
                     ob.remove(obj)
                     n += 1
                     if n == nNum:
                         break
                         
         g = item.clone()
-        g.hp = g['Ã¼·Â']
+        g.hp = g['ì²´ë ¥']
         ob.insert(g)
         
-        ob.sendLine('´ç½ÅÀÌ %s ±¸ÀÔÇÕ´Ï´Ù.' % item.han_obj())
-        ob.sendRoom('%s %s ±¸ÀÔÇÕ´Ï´Ù.' % (ob.han_iga(), item.han_obj()))
-        #ob.sendLine('¢Ñ ¾ÆÁ÷ È£À§¸¦ »ì ¼ö ¾ø¾î¿ä^^;;')
+        ob.sendLine('ë‹¹ì‹ ì´ %s êµ¬ì…í•©ë‹ˆë‹¤.' % item.han_obj())
+        ob.sendRoom('%s %s êµ¬ì…í•©ë‹ˆë‹¤.' % (ob.han_iga(), item.han_obj()))
+        #ob.sendLine('â˜ ì•„ì§ í˜¸ìœ„ë¥¼ ì‚´ ìˆ˜ ì—†ì–´ìš”^^;;')
         
     def getGuardNum(self, ob, name):
         n = 0
         for obj in ob.objs:
-            if obj['ÀÌ¸§'] == name:
+            if obj['ì´ë¦„'] == name:
                 n += 1
         return n
         
     def delHerb(self, ob, c):
         n = 0
-        herbs = ['ÇÕ¼º1', 'ÇÕ¼º2', 'ÇÕ¼º3', 'ÇÕ¼º4', 'ÇÕ¼º5', 'ÇÕ¼º6', 'ÇÕ¼º7', 'ÇÕ¼º8', 'ÇÕ¼º9']
+        herbs = ['í•©ì„±1', 'í•©ì„±2', 'í•©ì„±3', 'í•©ì„±4', 'í•©ì„±5', 'í•©ì„±6', 'í•©ì„±7', 'í•©ì„±8', 'í•©ì„±9']
         objs = copy.copy(ob.objs)
         for obj in objs:
             if obj.index in herbs:
@@ -177,7 +175,7 @@ class CmdObj(Command):
         
     def getHurbNum(self, ob):
         n = 0
-        herbs = ['ÇÕ¼º1', 'ÇÕ¼º2', 'ÇÕ¼º3', 'ÇÕ¼º4', 'ÇÕ¼º5', 'ÇÕ¼º6', 'ÇÕ¼º7', 'ÇÕ¼º8', 'ÇÕ¼º9']
+        herbs = ['í•©ì„±1', 'í•©ì„±2', 'í•©ì„±3', 'í•©ì„±4', 'í•©ì„±5', 'í•©ì„±6', 'í•©ì„±7', 'í•©ì„±8', 'í•©ì„±9']
         for obj in ob.objs:
             if obj.index in herbs:
                 n += 1

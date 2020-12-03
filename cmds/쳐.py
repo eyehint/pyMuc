@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
@@ -8,51 +6,51 @@ class CmdObj(Command):
     def cmd(self, ob, line):
     
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] °ø°İ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ] ê³µê²©')
             return
         
-        if ob.env.checkAttr('ÀüÅõ±İÁö'):
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡¼± ¸ğµç ÀüÅõ°¡ ±İÁöµÇ¾î ÀÖ¾î¿ä. ^^')
+        if ob.env.checkAttr('ì „íˆ¬ê¸ˆì§€'):
+            ob.sendLine('â˜ ì´ê³³ì—ì„  ëª¨ë“  ì „íˆ¬ê°€ ê¸ˆì§€ë˜ì–´ ìˆì–´ìš”. ^^')
             return
             
-        if line.find('½ÃÃ¼') != -1:
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+        if line.find('ì‹œì²´') != -1:
+            ob.sendLine('â˜ ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìˆì§€!')
             return
             
         mob = ob.env.findObjName(line)
 
         if mob == None:
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            ob.sendLine('â˜ ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìˆì§€!')
             return
 
         if is_item(mob) or is_box(mob) or is_player(mob):
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            ob.sendLine('â˜ ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìˆì§€!')
             return
-        if is_player(mob) and ob.env.checkAttr('»ç¿ëÀÚÀüÅõ±İÁö'):
-            ob.sendLine('¢Ñ Áö±İÀº [1m[31m»ì°Ì[0m[37m[40mÀ» ÀÏÀ¸Å°±â¿¡ ºÎÀûÇÕÇÑ »óÈ² ÀÌ¶ó³×')
+        if is_player(mob) and ob.env.checkAttr('ì‚¬ìš©ìì „íˆ¬ê¸ˆì§€'):
+            ob.sendLine('â˜ ì§€ê¸ˆì€ [1m[31mì‚´ê²[0m[37m[40mì„ ì¼ìœ¼í‚¤ê¸°ì— ë¶€ì í•©í•œ ìƒí™© ì´ë¼ë„¤')
             return
             
-        if is_player(mob) == False and mob['¸÷Á¾·ù'] != 1:
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+        if is_player(mob) == False and mob['ëª¹ì¢…ë¥˜'] != 1:
+            ob.sendLine('â˜ ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìˆì§€!')
             return
         if mob.act > ACT_FIGHT:
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°İÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            ob.sendLine('â˜ ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìˆì§€!')
             return
         
-        #if mob['ÀÌ¸§'] != '¶ËÆÄ¸®' and len(mob.target) != 0 and ob not in mob.target:
-        #    ob.sendLine('¢Ñ ±×·± »ó´ë°¡ ¾ø½À´Ï´Ù.')
+        #if mob['ì´ë¦„'] != 'ë˜¥íŒŒë¦¬' and len(mob.target) != 0 and ob not in mob.target:
+        #    ob.sendLine('â˜ ê·¸ëŸ° ìƒëŒ€ê°€ ì—†ìŠµë‹ˆë‹¤.')
         #    return
 
         if mob in ob.target:
-            ob.sendLine('¢Ñ ÀÌ¹Ì °ø°İÁßÀÌ¿¡¿ä. ^_^')
+            ob.sendLine('â˜ ì´ë¯¸ ê³µê²©ì¤‘ì´ì—ìš”. ^_^')
             return
         
         if len(ob.target) != 0:
-            ob.sendLine('¢Ñ ÇöÀçÀÇ ºñ¹«¿¡ ½Å°æÀ» ÁıÁßÇÏ¼¼¿ä. @_@')
+            ob.sendLine('â˜ í˜„ì¬ì˜ ë¹„ë¬´ì— ì‹ ê²½ì„ ì§‘ì¤‘í•˜ì„¸ìš”. @_@')
             return
         ob.setFight(mob)
         if is_player(mob):
             mob.fightMode = True
 
-        #ob.sendLine('´ç½ÅÀº ' + mob.get('ÀÌ¸§') + han_obj(mob.get('ÀÌ¸§')) + \
-        #    ' °ø°İÇÏ±â ½ÃÀÛÇÕ´Ï´Ù.')
+        #ob.sendLine('ë‹¹ì‹ ì€ ' + mob.get('ì´ë¦„') + han_obj(mob.get('ì´ë¦„')) + \
+        #    ' ê³µê²©í•˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤.')

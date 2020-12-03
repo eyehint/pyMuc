@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import os
 import glob
 import time
@@ -31,16 +29,16 @@ class Item(Object):
         if scr == None:
             return False
         try:
-            self.attr = scr['¾ÆÀÌÅÛÁ¤º¸']
+            self.attr = scr['ì•„ì´í…œì •ë³´']
         except:
             return False
             
         self.inUse = False
-        #print '%s »ı¼º!!!' % str(index)
+        #print '%s ìƒì„±!!!' % str(index)
 
     def save(self, mode = True):
         o = {}
-        o['¾ÆÀÌÅÛÁ¤º¸'] = self.attr
+        o['ì•„ì´í…œì •ë³´'] = self.attr
 
         try:
             f = open(self.path, 'w')
@@ -51,22 +49,22 @@ class Item(Object):
         return True
         
     def view(self, ob):
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        ob.sendLine('[0m[44m[1m[37m¡ß ÀÌ¸§ ¢¹ %-31s[0m[37m[40m' % self.get('ÀÌ¸§'))
-        ob.sendLine('[0m[44m[1m[37m¡ß Á¾·ù ¢¹ %-31s[0m[37m[40m' % self.get('Á¾·ù'))
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-        #ob.sendLine(self.get('¼³¸í2'))
-        desc = self['¼³¸í2']
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        ob.sendLine('[0m[44m[1m[37mâ—† ì´ë¦„ â–· %-31s[0m[37m[40m' % self.get('ì´ë¦„'))
+        ob.sendLine('[0m[44m[1m[37mâ—† ì¢…ë¥˜ â–· %-31s[0m[37m[40m' % self.get('ì¢…ë¥˜'))
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+        #ob.sendLine(self.get('ì„¤ëª…2'))
+        desc = self['ì„¤ëª…2']
         d = desc.splitlines()
         for l in d:
-            if l.find('¹æ¾î·Â - ') == 0:
-                ob.sendLine('¹æ¾î·Â - %d' % self['¹æ¾î·Â'])
+            if l.find('ë°©ì–´ë ¥ - ') == 0:
+                ob.sendLine('ë°©ì–´ë ¥ - %d' % self['ë°©ì–´ë ¥'])
             else:
                 ob.sendLine(l)
         s = self.getOptionStr()
         if s != '':
             ob.sendLine(s)
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
         
     def drop(self, sec = None):
         if sec != None:
@@ -92,19 +90,19 @@ class Item(Object):
         del self
         
     def getNameA(self):
-        return '[36m' + self.get('ÀÌ¸§') + '[37m'
+        return '[36m' + self.get('ì´ë¦„') + '[37m'
         
     def getDesc1(self):
-        return self.get('¼³¸í1').replace('$¾ÆÀÌÅÛ$', '[36m' + self.get('ÀÌ¸§') + '[37m')
+        return self.get('ì„¤ëª…1').replace('$ì•„ì´í…œ$', '[36m' + self.get('ì´ë¦„') + '[37m')
     
     def getType(self):
-        return self.get('Á¾·ù')
+        return self.get('ì¢…ë¥˜')
 
     def getUseScript(self):
-        return self.get('»ç¿ë½ºÅ©¸³').replace('$¾ÆÀÌÅÛ$', self.get('ÀÌ¸§'))
+        return self.get('ì‚¬ìš©ìŠ¤í¬ë¦½').replace('$ì•„ì´í…œ$', self.get('ì´ë¦„'))
         
     def isOneItem(self):
-        if self.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '´ÜÀÏ¾ÆÀÌÅÛ'):
+        if self.checkAttr('ì•„ì´í…œì†ì„±', 'ë‹¨ì¼ì•„ì´í…œ'):
             return True
         return False
         
@@ -113,12 +111,12 @@ class Item(Object):
         return bRet
 
     def delOption(self):
-        if self['¿É¼Ç'] != None:
-            del self['¾ÆÀÌÅÛ¼Ó¼º']
-            del self['¿É¼Ç']
+        if self['ì˜µì…˜'] != None:
+            del self['ì•„ì´í…œì†ì„±']
+            del self['ì˜µì…˜']
 
     def getOption(self):
-        s = self['¿É¼Ç']
+        s = self['ì˜µì…˜']
         if s == '':
             return None
         option = {}
@@ -132,7 +130,7 @@ class Item(Object):
         s = ''
         for d in option:
             s += d + ' ' + str(option[d]) + '\r\n'
-        self['¿É¼Ç'] = s
+        self['ì˜µì…˜'] = s
 
     def getOptionStr(self):
         option = self.getOption()
@@ -164,7 +162,7 @@ def getItem(itemName):
     
 
 def loadAllItem():
-    log('¾ÆÀÌÅÛ ·ÎµùÁß... Àá½Ã¸¸ ±â´Ù·ÁÁÖ¼¼¿ä.')
+    log('ì•„ì´í…œ ë¡œë”©ì¤‘... ì ì‹œë§Œ ê¸°ë‹¤ë ¤ì£¼ì„¸ìš”.')
     pwd = os.getcwd()
     c = 0
     os.chdir('data/item')
@@ -175,5 +173,5 @@ def loadAllItem():
         if item != None:
             c = c + 1
     
-    log(str(c) + '°³ÀÇ ¾ÆÀÌÅÛÀÌ ·ÎµùµÇ¾ú½À´Ï´Ù.')
+    log(str(c) + 'ê°œì˜ ì•„ì´í…œì´ ë¡œë”©ë˜ì—ˆìŠµë‹ˆë‹¤.')
 

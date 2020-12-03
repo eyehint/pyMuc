@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         
         words = line.split()
         if line == '' or len(words) < 3:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] [Å°] [°ª] ¿É¼³Á¤')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ëŒ€ìƒ] [í‚¤] [ê°’] ì˜µì„¤ì •')
             return
         name, order = getNameOrder(words[0])
         item = ob.findObjInven(name, order)
         if item == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ž ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
         option = item.getOption() 
         if option == None:
@@ -25,8 +23,6 @@ class CmdObj(Command):
         option[words[1]] = int(words[2])
 
         item.setOption(option)
-        ob.sendLine('¢Ñ ¼³Á¤µÇ¾ú½À´Ï´Ù.')
-        #n = stripANSI(item['ÀÌ¸§'])
-        item['ÀÌ¸§'] = '[1;34m' + item['ÀÌ¸§'] + '[0;37m'
-
-        
+        ob.sendLine('â˜ž ì„¤ì •ë˜ì—ˆìŠµë‹ˆë‹¤.')
+        #n = stripANSI(item['ì´ë¦„'])
+        item['ì´ë¦„'] = '[1;34m' + item['ì´ë¦„'] + '[0;37m'

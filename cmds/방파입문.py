@@ -1,41 +1,39 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['Á÷À§'] != '¹æÁÖ' and ob['Á÷À§'] != 'ºÎ¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼' and ob['ì§ìœ„'] != 'ë¶€ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
             
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [´ë»ó] ¹æÆÄÀÔ¹®')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ëŒ€ìƒ] ë°©íŒŒì…ë¬¸')
             return
 
         obj = ob.env.findObjName(line)
         if obj == None or is_player(obj) == False:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ±×·± ¹«¸²ÀÎÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì´ê³³ì— ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
         if obj == ob:
-            ob.sendLine('¢Ñ ÀÚ±â ÀÚ½ÅÀÔ´Ï´Ù.')
+            ob.sendLine('â˜ ìê¸° ìì‹ ì…ë‹ˆë‹¤.')
             return
 
-        if ob.checkAttr('ÀÔ¹®½ÅÃ»ÀÚ', obj['ÀÌ¸§']) == False:
-            ob.sendLine('¢Ñ ¹æÆÄ¸¦ ½ÅÃ»ÇÑ ±×·± ¹«¸²ÀÎÀÌ ¾ø½À´Ï´Ù.')
+        if ob.checkAttr('ì…ë¬¸ì‹ ì²­ì', obj['ì´ë¦„']) == False:
+            ob.sendLine('â˜ ë°©íŒŒë¥¼ ì‹ ì²­í•œ ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        ob.delAttr('ÀÔ¹®½ÅÃ»ÀÚ', obj['ÀÌ¸§'])
+        ob.delAttr('ì…ë¬¸ì‹ ì²­ì', obj['ì´ë¦„'])
         
-        ob.sendLine('´ç½ÅÀÌ %s ¹æÆÄ¿¡ ÀÔ¹®½ÃÄ×À½À» ¼±Æ÷ÇÕ´Ï´Ù.' % obj.han_obj())
-        obj.sendLine('\r\n%s ´ç½ÅÀ» ¹æÆÄ¿¡ ÀÔ¹®½ÃÄ×À½À» ¼±Æ÷ÇÕ´Ï´Ù.' % ob.han_iga())
+        ob.sendLine('ë‹¹ì‹ ì´ %s ë°©íŒŒì— ì…ë¬¸ì‹œì¼°ìŒì„ ì„ í¬í•©ë‹ˆë‹¤.' % obj.han_obj())
+        obj.sendLine('\r\n%s ë‹¹ì‹ ì„ ë°©íŒŒì— ì…ë¬¸ì‹œì¼°ìŒì„ ì„ í¬í•©ë‹ˆë‹¤.' % ob.han_iga())
         obj.lpPrompt()
-        obj['¼Ò¼Ó'] = ob['¼Ò¼Ó']
-        obj['Á÷À§'] = '¹æÆÄÀÎ'
-        g = GUILD[obj['¼Ò¼Ó']]
-        if '¹æÆÄÀÎ¸®½ºÆ®' not in g:
-            g['¹æÆÄÀÎ¸®½ºÆ®'] = [obj['ÀÌ¸§']]
+        obj['ì†Œì†'] = ob['ì†Œì†']
+        obj['ì§ìœ„'] = 'ë°©íŒŒì¸'
+        g = GUILD[obj['ì†Œì†']]
+        if 'ë°©íŒŒì¸ë¦¬ìŠ¤íŠ¸' not in g:
+            g['ë°©íŒŒì¸ë¦¬ìŠ¤íŠ¸'] = [obj['ì´ë¦„']]
         else:
-            g['¹æÆÄÀÎ¸®½ºÆ®'].append(obj['ÀÌ¸§'])
-        g['¹æÆÄ¿ø¼ö'] += 1
+            g['ë°©íŒŒì¸ë¦¬ìŠ¤íŠ¸'].append(obj['ì´ë¦„'])
+        g['ë°©íŒŒì›ìˆ˜'] += 1
         GUILD.save()
-        #¹æÆÄ¿øµé¿¡°Ôµµ ¾Ë·Á¾ßÇÔ!!
+        #ë°©íŒŒì›ë“¤ì—ê²Œë„ ì•Œë ¤ì•¼í•¨!!

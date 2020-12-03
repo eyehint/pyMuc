@@ -1,29 +1,27 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob.env.checkAttr('±ÍÈ¯±İÁö'):
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡¼± ±ÍÈ¯ÇÏ½Ç ¼ö ¾ø¾î¿ä. ^^')
+        if ob.env.checkAttr('ê·€í™˜ê¸ˆì§€'):
+            ob.sendLine('â˜ ì´ê³³ì—ì„  ê·€í™˜í•˜ì‹¤ ìˆ˜ ì—†ì–´ìš”. ^^')
             return
         # check if player can't move
         if ob.isMovable() == False:
-            ob.sendLine('¢Ñ Áö±İÀº ±ÍÈ¯ÇÒ »óÈ²ÀÌ ¾Æ´Ï¿¡¿ä. ^^')
+            ob.sendLine('â˜ ì§€ê¸ˆì€ ê·€í™˜í•  ìƒí™©ì´ ì•„ë‹ˆì—ìš”. ^^')
             return
 
-        ret = ob.get('±ÍÈ¯Áö¸Ê')
+        ret = ob.get('ê·€í™˜ì§€ë§µ')
         if ret == '':
-            room = getRoom('³«¾ç¼º:42')
+            room = getRoom('ë‚™ì–‘ì„±:42')
         else:
             room = getRoom(ret)
         if room == None:
-            ob.sendLine('±ÍÈ¯Áö¸ÊÀÌ ¾ø½À´Ï´Ù. °ü¸®ÀÚ¿¡°Ô ¿¬¶ôÇÏ¼¼¿ä.')
+            ob.sendLine('ê·€í™˜ì§€ë§µì´ ì—†ìŠµë‹ˆë‹¤. ê´€ë¦¬ìì—ê²Œ ì—°ë½í•˜ì„¸ìš”.')
             return
         if room == ob.env:
-            ob.sendLine('¢Ñ °°Àº ÀÚ¸®¿¡¿ä. ^^')
+            ob.sendLine('â˜ ê°™ì€ ìë¦¬ì—ìš”. ^^')
             return
-        ob.enterRoom(room, '±ÍÈ¯', '±ÍÈ¯')
+        ob.enterRoom(room, 'ê·€í™˜', 'ê·€í™˜')
 
 

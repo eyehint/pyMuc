@@ -1,12 +1,10 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¹°Ç°ÀÌ¸§] [¼ö·®] ÆÇ¸Å')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë¬¼í’ˆì´ë¦„] [ìˆ˜ëŸ‰] íŒë§¤')
             return
         words = line.split()
         count = 1
@@ -19,193 +17,193 @@ class CmdObj(Command):
 
         mob = ob.env.findMerchant()
         if mob == None:
-            ob.sendLine('¢Ñ ±×·± ¹°°ÇÀ» »ì »óÀÎÀÌ ¾ø¾î¿ä. ^_^')
+            ob.sendLine('â˜ ê·¸ëŸ° ë¬¼ê±´ì„ ì‚´ ìƒì¸ì´ ì—†ì–´ìš”. ^_^')
             return
-        if mob['¹°°Ç±¸ÀÔ'] == '':
-            ob.sendLine('¢Ñ ±×·± ¹°°ÇÀ» »ì »óÀÎÀÌ ¾ø¾î¿ä. ^_^')
+        if mob['ë¬¼ê±´êµ¬ì…'] == '':
+            ob.sendLine('â˜ ê·¸ëŸ° ë¬¼ê±´ì„ ì‚´ ìƒì¸ì´ ì—†ì–´ìš”. ^_^')
             return
 
-        w = mob['¹°°Ç±¸ÀÔ'].split()
+        w = mob['ë¬¼ê±´êµ¬ì…'].split()
         percent = int(w[1])
 
-        if line == '¼Ó¼º1':
+        if line == 'ì†ì„±1':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
                     continue
-                if item['Á¾·ù'] != '¹æ¾î±¸' and item['Á¾·ù'] != '¹«±â':
+                if item['ì¢…ë¥˜'] != 'ë°©ì–´êµ¬' and item['ì¢…ë¥˜'] != 'ë¬´ê¸°':
                     continue
-                if item['¿É¼Ç'] != None and len(item['¿É¼Ç'].split('\n')) > 2:
+                if item['ì˜µì…˜'] != None and len(item['ì˜µì…˜'].split('\n')) > 2:
                     continue
  
-                p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+                p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
-                ob['ÀºÀü'] += p
+                ob['ì€ì „'] += p
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), p))
-                ob.sendRoom('%s %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), p))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), p))
+                ob.sendRoom('%s %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), p))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if line == '¼Ó¼º2':
+        if line == 'ì†ì„±2':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
                     continue
-                if item['Á¾·ù'] != '¹æ¾î±¸' and item['Á¾·ù'] != '¹«±â':
+                if item['ì¢…ë¥˜'] != 'ë°©ì–´êµ¬' and item['ì¢…ë¥˜'] != 'ë¬´ê¸°':
                     continue
-                if item['¿É¼Ç'] != None and len(item['¿É¼Ç'].split('\n')) > 3:
+                if item['ì˜µì…˜'] != None and len(item['ì˜µì…˜'].split('\n')) > 3:
                     continue
  
-                p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+                p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
-                ob['ÀºÀü'] += p
+                ob['ì€ì „'] += p
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), p))
-                ob.sendRoom('%s %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), p))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), p))
+                ob.sendRoom('%s %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), p))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if line == '¼Ó¼º3':
+        if line == 'ì†ì„±3':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
                     continue
-                if item['Á¾·ù'] != '¹æ¾î±¸' and item['Á¾·ù'] != '¹«±â':
+                if item['ì¢…ë¥˜'] != 'ë°©ì–´êµ¬' and item['ì¢…ë¥˜'] != 'ë¬´ê¸°':
                     continue
-                if item['¿É¼Ç'] != None and len(item['¿É¼Ç'].split('\n')) > 4:
+                if item['ì˜µì…˜'] != None and len(item['ì˜µì…˜'].split('\n')) > 4:
                     continue
  
-                p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+                p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
-                ob['ÀºÀü'] += p
+                ob['ì€ì „'] += p
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), p))
-                ob.sendRoom('%s %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), p))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), p))
+                ob.sendRoom('%s %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), p))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
 
-        if line == 'ÀÏ¹İ':
+        if line == 'ì¼ë°˜':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
                     continue
-                if item['Á¾·ù'] != '¹æ¾î±¸' and item['Á¾·ù'] != '¹«±â':
+                if item['ì¢…ë¥˜'] != 'ë°©ì–´êµ¬' and item['ì¢…ë¥˜'] != 'ë¬´ê¸°':
                     continue
-                if item['¿É¼Ç'] == None:
+                if item['ì˜µì…˜'] == None:
                     pass
-                elif item['¿É¼Ç'] != None and len(item['¿É¼Ç']) != 0:
+                elif item['ì˜µì…˜'] != None and len(item['ì˜µì…˜']) != 0:
                     continue
  
-                p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+                p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
-                ob['ÀºÀü'] += p
+                ob['ì€ì „'] += p
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), p))
-                ob.sendRoom('%s %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), p))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), p))
+                ob.sendRoom('%s %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), p))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
 
-        if line == 'Àåºñ':
+        if line == 'ì¥ë¹„':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
                     continue
-                if item['Á¾·ù'] != '¹æ¾î±¸' and item['Á¾·ù'] != '¹«±â':
+                if item['ì¢…ë¥˜'] != 'ë°©ì–´êµ¬' and item['ì¢…ë¥˜'] != 'ë¬´ê¸°':
                     continue
  
-                p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+                p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
-                ob['ÀºÀü'] += p
+                ob['ì€ì „'] += p
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), p))
-                ob.sendRoom('%s %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), p))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), p))
+                ob.sendRoom('%s %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), p))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
 
-        if line == '¸ğµÎ':
+        if line == 'ëª¨ë‘':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
                     continue
  
-                p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+                p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
-                ob['ÀºÀü'] += p
+                ob['ì€ì „'] += p
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), p))
-                ob.sendRoom('%s %s 1°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), p))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), p))
+                ob.sendRoom('%s %s 1ê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), p))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
 
         name, order = getNameOrder(words[0])
@@ -214,28 +212,28 @@ class CmdObj(Command):
 
         item = ob.findObjInven(name, order)
         if item == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+        if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
         if item.inUse == True:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ'):
-            ob.sendLine('¢Ñ ±× ¾ÆÀÌÅÛÀº ÆÈ ¼ö°¡ ¾ø¾î¿ä~')
+        if item.checkAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨'):
+            ob.sendLine('â˜ ê·¸ ì•„ì´í…œì€ íŒ” ìˆ˜ê°€ ì—†ì–´ìš”~')
             return
         
         c = 0
         sum = 0
-        p = (getInt(item['ÆÇ¸Å°¡°İ']) * percent) / 100
+        p = (getInt(item['íŒë§¤ê°€ê²©']) * percent) / 100
         obj = item
         for i in range(count):
-            p = (getInt(obj['ÆÇ¸Å°¡°İ']) * percent) / 100
+            p = (getInt(obj['íŒë§¤ê°€ê²©']) * percent) / 100
             op = obj.getOption()
             if op != None:
                 p = int( p * (len(op) * 1.3) )
-            ob['ÀºÀü'] += p
+            ob['ì€ì „'] += p
             sum += p
             c += 1
             ob.remove(obj)
@@ -250,7 +248,7 @@ class CmdObj(Command):
             if obj.inUse == True:
                 break
         if c == 0:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
         else:
-            ob.sendLine('´ç½ÅÀÌ %s %d°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( item.getNameA(), c, sum))
-            ob.sendRoom('%s %s %d°³¸¦ ÀºÀü %d°³¿¡ ÆÇ¸ÅÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA(), c, sum))
+            ob.sendLine('ë‹¹ì‹ ì´ %s %dê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( item.getNameA(), c, sum))
+            ob.sendRoom('%s %s %dê°œë¥¼ ì€ì „ %dê°œì— íŒë§¤í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA(), c, sum))

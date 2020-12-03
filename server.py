@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from twisted.internet import protocol
 from twisted.application import service, internet
 import gc

@@ -1,49 +1,47 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [±İ¾×] ¼ö·É')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ê¸ˆì•¡] ìˆ˜ë ¹')
             return
-        mob = ob.env.findObjName('Ç¥µÎ')
+        mob = ob.env.findObjName('í‘œë‘')
         if mob == None:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ Ç¥±¹¹«»ç°¡ ¾ø³×¿ä.')
+            ob.sendLine('â˜ ì´ê³³ì— í‘œêµ­ë¬´ì‚¬ê°€ ì—†ë„¤ìš”.')
             return
         m = getInt(line)
         if m <= 0:
-            ob.sendLine('¢Ñ ÀºÀü 1°³ ÀÌ»ó ÀÔ·Â ÇÏ¼Å¾ß ÇØ¿ä.')
+            ob.sendLine('â˜ ì€ì „ 1ê°œ ì´ìƒ ì…ë ¥ í•˜ì…”ì•¼ í•´ìš”.')
             return
-        if ob['·¹º§'] > 500:
-            ob.sendLine('¢Ñ ÃæºĞÇÑ ´É·ÂÀÌ ÀÖ¾î º¸ÀÌ´Âµ¥¿ä???')
+        if ob['ë ˆë²¨'] > 500:
+            ob.sendLine('â˜ ì¶©ë¶„í•œ ëŠ¥ë ¥ì´ ìˆì–´ ë³´ì´ëŠ”ë°ìš”???')
             return
         if m > 10000000:
-            ob.sendLine('¢Ñ ³Ê¹« ¿å½ÉÀÌ Å©±º¿ä???')
+            ob.sendLine('â˜ ë„ˆë¬´ ìš•ì‹¬ì´ í¬êµ°ìš”???')
             return
-        if m > mob['ÀºÀü']:
-            ob.sendLine('¢Ñ ±âºÎ±İÀÌ ¸ğÀß¶ó¿ä^^;')
+        if m > mob['ì€ì „']:
+            ob.sendLine('â˜ ê¸°ë¶€ê¸ˆì´ ëª¨ì˜ë¼ìš”^^;')
             return
-        if getInt(ob['¼ö·É¾×']) >= 1000000000:
-            ob.sendLine('¢Ñ ´õÀÌ»ó ¼ö·ÉÀº °ï¶õÇØ¿ä^^;')
+        if getInt(ob['ìˆ˜ë ¹ì•¡']) >= 1000000000:
+            ob.sendLine('â˜ ë”ì´ìƒ ìˆ˜ë ¹ì€ ê³¤ë€í•´ìš”^^;')
             return
-        if getInt(ob['¼ö·É¾×']) + m >= 1000000000:
-            ob.sendLine('¢Ñ ÇÑµµ ÃÊ°ú¿¡¿ä!!!')
+        if getInt(ob['ìˆ˜ë ¹ì•¡']) + m >= 1000000000:
+            ob.sendLine('â˜ í•œë„ ì´ˆê³¼ì—ìš”!!!')
             return
-        if getInt(ob['¸¶Áö¸·¼ö·É']) + 86400 > time.time():
-            ob.sendLine('¢Ñ ¶Ç ¿À¼Ì¾î¿ä???')
+        if getInt(ob['ë§ˆì§€ë§‰ìˆ˜ë ¹']) + 86400 > time.time():
+            ob.sendLine('â˜ ë˜ ì˜¤ì…¨ì–´ìš”???')
             return
 
-        ob['¸¶Áö¸·¼ö·É'] = time.time()
-        ob['ÀºÀü'] += m
-        ob['¼ö·É¾×'] = getInt(ob['¼ö·É¾×']) + m
-        mob['ÀºÀü'] -= m
-        msg = '´ç½ÅÀÌ ÀºÀü %d°³¸¦ Ç¥±¹¹«»ç¿¡°Ô ¼ö·ÉÇÕ´Ï´Ù.\r\n' % m
-        msg += 'ÇöÀç±îÁö ¼ö·ÉÇÑ ±âºÎ±İ ÃÑ¾×Àº ÀºÀü [1m%d[0;37m°³ ÀÔ´Ï´Ù.' %(ob['¼ö·É¾×'])
+        ob['ë§ˆì§€ë§‰ìˆ˜ë ¹'] = time.time()
+        ob['ì€ì „'] += m
+        ob['ìˆ˜ë ¹ì•¡'] = getInt(ob['ìˆ˜ë ¹ì•¡']) + m
+        mob['ì€ì „'] -= m
+        msg = 'ë‹¹ì‹ ì´ ì€ì „ %dê°œë¥¼ í‘œêµ­ë¬´ì‚¬ì—ê²Œ ìˆ˜ë ¹í•©ë‹ˆë‹¤.\r\n' % m
+        msg += 'í˜„ì¬ê¹Œì§€ ìˆ˜ë ¹í•œ ê¸°ë¶€ê¸ˆ ì´ì•¡ì€ ì€ì „ [1m%d[0;37mê°œ ì…ë‹ˆë‹¤.' %(ob['ìˆ˜ë ¹ì•¡'])
         ob.sendLine(msg)
 
-        msg = '[¸÷Á¤º¸]\n\n'
+        msg = '[ëª¹ì •ë³´]\n\n'
         l = mob.attr.keys()
         l.sort()
         for at in l:

@@ -1,13 +1,11 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
             c = 0
@@ -18,20 +16,20 @@ class CmdObj(Command):
                     c += 1
                     obj.doRegen()
             if c != 0:
-                #ob.sendLine('¢Ñ ¸®Á¨µÇ¾ú½À´Ï´Ù.')
-                ob.env.printPrompt(ex = ob['ÀÌ¸§'])
-                ob.sendLine('\r\n\r\n¢Ñ ¸®Á¨µÇ¾ú½À´Ï´Ù.')
+                #ob.sendLine('â˜ž ë¦¬ì  ë˜ì—ˆìŠµë‹ˆë‹¤.')
+                ob.env.printPrompt(ex = ob['ì´ë¦„'])
+                ob.sendLine('\r\n\r\nâ˜ž ë¦¬ì  ë˜ì—ˆìŠµë‹ˆë‹¤.')
             else:
-                ob.sendLine('¢Ñ ¸®Á¨µÉ ¸÷ÀÌ ¾ø¾î¿ä!!')
+                ob.sendLine('â˜ž ë¦¬ì  ë  ëª¹ì´ ì—†ì–´ìš”!!')
             return
         obj = ob.env.findObjName(line)
         if obj == None or is_item(obj) or is_player(obj):
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if obj.act != ACT_DEATH:
-            ob.sendLine('¢Ñ ½ÃÃ¼¸¸ °¡´ÉÇÕ´Ï´Ù. *^_^*')
+            ob.sendLine('â˜ž ì‹œì²´ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤. *^_^*')
             return
         obj.doRegen()
-        ob.env.printPrompt(ex = ob['ÀÌ¸§'])
+        ob.env.printPrompt(ex = ob['ì´ë¦„'])
         
  

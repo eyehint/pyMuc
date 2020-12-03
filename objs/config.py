@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.object import Object
 from lib.loader import load_script
 
@@ -13,6 +11,6 @@ class Config(Object):
     def load(self):
         self.attr = {}
         scr = load_script('data/config/murim.cfg')
-        self.attr = scr['∏ﬁ¿Œº≥¡§']
+        self.attr = scr['Î©îÏù∏ÏÑ§Ï†ï']
         
 MAIN_CONFIG = Config()

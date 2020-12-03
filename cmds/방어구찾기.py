@@ -1,21 +1,19 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         c = 0
         for index in Item.Items:
             item = Item.Items[index]
-            if item['Á¾·ù'] == '¹æ¾î±¸':
+            if item['ì¢…ë¥˜'] == 'ë°©ì–´êµ¬':
                 c += 1
                 ob.sendLine('%s : %s'% (item.getNameA(), item.index))
         if c == 0:
-            ob.sendLine('¢Ñ Ã£À¸½Ã´Â ¾ÆÀÌÅÛÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ž ì°¾ìœ¼ì‹œëŠ” ì•„ì´í…œì´ ì—†ìŠµë‹ˆë‹¤.')
         
 

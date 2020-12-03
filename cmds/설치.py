@@ -1,63 +1,61 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] ¼³Ä¡')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ] ì„¤ì¹˜')
             return
         item = ob.findObjName(line)
         if item == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if item['Á¾·ù'] != '¼³Ä¡¾ÆÀÌÅÛ':
-            ob.sendLine('¢Ñ ¼³Ä¡ÇÒ ¼ö ÀÖ´Â °ÍÀÌ ¾Æ´Õ´Ï´Ù. ^^')
+        if item['ì¢…ë¥˜'] != 'ì„¤ì¹˜ì•„ì´í…œ':
+            ob.sendLine('â˜ ì„¤ì¹˜í•  ìˆ˜ ìˆëŠ” ê²ƒì´ ì•„ë‹™ë‹ˆë‹¤. ^^')
             return
-        name = item['ÀÌ¸§']
-        owner = ob['ÀÌ¸§']
-        if ob.env['ÁÖÀÎ'] == '':
-            if ob.env['¹æÆÄÁÖÀÎ'] == ob['¼Ò¼Ó']:
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '°ø¿ëº¸°üÇÔ') == False:
-                    ob.sendLine('¢Ñ ÀÌ°÷¿¡ ¼³Ä¡ÇÒ Çã°¡±ÇÀÌ ¾ø½À´Ï´Ù.')
+        name = item['ì´ë¦„']
+        owner = ob['ì´ë¦„']
+        if ob.env['ì£¼ì¸'] == '':
+            if ob.env['ë°©íŒŒì£¼ì¸'] == ob['ì†Œì†']:
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ê³µìš©ë³´ê´€í•¨') == False:
+                    ob.sendLine('â˜ ì´ê³³ì— ì„¤ì¹˜í•  í—ˆê°€ê¶Œì´ ì—†ìŠµë‹ˆë‹¤.')
                     return
-                owner = ob['¼Ò¼Ó']
+                owner = ob['ì†Œì†']
             else:
-                ob.sendLine('¢Ñ ÀÌ°÷¿¡ ¼³Ä¡ÇÒ Çã°¡±ÇÀÌ ¾ø½À´Ï´Ù.')
+                ob.sendLine('â˜ ì´ê³³ì— ì„¤ì¹˜í•  í—ˆê°€ê¶Œì´ ì—†ìŠµë‹ˆë‹¤.')
                 return
-        elif ob.env['ÁÖÀÎ'] != ob['ÀÌ¸§']:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ¼³Ä¡ÇÒ Çã°¡±ÇÀÌ ¾ø½À´Ï´Ù.')
+        elif ob.env['ì£¼ì¸'] != ob['ì´ë¦„']:
+            ob.sendLine('â˜ ì´ê³³ì— ì„¤ì¹˜í•  í—ˆê°€ê¶Œì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        if name in ob.env['¼³Ä¡¸®½ºÆ®'].splitlines():
-            ob.sendLine('¢Ñ ÀÌ¹Ì ¼³Ä¡°¡ µÇ¾î ÀÖ½À´Ï´Ù. ^^')
+        if name in ob.env['ì„¤ì¹˜ë¦¬ìŠ¤íŠ¸'].splitlines():
+            ob.sendLine('â˜ ì´ë¯¸ ì„¤ì¹˜ê°€ ë˜ì–´ ìˆìŠµë‹ˆë‹¤. ^^')
             return
         
-        ob.env.setAttr('¼³Ä¡¸®½ºÆ®', name)
+        ob.env.setAttr('ì„¤ì¹˜ë¦¬ìŠ¤íŠ¸', name)
         ob.env.save()
         
         box = Box()
-        box['ÀÌ¸§'] = item['ÀÌ¸§']
-        box['º¸°üÁ¾·ù'] = item['º¸°üÁ¾·ù']
-        box['¹İÀÀÀÌ¸§'] = item['¹İÀÀÀÌ¸§']
-        box['Á¾·ù'] = item['Á¾·ù']
-        box['»ı¼ºÁ¾·ù'] = item['»ı¼ºÁ¾·ù']
-        box['»ı¼ºÀ§Ä¡'] = item['»ı¼ºÀ§Ä¡']
-        box['º¸°ü¼ö·®'] = item['º¸°ü¼ö·®']
-        box['º¸°üÃÖ´ë¼ö·®'] = item['º¸°üÃÖ´ë¼ö·®']
-        box['º¸°üÁõ°¡ÀºÀü'] = item['º¸°üÁõ°¡ÀºÀü']
-        box['ÆÇ¸Å°¡°İ'] = item['ÆÇ¸Å°¡°İ']
-        box['¹«°Ô'] = item['¹«°Ô']
-        box['¾ÆÀÌÅÛ¼Ó¼º'] = item['¾ÆÀÌÅÛ¼Ó¼º']
-        box['¼³¸í1'] = item['¼³¸í1']
-        box['¼³¸í2'] = item['¼³¸í2']
-        box['ÁÖÀÎ'] = owner
-        box.index = '%s_%s' % (owner, item['ÀÌ¸§'])
+        box['ì´ë¦„'] = item['ì´ë¦„']
+        box['ë³´ê´€ì¢…ë¥˜'] = item['ë³´ê´€ì¢…ë¥˜']
+        box['ë°˜ì‘ì´ë¦„'] = item['ë°˜ì‘ì´ë¦„']
+        box['ì¢…ë¥˜'] = item['ì¢…ë¥˜']
+        box['ìƒì„±ì¢…ë¥˜'] = item['ìƒì„±ì¢…ë¥˜']
+        box['ìƒì„±ìœ„ì¹˜'] = item['ìƒì„±ìœ„ì¹˜']
+        box['ë³´ê´€ìˆ˜ëŸ‰'] = item['ë³´ê´€ìˆ˜ëŸ‰']
+        box['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰'] = item['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']
+        box['ë³´ê´€ì¦ê°€ì€ì „'] = item['ë³´ê´€ì¦ê°€ì€ì „']
+        box['íŒë§¤ê°€ê²©'] = item['íŒë§¤ê°€ê²©']
+        box['ë¬´ê²Œ'] = item['ë¬´ê²Œ']
+        box['ì•„ì´í…œì†ì„±'] = item['ì•„ì´í…œì†ì„±']
+        box['ì„¤ëª…1'] = item['ì„¤ëª…1']
+        box['ì„¤ëª…2'] = item['ì„¤ëª…2']
+        box['ì£¼ì¸'] = owner
+        box.index = '%s_%s' % (owner, item['ì´ë¦„'])
         box.path = 'data/box/%s.box' % box.index
         box.save()
         ob.env.insert(box)
-        ob.sendLine('´ç½ÅÀÌ %s ¼³Ä¡ÇÕ´Ï´Ù.' % item.han_obj())
-        ob.sendRoom('%s %s ¼³Ä¡ÇÕ´Ï´Ù.' % ( ob.han_iga(), item.han_obj() ))
+        ob.sendLine('ë‹¹ì‹ ì´ %s ì„¤ì¹˜í•©ë‹ˆë‹¤.' % item.han_obj())
+        ob.sendRoom('%s %s ì„¤ì¹˜í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.han_obj() ))
         ob.remove(item)
         del item
 

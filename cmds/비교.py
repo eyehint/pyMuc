@@ -1,39 +1,37 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] ºñ±³')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ] ë¹„êµ')
             return
         obj = ob.env.findObjName(line)
         if is_mob(obj) == False and is_player(obj) == False:
-            ob.sendLine('ÀÚ½ÅÀÇ »óÅÂ¸¦ ÅëÅºÇØ ÇÕ´Ï´Ù. @_@')
+            ob.sendLine('ìì‹ ì˜ ìƒíƒœë¥¼ í†µíƒ„í•´ í•©ë‹ˆë‹¤. @_@')
             return
-        if obj == None or obj['¸÷Á¾·ù'] == 7:
-            ob.sendLine('¢Ñ ±×·± ºñ±³´ë»óÀÌ ¾ø¾î¿ä. ^^')
+        if obj == None or obj['ëª¹ì¢…ë¥˜'] == 7:
+            ob.sendLine('â˜ ê·¸ëŸ° ë¹„êµëŒ€ìƒì´ ì—†ì–´ìš”. ^^')
             return
         if ob == obj:
-            ob.sendLine('ÀÚ½ÅÀÇ »óÅÂ¸¦ ÅëÅºÇØ ÇÕ´Ï´Ù. @_@')
+            ob.sendLine('ìì‹ ì˜ ìƒíƒœë¥¼ í†µíƒ„í•´ í•©ë‹ˆë‹¤. @_@')
             return
-        if ob.checkConfig('ºñ±³°ÅºÎ') or (is_player(obj) and obj.checkConfig('ºñ±³°ÅºÎ')):
-            ob.sendLine('¢Ñ ÁøÁ¤ÇÑ ½ÂºÎ¶õ ºñ¹«¸¦ ÅëÇØ¼­ ¾Ë ¼ö ÀÖ´Â °Í ÀÌÁö')
+        if ob.checkConfig('ë¹„êµê±°ë¶€') or (is_player(obj) and obj.checkConfig('ë¹„êµê±°ë¶€')):
+            ob.sendLine('â˜ ì§„ì •í•œ ìŠ¹ë¶€ë€ ë¹„ë¬´ë¥¼ í†µí•´ì„œ ì•Œ ìˆ˜ ìˆëŠ” ê²ƒ ì´ì§€')
             return
         
         mT, c1, c2 = ob.getAttackPoint(obj)
         uT, c1, c2 = obj.getAttackPoint(ob)
         if is_player(obj):
-            mH = obj['ÃÖ°íÃ¼·Â'] / mT
+            mH = obj['ìµœê³ ì²´ë ¥'] / mT
         else:
-            mH = obj['Ã¼·Â'] / mT
-        uH = ob['ÃÖ°íÃ¼·Â'] / uT
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        ob.sendLine('¢º [1m%s[0;37m%sÀÇ »ó´ëºñ±³' % ( obj['ÀÌ¸§'] , han_wa(obj['ÀÌ¸§']) ))
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-        ob.sendLine('¢Ñ ´ç½ÅÀÇ ½Â·ü ¿ÀÂ÷¢°%d' % uH)
-        ob.sendLine('¢Ñ »ó´ëÀÇ ½Â·ü ¿ÀÂ÷¢°%d' % mH)
-        ob.sendLine('¢Ñ ½Â  ·ü ¿ÀÂ÷ °á°ú¢°%d' % (uH-mH))
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            mH = obj['ì²´ë ¥'] / mT
+        uH = ob['ìµœê³ ì²´ë ¥'] / uT
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        ob.sendLine('â–¶ [1m%s[0;37m%sì˜ ìƒëŒ€ë¹„êµ' % ( obj['ì´ë¦„'] , han_wa(obj['ì´ë¦„']) ))
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+        ob.sendLine('â˜ ë‹¹ì‹ ì˜ ìŠ¹ë¥  ì˜¤ì°¨Ë%d' % uH)
+        ob.sendLine('â˜ ìƒëŒ€ì˜ ìŠ¹ë¥  ì˜¤ì°¨Ë%d' % mH)
+        ob.sendLine('â˜ ìŠ¹  ë¥  ì˜¤ì°¨ ê²°ê³¼Ë%d' % (uH-mH))
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
 

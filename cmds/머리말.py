@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
@@ -7,10 +5,10 @@ class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('╒я ╩Г©К╧Щ: [Ё╩©К] ╦с╦╝╦╩')
+            ob.sendLine('Б≤· Л┌╛Л ╘К╡∙: [К┌╢Л ╘] К╗╦К╕╛К╖░')
             return
         if len(line) > 20:
-            ob.sendLine('╒я Ёй╧╚ ╠И╢о╢ы.')
+            ob.sendLine('Б≤· К└┬К╛╢ Й╧│К▀┬К▀╓.')
             return
-        ob['╦с╦╝╦╩'] = line
-        ob.sendLine('╒я ╦с╦╝╦╩ю╩ ╪Ёа╓ го©╢╫ю╢о╢ы.')
+        ob['К╗╦К╕╛К╖░'] = line
+        ob.sendLine('Б≤· К╗╦К╕╛К╖░Л²└ Л└╓Л═∙ М∙≤Л≤─Л┼╣К▀┬К▀╓.')

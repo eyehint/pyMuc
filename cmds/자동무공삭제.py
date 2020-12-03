@@ -1,12 +1,10 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['ÀÚµ¿¹«°ø'] == '':
-            ob.sendLine('¢Ñ ÀÚµ¿¹«°ø : ¾øÀ½')
+        if ob['ìë™ë¬´ê³µ'] == '':
+            ob.sendLine('â˜ ìë™ë¬´ê³µ : ì—†ìŒ')
             return
-        ob['ÀÚµ¿¹«°ø'] = ''
-        ob.sendLine('¢Ñ ÀÚµ¿¹«°øÀ» »èÁ¦ÇÏ¿´½À´Ï´Ù.')
+        ob['ìë™ë¬´ê³µ'] = ''
+        ob.sendLine('â˜ ìë™ë¬´ê³µì„ ì‚­ì œí•˜ì˜€ìŠµë‹ˆë‹¤.')

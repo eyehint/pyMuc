@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -8,11 +6,11 @@ class CmdObj(Command):
         from objs.skill import MUGONG
         
         if line == '':
-            if ob['ÀÚµ¿¹«°ø'] == '':
-                ob.sendLine('¢Ñ ÀÚµ¿¹«°ø : ¾øÀ½')
+            if ob['ìë™ë¬´ê³µ'] == '':
+                ob.sendLine('â˜ ìë™ë¬´ê³µ : ì—†ìŒ')
                 return
             else:
-                ob.sendLine('¢Ñ ÀÚµ¿¹«°ø : [[1;37m%s[0;37m]' % ob['ÀÚµ¿¹«°ø'])
+                ob.sendLine('â˜ ìë™ë¬´ê³µ : [[1;37m%s[0;37m]' % ob['ìë™ë¬´ê³µ'])
                 return
         s = None
         if line in ob.skillList:
@@ -23,10 +21,10 @@ class CmdObj(Command):
                     s = MUGONG[sName]
                     break
         if s == None or s == '':
-            ob.sendLine('¢Ñ ±×·± ¹«°øÀ» ½ÀµæÇÑ ÀûÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ê·¸ëŸ° ë¬´ê³µì„ ìŠµë“í•œ ì ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        if s['Á¾·ù'] != 'ÀüÅõ':
-            ob.sendLine('¢Ñ ÀÚµ¿¹«°øÀ» ÇÒ ¼ö ¾ø´Â ¹«°øÀÔ´Ï´Ù.')
+        if s['ì¢…ë¥˜'] != 'ì „íˆ¬':
+            ob.sendLine('â˜ ìë™ë¬´ê³µì„ í•  ìˆ˜ ì—†ëŠ” ë¬´ê³µì…ë‹ˆë‹¤.')
             return
-        ob['ÀÚµ¿¹«°ø'] = s.name
-        ob.sendLine('¢Ñ ÀÚµ¿¹«°øÀ» ÁöÁ¤ÇÏ¿´½À´Ï´Ù.')
+        ob['ìë™ë¬´ê³µ'] = s.name
+        ob.sendLine('â˜ ìë™ë¬´ê³µì„ ì§€ì •í•˜ì˜€ìŠµë‹ˆë‹¤.')

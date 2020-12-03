@@ -1,57 +1,55 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [³»¿ë] ¿ÜÄ§(,)')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë‚´ìš©] ì™¸ì¹¨(,)')
             return
         if len(line) > 160:
-            ob.sendLine('¢Ñ ³Ê¹« ±æ¾î¿ä. ^^')
+            ob.sendLine('â˜ ë„ˆë¬´ ê¸¸ì–´ìš”. ^^')
             return
             
-        if ob.checkConfig('¿ÜÄ§°ÅºÎ'):
-            ob.sendLine('¢Ñ ¿ÜÄ§°ÅºÎÁß¿£ ¿ÜÄ¥ ¼ö ¾ø¾î¿ä. ^^')
+        if ob.checkConfig('ì™¸ì¹¨ê±°ë¶€'):
+            ob.sendLine('â˜ ì™¸ì¹¨ê±°ë¶€ì¤‘ì—” ì™¸ì¹  ìˆ˜ ì—†ì–´ìš”. ^^')
             return
         if ob.act == ACT_REST:
-            ob.sendLine('¢Ñ ¿î±âÁ¶½ÄÁß¿¡ ¿ÜÄ¡°Ô µÇ¸é ±â°¡ ÈåÆ®·¯Áı´Ï´Ù.')
+            ob.sendLine('â˜ ìš´ê¸°ì¡°ì‹ì¤‘ì— ì™¸ì¹˜ê²Œ ë˜ë©´ ê¸°ê°€ ííŠ¸ëŸ¬ì§‘ë‹ˆë‹¤.')
             return
         if ob.env.noComm():
-            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            ob.sendLine('â˜ ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
             return
-        if ob['¼º°İ'] == '¼±ÀÎ':
-            type = '[1;36mÃ¢·æÈÄ[0;37m'
-        elif ob['¼º°İ'] == '±âÀÎ':
-            type = '[1;32m»çÀÚÈÄ[0;37m'
+        if ob['ì„±ê²©'] == 'ì„ ì¸':
+            type = '[1;36mì°½ë£¡í›„[0;37m'
+        elif ob['ì„±ê²©'] == 'ê¸°ì¸':
+            type = '[1;32mì‚¬ìí›„[0;37m'
         else:
-            type = '[32m¿Ü Ä§[37m'
+            type = '[32mì™¸ ì¹¨[37m'
 
         msg = time.strftime('[%H:%M] ', time.localtime()) + ob.getNameA() + '(%s) : %s' % (type, line)
         msg1 = ob.getNameA() + '(%s) : %s' % (type, line)
         Player.chatHistory.append(msg)
         if len(Player.chatHistory) > 22:
             Player.chatHistory.__delitem__(0)
-        # Àâ´ã ·Î±×¸¦ ÆÄÀÏ·Î!!!
+        # ì¡ë‹´ ë¡œê·¸ë¥¼ íŒŒì¼ë¡œ!!!
         from client import Client
         for ply in Client.players:
             if ply.state != ACTIVE:
                 continue
-            if ply.checkConfig('¿ÜÄ§°ÅºÎ'):
+            if ply.checkConfig('ì™¸ì¹¨ê±°ë¶€'):
                 continue
-            if ply.checkConfig('Àâ´ã½Ã°£º¸±â'):
+            if ply.checkConfig('ì¡ë‹´ì‹œê°„ë³´ê¸°'):
                 buf = msg
             else:
                 buf = msg1
             if ply == ob:
-                ply.sendLine(buf + ' [1;32m¹Ö¹ÖÀÌÁö··~[0;37m')
+                ply.sendLine(buf + ' [1;32më°ë°ì´ì§€ë ~[0;37m')
             else:
-                ply.sendLine('\r\n' + buf + ' [1;32m¹Ö¹ÖÀÌÁö··~[0;37m')
+                ply.sendLine('\r\n' + buf + ' [1;32më°ë°ì´ì§€ë ~[0;37m')
                 ply.lpPrompt()
 
     def checkConfig(self, ob, config):
-        kl = ob['¼³Á¤»óÅÂ'].splitlines()
+        kl = ob['ì„¤ì •ìƒíƒœ'].splitlines()
         for k in kl:
             if k.find(config) == 0:
                 if len(k.split()) > 1 and k.split()[1] == '1':

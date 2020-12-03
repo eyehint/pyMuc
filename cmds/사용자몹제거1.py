@@ -1,24 +1,18 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if len(line) == 0:
-            ob.sendLine('»ç¿ë¹ý: [»ç¿ëÀÚ ÀÌ¸§] »ç¿ëÀÚ¸÷Á¦°Å')
+            ob.sendLine('ì‚¬ìš©ë²•: [ì‚¬ìš©ìž ì´ë¦„] ì‚¬ìš©ìžëª¹ì œê±°')
             return
 
         for ply in ob.channel.players:
-            if ply['ÀÌ¸§'] == line:
-#mob = ob.env.findObjName(line)
-#        if mob == None or is_player(mob) == False:
-#            ob.sendLine('±×·± ¸÷ÀÌ ¾ø¾î¿ä!')
-#            return
-		        ply.env.objs.remove(ply)
-       			ob.channel.players.remove(ply)
-		        del ply
-        		ob.sendLine('»ç¿ëÀÚ¸÷ÀÌ Á¦°ÅµÇ¾ú½À´Ï´Ù.')
+            if ply['ì´ë¦„'] == line:
+                ply.env.objs.remove(ply)
+                ob.channel.players.remove(ply)
+                del ply
+                ob.sendLine('ì‚¬ìš©ìžëª¹ì´ ì œê±°ë˜ì—ˆìŠµë‹ˆë‹¤.')

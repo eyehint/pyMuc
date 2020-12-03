@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.object import Object
 
 from lib.loader import load_script, save_script
@@ -15,7 +13,7 @@ class Emotion(Object):
     def load(self):
         self.attr = {}
         help = load_script('data/config/emotion.cfg')
-        e = help['∞®¡§«•«ˆ']
+        e = help['Í∞êÏ†ïÌëúÌòÑ']
         for key in e:
             keys = key.split()
             for k in keys:
@@ -35,31 +33,31 @@ class Emotion(Object):
     def makeScript(self, line, I, U, sub):
         line = self.replace(line, sub)
         if U == None:
-            buf1 = line.replace('[∞¯]', '¥ÁΩ≈')
+            buf1 = line.replace('[Í≥µ]', 'ÎãπÏã†')
             buf1 = postPosition1(buf1)
             
-            buf3 = line.replace('[∞¯]', I)
+            buf3 = line.replace('[Í≥µ]', I)
             buf3 = postPosition1(buf3)
             return buf1, '', buf3
         else:
             
-            buf1 = line.replace('[∞¯]', '¥ÁΩ≈')
-            buf1 = buf1.replace('[πÊ]', U)
-            buf1 = buf1.replace('[πÊº∫]', U)
+            buf1 = line.replace('[Í≥µ]', 'ÎãπÏã†')
+            buf1 = buf1.replace('[Î∞©]', U)
+            buf1 = buf1.replace('[Î∞©ÏÑ±]', U)
             buf1 = postPosition1(buf1)
             buf1 = postPosition1(buf1)
             buf1 = postPosition1(buf1)
             
-            buf2 = line.replace('[∞¯]', I)
-            buf2 = buf2.replace('[πÊ]', '¥ÁΩ≈')
-            buf2 = buf2.replace('[πÊº∫]', '¥ÁΩ≈')
+            buf2 = line.replace('[Í≥µ]', I)
+            buf2 = buf2.replace('[Î∞©]', 'ÎãπÏã†')
+            buf2 = buf2.replace('[Î∞©ÏÑ±]', 'ÎãπÏã†')
             buf2 = postPosition1(buf2)
             buf2 = postPosition1(buf2)
             buf2 = postPosition1(buf2)
             
-            buf3 = line.replace('[∞¯]', I)
-            buf3 = buf3.replace('[πÊ]', U)
-            buf3 = buf3.replace('[πÊº∫]', U)
+            buf3 = line.replace('[Í≥µ]', I)
+            buf3 = buf3.replace('[Î∞©]', U)
+            buf3 = buf3.replace('[Î∞©ÏÑ±]', U)
             buf3 = postPosition1(buf3)
             buf3 = postPosition1(buf3)
             buf3 = postPosition1(buf3)

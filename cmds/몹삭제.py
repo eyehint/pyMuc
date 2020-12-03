@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if len(line) == 0:
-            ob.sendLine('»ç¿ë¹ý: [¸÷ ÀÎµ¦½º] ¸÷»èÁ¦')
+            ob.sendLine('ì‚¬ìš©ë²•: [ëª¹ ì¸ë±ìŠ¤] ëª¹ì‚­ì œ')
             return
 
         ret = self.delMob(line)
         if ret == None:
-            ob.sendLine('Á¸ÀçÇÏÁö¾Ê´Â ¸÷ÀÔ´Ï´Ù.')
+            ob.sendLine('ì¡´ìž¬í•˜ì§€ì•ŠëŠ” ëª¹ìž…ë‹ˆë‹¤.')
             return
         del ret
-        ob.sendLine('¸÷ÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.')
+        ob.sendLine('ëª¹ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.')
         
     def delMob(self, path):
         i = path.find(':')

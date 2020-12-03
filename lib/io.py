@@ -1,7 +1,5 @@
-# -*- coding: euc-kr -*-
-
 #---------------------------------------
-# ¼³¸í : ÆÄÀÏÀ» ÀĞÀ½
+# ì„¤ëª… : íŒŒì¼ì„ ì½ìŒ
 #---------------------------------------
 def read_file(strFileName):
 
@@ -21,10 +19,10 @@ def read_file(strFileName):
         return strDesc
 
 #---------------------------------------
-# ¼³¸í : ÆÄÀÏ¿¡ ±â·Ï.
-# strFileName   : ÆÄÀÏ °æ·Î
-# strDesc       : ±â·ÏÇÒ ³»¿ë
-# strWriteMode  : ¾î¶² ¸ğµå·Î ±â·ÏÇÒ±î?
+# ì„¤ëª… : íŒŒì¼ì— ê¸°ë¡.
+# strFileName   : íŒŒì¼ ê²½ë¡œ
+# strDesc       : ê¸°ë¡í•  ë‚´ìš©
+# strWriteMode  : ì–´ë–¤ ëª¨ë“œë¡œ ê¸°ë¡í• ê¹Œ?
 #---------------------------------------
 def write_file(strFileName, strDesc = '', strWriteMode = 'w'):
     
@@ -42,7 +40,7 @@ def cat(ob, filename):
     try:
         f = open(filename, 'U')
     except IOError:
-        ob.sendLine('[''filename' '] ¿­ ¼ö ¾ø½À´Ï´Ù.')
+        ob.sendLine('[''filename' '] ì—´ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
     
     else:
         ob.sendLine(f.read().replace('\n', '\r\n'))

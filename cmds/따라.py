@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] µ¿Çà')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ] ë™í–‰')
             return
-        if line == '³ª':
+        if line == 'ë‚˜':
             ob.delFollow()
-            ob.sendLine('´ç½ÅÀº È¦·Î °­È£¸¦ ÁÖÀ¯ÇÏ±â ½ÃÀÛÇÕ´Ï´Ù.')
+            ob.sendLine('ë‹¹ì‹ ì€ í™€ë¡œ ê°•í˜¸ë¥¼ ì£¼ìœ í•˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤.')
             return
         target = ob.env.findObjName(line)
         if target == None or is_player(target) == False:
-            ob.sendLine('¢Ñ ±×·± ´ë»óÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ê·¸ëŸ° ëŒ€ìƒì´ ì—†ì–´ìš”. ^^')
             return
-        if target.checkConfig('µ¿Çà°ÅºÎ'):
-            ob.sendLine('%s µ¿Çà°ÅºÎÁß ÀÔ´Ï´Ù.' % target.han_iga())
+        if target.checkConfig('ë™í–‰ê±°ë¶€'):
+            ob.sendLine('%s ë™í–‰ê±°ë¶€ì¤‘ ì…ë‹ˆë‹¤.' % target.han_iga())
             return
         ob.delFollow()
         ob.addFollow(target)

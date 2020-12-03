@@ -1,19 +1,17 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] Ã¼ÀÎÁö')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ëŒ€ìƒ] ì²´ì¸ì§€')
             return
         ply = ob.env.findObjName(line)
         if ply == None or is_player(ply) == False:
-            ob.sendLine('¿©±â¿¡ ¾ø³ªºÁ¿ä^^')
+            ob.sendLine('ì—¬ê¸°ì— ì—†ë‚˜ë´ìš”^^')
             return
             
         c = ply.channel
@@ -31,5 +29,5 @@ class CmdObj(Command):
         ply.input_to(ob.parse_command)
         ob.input_to(ply.parse_command)
         
-        ob.sendLine('\r\n%s%s ¸öÀ» ±³È¯ÇÕ´Ï´Ù.' % (ply['ÀÌ¸§'], han_wa(ply['ÀÌ¸§'])))
-        ply.sendLine('\r\n%s%s ¸öÀ» ±³È¯ÇÕ´Ï´Ù.' % (ob['ÀÌ¸§'], han_wa(ob['ÀÌ¸§'])))
+        ob.sendLine('\r\n%s%s ëª¸ì„ êµí™˜í•©ë‹ˆë‹¤.' % (ply['ì´ë¦„'], han_wa(ply['ì´ë¦„'])))
+        ply.sendLine('\r\n%s%s ëª¸ì„ êµí™˜í•©ë‹ˆë‹¤.' % (ob['ì´ë¦„'], han_wa(ob['ì´ë¦„'])))

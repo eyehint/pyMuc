@@ -1,30 +1,28 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [±İ¾×] ±âºÎ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ê¸ˆì•¡] ê¸°ë¶€')
             return
-        mob = ob.env.findObjName('Ç¥µÎ')
+        mob = ob.env.findObjName('í‘œë‘')
         if mob == None:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ Ç¥±¹¹«»ç°¡ ¾ø³×¿ä.')
+            ob.sendLine('â˜ ì´ê³³ì— í‘œêµ­ë¬´ì‚¬ê°€ ì—†ë„¤ìš”.')
             return
         m = getInt(line)
         if m <= 0:
-            ob.sendLine('¢Ñ ÀºÀü 1°³ ÀÌ»ó ÀÔ±İ ÇÏ¼Å¾ß ÇØ¿ä.')
+            ob.sendLine('â˜ ì€ì „ 1ê°œ ì´ìƒ ì…ê¸ˆ í•˜ì…”ì•¼ í•´ìš”.')
             return
-        if m > ob['ÀºÀü']:
-            m = ob['ÀºÀü']
-        ob['ÀºÀü'] -= m
-        mob['ÀºÀü'] += m
-        msg = '´ç½ÅÀÌ ÀºÀü %d°³¸¦ Ç¥±¹¹«»ç¿¡°Ô ±âÅ¹ÇÕ´Ï´Ù.\r\n' % m
-        msg += 'ÇöÀç±îÁö ¸ğ¿©Áø ±âºÎ±İ ÃÑ¾×Àº ÀºÀü [1m%d[0;37m°³ ÀÔ´Ï´Ù.' %(mob['ÀºÀü'])
+        if m > ob['ì€ì „']:
+            m = ob['ì€ì „']
+        ob['ì€ì „'] -= m
+        mob['ì€ì „'] += m
+        msg = 'ë‹¹ì‹ ì´ ì€ì „ %dê°œë¥¼ í‘œêµ­ë¬´ì‚¬ì—ê²Œ ê¸°íƒí•©ë‹ˆë‹¤.\r\n' % m
+        msg += 'í˜„ì¬ê¹Œì§€ ëª¨ì—¬ì§„ ê¸°ë¶€ê¸ˆ ì´ì•¡ì€ ì€ì „ [1m%d[0;37mê°œ ì…ë‹ˆë‹¤.' %(mob['ì€ì „'])
         ob.sendLine(msg)
 
-        msg = '[¸÷Á¤º¸]\n\n'
+        msg = '[ëª¹ì •ë³´]\n\n'
         l = mob.attr.keys()
         l.sort()
         for at in l:

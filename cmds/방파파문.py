@@ -1,48 +1,46 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['Á÷À§'] != '¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [´ë»ó] ¹æÆÄÆÄ¹®')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ëŒ€ìƒ] ë°©íŒŒíŒŒë¬¸')
             return
 
-        if line == ob['ÀÌ¸§']:
-            ob.sendLine('¢Ñ ÀÚ±â ÀÚ½ÅÀÔ´Ï´Ù.')
+        if line == ob['ì´ë¦„']:
+            ob.sendLine('â˜ ìê¸° ìì‹ ì…ë‹ˆë‹¤.')
             return
         found = False
         for obj in ob.channel.players:
-            if obj['ÀÌ¸§'] == line:
+            if obj['ì´ë¦„'] == line:
                 found = True
                 break
         if found == False:
             obj = Player()
             obj.load(line)
             if obj == None:
-                ob.sendLine('¢Ñ ±×·± ¹«¸²ÀÎÀº ¾Æ¾Ö Á¸ÀçÇÏÁö ¾Ê½À´Ï´Ù.')
+                ob.sendLine('â˜ ê·¸ëŸ° ë¬´ë¦¼ì¸ì€ ì•„ì•  ì¡´ì¬í•˜ì§€ ì•ŠìŠµë‹ˆë‹¤.')
                 return
         
-        if obj['¼Ò¼Ó'] != ob['¼Ò¼Ó']:
-            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¼Ò¼ÓÀÌ ¾Æ´Õ´Ï´Ù.')
+        if obj['ì†Œì†'] != ob['ì†Œì†']:
+            ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì†Œì†ì´ ì•„ë‹™ë‹ˆë‹¤.')
             return
 
-        g = GUILD[ob['¼Ò¼Ó']]
-        g['%s¸®½ºÆ®' % obj['Á÷À§']].remove(obj['ÀÌ¸§'])
-        obj.attr.__delitem__('¼Ò¼Ó')
-        obj.attr.__delitem__('Á÷À§')
-        if obj['¹æÆÄº°È£'] != '':
-            obj.attr.__delitem__('¹æÆÄº°È£')
+        g = GUILD[ob['ì†Œì†']]
+        g['%së¦¬ìŠ¤íŠ¸' % obj['ì§ìœ„']].remove(obj['ì´ë¦„'])
+        obj.attr.__delitem__('ì†Œì†')
+        obj.attr.__delitem__('ì§ìœ„')
+        if obj['ë°©íŒŒë³„í˜¸'] != '':
+            obj.attr.__delitem__('ë°©íŒŒë³„í˜¸')
         obj.save(False)
-        g['¹æÆÄ¿ø¼ö'] -= 1
+        g['ë°©íŒŒì›ìˆ˜'] -= 1
         GUILD.save()
 
-        msg = '%s %s ¹æÆÄ¿¡¼­ ÆÄ¹®½ÃÅ´À» ¼±Æ÷ÇÕ´Ï´Ù.' % (ob.han_iga(), obj.han_obj())
-        obj.sendLine('\r\n´ç½ÅÀº ÆÄ¹®µÇ¾ú½À´Ï´Ù.')
+        msg = '%s %s ë°©íŒŒì—ì„œ íŒŒë¬¸ì‹œí‚´ì„ ì„ í¬í•©ë‹ˆë‹¤.' % (ob.han_iga(), obj.han_obj())
+        obj.sendLine('\r\në‹¹ì‹ ì€ íŒŒë¬¸ë˜ì—ˆìŠµë‹ˆë‹¤.')
         obj.lpPrompt()
         ob.sendGroup(msg, prompt = True)
         

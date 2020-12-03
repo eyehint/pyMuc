@@ -1,56 +1,54 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¾ÆÀÌÅÛ ÀÌ¸§] ÇØÁ¦')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ì•„ì´í…œ ì´ë¦„] í•´ì œ')
             return
         msg = ''
-        if line == '¸ğµÎ' or line == 'ÀüºÎ':
+        if line == 'ëª¨ë‘' or line == 'ì „ë¶€':
             cnt = 0
             i = 0
             for obj in ob.objs:
                 if obj.inUse:
                     obj.inUse = False
-                    ob.armor -= getInt(obj['¹æ¾î·Â'])
-                    ob.attpower -= getInt(obj['°ø°İ·Â'])
+                    ob.armor -= getInt(obj['ë°©ì–´ë ¥'])
+                    ob.attpower -= getInt(obj['ê³µê²©ë ¥'])
                     option = obj.getOption()
                     if option != None:
                         for op in option:
-                            if op == 'Èû':
+                            if op == 'í˜':
                                 ob._str -= option[op]
-                            elif op == '¹ÎÃ¸¼º':
+                            elif op == 'ë¯¼ì²©ì„±':
                                 ob._dex -= option[op]
-                            elif op == '¸ËÁı':
+                            elif op == 'ë§·ì§‘':
                                 ob._arm -= option[op]
-                            elif op == 'Ã¼·Â':
+                            elif op == 'ì²´ë ¥':
                                 ob._maxhp -= option[op]
-                            elif op == '³»°ø':
+                            elif op == 'ë‚´ê³µ':
                                 ob._maxmp -= option[op]
-                            elif op == 'ÇÊ»ì':
+                            elif op == 'í•„ì‚´':
                                 ob._critical -= option[op]
-                            elif op == '¿î':
+                            elif op == 'ìš´':
                                  ob._criticalChance -= option[op]
-                            elif op == 'È¸ÇÇ':
+                            elif op == 'íšŒí”¼':
                                 ob._miss -= option[op]
-                            elif op == '¸íÁß':
+                            elif op == 'ëª…ì¤‘':
                                 ob._hit -= option[op]
-                            elif op == '°æÇèÄ¡':
+                            elif op == 'ê²½í—˜ì¹˜':
                                 ob._exp -= option[op]
-                            elif op == '¸¶¹ı¹ß°ß':
+                            elif op == 'ë§ˆë²•ë°œê²¬':
                                 ob._magicChance -= option[op]
-                    if obj['Á¾·ù'] == '¹«±â':
+                    if obj['ì¢…ë¥˜'] == 'ë¬´ê¸°':
                         ob.weaponItem = None
-                    ob.sendLine('´ç½ÅÀÌ [36m' + obj.get('ÀÌ¸§') + '[37m' + han_obj(obj.getStrip('ÀÌ¸§')) + ' Âø¿ëÇØÁ¦ ÇÕ´Ï´Ù.')
-                    #ob.sendRoom('%s %s Âø¿ëÇØÁ¦ ÇÕ´Ï´Ù.' % (ob.han_iga(), obj.han_obj()))
-                    msg += '%s %s Âø¿ëÇØÁ¦ ÇÕ´Ï´Ù.\r\n' % (ob.han_iga(), obj.han_obj())
+                    ob.sendLine('ë‹¹ì‹ ì´ [36m' + obj.get('ì´ë¦„') + '[37m' + han_obj(obj.getStrip('ì´ë¦„')) + ' ì°©ìš©í•´ì œ í•©ë‹ˆë‹¤.')
+                    #ob.sendRoom('%s %s ì°©ìš©í•´ì œ í•©ë‹ˆë‹¤.' % (ob.han_iga(), obj.han_obj()))
+                    msg += '%s %s ì°©ìš©í•´ì œ í•©ë‹ˆë‹¤.\r\n' % (ob.han_iga(), obj.han_obj())
                     cnt = cnt + 1
                    
             if cnt == 0:
-                ob.sendLine('¢Ñ Âø¿ëÁßÀÎ Àåºñ°¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ì°©ìš©ì¤‘ì¸ ì¥ë¹„ê°€ ì—†ì–´ìš”.')
                 return
             else:
                 ob.sendRoom(msg[:-2])
@@ -58,42 +56,42 @@ class CmdObj(Command):
             item = ob.findObjInUse(line)
 
             if item == None:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
                 return
             if item.inUse == False:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
                 return
 
             item.inUse = False
-            ob.armor -= getInt(item['¹æ¾î·Â'])
-            ob.attpower -= getInt(item['°ø°İ·Â'])
+            ob.armor -= getInt(item['ë°©ì–´ë ¥'])
+            ob.attpower -= getInt(item['ê³µê²©ë ¥'])
             option = item.getOption()
             if option != None:
                 for op in option:
-                    if op == 'Èû':
+                    if op == 'í˜':
                         ob._str -= option[op]
-                    elif op == '¹ÎÃ¸¼º':
+                    elif op == 'ë¯¼ì²©ì„±':
                         ob._dex -= option[op]
-                    elif op == '¸ËÁı':
+                    elif op == 'ë§·ì§‘':
                         ob._arm -= option[op]
-                    elif op == 'Ã¼·Â':
+                    elif op == 'ì²´ë ¥':
                         ob._maxhp -= option[op]
-                    elif op == '³»°ø':
+                    elif op == 'ë‚´ê³µ':
                         ob._maxmp -= option[op]
-                    elif op == 'ÇÊ»ì':
+                    elif op == 'í•„ì‚´':
                         ob._critical -= option[op]
-                    elif op == '¿î':
+                    elif op == 'ìš´':
                          ob._criticalChance -= option[op]
-                    elif op == 'È¸ÇÇ':
+                    elif op == 'íšŒí”¼':
                         ob._miss -= option[op]
-                    elif op == '¸íÁß':
+                    elif op == 'ëª…ì¤‘':
                         ob._hit -= option[op]
-                    elif op == '°æÇèÄ¡':
+                    elif op == 'ê²½í—˜ì¹˜':
                         ob._exp -= option[op]
-                    elif op == '¸¶¹ı¹ß°ß':
+                    elif op == 'ë§ˆë²•ë°œê²¬':
                         ob._magicChance -= option[op]
-            if item['Á¾·ù'] == '¹«±â':
+            if item['ì¢…ë¥˜'] == 'ë¬´ê¸°':
                     ob.weaponItem = None
-            ob.sendLine('´ç½ÅÀÌ [36m' + item.get('ÀÌ¸§') + '[37m' + han_obj(item.getStrip('ÀÌ¸§')) + ' Âø¿ëÇØÁ¦ ÇÕ´Ï´Ù.')
-            ob.sendRoom('%s %s Âø¿ëÇØÁ¦ ÇÕ´Ï´Ù.' % (ob.han_iga(), item.han_obj()))
+            ob.sendLine('ë‹¹ì‹ ì´ [36m' + item.get('ì´ë¦„') + '[37m' + han_obj(item.getStrip('ì´ë¦„')) + ' ì°©ìš©í•´ì œ í•©ë‹ˆë‹¤.')
+            ob.sendRoom('%s %s ì°©ìš©í•´ì œ í•©ë‹ˆë‹¤.' % (ob.han_iga(), item.han_obj()))
 

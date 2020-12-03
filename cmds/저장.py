@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,6 +5,6 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         res = ob.save()
         if res == True:
-            ob.sendLine('* ÀúÀå µÇ¾ú½À´Ï´Ù.')
+            ob.sendLine('* ì €ì¥ ë˜ì—ˆìŠµë‹ˆë‹¤.')
         else:
-            ob.sendLine('* ÀúÀå ½ÇÆĞ!!!')
+            ob.sendLine('* ì €ì¥ ì‹¤íŒ¨!!!')

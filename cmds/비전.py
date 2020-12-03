@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -8,16 +6,16 @@ class CmdObj(Command):
         from objs.skill import MUGONG
         
         if line == '':
-            if ob['ºñÀü¼³Á¤'] == '':
-                ob.sendLine('¢Ñ ºñÀü : ¾øÀ½')
+            if ob['ë¹„ì „ì„¤ì •'] == '':
+                ob.sendLine('â˜ ë¹„ì „ : ì—†ìŒ')
                 return
             else:
-                ob.sendLine('¢Ñ ºñÀü : [[1;37m%s[0;37m]' % ob['ºñÀü¼³Á¤'])
+                ob.sendLine('â˜ ë¹„ì „ : [[1;37m%s[0;37m]' % ob['ë¹„ì „ì„¤ì •'])
                 return
         s = None
-        vision = ob['ºñÀüÀÌ¸§'].splitlines()
+        vision = ob['ë¹„ì „ì´ë¦„'].splitlines()
         if line not in vision:
-            ob.sendLine('¢Ñ ´ç½ÅÀº ±×·± ºñÀüÀ» ¹è¿îÀûÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ë‹¹ì‹ ì€ ê·¸ëŸ° ë¹„ì „ì„ ë°°ìš´ì ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        ob['ºñÀü¼³Á¤'] = line
-        ob.sendLine('¢Ñ ºñÀüÀ» ÁöÁ¤ÇÏ¿´½À´Ï´Ù.')
+        ob['ë¹„ì „ì„¤ì •'] = line
+        ob.sendLine('â˜ ë¹„ì „ì„ ì§€ì •í•˜ì˜€ìŠµë‹ˆë‹¤.')

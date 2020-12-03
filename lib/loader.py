@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import os
 
 
@@ -52,8 +50,8 @@ def load_script(path):
         if len(line) == 0:
             continue
         
-        #comment = line.find('£»')
-        comment = find(line, '£»')
+        #comment = line.find('ï¼›')
+        comment = find(line, 'ï¼›')
         if comment == 0:
             continue
         elif comment != -1:
@@ -208,7 +206,7 @@ def save_script(f, x):
                             f.write(':' + line + '\n')
                 f.write('\n')
             f.seek(-2, os.SEEK_CUR)
-            f.write('\n£»\n')
+            f.write('\nï¼›\n')
         else:
             seglist = x[segName]
             for segment in seglist:
@@ -223,7 +221,7 @@ def save_script(f, x):
                         f.write(':' + str(segment[keyName]) + '\n')
                     f.write('\n')
                 f.seek(-2, os.SEEK_CUR)
-                f.write('\n£»\n')
+                f.write('\nï¼›\n')
 
 
 def save_object(f, x):
@@ -252,7 +250,7 @@ def load_object(path):
     return o
 
 """
-o = load_script('¿ëÆÄ¸®')
+o = load_script('ìš©íŒŒë¦¬')
 
 
 f = open('m.py', 'w')

@@ -1,29 +1,27 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if line != '' and getInt(ob['°ü¸®ÀÚµî±Ş']) >= 1000:
+        if line != '' and getInt(ob['ê´€ë¦¬ìë“±ê¸‰']) >= 1000:
             target = ob.env.findObjName(line)
             if target == None or is_item(target):
-                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì•ˆê´‘ìœ¼ë¡œëŠ” ê·¸ëŸ°ê²ƒì„ ë³¼ìˆ˜ ì—†ë‹¤ë„¤')
                 return
         else:
             target = ob
         
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
         if target == ob:
-            buf = '¢· ´ç½ÅÀÇ ¹«°ø ¢¹'
+            buf = 'â— ë‹¹ì‹ ì˜ ë¬´ê³µ â–·'
         else:
-            buf = '¢· %sÀÇ ¹«°ø ¢¹' % target['ÀÌ¸§']
+            buf = 'â— %sì˜ ë¬´ê³µ â–·' % target['ì´ë¦„']
         ob.sendLine('[0m[47m[30m%-78s[0m[40m[37m' % buf)
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-        ob.sendLine('[1m[40m[32m¢¹ ÀÏ¹İ¹«°ø[0m[40m[37m')
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+        ob.sendLine('[1m[40m[32mâ–· ì¼ë°˜ë¬´ê³µ[0m[40m[37m')
         msg = ''
         if len(target.skillList) == 0:
-            ob.sendLine('¢Ñ ±ú¿ìÄ£ ¹«°øÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ê¹¨ìš°ì¹œ ë¬´ê³µì´ ì—†ìŠµë‹ˆë‹¤.')
         else:
             c = 0
             for m in target.skillList:
@@ -31,34 +29,34 @@ class CmdObj(Command):
                     s = 1
                 else:
                     s = target.skillMap[m][0]
-                buf = '%s(%d¼º)' % (m, s)
-                msg += ' ¡Ş %-20s ' % buf
+                buf = '%s(%dì„±)' % (m, s)
+                msg += ' â—‡ %-20s ' % buf
                 c += 1
                 if c % 3 == 0:
                     msg += '\r\n'
             if c % 3 == 0:
                 msg = msg[:-2]
             ob.sendLine(msg)
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         
-        ob.sendLine('[1m[40m[32m¢¹ ºñÀü[0m[40m[37m')
-        buf = target['ºñÀü¼ö·Ã']
-        lines = target['ºñÀüÀÌ¸§'].splitlines()
+        ob.sendLine('[1m[40m[32mâ–· ë¹„ì „[0m[40m[37m')
+        buf = target['ë¹„ì „ìˆ˜ë ¨']
+        lines = target['ë¹„ì „ì´ë¦„'].splitlines()
         if buf == '' and len(lines) == 0:
-            ob.sendLine('¢Ñ ¿ÀÀÇ¸¦ ±ú¿ìÄ£ ¹«°øÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì˜¤ì˜ë¥¼ ê¹¨ìš°ì¹œ ë¬´ê³µì´ ì—†ìŠµë‹ˆë‹¤.')
         else:
             if buf != '':
-                msg = '[1m[33m%s[0m[40m[37m(¼ö·ÃÁß)\r\n' % buf
+                msg = '[1m[33m%s[0m[40m[37m(ìˆ˜ë ¨ì¤‘)\r\n' % buf
             else:
                 msg = ''
             c = 0
             for m in lines:
-                msg += ' ¡Ş %-20s ' % m
+                msg += ' â—‡ %-20s ' % m
                 c += 1
                 if c % 3 == 0:
                     msg += '\r\n'
             if c % 3 == 0:
                 msg = msg[:-2]
             ob.sendLine(msg)
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
         

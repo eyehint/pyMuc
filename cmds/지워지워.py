@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¾ÆÀÌÅÛ ÀÌ¸§] ¸Ô¾î')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ì•„ì´í…œ ì´ë¦„] ë¨¹ì–´')
             return
         if ob.act == ACT_REST:
-            ob.sendLine('¢Ñ ¸ÔÀ» ¼ö ÀÖ´Â »óÈ²ÀÌ ¾Æ´Ï³×¿ä. ^_^')
+            ob.sendLine('â˜ ë¨¹ì„ ìˆ˜ ìˆëŠ” ìƒí™©ì´ ì•„ë‹ˆë„¤ìš”. ^_^')
             return
         name, order = getNameOrder(line)
         item = ob.findObjInven(name, order)
         if item == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if item['¿É¼Ç'] != None:
-            ob.sendLine(item['¿É¼Ç'])
-            del item['¾ÆÀÌÅÛ¼Ó¼º']
-            del item['¿É¼Ç']
+        if item['ì˜µì…˜'] != None:
+            ob.sendLine(item['ì˜µì…˜'])
+            del item['ì•„ì´í…œì†ì„±']
+            del item['ì˜µì…˜']
             return

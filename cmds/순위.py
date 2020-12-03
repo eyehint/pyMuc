@@ -1,50 +1,48 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     level = 1000
     def cmd(self, ob, line):
-        #if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-        #    ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        #if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+        #    ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
         #    return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [Æ¯¼ºÄ¡] ¼øÀ§')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [íŠ¹ì„±ì¹˜] ìˆœìœ„')
             return
         
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            if line not in ['Èû', 'ÀºÀü', '·¹º§', 'Ã¼·Â', '³»°ø', '¹ÎÃ¸', '¸ËÁý', '¸íÁß', 'È¸ÇÇ', 'ÇÊ»ì', '¿î', '³ªÀÌ']:
-                ob.sendLine('¢Ñ »ç¿ë¹ý: [Æ¯¼ºÄ¡] ¼øÀ§')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            if line not in ['íž˜', 'ì€ì „', 'ë ˆë²¨', 'ì²´ë ¥', 'ë‚´ê³µ', 'ë¯¼ì²©', 'ë§·ì§‘', 'ëª…ì¤‘', 'íšŒí”¼', 'í•„ì‚´', 'ìš´', 'ë‚˜ì´']:
+                ob.sendLine('â˜ž ì‚¬ìš©ë²•: [íŠ¹ì„±ì¹˜] ìˆœìœ„')
                 return
-        if line == '³»°ø':
-            line = 'ÃÖ°í³»°ø'
-        if line == 'Ã¼·Â':
-            line = 'ÃÖ°íÃ¼·Â'
-        if line == '¹ÎÃ¸':
-            line = '¹ÎÃ¸¼º'
+        if line == 'ë‚´ê³µ':
+            line = 'ìµœê³ ë‚´ê³µ'
+        if line == 'ì²´ë ¥':
+            line = 'ìµœê³ ì²´ë ¥'
+        if line == 'ë¯¼ì²©':
+            line = 'ë¯¼ì²©ì„±'
 
-        if ob['ÀºÀü'] < 100000:
-            ob.sendLine('¢Ñ ÀºÀüÀÌ ºÎÁ·ÇØ¿ä.')
+        if ob['ì€ì „'] < 100000:
+            ob.sendLine('â˜ž ì€ì „ì´ ë¶€ì¡±í•´ìš”.')
             return
 
-        ob['ÀºÀü'] = ob['ÀºÀü'] - 100000
+        ob['ì€ì „'] = ob['ì€ì „'] - 100000
         l = []
         for c in ob.channel.players:
-            if c['ÀÌ¸§'] != '':
-                if getInt(c['°ü¸®ÀÚµî±Þ']) != 0:
+            if c['ì´ë¦„'] != '':
+                if getInt(c['ê´€ë¦¬ìžë“±ê¸‰']) != 0:
                     continue
                 v = c[line]
                 if v == '' or v == 0:
                     continue
-                l.append((c['ÀÌ¸§'], v))
+                l.append((c['ì´ë¦„'], v))
             
         l.sort(reverse=True,key=lambda tup: tup[1])
         msg = ''
         cnt = 0
         for c in l:
             cnt += 1
-            if getInt(ob['°ü¸®ÀÚµî±Þ']) >= 1000:
+            if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) >= 1000:
                 msg += '%10s %-13d  ' % (c[0], c[1])
                 if cnt % 3 == 0:
                     msg += '\r\n'

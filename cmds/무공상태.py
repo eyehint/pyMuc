@@ -1,33 +1,31 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if line != '' and getInt(ob['°ü¸®ÀÚµî±Ş']) >= 1000:
+        if line != '' and getInt(ob['ê´€ë¦¬ìë“±ê¸‰']) >= 1000:
             target = ob.env.findObjName(line)
             if target == None or is_item(target):
-                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì•ˆê´‘ìœ¼ë¡œëŠ” ê·¸ëŸ°ê²ƒì„ ë³¼ìˆ˜ ì—†ë‹¤ë„¤')
                 return
         else:
             target = ob
         
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        buf = ' [1m[32m¬¨ [37m%s[0;37mÀÇ ¹«°øÁı°á »óÅÂ [1m[32m¬¨[0m[37m' % target['ÀÌ¸§']
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        buf = ' [1m[32mĞ– [37m%s[0;37mì˜ ë¬´ê³µì§‘ê²° ìƒíƒœ [1m[32mĞ–[0m[37m' % target['ì´ë¦„']
         ob.sendLine(buf)
         
         if len(target.skills) == 0:
-            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-            ob.sendLine(MAIN_CONFIG['¹«°ø½ÃÀü¾øÀ½'])
-            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+            ob.sendLine(MAIN_CONFIG['ë¬´ê³µì‹œì „ì—†ìŒ'])
+            ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
             return
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¨¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”¬â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         for s in target.skills:
             inc = 1
             if s.name in target.skillMap:
                 inc = target.skillMap[s.name][0]
-            n = s['¹æ¾î½Ã°£'] + s['¹æ¾î½Ã°£Áõ°¡Ä¡'] * (inc - 1)
+            n = s['ë°©ì–´ì‹œê°„'] + s['ë°©ì–´ì‹œê°„ì¦ê°€ì¹˜'] * (inc - 1)
             t = s.start_time
             cnt = len(target.strBar)
             a = t * 10 / n
@@ -35,6 +33,6 @@ class CmdObj(Command):
                 a = 0
             if a >= cnt:
                 a = cnt - 1
-            buf = '%5d¢°%s' % (t, target.strBar[a])
-            ob.sendLine('[1m[40m[36m¡¤[0m[40m[37m%-14s¦¢%-12s¦¢ %s' % (s.name, s['¹æ¾î»óÅÂÃâ·Â'], buf)) 
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦º¦¬¦¬¦¬¦¬¦¬¦¬¦º¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            buf = '%5dË%s' % (t, target.strBar[a])
+            ob.sendLine('[1m[40m[36mÂ·[0m[40m[37m%-14sâ”‚%-12sâ”‚ %s' % (s.name, s['ë°©ì–´ìƒíƒœì¶œë ¥'], buf)) 
+        ob.sendLine('â”â”â”â”â”â”â”â”â”·â”â”â”â”â”â”â”·â”â”â”â”â”â”â”â”â”â”â”â”â”â”')

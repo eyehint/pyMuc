@@ -1,16 +1,14 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ ¿î¿µÀÚ ¸í·É: [¸÷ÀÌ¸§]|[¸÷Á¾·ù] ¸÷Ã£±â\r\n ex) »êÀû ¸÷Ã£±â or 6 ¸÷Ã£±â')
+            ob.sendLine('â˜ž ìš´ì˜ìž ëª…ë ¹: [ëª¹ì´ë¦„]|[ëª¹ì¢…ë¥˜] ëª¹ì°¾ê¸°\r\n ex) ì‚°ì  ëª¹ì°¾ê¸° or 6 ëª¹ì°¾ê¸°')
             return
         c = 0
         
@@ -21,14 +19,14 @@ class CmdObj(Command):
             for mobName in zone:
                 mob = zone[mobName]
                 if t != 0:
-                    if mob['¸÷Á¾·ù'] == t:
+                    if mob['ëª¹ì¢…ë¥˜'] == t:
                         c += 1
-                        ob.sendLine('%s(%s) : %s'% (mob.getNameA(), mob.index, mob['À§Ä¡']))
+                        ob.sendLine('%s(%s) : %s'% (mob.getNameA(), mob.index, mob['ìœ„ì¹˜']))
                 else:
-                    if mob['ÀÌ¸§'].find(line) != -1:
+                    if mob['ì´ë¦„'].find(line) != -1:
                         c += 1
-                        ob.sendLine('%s(%s) : %s'% (mob.getNameA(), mob.index, mob['À§Ä¡']))
+                        ob.sendLine('%s(%s) : %s'% (mob.getNameA(), mob.index, mob['ìœ„ì¹˜']))
         if c == 0:
-            ob.sendLine('¢Ñ Ã£À¸½Ã´Â ¸÷ÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ž ì°¾ìœ¼ì‹œëŠ” ëª¹ì´ ì—†ìŠµë‹ˆë‹¤.')
         
 

@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.object import Object
 
 from lib.loader import load_script, save_script
@@ -13,11 +11,11 @@ class Help(Object):
         
     def load(self):
         help = load_script('data/config/help.cfg')
-        self.attr = help['µµ¿ò¸»']
+        self.attr = help['ë„ì›€ë§']
 
     def save(self):
         o = {}
-        o['µµ¿ò¸»'] = self.attr
+        o['ë„ì›€ë§'] = self.attr
         try:
             f = open('data/config/help.cfg', 'w')
         except:

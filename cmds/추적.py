@@ -1,36 +1,35 @@
-# -*- coding: euc-kr -*-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
             
         if line == '':
-            ob.sendLine('¸÷ÀÌ¸§ Á¸ÀÌ¸§ ÃßÀû')
+            ob.sendLine('ëª¹ì´ë¦„ ì¡´ì´ë¦„ ì¶”ì ')
             return
         words = line.split()
 
         if len(words) < 2 :
-            ob.sendLine('¸÷ÀÌ¸§ Á¸ÀÌ¸§ ÃßÀû')
+            ob.sendLine('ëª¹ì´ë¦„ ì¡´ì´ë¦„ ì¶”ì ')
             return
 
         try:
             zone = Room.Zones[words[1]]
         except KeyError:
-            ob.sendLine('±×·± Á¸Àº ¾ø¾î¿ä!')
+            ob.sendLine('ê·¸ëŸ° ì¡´ì€ ì—†ì–´ìš”!')
             return
         for room in zone:
             r = getRoom(words[1] + ':' + room)
             
             for obj in r.objs:
                 if is_mob(obj):
-                    if obj['ÀÌ¸§'] == words[0]:
+                    if obj['ì´ë¦„'] == words[0]:
                         ob.sendLine(room)
                         return 
-        ob.sendLine('¸øÃ£¾ÒÀ½')
+        ob.sendLine('ëª»ì°¾ì•˜ìŒ')
     
     
     

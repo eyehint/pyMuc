@@ -1,63 +1,61 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
 class CmdObj(Command):
 
     def view(self, obj, ob):
-        p = int(obj['º¸°ü¼ö·®'])
-        pm = obj['º¸°üÁõ°¡ÀºÀü']
-        pp = obj['º¸°üÃÖ´ë¼ö·®']
+        p = int(obj['ë³´ê´€ìˆ˜ëŸ‰'])
+        pm = obj['ë³´ê´€ì¦ê°€ì€ì „']
+        pp = obj['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']
         
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        buf = '¢· %sÀÇ %s ¢¹' % (obj['ÁÖÀÎ'], obj['ÀÌ¸§'])
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        buf = 'â— %sì˜ %s â–·' % (obj['ì£¼ì¸'], obj['ì´ë¦„'])
         ob.sendLine('[1m[44m[37m%-78s[0m[40m[37m' % buf)
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         c = 0
         msg = ''
         for item in obj.objs:
             c += 1
-            s = item['ÀÌ¸§'] + ' ' + item.getOptionStr()
+            s = item['ì´ë¦„'] + ' ' + item.getOptionStr()
             s = '[%4d] %s' % (c, s)
             s1 = stripANSI(s)
             space = ' ' * (38 - len(s1))
             msg += '%-38s' % (s + space)
-            #msg += '¡¤%-24s' % (s + space)
-            #msg += '[1;36m¡¤[0;36m%-38s[0;37m  ' % (item['ÀÌ¸§'] + ' ' + item.getOptionStr())
+            #msg += 'Â·%-24s' % (s + space)
+            #msg += '[1;36mÂ·[0;36m%-38s[0;37m  ' % (item['ì´ë¦„'] + ' ' + item.getOptionStr())
             if c % 2 == 0:
                 msg += '\r\n'
         if msg != '':
             ob.sendLine(msg)
 
         if c == 0:
-            ob.sendLine('¢Ñ ¾Æ¹«°Íµµ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì•„ë¬´ê²ƒë„ ì—†ìŠµë‹ˆë‹¤.')
 
-        if obj['º¸°ü¼ö·®'] == obj['º¸°üÃÖ´ë¼ö·®']:
-            buf = '¡ß ¼ö·® (%d/%d)' % ( len(obj.objs), obj['º¸°ü¼ö·®'])
+        if obj['ë³´ê´€ìˆ˜ëŸ‰'] == obj['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']:
+            buf = 'â—† ìˆ˜ëŸ‰ (%d/%d)' % ( len(obj.objs), obj['ë³´ê´€ìˆ˜ëŸ‰'])
         else:
-            buf = '¡ß ¼ö·® (%d/%d)  ¡ß ÃÖ´ë¼ö·® (%d)  ¡ß È®Àå¿¡ ÇÊ¿äÇÑ ÀºÀü (%d/%d)' % ( len(obj.objs), obj['º¸°ü¼ö·®'], \
-            obj['º¸°üÃÖ´ë¼ö·®'], getInt(obj['ÀºÀü']), obj['º¸°üÁõ°¡ÀºÀü'])
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            buf = 'â—† ìˆ˜ëŸ‰ (%d/%d)  â—† ìµœëŒ€ìˆ˜ëŸ‰ (%d)  â—† í™•ì¥ì— í•„ìš”í•œ ì€ì „ (%d/%d)' % ( len(obj.objs), obj['ë³´ê´€ìˆ˜ëŸ‰'], \
+            obj['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰'], getInt(obj['ì€ì „']), obj['ë³´ê´€ì¦ê°€ì€ì „'])
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         ob.sendLine('[0m[47m[30m%-78s[0m[40m[37m' % buf)
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
 
     def cmd(self, ob, line):
         if len(line) == 0:
             ob.viewMapData()
             return
         if ob.env == None:
-            print ob['ÀÌ¸§']
+            print ob['ì´ë¦„']
             return
 
         words = line.split()
-        if line == 'È£À§' or (len(words) > 1 and words[1] == 'È£À§'):
+        if line == 'í˜¸ìœ„' or (len(words) > 1 and words[1] == 'í˜¸ìœ„'):
             ob.do_command(line, True)
             return
         name, order = getNameOrder(line)
 
         
-        if line == '³ª':
+        if line == 'ë‚˜':
             obj = ob
         else:
             obj = ob.findObjInven(name, order)
@@ -65,14 +63,14 @@ class CmdObj(Command):
         if obj == None:
             obj = ob.env.findObjName(line)
             if obj == None:
-                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì•ˆê´‘ìœ¼ë¡œëŠ” ê·¸ëŸ°ê²ƒì„ ë³¼ìˆ˜ ì—†ë‹¤ë„¤')
                 return
-        if getInt(ob['°ü¸®ÀÚµî±Ş']) >= 1000 and is_player(obj) == False:
+        if getInt(ob['ê´€ë¦¬ìë“±ê¸‰']) >= 1000 and is_player(obj) == False:
             ob.sendLine('Index : %s' % obj.index)
-        if (line == '¹«±â°í' or line == 'È­ÃÊÀå' or line == 'ÇÑ¿ÁÀå') and is_box(obj):
+        if (line == 'ë¬´ê¸°ê³ ' or line == 'í™”ì´ˆì¥' or line == 'í•œì˜¥ì¥') and is_box(obj):
             self.view(obj, ob)
         else:
             obj.view(ob)
         if is_player(obj) and obj != ob:
-            obj.sendLine('\r\n%s ´ç½ÅÀ» »ìÆìº¾´Ï´Ù.' % ob.han_iga())
+            obj.sendLine('\r\n%s ë‹¹ì‹ ì„ ì‚´í´ë´…ë‹ˆë‹¤.' % ob.han_iga())
             obj.lpPrompt()

@@ -1,4 +1,3 @@
-# -*- coding: euc-kr -*-
 from twisted.internet import reactor
 
 from objs.object import Object
@@ -18,7 +17,7 @@ class Doumi(Object):
     def load(self):
         self.attr = {}
         s = load_script('data/config/doumi.cfg')
-        self.attr = s['µµ¿ì¹Ì¸ŞÀÎ¼³Á¤']
+        self.attr = s['ë„ìš°ë¯¸ë©”ì¸ì„¤ì •']
     
 class autoScript():
     def start(self, script, player):
@@ -45,19 +44,19 @@ class autoScript():
                 self.player.sendLine('')
             elif line[0] == '$':
                 l = line.strip()
-                if  l == '$Ãâ·Â½ÃÀÛ':
+                if  l == '$ì¶œë ¥ì‹œì‘':
                     printLine = True
-                elif l == '$Ãâ·Â³¡':
+                elif l == '$ì¶œë ¥ë':
                     printLine = False
                     self.lineNum += 1
                     continue
-                elif l[:3] == '$Æ½':
+                elif l[:3] == '$í‹±':
                     tick = getInt(l[4:])
                     if tick != 0:
                         self.tick = tick * 0.1 * 1.5
                     self.lineNum += 1
                     continue
-                elif l[:7] == '$Å°ÀÔ·Â':
+                elif l[:7] == '$í‚¤ì…ë ¥':
                     key = l.find(':')
                     if key == -1:
                         self.player.input_to(self.player.pressEnter1)
@@ -65,23 +64,23 @@ class autoScript():
                         self.player.input_to(self.player.getKeyInput, l[key + 1:])
                     self.lineNum += 1
                     return
-                elif l[:9] == '$ÀÌ¸§È¹µæ':
+                elif l[:9] == '$ì´ë¦„íšë“':
                     self.lineNum += 1
-                    self.player.write('¹«¸²Á¸ÇÔ¢°')
+                    self.player.write('ë¬´ë¦¼ì¡´í•¨Ë')
                     self.player.input_to(self.player.getNewname)
                     return
-                elif l[:9] == '$¾ÏÈ£È¹µæ':
+                elif l[:9] == '$ì•”í˜¸íšë“':
                     self.lineNum += 1
-                    self.player.write('Á¸ÇÔ¾ÏÈ£¢°')
+                    self.player.write('ì¡´í•¨ì•”í˜¸Ë')
                     self.player.input_to(self.player.getNewpass)
                     return
-                elif l[:9] == '$¼ºº°È¹µæ':
+                elif l[:9] == '$ì„±ë³„íšë“':
                     self.lineNum += 1
-                    self.player.write('¼ºº°(³²/¿©)¢°')
+                    self.player.write('ì„±ë³„(ë‚¨/ì—¬)Ë')
                     self.player.input_to(self.player.getSex)
                     return
             else:
-                msg = line.replace('[°ø]', self.player['ÀÌ¸§'])
+                msg = line.replace('[ê³µ]', self.player['ì´ë¦„'])
                 self.player.sendLine(postPosition1(msg))
             self.lineNum += 1
             if printLine == True:

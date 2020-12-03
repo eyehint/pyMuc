@@ -1,12 +1,11 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
+
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [ÀÔ·Â±Û] Áö¿¬ÀÔ·Â')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ìž…ë ¥ê¸€] ì§€ì—°ìž…ë ¥')
             return
         from twisted.internet import reactor
         reactor.callLater(1, ob.do_command, line)

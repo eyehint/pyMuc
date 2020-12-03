@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.object import Object
 
 from lib.loader import load_script, save_script
@@ -10,23 +8,23 @@ class Oneitem(Object):
     
     def __init__(self):
         script = load_script('data/config/oneitem_index.cfg')
-        self.index = script['´ÜÀÏ¾ÆÀÌÅÛÀÎµ¦½º']
+        self.index = script['ë‹¨ì¼ì•„ì´í…œì¸ë±ìŠ¤']
         
         script = load_script('data/config/oneitem.cfg')
-        attr = script['´ÜÀÏ¾ÆÀÌÅÛ']
+        attr = script['ë‹¨ì¼ì•„ì´í…œ']
         
         for att in self.index:
             self.index[att] = str(self.index[att])
             
         for att in attr:
             words = attr[att].split()
-            if len(words) > 1 and words[1] == '¹ö¸²':
+            if len(words) > 1 and words[1] == 'ë²„ë¦¼':
                 continue
             self.attr[att] = attr[att]
         
     def save(self):
         o = {}
-        o['´ÜÀÏ¾ÆÀÌÅÛ'] = self.attr
+        o['ë‹¨ì¼ì•„ì´í…œ'] = self.attr
         try:
             f = open('data/config/oneitem.cfg', 'w')
         except:
@@ -57,15 +55,15 @@ class Oneitem(Object):
         self.save()
             
     def drop(self, index, name):
-        self[index] = name + ' ¹ö¸²'
+        self[index] = name + ' ë²„ë¦¼'
         self.save()
 
     def drop2(self, index, name):
-        self[index] = name + ' ¶³±À'
+        self[index] = name + ' ë–¨êµ¼'
         self.save()
             
     def keep(self, index, name):
-        self[index] = name + ' º¸°ü'
+        self[index] = name + ' ë³´ê´€'
         self.save()
             
     def destroy(self, index):

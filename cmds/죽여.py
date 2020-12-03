@@ -1,17 +1,15 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
             
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] Á×¿©') #
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ëŒ€ìƒ] ì£½ì—¬') #
             return
         
             
@@ -19,19 +17,19 @@ class CmdObj(Command):
         mob = ob.env.findObjName(line)
 
         if mob == None:
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            ob.sendLine('â˜ž ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìžˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìžˆì§€!')
             return
 
         if not is_mob(mob):
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+            ob.sendLine('â˜ž ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìžˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìžˆì§€!')
             return
 
-        if mob.get('°ø°Ý±ÝÁö'):
-            ob.sendLine('¢Ñ °­È£¿¡´Â °ø°ÝÇÒ ¼ö ÀÖ´Â°Í°ú ¾ø´Â°ÍÀÌ ÀÖÁö!')
+        if mob.get('ê³µê²©ê¸ˆì§€'):
+            ob.sendLine('â˜ž ê°•í˜¸ì—ëŠ” ê³µê²©í•  ìˆ˜ ìžˆëŠ”ê²ƒê³¼ ì—†ëŠ”ê²ƒì´ ìžˆì§€!')
             return
 
-        mob.die(ob['ÀÌ¸§'])
+        mob.die(ob['ì´ë¦„'])
         #mob.act = ACT_DEATH
 
-        #ob.sendLine('´ç½ÅÀº ' + mob.get('ÀÌ¸§') + han_obj(mob.get('ÀÌ¸§')) + \
-        #    ' °ø°ÝÇÏ±â ½ÃÀÛÇÕ´Ï´Ù.')
+        #ob.sendLine('ë‹¹ì‹ ì€ ' + mob.get('ì´ë¦„') + han_obj(mob.get('ì´ë¦„')) + \
+        #    ' ê³µê²©í•˜ê¸° ì‹œìž‘í•©ë‹ˆë‹¤.')

@@ -1,27 +1,25 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     def cmd(self, ob, line):
-        if ob['Á÷À§'] != '¹æÁÖ' and ob['Á÷À§'] != 'ºÎ¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼' and ob['ì§ìœ„'] != 'ë¶€ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [ÀÌ¸§] ¹æÆÄ¹æÀÌ¸§')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ì´ë¦„] ë°©íŒŒë°©ì´ë¦„')
             return
-        if ob.env['¹æÆÄÁÖÀÎ'] == '':
-            ob.sendLine('¢Ñ ¹«¸²ÀÎÀº ¾Æ¹«°÷¿¡³ª ÀÌ¸§À» »õ±âÁö ¾Ê´Â´Ù³×.')
+        if ob.env['ë°©íŒŒì£¼ì¸'] == '':
+            ob.sendLine('â˜ ë¬´ë¦¼ì¸ì€ ì•„ë¬´ê³³ì—ë‚˜ ì´ë¦„ì„ ìƒˆê¸°ì§€ ì•ŠëŠ”ë‹¤ë„¤.')
             return
             
-        if ob.env['¹æÆÄÁÖÀÎ'] != ob['¼Ò¼Ó']:
-            ob.sendLine('¢Ñ ¹«¸²ÀÎÀº ¾Æ¹«°÷¿¡³ª ÀÌ¸§À» »õ±âÁö ¾Ê´Â´Ù³×.')
+        if ob.env['ë°©íŒŒì£¼ì¸'] != ob['ì†Œì†']:
+            ob.sendLine('â˜ ë¬´ë¦¼ì¸ì€ ì•„ë¬´ê³³ì—ë‚˜ ì´ë¦„ì„ ìƒˆê¸°ì§€ ì•ŠëŠ”ë‹¤ë„¤.')
             return
         if len(line) > 20:
-            ob.sendLine('¢Ñ ³Ê¹« ±æ¾î¿ä.')
+            ob.sendLine('â˜ ë„ˆë¬´ ê¸¸ì–´ìš”.')
             return
 
-        ob.env['ÀÌ¸§'] = line
+        ob.env['ì´ë¦„'] = line
         ob.env.save()
-        ob.sendLine('ÀÌ¸§ÀÌ º¯°æ µÇ¾ú½À´Ï´Ù.')
-        
+        ob.sendLine('ì´ë¦„ì´ ë³€ê²½ ë˜ì—ˆìŠµë‹ˆë‹¤.')
+

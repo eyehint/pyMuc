@@ -1,47 +1,45 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     level = 1000
     def cmd(self, ob, line):
-        #if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-        #    ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        #if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+        #    ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
         #    return
         words = line.split()
 
         if line == '' or len(words) < 2:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [º¸°üÇÔ] [Æ¯¼ºÄ¡] Á¤·Ä')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ë³´ê´€í•¨] [íŠ¹ì„±ì¹˜] ì •ë ¬')
             return
 
         w = words[0]
 
         obj = ob.env.findObjName(line)
         if obj == None:
-            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+            ob.sendLine('â˜ž ë‹¹ì‹ ì˜ ì•ˆê´‘ìœ¼ë¡œëŠ” ê·¸ëŸ°ê²ƒì„ ë³¼ìˆ˜ ì—†ë‹¤ë„¤')
             return
 
         if is_box(obj) == False:
-            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+            ob.sendLine('â˜ž ë‹¹ì‹ ì˜ ì•ˆê´‘ìœ¼ë¡œëŠ” ê·¸ëŸ°ê²ƒì„ ë³¼ìˆ˜ ì—†ë‹¤ë„¤')
             return
          
         self.k = words[1]
-        if self.k not in ['Èû', '¹ÎÃ¸¼º', '¸ËÁý', '¸íÁß', 'È¸ÇÇ', 'ÇÊ»ì', '¿î', '¹æ¾î·Â', 'Ã¼·Â', '³»°ø', 'ÀÌ¸§']:
-            ob.sendLine('¢Ñ Èû|¹ÎÃ¸¼º|¸ËÁý|¸íÁß|È¸ÇÇ|ÇÊ»ì|¿î|¹æ¾î·Â|Ã¼·Â|³»°ø|ÀÌ¸§ ¸¸ °¡´ÉÇÕ´Ï´Ù.')
+        if self.k not in ['íž˜', 'ë¯¼ì²©ì„±', 'ë§·ì§‘', 'ëª…ì¤‘', 'íšŒí”¼', 'í•„ì‚´', 'ìš´', 'ë°©ì–´ë ¥', 'ì²´ë ¥', 'ë‚´ê³µ', 'ì´ë¦„']:
+            ob.sendLine('â˜ž íž˜|ë¯¼ì²©ì„±|ë§·ì§‘|ëª…ì¤‘|íšŒí”¼|í•„ì‚´|ìš´|ë°©ì–´ë ¥|ì²´ë ¥|ë‚´ê³µ|ì´ë¦„ ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.')
             return
 
-        if ob['ÀºÀü'] < 100000:
-            ob.sendLine('¢Ñ ÀºÀüÀÌ ºÎÁ·ÇØ¿ä.')
+        if ob['ì€ì „'] < 100000:
+            ob.sendLine('â˜ž ì€ì „ì´ ë¶€ì¡±í•´ìš”.')
             return
 
         #obj.objs.sort(reverse=True, key=self.getOp)
-        if self.k == 'ÀÌ¸§':
-            obj.objs.sort(key=lambda item: (item['ÀÌ¸§'], item['ÀÌ¸§']))
+        if self.k == 'ì´ë¦„':
+            obj.objs.sort(key=lambda item: (item['ì´ë¦„'], item['ì´ë¦„']))
         else:
-            obj.objs.sort(key=lambda item: (self.getOp(item), item['ÀÌ¸§']))
-        ob.sendLine('¢Ñ Á¤·ÄµÇ¾ú½À´Ï´Ù.')
-        ob['ÀºÀü'] = ob['ÀºÀü'] - 100000
+            obj.objs.sort(key=lambda item: (self.getOp(item), item['ì´ë¦„']))
+        ob.sendLine('â˜ž ì •ë ¬ë˜ì—ˆìŠµë‹ˆë‹¤.')
+        ob['ì€ì „'] = ob['ì€ì „'] - 100000
         return
             
 

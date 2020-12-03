@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.object import Object
 
 from lib.loader import load_script, save_script
@@ -13,7 +11,7 @@ class Nickname(Object):
     
     def save(self):
         o = {}
-        o['¹«¸²º°È£'] = self.attr
+        o['ë¬´ë¦¼ë³„í˜¸'] = self.attr
         try:
             f = open('data/config/nickname.cfg', 'w')
         except:
@@ -24,7 +22,7 @@ class Nickname(Object):
         
     def load(self):
         script = load_script('data/config/nickname.cfg')
-        self.attr = script['¹«¸²º°È£']
+        self.attr = script['ë¬´ë¦¼ë³„í˜¸']
         
 NICKNAME = Nickname()
         

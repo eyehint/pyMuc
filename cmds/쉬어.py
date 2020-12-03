@@ -1,18 +1,16 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob.env.checkAttr('½°±İÁö'):
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡¼­ ¿î±âÁ¶½ÄÇÏ±â¿£ Àû´çÇÏÁö ¾Ê±º¿ä.')
+        if ob.env.checkAttr('ì‰¼ê¸ˆì§€'):
+            ob.sendLine('â˜ ì´ê³³ì—ì„œ ìš´ê¸°ì¡°ì‹í•˜ê¸°ì—” ì ë‹¹í•˜ì§€ ì•Šêµ°ìš”.')
             return
         if ob.act == ACT_REST:
-            ob.sendLine('¢Ñ ¹ú½á ½¬°í ÀÖ¾î¿ä. ^^')
+            ob.sendLine('â˜ ë²Œì¨ ì‰¬ê³  ìˆì–´ìš”. ^^')
         elif ob.act == ACT_STAND:
-            ob.sendLine('´ç½ÅÀÌ ÀÚ¼¼¸¦ Æí¾ÈÈ÷ ÇÏ¸ç ¿î±âÁ¶½Ä¿¡ µé¾î°©´Ï´Ù.')
-            ob.sendRoom('%s ÀÚ¼¼¸¦ Æí¾ÈÈ÷ ÇÏ¸ç ¿î±âÁ¶½Ä¿¡ µé¾î°©´Ï´Ù.' % ob.han_iga())
+            ob.sendLine('ë‹¹ì‹ ì´ ìì„¸ë¥¼ í¸ì•ˆíˆ í•˜ë©° ìš´ê¸°ì¡°ì‹ì— ë“¤ì–´ê°‘ë‹ˆë‹¤.')
+            ob.sendRoom('%s ìì„¸ë¥¼ í¸ì•ˆíˆ í•˜ë©° ìš´ê¸°ì¡°ì‹ì— ë“¤ì–´ê°‘ë‹ˆë‹¤.' % ob.han_iga())
             ob.act = ACT_REST
         else:
-            ob.sendLine('¢Ñ Áö±İ ½¬±â¿¡´Â ÁÁÁö°¡ ¾Ê³×¿ä. ^^')
+            ob.sendLine('â˜ ì§€ê¸ˆ ì‰¬ê¸°ì—ëŠ” ì¢‹ì§€ê°€ ì•Šë„¤ìš”. ^^')

@@ -1,23 +1,22 @@
-# -*- coding: euc-kr -*-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def down(self, ob):
         ob.set('cooltime', 0)
-        ob.sendLine('´ç½ÅÀº ¾ÈÀüÇÏ°Ô ÂøÁöÇÕ´Ï´Ù. ^^v')
+        ob.sendLine('ë‹¹ì‹ ì€ ì•ˆì „í•˜ê²Œ ì°©ì§€í•©ë‹ˆë‹¤. ^^v')
 
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Ş']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ğ¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
             
         if ob.get('cooltime') == None:
             ob.set('cooltime', 0)
         if ob.get('cooltime') == 1:
-            ob.sendLine('±â¼úÀ» ¾²±â¿£ ³Ê¹«µµ ¹Ùºü¿ä~')
+            ob.sendLine('ê¸°ìˆ ì„ ì“°ê¸°ì—” ë„ˆë¬´ë„ ë°”ë¹ ìš”~')
             return
         from twisted.internet import reactor
-        ob.sendLine('´ç½ÅÀÌ ºÎ¿õ~~ ³¯¾Æ ¿À¸¨´Ï´Ù')
+        ob.sendLine('ë‹¹ì‹ ì´ ë¶€ì›…~~ ë‚ ì•„ ì˜¤ë¦…ë‹ˆë‹¤')
         ob.set('cooltime', 1)
         reactor.callLater(2, self.down, ob)

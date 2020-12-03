@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import sys, traceback
 from lib.object import *
 from lib.comm import broadcast
@@ -10,21 +8,21 @@ def parse_command(self, line, *args):
         
     from objs.player import Player
     if line[-1] in (' ', '.', '!', '?', ','):
-        Player.cmdList['¸»'].cmd(self, line)
+        Player.cmdList['ë§'].cmd(self, line)
         return
 
     cmd = line.split(' ')[-1]
     param = line.rstrip(cmd)
     param = param.strip()
 
-    s = self.get('ÁÙÀÓ¸»')
+    s = self.get('ì¤„ì„ë§')
     if s != None and cmd in s:
         wlist = s[cmd].split(';')
         cmd = wlist[0]
         msg = ''
         for w in wlist[1:]:
             #if w in s:
-            #    self.sendLine('ÁßÃ¸µÈ ÁÙÀÓ¸»Àº »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            #    self.sendLine('ì¤‘ì²©ëœ ì¤„ì„ë§ì€ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             #    return
             msg += w + '\r\n'
         self.channel.buffer = msg + self.channel.buffer
@@ -33,12 +31,12 @@ def parse_command(self, line, *args):
     if cmd in alias:
         cmd = alias[cmd]
                 
-    if type(self.env.get('Ãâ±¸')) is dict and cmd in self.env.get('Ãâ±¸'):
+    if type(self.env.get('ì¶œêµ¬')) is dict and cmd in self.env.get('ì¶œêµ¬'):
         if self.is_attack():
-            self.sendLine('ÀüÅõ Áß¿¡´Â ÀÌµ¿ ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            self.sendLine('ì „íˆ¬ ì¤‘ì—ëŠ” ì´ë™ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             return
 
-        exit = self.env.get('Ãâ±¸')[cmd]
+        exit = self.env.get('ì¶œêµ¬')[cmd]
         if type(exit) is list:
             import random
             r = random.randint(0, len(exit)-1)
@@ -46,16 +44,16 @@ def parse_command(self, line, *args):
         room = get_room(exit)
       
         if room == None:
-            self.sendLine('* ÀÌµ¿ ½ÇÆĞ!!!')
+            self.sendLine('* ì´ë™ ì‹¤íŒ¨!!!')
             return
         room.append(self, cmd)
         return
-    elif cmd in ('³¡', 'Á¾·á'):
+    elif cmd in ('ë', 'ì¢…ë£Œ'):
         if self.is_attack():
-            self.sendLine('ÀüÅõ Áß¿¡´Â Á¾·á ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            self.sendLine('ì „íˆ¬ ì¤‘ì—ëŠ” ì¢…ë£Œ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             return
-        self.sendLine('´ÙÀ½¿¡ ¶Ç ¸¸³ª¿ä~!!!')
-        broadcast(self.get('ÀÌ¸§') + '´ÔÀÌ ³ª°¡¼Ì½À´Ï´Ù.', self)
+        self.sendLine('ë‹¤ìŒì— ë˜ ë§Œë‚˜ìš”~!!!')
+        broadcast(self.get('ì´ë¦„') + 'ë‹˜ì´ ë‚˜ê°€ì…¨ìŠµë‹ˆë‹¤.', self)
         self.channel.transport.loseConnection()
         return
     elif cmd in Player.emotes:
@@ -72,27 +70,27 @@ def parse_command(self, line, *args):
             traceback.print_exc(file=sys.stderr)
             print 'Error in %s' % cmd
         
-        # »ç¿ëÀÚÀÇ ¸í·ÉÀ» Ã³¸®ÈÄ ¸÷ ¿¢¼Ç ÈÄÅ©
+        # ì‚¬ìš©ìì˜ ëª…ë ¹ì„ ì²˜ë¦¬í›„ ëª¹ ì—‘ì…˜ í›„í¬
         for obj in self.env.objs:
             if is_mob(obj) and hasattr(obj, 'mob_hook'):
                 obj.mob_hook(line)
         return
 
 
-    # ·ë ¿ÀºêÁ§Æ®ÀÇ ¾×¼ÇÀ» Ã³¸®
+    # ë£¸ ì˜¤ë¸Œì íŠ¸ì˜ ì•¡ì…˜ì„ ì²˜ë¦¬
     if hasattr(self.env, 'actions'):
         if cmd in self.env.actions:
             self.env.actions[cmd](self, param)
             return
 
-    # ·ë¿¡ ÀÖ´Â ¿ÀºêÁ§Æ®µéÀÇ ¾×¼ÇÀ» Ã³¸®
+    # ë£¸ì— ìˆëŠ” ì˜¤ë¸Œì íŠ¸ë“¤ì˜ ì•¡ì…˜ì„ ì²˜ë¦¬
     for obj in self.env.objs:
         if hasattr(obj, 'actions'):
             if cmd in obj.actions:
                 obj.actions[cmd](self, param)
                 return
            
-    self.sendLine('\r\n¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ğ¸£°Ú¾î¿ä. *^_^*')
+    self.sendLine('\r\nâ˜ ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
     
 def pressEnter(self, line, *args):
     self.INTERACTIVE = 1

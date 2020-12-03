@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import time
 import Queue
 
@@ -93,7 +91,7 @@ class Client(basic.LineOnlyReceiver):
     
     def sendToAllInOut(self, line, ex = None):
         for user in self.players:
-            if user.state == ACTIVE and user.checkConfig('ÀÔÃâÀÔ¸Þ¼¼Áö°ÅºÎ') == False and user != ex:
+            if user.state == ACTIVE and user.checkConfig('ìž…ì¶œìž…ë©”ì„¸ì§€ê±°ë¶€') == False and user != ex:
                 user.sendLine('\r\n' + line)
                 user.lpPrompt()
                 

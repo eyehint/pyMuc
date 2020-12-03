@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
@@ -7,44 +5,44 @@ class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó] µÚÁ®')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ] ë’¤ì ¸')
             return
         obj = ob.env.findObjName(line)
 
         if obj == None or is_item(obj) or is_box(obj):
-            ob.sendLine('¢Ñ µÚÁú´ë»óÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ë’¤ì§ˆëŒ€ìƒì´ ì—†ì–´ìš”. ^^')
             return
         if is_player(obj):
-            ob.sendLine('´ç½ÅÀÌ %sÀÇ ¸öÀ» ´õµë½À´Ï´Ù. "¹¹ ¾ø³ª~~ -.-"' % obj.getNameA())
-            ob.sendRoom('%s %sÀÇ ¸öÀ» ´õµë½À´Ï´Ù. "¹¹ ¾ø³ª~~ -.-"' % (ob.han_iga(), obj.getNameA()))
+            ob.sendLine('ë‹¹ì‹ ì´ %sì˜ ëª¸ì„ ë”ë“¬ìŠµë‹ˆë‹¤. "ë­ ì—†ë‚˜~~ -.-"' % obj.getNameA())
+            ob.sendRoom('%s %sì˜ ëª¸ì„ ë”ë“¬ìŠµë‹ˆë‹¤. "ë­ ì—†ë‚˜~~ -.-"' % (ob.han_iga(), obj.getNameA()))
             return
             
-        if obj.act != ACT_DEATH and obj['¸÷Á¾·ù'] != 6:
-            ob.sendLine('´ç½ÅÀÌ %sÀÇ ¸öÀ» ´õµë½À´Ï´Ù. "¹¹ ¾ø³ª~~ -.-"' % obj.getNameA())
-            ob.sendRoom('%s %sÀÇ ¸öÀ» ´õµë½À´Ï´Ù. "¹¹ ¾ø³ª~~ -.-"' % (ob.han_iga(), obj.getNameA()))
+        if obj.act != ACT_DEATH and obj['ëª¹ì¢…ë¥˜'] != 6:
+            ob.sendLine('ë‹¹ì‹ ì´ %sì˜ ëª¸ì„ ë”ë“¬ìŠµë‹ˆë‹¤. "ë­ ì—†ë‚˜~~ -.-"' % obj.getNameA())
+            ob.sendRoom('%s %sì˜ ëª¸ì„ ë”ë“¬ìŠµë‹ˆë‹¤. "ë­ ì—†ë‚˜~~ -.-"' % (ob.han_iga(), obj.getNameA()))
             return
         
         if len(obj.objs) == 0:
             if obj.act == ACT_DEATH:
-                ob.sendLine('´ç½ÅÀÌ %sÀÇ ½ÃÃ¼¸¦ µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % obj.getNameA())
-                ob.sendRoom('%s %sÀÇ ½ÃÃ¼¸¦ µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % (ob.han_iga(), obj.getNameA()))
+                ob.sendLine('ë‹¹ì‹ ì´ %sì˜ ì‹œì²´ë¥¼ ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % obj.getNameA())
+                ob.sendRoom('%s %sì˜ ì‹œì²´ë¥¼ ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % (ob.han_iga(), obj.getNameA()))
             else:
-                ob.sendLine('´ç½ÅÀÌ %s µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % obj.han_obj())
-                ob.sendRoom('%s %s µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % (ob.han_iga(), obj.han_obj()))
+                ob.sendLine('ë‹¹ì‹ ì´ %s ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % obj.han_obj())
+                ob.sendRoom('%s %s ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % (ob.han_iga(), obj.han_obj()))
             return
             
         msg = ''
         c = 0
         objs = copy.copy(obj.objs)
         for item in objs:
-            if ob.getItemCount() >= getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']) or ob.getItemWeight() + item['¹«°Ô'] > ob.getStr() * 10:
+            if ob.getItemCount() >= getInt(MAIN_CONFIG['ì‚¬ìš©ìì•„ì´í…œê°¯ìˆ˜']) or ob.getItemWeight() + item['ë¬´ê²Œ'] > ob.getStr() * 10:
                 if c == 0:
                     if obj.act == ACT_DEATH:
-                        ob.sendLine('´ç½ÅÀÌ %sÀÇ ½ÃÃ¼¸¦ µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % obj.getNameA())
-                        ob.sendRoom('%s %sÀÇ ½ÃÃ¼¸¦ µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % (ob.han_iga(), obj.getNameA()))
+                        ob.sendLine('ë‹¹ì‹ ì´ %sì˜ ì‹œì²´ë¥¼ ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % obj.getNameA())
+                        ob.sendRoom('%s %sì˜ ì‹œì²´ë¥¼ ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % (ob.han_iga(), obj.getNameA()))
                     else:
-                        ob.sendLine('´ç½ÅÀÌ %s µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % obj.han_obj())
-                        ob.sendRoom('%s %s µÚÁı´Ï´Ù. \'µÚÀû~ µÚÀû~\'' % (ob.han_iga(), obj.han_obj()))
+                        ob.sendLine('ë‹¹ì‹ ì´ %s ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % obj.han_obj())
+                        ob.sendRoom('%s %s ë’¤ì§‘ë‹ˆë‹¤. \'ë’¤ì ~ ë’¤ì ~\'' % (ob.han_iga(), obj.han_obj()))
                     return
                 break
 
@@ -52,13 +50,13 @@ class CmdObj(Command):
             obj.remove(item)
             ob.insert(item)
             if item.isOneItem():
-                    ONEITEM.have(item.index, ob['ÀÌ¸§'])
+                    ONEITEM.have(item.index, ob['ì´ë¦„'])
             if obj.act == ACT_DEATH:
-                ob.sendLine('´ç½ÅÀÌ %sÀÇ ½ÃÃ¼¼Ó¿¡¼­ %s µÚÁ®¼­ °¡Áı´Ï´Ù.' % (obj.getNameA(), item.han_obj()))
-                msg += '%s %sÀÇ ½ÃÃ¼¼Ó¿¡¼­ %s µÚÁ®¼­ °¡Áı´Ï´Ù.\r\n' %( ob.han_iga(), obj.getNameA(), item.han_obj())
+                ob.sendLine('ë‹¹ì‹ ì´ %sì˜ ì‹œì²´ì†ì—ì„œ %s ë’¤ì ¸ì„œ ê°€ì§‘ë‹ˆë‹¤.' % (obj.getNameA(), item.han_obj()))
+                msg += '%s %sì˜ ì‹œì²´ì†ì—ì„œ %s ë’¤ì ¸ì„œ ê°€ì§‘ë‹ˆë‹¤.\r\n' %( ob.han_iga(), obj.getNameA(), item.han_obj())
             else:
-                ob.sendLine('´ç½ÅÀÌ %s¿¡°Ô¼­ %s µÚÁ®¼­ °¡Áı´Ï´Ù.' % (obj.getNameA(), item.han_obj()))
-                msg += '%s %s¿¡°Ô¼­ %s µÚÁ®¼­ °¡Áı´Ï´Ù.\r\n' %( ob.han_iga(), obj.getNameA(), item.han_obj())
+                ob.sendLine('ë‹¹ì‹ ì´ %sì—ê²Œì„œ %s ë’¤ì ¸ì„œ ê°€ì§‘ë‹ˆë‹¤.' % (obj.getNameA(), item.han_obj()))
+                msg += '%s %sì—ê²Œì„œ %s ë’¤ì ¸ì„œ ê°€ì§‘ë‹ˆë‹¤.\r\n' %( ob.han_iga(), obj.getNameA(), item.han_obj())
         obj.timeofregen = time.time()
         ob.sendRoom(msg[:-2])
 

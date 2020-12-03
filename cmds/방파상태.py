@@ -1,54 +1,52 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['¼Ò¼Ó'] == '':
-            ob.sendLine('¢Ñ ´ç½ÅÀº ¼Ò¼ÓÀÌ ¾ø½À´Ï´Ù.')
+        if ob['ì†Œì†'] == '':
+            ob.sendLine('â˜ ë‹¹ì‹ ì€ ì†Œì†ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
-        g = GUILD[ob['¼Ò¼Ó']]
+        g = GUILD[ob['ì†Œì†']]
         l1 = []
         l2 = []
         l3 = []
-        if 'ºÎ¹æÁÖ¸®½ºÆ®' in g:
-            l1 = g['ºÎ¹æÁÖ¸®½ºÆ®']
-        if 'Àå·Î¸®½ºÆ®' in g:
-            l2 = g['Àå·Î¸®½ºÆ®']
-        if '¹æÆÄÀÎ¸®½ºÆ®' in g:
-            l3 = g['¹æÆÄÀÎ¸®½ºÆ®']
+        if 'ë¶€ë°©ì£¼ë¦¬ìŠ¤íŠ¸' in g:
+            l1 = g['ë¶€ë°©ì£¼ë¦¬ìŠ¤íŠ¸']
+        if 'ì¥ë¡œë¦¬ìŠ¤íŠ¸' in g:
+            l2 = g['ì¥ë¡œë¦¬ìŠ¤íŠ¸']
+        if 'ë°©íŒŒì¸ë¦¬ìŠ¤íŠ¸' in g:
+            l3 = g['ë°©íŒŒì¸ë¦¬ìŠ¤íŠ¸']
 
         Num = 0
-        msg = MAIN_CONFIG['¹æÆÄ»óÅÂÃâ·Â»ó´Ü']
-        msg += MAIN_CONFIG['¹æÆÄ»óÅÂÃâ·Â']
-        msg += '[1;31m[1;47m%s[0;37;40m\r\n' % ob['¼Ò¼Ó']
-        msg += MAIN_CONFIG['¹æÆÄ»óÅÂÃâ·ÂÇÏ´Ü']
-        msg += '\r\n  [[1m[31m¹æ  ÁÖ[0m[40m[37m]     %-11s' % g['¹æÁÖÀÌ¸§']
+        msg = MAIN_CONFIG['ë°©íŒŒìƒíƒœì¶œë ¥ìƒë‹¨']
+        msg += MAIN_CONFIG['ë°©íŒŒìƒíƒœì¶œë ¥']
+        msg += '[1;31m[1;47m%s[0;37;40m\r\n' % ob['ì†Œì†']
+        msg += MAIN_CONFIG['ë°©íŒŒìƒíƒœì¶œë ¥í•˜ë‹¨']
+        msg += '\r\n  [[1m[31më°©  ì£¼[0m[40m[37m]     %-11s' % g['ë°©ì£¼ì´ë¦„']
         Num += 1
         for buf in l1:
-            msg += '  [[1m[33mºÎ¹æÁÖ[0m[40m[37m]     %-11s' % buf
+            msg += '  [[1m[33më¶€ë°©ì£¼[0m[40m[37m]     %-11s' % buf
             Num += 1
         if Num % 3 == 0:
             msg += '\r\n'
         for buf in l2:
-            msg += '  [[1m[32mÀå  ·Î[0m[40m[37m]     %-11s' % buf
+            msg += '  [[1m[32mì¥  ë¡œ[0m[40m[37m]     %-11s' % buf
             Num += 1
             if Num % 3 == 0:
                 msg += '\r\n'
         for buf in l3:
-            msg += '  [[1m¹æÆÄ¿ø[0m[40m[37m]     %-11s' % buf
+            msg += '  [[1më°©íŒŒì›[0m[40m[37m]     %-11s' % buf
             Num += 1
             if Num % 3 == 0:
                 msg += '\r\n'
 
-        msg += '\r\n' + MAIN_CONFIG['¹æÆÄ»óÅÂÃâ·ÂÇÏ´Ü']
-        msg += '\r\n¹æÆÄÃÑÀÎ¿ø : %-8d' % g['¹æÆÄ¿ø¼ö']
+        msg += '\r\n' + MAIN_CONFIG['ë°©íŒŒìƒíƒœì¶œë ¥í•˜ë‹¨']
+        msg += '\r\në°©íŒŒì´ì¸ì› : %-8d' % g['ë°©íŒŒì›ìˆ˜']
         cnt = 0
         for ply in ob.channel.players:
-            if ply['¼Ò¼Ó'] == ob['¼Ò¼Ó'] and ply.state == ACTIVE and getInt(ply['Åõ¸í»óÅÂ']) != 1:
+            if ply['ì†Œì†'] == ob['ì†Œì†'] and ply.state == ACTIVE and getInt(ply['íˆ¬ëª…ìƒíƒœ']) != 1:
                 cnt += 1
-        msg += '¢Ñ ÇöÀç %d¸íÀÌ È°µ¿Áß ÀÔ´Ï´Ù.' % cnt
+        msg += 'â˜ í˜„ì¬ %dëª…ì´ í™œë™ì¤‘ ì…ë‹ˆë‹¤.' % cnt
         
         ob.sendLine(msg)
         

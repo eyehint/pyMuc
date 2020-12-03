@@ -1,27 +1,25 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('ÃÊ±âÈ­ÇÒ ¹æÆÄ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.')
+            ob.sendLine('ì´ˆê¸°í™”í•  ë°©íŒŒë¥¼ ìž…ë ¥í•˜ì„¸ìš”.')
             return
         else:
             if line in GUILD.attr:
                 guild = GUILD.attr[line]
-                #¹æÆÄ¿øµéÀÇ ¼Ò¼Ó°ú Á÷À§¸¦ ¾ø¾Ö¾ßÇÔ...
-                path = guild['¹æÆÄ¸Ê']
+                #ë°©íŒŒì›ë“¤ì˜ ì†Œì†ê³¼ ì§ìœ„ë¥¼ ì—†ì• ì•¼í•¨...
+                path = guild['ë°©íŒŒë§µ']
                 room = getRoom(path)
                 if room == None:
                     contimue
-                room.attr.__delitem__('¹æÆÄÁÖÀÎ')
+                room.attr.__delitem__('ë°©íŒŒì£¼ì¸')
                 room.save()
-                for r in room['¹æÆÄÀÔ±¸'].splitlines():
+                for r in room['ë°©íŒŒìž…êµ¬'].splitlines():
                     if r.find(':') == -1:
                         path = room.zone + ':' + r
                     else:
@@ -29,11 +27,11 @@ class CmdObj(Command):
                     enter = getRoom(path)
                     if enter == None:
                         continue
-                    enter.attr.__delitem__('¹æÆÄÁÖÀÎ')
+                    enter.attr.__delitem__('ë°©íŒŒì£¼ì¸')
                     enter.save()
                 GUILD.attr = {}
                 GUILD.save()
             else:
-                ob.sendLine('* ±×·± ¹æÆÄ°¡ ¾ø½À´Ï´Ù.')
+                ob.sendLine('* ê·¸ëŸ° ë°©íŒŒê°€ ì—†ìŠµë‹ˆë‹¤.')
                 return
-        ob.sendLine('* ¹æÆÄ°¡ ÃÊ±âÈ­µÇ¾ú½À´Ï´Ù.')
+        ob.sendLine('* ë°©íŒŒê°€ ì´ˆê¸°í™”ë˜ì—ˆìŠµë‹ˆë‹¤.')

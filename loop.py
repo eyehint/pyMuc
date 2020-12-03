@@ -1,5 +1,3 @@
-# -*- coding: utf-8 -*-
-
 import os
 import time
 import copy
@@ -37,11 +35,11 @@ class Loop:
         try:
             for player in players:
                 if player.state == INACTIVE and t1 - player.idle >= 10:
-                    player.sendLine('\r\n\r\nÀÔ·Â Á¦ÇÑ½Ã°£À» ÃÊ°úÇÏ¿´½À´Ï´Ù.\r\n')
+                    player.sendLine('\r\n\r\nì…ë ¥ ì œí•œì‹œê°„ì„ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.\r\n')
                     player.channel.transport.loseConnection()
                     continue
                 if player.state != INACTIVE and t1 - player.idle >= 180:
-                    player.sendLine('\r\n\r\n3ºĞ µ¿¾È ÀÔ·ÂÀÌ ¾ø¾î Á¢¼ÓÀ» Á¾·áÇÕ´Ï´Ù.\r\n')
+                    player.sendLine('\r\n\r\n3ë¶„ ë™ì•ˆ ì…ë ¥ì´ ì—†ì–´ ì ‘ì†ì„ ì¢…ë£Œí•©ë‹ˆë‹¤.\r\n')
                     player.channel.transport.loseConnection()
                     continue
                 if player.state == ACTIVE:
@@ -50,7 +48,7 @@ class Loop:
                     rooms.append(player.env)
         except :
             traceback.print_exc(file=sys.stderr)
-            print player['ÀÌ¸§']
+            print player['ì´ë¦„']
         
         if len(Client.players) != 0:
             self.updateRooms(rooms)

@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [±â¿¬ÀÌ¸§] ±â¿¬»èÁ¦')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ê¸°ì—°ì´ë¦„] ê¸°ì—°ì‚­ì œ')
             return
             
         msg = ''
         if line not in ONEITEM.index:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀº ¾ø½À´Ï´Ù.!')
+            ob.sendLine('â˜ž ê·¸ëŸ° ì•„ì´í…œì€ ì—†ìŠµë‹ˆë‹¤.!')
             return
         index = ONEITEM.index[line]
         ONEITEM.attr.__delitem__(index)
         ONEITEM.save()
-        ob.sendLine('¢Ñ ±â¿¬ÀÌ »èÁ¦µÇ¾ú½À´Ï´Ù.')
+        ob.sendLine('â˜ž ê¸°ì—°ì´ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.')
 

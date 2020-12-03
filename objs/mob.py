@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import os
 import glob
 import time
@@ -60,19 +58,19 @@ class Mob(Body):
             return False
         
         try:
-            self.attr = scr['¸÷Á¤º¸']
+            self.attr = scr['ëª¹ì •ë³´']
         except:
             return False
             
         self.init()
         
     def init(self):
-        self.corpse = getInt(self.get('½ÃÃ¼'))
+        self.corpse = getInt(self.get('ì‹œì²´'))
         if self.corpse <= 0:
             self.corpse = 30
         else:
             self.corpse = self.corpse * MAIN_CONFIG['REGEN_MULTIPLY']
-        self.regen = getInt(self.get('¸®Á¨'))
+        self.regen = getInt(self.get('ë¦¬ì  '))
         if self.regen <= 0:
             self.regen = 60
         elif self.regen >= 360:
@@ -83,18 +81,18 @@ class Mob(Body):
                 self.regen = 360
         self.setMove()
         
-        l = self.get('»ç¿ë¾ÆÀÌÅÛ').splitlines()
+        l = self.get('ì‚¬ìš©ì•„ì´í…œ').splitlines()
         for i in l:
             item = getItem(i.split()[0])
             if item == None:
                 continue
-            self.armor += getInt(item['¹æ¾î·Â'])
-            self.attpower += getInt(item['°ø°İ·Â'])
-            if item['Á¾·ù'] == '¹«±â':
-                self.weapon = item['ÀüÅõ½ºÅ©¸³']
+            self.armor += getInt(item['ë°©ì–´ë ¥'])
+            self.attpower += getInt(item['ê³µê²©ë ¥'])
+            if item['ì¢…ë¥˜'] == 'ë¬´ê¸°':
+                self.weapon = item['ì „íˆ¬ìŠ¤í¬ë¦½']
                 self.weaponItem = item
         
-        l = self['¹«°ø'].splitlines()
+        l = self['ë¬´ê³µ'].splitlines()
         for m in l:
             words = m.split()
             if len(words) != 3:
@@ -114,24 +112,24 @@ class Mob(Body):
         self._arm = 0
         self._mp = 0
         self._maxmp = 0
-        if self['Ã¼·Â'] == '':
-            self['Ã¼·Â'] = 0
-        if self['³»°ø'] == '':
-            self['³»°ø'] = 0
-        self.hp = getInt(self.get('Ã¼·Â'))
-        self.mp = getInt(self.get('³»°ø'))
+        if self['ì²´ë ¥'] == '':
+            self['ì²´ë ¥'] = 0
+        if self['ë‚´ê³µ'] == '':
+            self['ë‚´ê³µ'] = 0
+        self.hp = getInt(self.get('ì²´ë ¥'))
+        self.mp = getInt(self.get('ë‚´ê³µ'))
         
     def place(self):
         from objs.room import Room, is_room, getRoom
-        keydata = self.getString('À§Ä¡')
+        keydata = self.getString('ìœ„ì¹˜')
         lines = keydata.splitlines()
         for line in lines:
             for loc in line.split():
-                room = getRoom(self.get('Á¸ÀÌ¸§') + ':' + loc)
+                room = getRoom(self.get('ì¡´ì´ë¦„') + ':' + loc)
                 if room != None:
                     mob = self.clone()
                     mob.reset()
-                    mob.origin = self.get('Á¸ÀÌ¸§') + ':' + loc
+                    mob.origin = self.get('ì¡´ì´ë¦„') + ':' + loc
                     room.insert(mob)
                     if len(mob.moveList) != 0:
                         self.movingMobs.append(mob)
@@ -143,21 +141,21 @@ class Mob(Body):
         return self.mp
         
     def getMaxMp(self):
-        if getInt(self['³»°ø']) == 0:
+        if getInt(self['ë‚´ê³µ']) == 0:
 	    return 0
         if self._maxmp != 0:
-            mp = self['³»°ø'] + self['³»°ø'] * self._maxmp / 100
+            mp = self['ë‚´ê³µ'] + self['ë‚´ê³µ'] * self._maxmp / 100
             return float(mp)
-        return self['³»°ø']
+        return self['ë‚´ê³µ']
                             
     def addItem(self):
         if len(self.objs) != 0:
             return
-        d = self['³­ÀÌµµ']
+        d = self['ë‚œì´ë„']
         if d == '':
             d = 0
 
-        iList = self['¾ÆÀÌÅÛ'].splitlines()
+        iList = self['ì•„ì´í…œ'].splitlines()
         for i in iList:
             c = 1
             words = i.split()
@@ -178,10 +176,10 @@ class Mob(Body):
             for cnt in range(count):
                 if chance >= randint(0, 100 * c):
                     obj = item.deepclone()
-                    obj.applyMagic(self['·¹º§'], 0)
+                    obj.applyMagic(self['ë ˆë²¨'], 0)
                     self.insert(obj)
                     
-        iList = self['»ç¿ë¾ÆÀÌÅÛ'].splitlines()
+        iList = self['ì‚¬ìš©ì•„ì´í…œ'].splitlines()
         for i in iList:
             c = 1
             words = i.split()
@@ -200,61 +198,61 @@ class Mob(Body):
             for cnt in range(count):
                 if chance >= randint(0, 100 * c):
                     obj = item.deepclone()
-                    obj.applyMagic(self['·¹º§'], 0)
+                    obj.applyMagic(self['ë ˆë²¨'], 0)
                     self.insert(obj)
         
     def viewItemList(self):
         if len(self.objs) == 0:
-            return '[36m¢Ñ ¾Æ¹«°Íµµ ¾ø½À´Ï´Ù.[37m'
+            return '[36mâ˜ ì•„ë¬´ê²ƒë„ ì—†ìŠµë‹ˆë‹¤.[37m'
         msg = ''
         for obj in self.objs:
-            msg += '[36m%s[37m\r\n' % obj['ÀÌ¸§']
+            msg += '[36m%s[37m\r\n' % obj['ì´ë¦„']
         return msg[:-2]
         
     def view(self, ob):
         if self.act == ACT_DEATH:
-            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-            ob.sendLine('[0m[44m[1m[37m¡ß ÀÌ¸§ ¢¹ %-49s[0m[37m[40m' % (self.get('ÀÌ¸§') + 'ÀÇ ½ÃÃ¼'))
-            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+            ob.sendLine('[0m[44m[1m[37mâ—† ì´ë¦„ â–· %-49s[0m[37m[40m' % (self.get('ì´ë¦„') + 'ì˜ ì‹œì²´'))
+            ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
             ob.sendLine(self.viewItemList())
-            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
             return
             
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        ob.sendLine('[0m[44m[1m[37m¡ß ÀÌ¸§ ¢¹ %-49s[0m[37m[40m' % self.get('ÀÌ¸§'))
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-        ob.sendLine(self.get('¼³¸í2'))
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        ob.sendLine('[0m[44m[1m[37mâ—† ì´ë¦„ â–· %-49s[0m[37m[40m' % self.get('ì´ë¦„'))
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+        ob.sendLine(self.get('ì„¤ëª…2'))
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         
-        l = self.get('»ç¿ë¾ÆÀÌÅÛ').splitlines()
+        l = self.get('ì‚¬ìš©ì•„ì´í…œ').splitlines()
         for lv in self.ItemLevelList:
             for i in l:
                 item = getItem(i.split()[0])
-                if lv == item['°èÃş']:
-                    ob.sendLine('[%s] [36m%s[37m' % (self.ItemUseLevel[item.get('°èÃş')] , item.get('ÀÌ¸§')))
+                if lv == item['ê³„ì¸µ']:
+                    ob.sendLine('[%s] [36m%s[37m' % (self.ItemUseLevel[item.get('ê³„ì¸µ')] , item.get('ì´ë¦„')))
         if len(l) != 0:
-            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-        ob.sendLine('¡Ú %s' % self.GetHPString())
-        ob.sendLine('¡Ù %s' % self.getHPbar())
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+        ob.sendLine('â˜… %s' % self.GetHPString())
+        ob.sendLine('â˜† %s' % self.getHPbar())
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
         
     def checkDieEvent(self):
-        e1 = self.get('ÀÌº¥Æ® $%¼Ò¸êÀÌº¥Æ®%')
-        e2 = self.get('ÀÌº¥Æ®: $%¼Ò¸êÀÌº¥Æ®%')
+        e1 = self.get('ì´ë²¤íŠ¸ $%ì†Œë©¸ì´ë²¤íŠ¸%')
+        e2 = self.get('ì´ë²¤íŠ¸: $%ì†Œë©¸ì´ë²¤íŠ¸%')
         
         if e1 != '':
-            return 'ÀÌº¥Æ® $%¼Ò¸êÀÌº¥Æ®%'
+            return 'ì´ë²¤íŠ¸ $%ì†Œë©¸ì´ë²¤íŠ¸%'
         elif e2 != '':
-            return 'ÀÌº¥Æ®: $%¼Ò¸êÀÌº¥Æ®%'
+            return 'ì´ë²¤íŠ¸: $%ì†Œë©¸ì´ë²¤íŠ¸%'
         
         return ''
             
     def setMove(self):
-        rstr = str( self.get('ÀÌµ¿') )
+        rstr = str( self.get('ì´ë™') )
         
         if rstr == '':
             return
-        self.moveTick = getInt(self.get('ÀÌµ¿Æ½'))
+        self.moveTick = getInt(self.get('ì´ë™í‹±'))
         if self.moveTick == 0:
             self.moveTick = 30
         
@@ -265,11 +263,11 @@ class Mob(Body):
                 if len(rs) != 2:
                     continue
                 for n in range( int(rs[0]), int(rs[1]) ):
-                    rName = self.get('Á¸ÀÌ¸§') + ':' + str(n)
+                    rName = self.get('ì¡´ì´ë¦„') + ':' + str(n)
                     if rName not in self.moveList:
                         self.moveList.append(rName)
             else:
-                rName = self.get('Á¸ÀÌ¸§') + ':' + r
+                rName = self.get('ì¡´ì´ë¦„') + ':' + r
                 if rName not in self.moveList:
                     self.moveList.append(rName)
         
@@ -285,7 +283,7 @@ class Mob(Body):
             mob = self.movingMobs[self.nMovingOrder]
             if mob != None:
                 mob.move()
-                #print str(self.nMovingOrder) + ': ' + mob.get('ÀÌ¸§')
+                #print str(self.nMovingOrder) + ': ' + mob.get('ì´ë¦„')
             self.nMovingOrder += 1
             
         if self.nMovingOrder >= self.numMovings:
@@ -306,30 +304,30 @@ class Mob(Body):
         if randint(0, 2) != 0:
             return
         room, dir = self.env.getRandomExit()
-        if dir not in ['µ¿', '¼­', '³²', 'ºÏ', 'À§', '¾Æ·¡', 'ºÏµ¿', 'ºÏ¼­', '³²µ¿', '³²¼­']:
+        if dir not in ['ë™', 'ì„œ', 'ë‚¨', 'ë¶', 'ìœ„', 'ì•„ë˜', 'ë¶ë™', 'ë¶ì„œ', 'ë‚¨ë™', 'ë‚¨ì„œ']:
             return
         if room == None:
             return
             
         if room.index in self.moveList:
-            #print str(self.nMovingOrder) + ': ' + self.get('ÀÌ¸§') + ' ' + room.index
+            #print str(self.nMovingOrder) + ': ' + self.get('ì´ë¦„') + ' ' + room.index
             self.enterRoom(room, dir)
     
     def enterRoom(self, room, dir):
         self.moveTime = time.time()
-        #print self.get('ÀÌ¸§') + ' ' + room.index + '/' + dir
+        #print self.get('ì´ë¦„') + ' ' + room.index + '/' + dir
         
-        msg1 = self.get('ÅğÁø½ºÅ©¸³')
+        msg1 = self.get('í‡´ì§„ìŠ¤í¬ë¦½')
         if msg1 == '':
-            msg1 = '$¹æÇâ$ÂÊÀ¸·Î °¬½À´Ï´Ù.'
-        msg1 = msg1.replace('$¹æÇâ$', dir)
-        msg2 =  self.get('ÁøÀÔ½ºÅ©¸³')
+            msg1 = '$ë°©í–¥$ìª½ìœ¼ë¡œ ê°”ìŠµë‹ˆë‹¤.'
+        msg1 = msg1.replace('$ë°©í–¥$', dir)
+        msg2 =  self.get('ì§„ì…ìŠ¤í¬ë¦½')
         if msg2 == '':
-            msg2 = '$¹æÇâ$ÂÊ¿¡¼­ ¿Ô½À´Ï´Ù.'
-        msg2 = msg2.replace('$¹æÇâ$', room.reverseDir[dir])
-        self.env.sendRoom('\r\n[33m' + self.get('ÀÌ¸§') + '[37m' + han_iga(self.get('ÀÌ¸§')) + ' ' + msg1)
+            msg2 = '$ë°©í–¥$ìª½ì—ì„œ ì™”ìŠµë‹ˆë‹¤.'
+        msg2 = msg2.replace('$ë°©í–¥$', room.reverseDir[dir])
+        self.env.sendRoom('\r\n[33m' + self.get('ì´ë¦„') + '[37m' + han_iga(self.get('ì´ë¦„')) + ' ' + msg1)
         self.env.remove(self)
-        msg = '\r\n[33m' + self.get('ÀÌ¸§') + '[37m' + han_iga(self.get('ÀÌ¸§')) + ' ' + msg2
+        msg = '\r\n[33m' + self.get('ì´ë¦„') + '[37m' + han_iga(self.get('ì´ë¦„')) + ' ' + msg2
         say = self.getSayStr()
         if say != '' and randint(0,2) == 0:
             msg += '\r\n' + say
@@ -337,7 +335,7 @@ class Mob(Body):
         room.insert(self)
         
     def getNameA(self):
-        return '[33m' + self.get('ÀÌ¸§') + '[37m'
+        return '[33m' + self.get('ì´ë¦„') + '[37m'
         
     def say(self):
         say = self.getSayStr()
@@ -351,7 +349,7 @@ class Mob(Body):
             self.recover()
         
         if self.act == ACT_STAND:
-            if self.get('´ëÈ­Æ½') != '' and self.tick % self.get('´ëÈ­Æ½') == 0:
+            if self.get('ëŒ€í™”í‹±') != '' and self.tick % self.get('ëŒ€í™”í‹±') == 0:
                 if randint(0, 2) == 0:
                     self.say()
                     return True
@@ -371,17 +369,17 @@ class Mob(Body):
             if curTime - self.timeofdeath >= self.regen:
                 self.doRegen()
                 return True
-        if self['¸÷Á¾·ù'] == 6:
-            r = self['¾ÆÀÌÅÛ¸®Á¨']
+        if self['ëª¹ì¢…ë¥˜'] == 6:
+            r = self['ì•„ì´í…œë¦¬ì  ']
             if r < 180:
                 r = 180
             if curTime - self.timeofregen >= r:
                 self.timeofregen = curTime
                 self.addItem()
-        elif self['ÀüÅõÁ¾·ù'] == 1 and self.act == ACT_STAND:
+        elif self['ì „íˆ¬ì¢…ë¥˜'] == 1 and self.act == ACT_STAND:
             from objs.player import Player, is_player
             for ply in self.env.objs:
-                if is_player(ply) and ply['Åõ¸í»óÅÂ'] != 1:
+                if is_player(ply) and ply['íˆ¬ëª…ìƒíƒœ'] != 1:
                     ply.setFight(self, True)  
                     break
             
@@ -390,21 +388,21 @@ class Mob(Body):
         return False
         
     def recover(self):
-        #Ã¼·ÂÈ¸º¹
+        #ì²´ë ¥íšŒë³µ
         hp = self.hp
-        maxhp = self.get('Ã¼·Â')
+        maxhp = self.get('ì²´ë ¥')
         
         mp = self.getMp()
         maxmp = self.getMaxMp()
         
         if self.act == ACT_STAND:
-            # 10% È¸º¹
+            # 10% íšŒë³µ
             r = 0.1
         elif self.act == ACT_REST:
-            # 20% È¸º¹
+            # 20% íšŒë³µ
             r = 0.2
         elif self.act == ACT_FIGHT:
-            # 5% È¸º¹
+            # 5% íšŒë³µ
             r = 0.05
         else:
             return
@@ -427,7 +425,7 @@ class Mob(Body):
         for s in skills:
             if s.end_time < curTime:
                 self.skills.remove(s)
-                buf1, buf2, buf3 = self.makeFightScript(s['¹«°øÇØÁ¦½ºÅ©¸³'], None)
+                buf1, buf2, buf3 = self.makeFightScript(s['ë¬´ê³µí•´ì œìŠ¤í¬ë¦½'], None)
                 self._str -= s._str
                 self._dex -= s._dex
                 self._arm -= s._arm
@@ -442,8 +440,8 @@ class Mob(Body):
         return False
                 
     def getExpGold(self, target):
-        c1 = getInt(target['·¹º§'])
-        c2 = getInt(self['·¹º§'])
+        c1 = getInt(target['ë ˆë²¨'])
+        c2 = getInt(self['ë ˆë²¨'])
         a=((c2*c2)/3)+30
     	b=(a * (c2-c1))/100
     	
@@ -463,14 +461,14 @@ class Mob(Body):
     	if c > MAX_INT:
     	    c = MAX_INT
     	
-        c1 = getInt(self['·¹º§']) + 14
+        c1 = getInt(self['ë ˆë²¨']) + 14
         c2 = randint(0, 4)
         if randint(0, 1) == 0:
             c1 += c2;
         else:
             c1 -= c2;
-        #print self['ÀºÀü']
-        c1 += getInt(self['ÀºÀü'])
+        #print self['ì€ì „']
+        c1 += getInt(self['ì€ì „'])
         if c1 < 1:
             c1 = 1
         if c1 > MAX_INT:
@@ -481,23 +479,23 @@ class Mob(Body):
     def addHerb(self):
         if len(self.target) == 0:
             return
-        if self['·¹º§'] < self.target[0]['·¹º§']:
+        if self['ë ˆë²¨'] < self.target[0]['ë ˆë²¨']:
             return
-        p1 = self['·¹º§'] - self.target[0]['·¹º§']
+        p1 = self['ë ˆë²¨'] - self.target[0]['ë ˆë²¨']
         p2 = p1 * 0.01 + 0.05
         try:
-            d = float (self['³­ÀÌµµ']) 
+            d = float (self['ë‚œì´ë„']) 
             p2 += d
         except:
             pass
         p3 = randint(0, 99)
         
-        if p2 > MAIN_CONFIG['¾àÃÊ³ª¿ÃÈ®·ü']:
-            p2 = MAIN_CONFIG['¾àÃÊ³ª¿ÃÈ®·ü']
+        if p2 > MAIN_CONFIG['ì•½ì´ˆë‚˜ì˜¬í™•ë¥ ']:
+            p2 = MAIN_CONFIG['ì•½ì´ˆë‚˜ì˜¬í™•ë¥ ']
         if p2 < p3:
             return
         
-        herbs = MAIN_CONFIG['³»°ø¾ÆÀÌÅÛ¸®½ºÆ®'].splitlines()
+        herbs = MAIN_CONFIG['ë‚´ê³µì•„ì´í…œë¦¬ìŠ¤íŠ¸'].splitlines()
         l = len(herbs)
         herb = getItem(herbs[randint(0, l - 1)]).clone()
         if len(self.target) != 0:
@@ -510,9 +508,9 @@ class Mob(Body):
         self._arm = 0
         self.addItem()
         self.addHerb()
-        msg = self.get('¼Ò¸ê½ºÅ©¸³')
+        msg = self.get('ì†Œë©¸ìŠ¤í¬ë¦½')
         if msg == '':
-            self.env.writeRoom('\r\n[1;37m' + self.getName() + han_iga(self.getName()) + ' ¾²·¯Áı´Ï´Ù. \'Äí¿õ~~ Ã¶ÆÛ´ö~~\'[0;37m')
+            self.env.writeRoom('\r\n[1;37m' + self.getName() + han_iga(self.getName()) + ' ì“°ëŸ¬ì§‘ë‹ˆë‹¤. \'ì¿ ì›…~~ ì² í¼ë•~~\'[0;37m')
         else:
             self.env.writeRoom('\r\n[1;37m' + msg + '[0;37m')
         self.env.writeRoom('\r\n')
@@ -522,67 +520,67 @@ class Mob(Body):
         for target in self.target:
             if self.env != target.env:
                 continue
-            who = target['ÀÌ¸§']
+            who = target['ì´ë¦„']
             if who not in self.dmgMap:
                 continue
             c += 1
             dmg = float(self.dmgMap[who])
-            ratio = dmg / float(self['Ã¼·Â'])
+            ratio = dmg / float(self['ì²´ë ¥'])
             if ratio > 1:
                 ratio = 1
-            #print dmg, self['Ã¼·Â'], ratio
+            #print dmg, self['ì²´ë ¥'], ratio
             exp, gold = self.getExpGold(target)
             exp = int( exp * ratio )
             gold = int ( gold * ratio )
             bonus_exp = 0
             bonus_gold = 0
             
-            #if is_player(target) and target['·¹º§'] > self['·¹º§']:
+            #if is_player(target) and target['ë ˆë²¨'] > self['ë ˆë²¨']:
             #    target.addStr(5);
             #    target.addDex(2);
             #    target.weaponSkillUp(3);
             try:
-                d = int (self['³­ÀÌµµ'])
+                d = int (self['ë‚œì´ë„'])
             except:
                 d = 0
             if d != 0:
                 bonus_exp = int( exp * Body.difficulty[d-1][2] ) 
                 bonus_gold = int( gold * Body.difficulty[d-1][3] ) 
-                target.sendLine('\r\n´ç½ÅÀÌ %d(+%d)ÀÇ °æÇèÄ¡¸¦ ¾ò½À´Ï´Ù.' % (exp, bonus_exp))
-                target.sendLine('´ç½ÅÀÌ %s¿¡°Ô ÀºÀü %d(+%d)°³¸¦ È¹µæÇÕ´Ï´Ù.' % (self.getNameA(), gold, bonus_gold))
+                target.sendLine('\r\në‹¹ì‹ ì´ %d(+%d)ì˜ ê²½í—˜ì¹˜ë¥¼ ì–»ìŠµë‹ˆë‹¤.' % (exp, bonus_exp))
+                target.sendLine('ë‹¹ì‹ ì´ %sì—ê²Œ ì€ì „ %d(+%d)ê°œë¥¼ íšë“í•©ë‹ˆë‹¤.' % (self.getNameA(), gold, bonus_gold))
             else:
-                target.sendLine('\r\n´ç½ÅÀÌ %dÀÇ °æÇèÄ¡¸¦ ¾ò½À´Ï´Ù.' % exp)
-                target.sendLine('´ç½ÅÀÌ %s¿¡°Ô ÀºÀü %d°³¸¦ È¹µæÇÕ´Ï´Ù.' % (self.getNameA(), gold))
-            target['ÀºÀü'] += gold + bonus_gold
-            target['%d ¼º°İÇÃÅ³' % getInt(self['¼º°İ'])] += 1
+                target.sendLine('\r\në‹¹ì‹ ì´ %dì˜ ê²½í—˜ì¹˜ë¥¼ ì–»ìŠµë‹ˆë‹¤.' % exp)
+                target.sendLine('ë‹¹ì‹ ì´ %sì—ê²Œ ì€ì „ %dê°œë¥¼ íšë“í•©ë‹ˆë‹¤.' % (self.getNameA(), gold))
+            target['ì€ì „'] += gold + bonus_gold
+            target['%d ì„±ê²©í”Œí‚¬' % getInt(self['ì„±ê²©'])] += 1
             
-            msg = '%s ¾à°£ÀÇ °æÇèÄ¡¸¦ ¾ò½À´Ï´Ù.\r\n' % target.han_iga()
-            msg += '%s ¸î°³ÀÇ ÀºÀüÀ» È¹µæÇÕ´Ï´Ù.' % target.han_iga()
+            msg = '%s ì•½ê°„ì˜ ê²½í—˜ì¹˜ë¥¼ ì–»ìŠµë‹ˆë‹¤.\r\n' % target.han_iga()
+            msg += '%s ëª‡ê°œì˜ ì€ì „ì„ íšë“í•©ë‹ˆë‹¤.' % target.han_iga()
             
-            if c == 1 and target.checkConfig('ÀÚµ¿½Àµæ') == True:
+            if c == 1 and target.checkConfig('ìë™ìŠµë“') == True:
                 chance = randint(0, 99)
-                if self['·¹º§'] >= 2000 and chance < 1:
+                if self['ë ˆë²¨'] >= 2000 and chance < 1:
                     dropitem = DROPITEM[randint(0, len(DROPITEM) - 1)]
                     item = getItem(dropitem)
                     if item != None:
-                        if target.getItemCount() <= getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']) and target.getItemWeight() + item['¹«°Ô'] < target.getStr() * 10:
+                        if target.getItemCount() <= getInt(MAIN_CONFIG['ì‚¬ìš©ìì•„ì´í…œê°¯ìˆ˜']) and target.getItemWeight() + item['ë¬´ê²Œ'] < target.getStr() * 10:
                             obj = item.deepclone()
                             if randint(0, 99) < 30:
-                                obj.applyMagic(self['·¹º§'], 0)
+                                obj.applyMagic(self['ë ˆë²¨'], 0)
                             target.insert(obj)
-                            target.sendLine('´ç½ÅÀÌ %s Àü¸®Ç°À¸·Î È¹µæÇÕ´Ï´Ù.' % item.han_obj())
-                            msg += '\r\n%s %s Àü¸®Ç°À¸·Î È¹µæÇÕ´Ï´Ù.' % (target.han_iga(), item.han_obj())
+                            target.sendLine('ë‹¹ì‹ ì´ %s ì „ë¦¬í’ˆìœ¼ë¡œ íšë“í•©ë‹ˆë‹¤.' % item.han_obj())
+                            msg += '\r\n%s %s ì „ë¦¬í’ˆìœ¼ë¡œ íšë“í•©ë‹ˆë‹¤.' % (target.han_iga(), item.han_obj())
                             
                 objs = copy.copy(self.objs)
                 for item in objs:
-                    if target.getItemCount() > getInt(MAIN_CONFIG['»ç¿ëÀÚ¾ÆÀÌÅÛ°¹¼ö']) or target.getItemWeight() + item['¹«°Ô'] > target.getStr() * 10:
+                    if target.getItemCount() > getInt(MAIN_CONFIG['ì‚¬ìš©ìì•„ì´í…œê°¯ìˆ˜']) or target.getItemWeight() + item['ë¬´ê²Œ'] > target.getStr() * 10:
                         break
                     self.remove(item)
                     target.insert(item)
                     if item.isOneItem():
-                        ONEITEM.have(item.index,target['ÀÌ¸§'])
-                    target.sendLine('´ç½ÅÀÌ %s Àü¸®Ç°À¸·Î È¹µæÇÕ´Ï´Ù.' % item.han_obj())
-                    msg += '\r\n%s %s Àü¸®Ç°À¸·Î È¹µæÇÕ´Ï´Ù.' % (target.han_iga(), item.han_obj())
+                        ONEITEM.have(item.index,target['ì´ë¦„'])
+                    target.sendLine('ë‹¹ì‹ ì´ %s ì „ë¦¬í’ˆìœ¼ë¡œ íšë“í•©ë‹ˆë‹¤.' % item.han_obj())
+                    msg += '\r\n%s %s ì „ë¦¬í’ˆìœ¼ë¡œ íšë“í•©ë‹ˆë‹¤.' % (target.han_iga(), item.han_obj())
             target.sendRoom(msg, noPrompt = True)
             
             target.addExp(exp + bonus_exp)
@@ -612,12 +610,12 @@ class Mob(Body):
         
     def doDeath(self, sec = None):
         self.act = ACT_REGEN
-        self.env.writeRoom('\r\n' + self.getNameA() + 'ÀÇ ½ÃÃ¼°¡ ¹«¸²ÁöÁ¸ÀÇ ¼Õ¿¡ ÀÌ²ø·Á ¸ÁÀÚÀÇ °­À» °Ç³Ê°©´Ï´Ù.')
+        self.env.writeRoom('\r\n' + self.getNameA() + 'ì˜ ì‹œì²´ê°€ ë¬´ë¦¼ì§€ì¡´ì˜ ì†ì— ì´ëŒë ¤ ë§ìì˜ ê°•ì„ ê±´ë„ˆê°‘ë‹ˆë‹¤.')
         if len(self.objs) > 0:
             objs = copy.copy(self.objs)
             msg = '\r\n'
             for obj in objs:
-                msg += '%sÀÇ ½ÃÃ¼¼Ó¿¡¼­ %s ¸ğ½ÀÀ» µå·¯³À´Ï´Ù.\r\n' % (self.getNameA(), obj.han_iga())
+                msg += '%sì˜ ì‹œì²´ì†ì—ì„œ %s ëª¨ìŠµì„ ë“œëŸ¬ëƒ…ë‹ˆë‹¤.\r\n' % (self.getNameA(), obj.han_iga())
                 self.remove(obj)
                 self.env.insert(obj)
                 obj.drop(sec)
@@ -630,27 +628,27 @@ class Mob(Body):
         from objs.room import getRoom
         self.reset()
         self.act = ACT_STAND
-        #¿ø·¡ index·Î º¹±ÍÇÏ¶ó!
+        #ì›ë˜ indexë¡œ ë³µê·€í•˜ë¼!
         if self.origin != self.env.index:
             self.env.remove(self)
             room = getRoom(self.origin)
             room.insert(self)
-        self.env.writeRoom('\r\n' + self.get('¼³¸í3'))
+        self.env.writeRoom('\r\n' + self.get('ì„¤ëª…3'))
         self.attack_player()
         
     def attack_player(self):
         from objs.player import Player, is_player
-        # ¼±°ø¸÷ÀÏ °æ¿ì ÇÃ·¹ÀÌ¾î °ø°İ
-        if self.get('ÀüÅõÁ¾·ù') == 1:
-            #print '¸®Á¨¼±°ø¸÷2!!'
+        # ì„ ê³µëª¹ì¼ ê²½ìš° í”Œë ˆì´ì–´ ê³µê²©
+        if self.get('ì „íˆ¬ì¢…ë¥˜') == 1:
+            #print 'ë¦¬ì  ì„ ê³µëª¹2!!'
             for p in self.env.objs:
-                if is_player(p) and p['Åõ¸í»óÅÂ'] != 1:
-                    #print '¸®Á¨¼±°ø¸÷3!!'
+                if is_player(p) and p['íˆ¬ëª…ìƒíƒœ'] != 1:
+                    #print 'ë¦¬ì  ì„ ê³µëª¹3!!'
                     p.setFight(self, True)
                     break
         
     def getSayStr(self):
-        lines = self.get('ÀÚµ¿½ºÅ©¸³').splitlines()
+        lines = self.get('ìë™ìŠ¤í¬ë¦½').splitlines()
         if len(lines) == 0:
             return ''
         return lines[randint(0, len(lines) - 1)]
@@ -658,13 +656,13 @@ class Mob(Body):
     def getDesc1(self):
         msg = ''
         for s in self.skills:
-            msg += s['¹æ¾î»óÅÂ¸Ó¸®¸»'] + ' '
-        return msg + self.get('¼³¸í1')
+            msg += s['ë°©ì–´ìƒíƒœë¨¸ë¦¬ë§'] + ' '
+        return msg + self.get('ì„¤ëª…1')
     
     def checkEvent(self, words):
         noissue = ''
         for key in self.attr:
-            if key.find('ÀÌº¥Æ®') == 0:
+            if key.find('ì´ë²¤íŠ¸') == 0:
                 keywords = key[7:].split()
                 cmdList = []
                 issueList = []
@@ -690,50 +688,50 @@ class Mob(Body):
         return ''
     
     def getFightStartStr(self):
-        return '[33m' + self.get('ÀÌ¸§') + '[37m' + han_iga(self.get('ÀÌ¸§')) + ' ' + self.get('ÀüÅõ½ÃÀÛ'), ''
+        return '[33m' + self.get('ì´ë¦„') + '[37m' + han_iga(self.get('ì´ë¦„')) + ' ' + self.get('ì „íˆ¬ì‹œì‘'), ''
         
     def getHPbar(self):
-        maxhp = self.get('Ã¼·Â')
+        maxhp = self.get('ì²´ë ¥')
         hcnt = 10*self.hp/maxhp
         return self.strBar[hcnt] + ' (%d)' % (100 * self.hp / maxhp)
         
     def get_hp_script(self):
-        maxhp = self.get('Ã¼·Â')
+        maxhp = self.get('ì²´ë ¥')
         cnt = len(self.hp_script)
         s = self.hp_script[(cnt - 1) - ((cnt - 1) * self.hp / maxhp)]
-        s = self['ÀÌ¸§'] + postPosition(s, self['ÀÌ¸§'])
+        s = self['ì´ë¦„'] + postPosition(s, self['ì´ë¦„'])
         return s
         
     def GetHPString(self):
-        mode = self['Ã¼·Â½ºÅ©¸³']
+        mode = self['ì²´ë ¥ìŠ¤í¬ë¦½']
         if mode == '':
-            mode == '»ç¶÷'
-        mode += '½ºÅ©¸³'
+            mode == 'ì‚¬ëŒ'
+        mode += 'ìŠ¤í¬ë¦½'
         scripts = SCRIPT[mode]
         cnt = len(scripts)
         if cnt == 0:
             return ''
-        ix = (cnt - 1) - ((cnt - 1) * self.hp / self['Ã¼·Â'] )
+        ix = (cnt - 1) - ((cnt - 1) * self.hp / self['ì²´ë ¥'] )
         if ix < 0:
             ix = 0
         if ix >= cnt:
             ix = cnt - 1
         s = scripts[ix]
-        s = self['ÀÌ¸§'] + postPosition(s, self['ÀÌ¸§'])
+        s = self['ì´ë¦„'] + postPosition(s, self['ì´ë¦„'])
         return s
 
     def getWeapon(self):
         if self.weaponItem != None:
             return self.weaponItem
-        return getItem('ÁÖ¸Ô')
+        return getItem('ì£¼ë¨¹')
         
     def getAttackFailScript(self, mob):
         if self.weapon == '':
-            buf = self['ÀüÅõ½ºÅ©¸³']
+            buf = self['ì „íˆ¬ìŠ¤í¬ë¦½']
         else:
             buf = self.weapon
             
-        s = SCRIPT[buf + 'ÀüÅõ½ÇÆĞ½ºÅ©¸³']
+        s = SCRIPT[buf + 'ì „íˆ¬ì‹¤íŒ¨ìŠ¤í¬ë¦½']
         s = s[randint(0, len(s) - 1)]
         
         
@@ -741,10 +739,10 @@ class Mob(Body):
         
     def getAttackScript(self, mob, dmg, c1, c2):
         if self.weapon == '':
-            buf = self['ÀüÅõ½ºÅ©¸³']
+            buf = self['ì „íˆ¬ìŠ¤í¬ë¦½']
         else:
             buf = self.weapon
-        s = SCRIPT[buf + 'ÀüÅõ½ºÅ©¸³']
+        s = SCRIPT[buf + 'ì „íˆ¬ìŠ¤í¬ë¦½']
         c = ((dmg - c1) * (len(s) - 1))/(c2-c1)
         #print dmg, c1, c2, c, len(s)
         i = len(s) - 1 - c
@@ -758,38 +756,38 @@ class Mob(Body):
         
     def getAct(self):
         if self.act == ACT_STAND:
-            return 'º¸Åë'
+            return 'ë³´í†µ'
         elif self.act == ACT_REST:
-            return '½°'
+            return 'ì‰¼'
         elif self.act == ACT_FIGHT:
-            return 'ÀüÅõ'
+            return 'ì „íˆ¬'
         elif self.act == ACT_DEATH:
-            return '½ÃÃ¼'
+            return 'ì‹œì²´'
         elif self.act == ACT_REGEN:
-            return '¸®Á¨'
+            return 'ë¦¬ì  '
             
     def setAct(self, act):
-        if act == 'º¸Åë':
+        if act == 'ë³´í†µ':
             self.act = ACT_STAND
-        elif act == '½°':
+        elif act == 'ì‰¼':
             self.act = ACT_REST
-        elif act == 'ÀüÅõ':
+        elif act == 'ì „íˆ¬':
             self.act = ACT_FIGHT
-        elif act == '½ÃÃ¼':
+        elif act == 'ì‹œì²´':
             self.act = ACT_DEATH
             self.timeofdeath = time.time()
-        elif act == '¸®Á¨':
+        elif act == 'ë¦¬ì  ':
             self.doDeath()
-        elif act == '¸®Á¨ÈÄ»ı¼º':
+        elif act == 'ë¦¬ì  í›„ìƒì„±':
             self.doRegen()
             
     def setSkill(self):
         if self.skill != None:
             return False
         for skill in self.skillList:
-            if skill[0]['Á¾·ù'] != 'ÀüÅõ':
+            if skill[0]['ì¢…ë¥˜'] != 'ì „íˆ¬':
                 continue
-            if self.hp > self['Ã¼·Â'] * skill[1] / 100:
+            if self.hp > self['ì²´ë ¥'] * skill[1] / 100:
                 continue
             if skill[2] < randint(0, 100):
                 continue
@@ -805,62 +803,62 @@ class Mob(Body):
         return False
             
     def getSkillChance(self, mob):
-        l1 = self['·¹º§']
-        l2 = mob['·¹º§']
+        l1 = self['ë ˆë²¨']
+        l2 = mob['ë ˆë²¨']
         if self.skill != None:
-            CHANCE = self.skill['È®·ü']
+            CHANCE = self.skill['í™•ë¥ ']
         else:
             CHANCE = 100
-        bonus = getInt(self['¸íÁß']) * float(MAIN_CONFIG['¸íÁßÈ®·ü'])
-        bonus -= getInt(mob['È¸ÇÇ']) * float(MAIN_CONFIG['È¸ÇÇÈ®·ü'])
+        bonus = getInt(self['ëª…ì¤‘']) * float(MAIN_CONFIG['ëª…ì¤‘í™•ë¥ '])
+        bonus -= getInt(mob['íšŒí”¼']) * float(MAIN_CONFIG['íšŒí”¼í™•ë¥ '])
         return CHANCE - (((l2-l1)+90)/3) + bonus
 
     def setDifficulty(self):
         maxlv = 15500
         try:
-            d = int(self['³­ÀÌµµ'])
+            d = int(self['ë‚œì´ë„'])
         except:
             d = 0
         if d == 0:
             return
         d -= 1
-        l = self['·¹º§'] + 2000 * (d + 1) - 500
-        self['·¹º§'] = l
-        #self['Ã¼·Â'] = int( self['Ã¼·Â'] * self.difficulty[d][0] + 200000 * d)
+        l = self['ë ˆë²¨'] + 2000 * (d + 1) - 500
+        self['ë ˆë²¨'] = l
+        #self['ì²´ë ¥'] = int( self['ì²´ë ¥'] * self.difficulty[d][0] + 200000 * d)
         hp = int( 0.0529 * l * l - 8.7552 * l + 2448.9 )
-        self['Ã¼·Â'] = int( hp * self.difficulty[d][2])
-        #self['Èû'] = int( self['Èû'] * self.difficulty[d][1] + 5500 * d )
-        self['Èû'] = int( l * (3.0 + l / 20000)  * 1.3 )
+        self['ì²´ë ¥'] = int( hp * self.difficulty[d][2])
+        #self['í˜'] = int( self['í˜'] * self.difficulty[d][1] + 5500 * d )
+        self['í˜'] = int( l * (3.0 + l / 20000)  * 1.3 )
         dex = l
         if dex < 1400:
             dex = 1400
         if dex > 2800:
            dex = 2800
-        self['¹ÎÃ¸¼º'] = dex
-        self['³»°ø'] = l * 3
+        self['ë¯¼ì²©ì„±'] = dex
+        self['ë‚´ê³µ'] = l * 3
         m = 4000 + int( l / 2 )
-        if self['¸ËÁı'] < m:
-            self['¸ËÁı'] = m
-        if self['¹«°ø'] == '':
+        if self['ë§·ì§‘'] < m:
+            self['ë§·ì§‘'] = m
+        if self['ë¬´ê³µ'] == '':
             h1 = 80
             c1 = 70
-            h = h1 + self['·¹º§'] * (100-h1) / maxlv
+            h = h1 + self['ë ˆë²¨'] * (100-h1) / maxlv
             if h > 100:
                 h = 100
-            c = c1 + self['·¹º§'] * (100-c1) / maxlv
+            c = c1 + self['ë ˆë²¨'] * (100-c1) / maxlv
             if c > 100:
                 c = 100
-            s = MUGONG['µ¶%d' % (d + 1)]
+            s = MUGONG['ë…%d' % (d + 1)]
             self.skillList.append( ( s, h, c ) )
 
-        self['¸íÁß'] = int( self['·¹º§'] * 300 / maxlv )
-        self['È¸ÇÇ'] = int( self['·¹º§'] * 200 / maxlv )
-        self['ÇÊ»ì'] = int( self['·¹º§'] * 200 / maxlv )
-        self['¿î'] = int( self['·¹º§'] * 200 / maxlv )
+        self['ëª…ì¤‘'] = int( self['ë ˆë²¨'] * 300 / maxlv )
+        self['íšŒí”¼'] = int( self['ë ˆë²¨'] * 200 / maxlv )
+        self['í•„ì‚´'] = int( self['ë ˆë²¨'] * 200 / maxlv )
+        self['ìš´'] = int( self['ë ˆë²¨'] * 200 / maxlv )
 
-        self.hp = self['Ã¼·Â']
-        self.mp = self['³»°ø']
-        self['º¸³Ê½º'] = self.difficulty[d][2]
+        self.hp = self['ì²´ë ¥']
+        self.mp = self['ë‚´ê³µ']
+        self['ë³´ë„ˆìŠ¤'] = self.difficulty[d][2]
 
     
 def is_mob(obj):
@@ -894,7 +892,7 @@ def getMob(path):
     return mob
 
 def loadAllMob():
-    log('¸÷ ·ÎµùÁß... Àá½Ã¸¸ ±â´Ù·ÁÁÖ¼¼¿ä.')
+    log('ëª¹ ë¡œë”©ì¤‘... ì ì‹œë§Œ ê¸°ë‹¤ë ¤ì£¼ì„¸ìš”.')
     pwd = os.getcwd()
     c = 0
     curTime = time.time()
@@ -910,15 +908,15 @@ def loadAllMob():
         for file in files:
             mob = getMob(dir + ':' + file[:-4])
             if mob != None:
-                mob['Á¸ÀÌ¸§'] = dir
+                mob['ì¡´ì´ë¦„'] = dir
                 if dir[-1].isdigit():
-                    mob['³­ÀÌµµ'] = int(dir[-1])
+                    mob['ë‚œì´ë„'] = int(dir[-1])
                 mob.setDifficulty()
                 c = c + 1
                 mob.place()
                 mob.timeofregen = curTime
-    log(str(c) + '°³ÀÇ ¸÷ÀÌ ·ÎµùµÇ¾ú½À´Ï´Ù.')
+    log(str(c) + 'ê°œì˜ ëª¹ì´ ë¡œë”©ë˜ì—ˆìŠµë‹ˆë‹¤.')
     Mob.numMovings = len(Mob.movingMobs)
-    log(str( Mob.numMovings ) + '°³ÀÇ È°µ¿ ¸÷ÀÌ ·ÎµùµÇ¾ú½À´Ï´Ù.')
+    log(str( Mob.numMovings ) + 'ê°œì˜ í™œë™ ëª¹ì´ ë¡œë”©ë˜ì—ˆìŠµë‹ˆë‹¤.')
     
 

@@ -1,30 +1,28 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [Á¸ÀÌ¸§:¸Ê¹øÈ£] ÀÌµ¿')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ì¡´ì´ë¦„:ë§µë²ˆí˜¸] ì´ë™')
             return
         room = getRoom(line)
         if room == None:
-            ob.sendLine('* ÀÌµ¿ ½ÇÆÐ!!!')
+            ob.sendLine('* ì´ë™ ì‹¤íŒ¨!!!')
             return
         
         if room == ob.env:
-            ob.sendLine('¢Ñ °°Àº ÀÚ¸®¿¡¿ä. ^^')
+            ob.sendLine('â˜ž ê°™ì€ ìžë¦¬ì—ìš”. ^^')
             return
             
         #ob.act = ACT_STAND
         ob.clearTarget()
         
-        ob.enterRoom(room, '¼ÒÈ¯', '¼ÒÈ¯')
+        ob.enterRoom(room, 'ì†Œí™˜', 'ì†Œí™˜')
         
         
-        #reactor.callLater(2, ob.do_command, 'µ¿')
-        #ob.parse_command('µ¿')
+        #reactor.callLater(2, ob.do_command, 'ë™')
+        #ob.parse_command('ë™')

@@ -1,12 +1,10 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         from objs.room import Room, getRoom
         for zoneName in Room.Zones:
@@ -14,7 +12,7 @@ class CmdObj(Command):
             for roomName in zone:
                 room = zone[roomName]
                 for obj in room.objs:
-                    if obj['ÀÌ¸§'] == line:
-                        ob.sendLine(room['ÀÌ¸§'])
+                    if obj['ì´ë¦„'] == line:
+                        ob.sendLine(room['ì´ë¦„'])
 
 

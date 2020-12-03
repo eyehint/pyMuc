@@ -1,22 +1,20 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         words = line.split(None, 1)
         if line == '' or len(words) < 2:
-            ob.sendLine('¢Ñ ¿î¿µÀÚ ¸í·É: [´ë»ó] [³»¿ë] ¸í·É')
+            ob.sendLine('â˜ž ìš´ì˜ìž ëª…ë ¹: [ëŒ€ìƒ] [ë‚´ìš©] ëª…ë ¹')
             return
         
         obj = ob.env.findObjName(words[0])
         if obj == None or is_player(obj) == False:
-            ob.sendLine('¢Ñ ±×·± ´ë»óÀÌ ¾ø¾î¿ä. *^_^*')
+            ob.sendLine('â˜ž ê·¸ëŸ° ëŒ€ìƒì´ ì—†ì–´ìš”. *^_^*')
             return
         obj.sendLine('')
         obj.do_command(words[1])

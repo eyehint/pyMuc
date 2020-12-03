@@ -1,16 +1,14 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
-        msg = '[¿Ã¼÷¾ÆÀÌÅÛÀÎµ¦½º]\r\n'
+        msg = '[ì˜¬ìˆ™ì•„ì´í…œì¸ë±ìŠ¤]\r\n'
         for index in Item.Items:
             item = Item.Items[index]
-            if item['»ç¿ëÀÚ'] != 0 and item['»ç¿ëÀÚ'] != '':
-                msg += '#%s\r\n:%s\r\n\r\n' % (item['ÀÌ¸§'], item.index)
+            if item['ì‚¬ìš©ìž'] != 0 and item['ì‚¬ìš©ìž'] != '':
+                msg += '#%s\r\n:%s\r\n\r\n' % (item['ì´ë¦„'], item.index)
         ob.sendLine(msg)

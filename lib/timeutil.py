@@ -1,4 +1,3 @@
-# -*- coding: euc-kr -*-
 from time import ctime
 
 dicMonth = \
@@ -7,8 +6,8 @@ dicMonth = \
   
 #'Fri Dec 02 11:01:26 2005'
 #---------------------------------------
-# ¼³¸í          : [xx¿ù/xxÀÏ]·Î °¡°øÃ³¸®.
-# nTimeStamp    : Å¸ÀÓ½ºÅÆÇÁ°ª.
+# ì„¤ëª…          : [xxì›”/xxì¼]ë¡œ ê°€ê³µì²˜ë¦¬.
+# nTimeStamp    : íƒ€ì„ìŠ¤íƒ¬í”„ê°’.
 #---------------------------------------
 def frmTime_A(nTimeStamp):
     
@@ -19,4 +18,4 @@ def frmTime_A(nTimeStamp):
  
     nDay = int(strNday)
  
-    return '[%2d¿ù/%2dÀÏ]' % (dicMonth[strMonth], nDay)
+    return '[%2dì›”/%2dì¼]' % (dicMonth[strMonth], nDay)

@@ -1,44 +1,42 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['Á÷À§'] != '¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼':
+            ob.sendLine('â˜ž ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý : [´ë»ó] ¹æÁÖ±ÇÇÑ¾çµµ')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²• : [ëŒ€ìƒ] ë°©ì£¼ê¶Œí•œì–‘ë„')
             return
 
         obj = ob.env.findObjName(line)
         if obj == None or is_player(obj) == False:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ±×·± ¹«¸²ÀÎÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ž ì´ê³³ì— ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
         if obj == ob:
-            ob.sendLine('¢Ñ ÀÌ¹Ì ´ç½ÅÀº ¹æÁÖ ÀÔ´Ï´Ù.')
+            ob.sendLine('â˜ž ì´ë¯¸ ë‹¹ì‹ ì€ ë°©ì£¼ ìž…ë‹ˆë‹¤.')
             return
-        if obj['¼Ò¼Ó'] != ob['¼Ò¼Ó']:
-            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¼Ò¼ÓÀÌ ¾Æ´Õ´Ï´Ù.')
+        if obj['ì†Œì†'] != ob['ì†Œì†']:
+            ob.sendLine('â˜ž ë‹¹ì‹ ì˜ ì†Œì†ì´ ì•„ë‹™ë‹ˆë‹¤.')
             return
-        if obj['Á÷À§'] != 'ºÎ¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÁÖ±ÇÇÑÀº ºÎ¹æÁÖ¿¡°Ô¸¸ ¾çµµÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if obj['ì§ìœ„'] != 'ë¶€ë°©ì£¼':
+            ob.sendLine('â˜ž ë°©ì£¼ê¶Œí•œì€ ë¶€ë°©ì£¼ì—ê²Œë§Œ ì–‘ë„í•  ìˆ˜ ìžˆìŠµë‹ˆë‹¤.')
             return
-        if MAIN_CONFIG['ºÎ¹æÁÖ¾çµµ·¹º§'] > obj['·¹º§']:
-            ob.sendLine('¢Ñ ¹æÁÖ°¡ µÇ±â¿¡´Â ¿ª·®ÀÌ ºÎÁ·ÇÕ´Ï´Ù.')
+        if MAIN_CONFIG['ë¶€ë°©ì£¼ì–‘ë„ë ˆë²¨'] > obj['ë ˆë²¨']:
+            ob.sendLine('â˜ž ë°©ì£¼ê°€ ë˜ê¸°ì—ëŠ” ì—­ëŸ‰ì´ ë¶€ì¡±í•©ë‹ˆë‹¤.')
             return
         
-        obj['Á÷À§'] = '¹æÁÖ'
-        ob['Á÷À§'] = 'ºÎ¹æÁÖ'
-        g = GUILD[ob['¼Ò¼Ó']]
-        g['ºÎ¹æÁÖ¸®½ºÆ®'].append(ob['ÀÌ¸§'])
-        g['ºÎ¹æÁÖ¸®½ºÆ®'].remove(obj['ÀÌ¸§'])
-        g['¹æÁÖÀÌ¸§'] = obj['ÀÌ¸§']
+        obj['ì§ìœ„'] = 'ë°©ì£¼'
+        ob['ì§ìœ„'] = 'ë¶€ë°©ì£¼'
+        g = GUILD[ob['ì†Œì†']]
+        g['ë¶€ë°©ì£¼ë¦¬ìŠ¤íŠ¸'].append(ob['ì´ë¦„'])
+        g['ë¶€ë°©ì£¼ë¦¬ìŠ¤íŠ¸'].remove(obj['ì´ë¦„'])
+        g['ë°©ì£¼ì´ë¦„'] = obj['ì´ë¦„']
         GUILD.save()
 
-        msg = '%s %s ¹æÁÖ·Î ±ÇÇÑÀÌ¾çÀ» ¼±Æ÷ÇÕ´Ï´Ù.' % (ob.han_iga(), obj.han_obj())
-#obj.sendLine('\r\n´ç½ÅÀº ÆÄ¹®µÇ¾ú½À´Ï´Ù.')
+        msg = '%s %s ë°©ì£¼ë¡œ ê¶Œí•œì´ì–‘ì„ ì„ í¬í•©ë‹ˆë‹¤.' % (ob.han_iga(), obj.han_obj())
+#obj.sendLine('\r\në‹¹ì‹ ì€ íŒŒë¬¸ë˜ì—ˆìŠµë‹ˆë‹¤.')
         obj.lpPrompt()
         ob.sendGroup(msg, prompt = True)
         

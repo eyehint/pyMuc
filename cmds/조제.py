@@ -1,29 +1,27 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [ÀÌ¸§] Á¶Á¦')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ì´ë¦„] ì¡°ì œ')
             return
         found = False
         doctor = False
         for mob in ob.env.objs:
             if is_mob(mob) == False:
                 continue
-            if 'ÀÇ¿ø' in mob['¹İÀÀÀÌ¸§'].splitlines():
+            if 'ì˜ì›' in mob['ë°˜ì‘ì´ë¦„'].splitlines():
                 doctor = True
-                key = 'Á¶Á¦ %s' % line
+                key = 'ì¡°ì œ %s' % line
                 if key in mob.attr:
                     found = True
                     break
         if doctor == False:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ¾àÀ» Á¶Á¦ÇÒ¸¸ÇÑ ÀÇ¿øÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ì´ê³³ì— ì•½ì„ ì¡°ì œí• ë§Œí•œ ì˜ì›ì´ ì—†ì–´ìš”. ^^')
             return
         if found == False:
-            ob.sendLine('¢Ñ ±×·¯ÇÑ °ÍÀ» Á¶Á¦ÇÒ ÀÇ¿øÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ê·¸ëŸ¬í•œ ê²ƒì„ ì¡°ì œí•  ì˜ì›ì´ ì—†ì–´ìš”. ^^')
             return
         take = []
         for l in mob[key].splitlines():
@@ -50,20 +48,20 @@ class CmdObj(Command):
                     continue
                 break
             if c != i[1]:
-                ob.sendLine('%s ¸»ÇÕ´Ï´Ù. "À½.. ºÎÁ·ÇÑ°Ô ÀÖ´Ù³×... Àç·á¸¦ ´õ ±¸ÇØ¿À°Ô³ª"' % mob.han_iga())
+                ob.sendLine('%s ë§í•©ë‹ˆë‹¤. "ìŒ.. ë¶€ì¡±í•œê²Œ ìˆë‹¤ë„¤... ì¬ë£Œë¥¼ ë” êµ¬í•´ì˜¤ê²Œë‚˜"' % mob.han_iga())
                 return
         msg = ''
         items = []
         for i in range(0, ngive):
             item = getItem(give)
             if item == None:
-                ob.sendLine('%s ¸»ÇÕ´Ï´Ù. "À½.. Àç·á°¡ ´Ù ¶³¾îÁ®¼­ ÇÑµ¿¾È Á¶Á¦°¡ Èûµé°Ú¾î..."' % mob.han_iga())
+                ob.sendLine('%s ë§í•©ë‹ˆë‹¤. "ìŒ.. ì¬ë£Œê°€ ë‹¤ ë–¨ì–´ì ¸ì„œ í•œë™ì•ˆ ì¡°ì œê°€ í˜ë“¤ê² ì–´..."' % mob.han_iga())
                 return
             item = item.clone()
             items.append(item)
-            msg += '%s ´ç½Å¿¡°Ô %s Áİ´Ï´Ù.' % (mob.han_iga(), item.han_obj())
-        ob.sendLine('´ç½ÅÀÌ %s¿¡°Ô [36m%s[37m%s ¸¸µé¼ö ÀÖ´Â Àç·áµéÀ» °Ç³×Áİ´Ï´Ù.' % ( mob.getNameA(), line, han_obj(line)))
-        ob.sendLine('%s Àç·áµéÀ» °¡Áö°í ½É¿ÀÇÑ ±â¸¦ ºÒ¾î ³ÖÀ¸¸ç ÀÛ¾÷ÇÕ´Ï´Ù.'% mob.han_iga())
+            msg += '%s ë‹¹ì‹ ì—ê²Œ %s ì¤ë‹ˆë‹¤.' % (mob.han_iga(), item.han_obj())
+        ob.sendLine('ë‹¹ì‹ ì´ %sì—ê²Œ [36m%s[37m%s ë§Œë“¤ìˆ˜ ìˆëŠ” ì¬ë£Œë“¤ì„ ê±´ë„¤ì¤ë‹ˆë‹¤.' % ( mob.getNameA(), line, han_obj(line)))
+        ob.sendLine('%s ì¬ë£Œë“¤ì„ ê°€ì§€ê³  ì‹¬ì˜¤í•œ ê¸°ë¥¼ ë¶ˆì–´ ë„£ìœ¼ë©° ì‘ì—…í•©ë‹ˆë‹¤.'% mob.han_iga())
         ob.sendLine(msg)
         objs = copy.copy(ob.objs)
         for i in take:

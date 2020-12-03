@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,35 +5,35 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         words = line.split()
         if len(line) == 0 or len(words) < 2:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] [³»¿ë] ÀüÀ½(/)')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ëŒ€ìƒ] [ë‚´ìš©] ì „ìŒ(/)')
             return
         found = False
         for ply in ob.channel.players:
-            if ply['Åõ¸í»óÅÂ'] == 1:
+            if ply['íˆ¬ëª…ìƒíƒœ'] == 1:
                 continue
-            if ply['ÀÌ¸§'] == words[0] and ply.state == ACTIVE:
+            if ply['ì´ë¦„'] == words[0] and ply.state == ACTIVE:
                 found = True
                 break
         if found == False:
             ply = None
             
         if ply == None:
-            ob.sendLine('¢Ñ ÀüÀ½ÀÌ Àü´ÞµÉ¸¸ÇÑ »ó´ë°¡ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ž ì „ìŒì´ ì „ë‹¬ë ë§Œí•œ ìƒëŒ€ê°€ ì—†ì–´ìš”. ^^')
             return
         if not is_player(ply):
-            ob.sendLine('¢Ñ ÀüÀ½ÀÌ Àü´ÞµÉ¸¸ÇÑ »ó´ë°¡ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ž ì „ìŒì´ ì „ë‹¬ë ë§Œí•œ ìƒëŒ€ê°€ ì—†ì–´ìš”. ^^')
             return
-        if ob.checkConfig('ÀüÀ½°ÅºÎ') or ply.checkConfig('ÀüÀ½°ÅºÎ'):
-            ob.sendLine('¢Ñ ÀüÀ½ °ÅºÎÁßÀÌ¿¡¿ä. ^^')
+        if ob.checkConfig('ì „ìŒê±°ë¶€') or ply.checkConfig('ì „ìŒê±°ë¶€'):
+            ob.sendLine('â˜ž ì „ìŒ ê±°ë¶€ì¤‘ì´ì—ìš”. ^^')
             return
         if ob.env.noComm():
-            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            ob.sendLine('â˜ž ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
             return
         msg = ''
         for i in range(1, len(words)):
             msg += words[i] + ' ' 
-        msg1 = '[[1m[36mÀüÀ½[0m[37m] %s¿¡°Ô º¸³¿ : %s' % (ply['ÀÌ¸§'], msg)
-        msg2 = '[[1m[36mÀüÀ½[0m[37m] %s : %s' % (ob['ÀÌ¸§'], msg)
+        msg1 = '[[1m[36mì „ìŒ[0m[37m] %sì—ê²Œ ë³´ëƒ„ : %s' % (ply['ì´ë¦„'], msg)
+        msg2 = '[[1m[36mì „ìŒ[0m[37m] %s : %s' % (ob['ì´ë¦„'], msg)
 
         ob.sendLine(msg1)
         ply._talker = ob

@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -9,29 +7,29 @@ class CmdObj(Command):
         i = 0
         if line ==  '':
             for cfg in ob.CFG:
-                msg += '[1m[40m[32m¡¤[0m[40m[37m %-17s' % cfg
+                msg += '[1m[40m[32mÂ·[0m[40m[37m %-17s' % cfg
                 if ob.checkConfig(cfg):
-                    msg += '[[1m¼³  Á¤[0;37m]    '
+                    msg += '[[1mì„¤  ì •[0;37m]    '
                 else:
-                    msg += '[ºñ¼³Á¤]    '
+                    msg += '[ë¹„ì„¤ì •]    '
                 i += 1
                 if i % 2 == 0:
                     msg += '\r\n'
                 
-            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-            ob.sendLine('[47m[30m¢·               ¼³      Á¤      »ó      ÅÂ               ¢¹[40m[37m')
-            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+            ob.sendLine('[47m[30mâ—               ì„¤      ì •      ìƒ      íƒœ               â–·[40m[37m')
+            ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
             ob.write(msg)
-            ob.sendLine('\r\n¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            ob.sendLine('\r\nâ”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
         else:
             if line not in ob.CFG:
-                ob.sendLine('¢Ñ ±×·± ¼³Á¤Àº ¾ø¾î¿ä. ^^')
+                ob.sendLine('â˜ ê·¸ëŸ° ì„¤ì •ì€ ì—†ì–´ìš”. ^^')
                 return
             s = ob.checkConfig(line)
             if s:
-                msg = '[1m[ºñ¼³Á¤][0;37m'
+                msg = '[1m[ë¹„ì„¤ì •][0;37m'
             else:
-                msg = '[1m[¼³Á¤][0;37m'
+                msg = '[1m[ì„¤ì •][0;37m'
             ob.setConfig(line)
-            ob.sendLine('¢Ñ ' + line + han_obj(line) + ' ' + msg + ' ÇÏ¿´½À´Ï´Ù.')
+            ob.sendLine('â˜ ' + line + han_obj(line) + ' ' + msg + ' í•˜ì˜€ìŠµë‹ˆë‹¤.')
 

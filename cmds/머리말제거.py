@@ -1,10 +1,8 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        ob['╦с╦╝╦╩'] = ''
-        ob.sendLine('╒я ╦с╦╝╦╩ю╩ а╕╟е го©╢╫ю╢о╢ы.')
+        ob['К╗╦К╕╛К╖░'] = ''
+        ob.sendLine('Б≤· К╗╦К╕╛К╖░Л²└ Л═°Й╠╟ М∙≤Л≤─Л┼╣К▀┬К▀╓.')

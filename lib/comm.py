@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 def tell_room(env, line, ob = None):
     if len(line) == 0:
         return
@@ -30,4 +28,4 @@ def say(ob, line, *args):
         if c == ob:
             c.sendLine('you say : ' + line)
         else:
-            c.sendLine(ob.get('ÀÌ¸§') + ' say : ' + line) 
+            c.sendLine(ob.get('ì´ë¦„') + ' say : ' + line) 

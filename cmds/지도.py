@@ -1,35 +1,33 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     room_num = [
-        12,14,16,18,20,
-        34,36,38,40,42,
-        56,58,60,62,64,
-        78,80,82,84,86,
-        100,102,104,106,108,
+        12, 14, 16, 18, 20,
+        34, 36, 38, 40, 42,
+        56, 58, 60, 62, 64,
+        78, 80, 82, 84, 86,
+        100, 102, 104, 106, 108,
     ]
 
 
     def cmd(self, ob, line):
-        self.res = [ 
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	    '  ','  ','  ','  ','  ','  ','  ','  ','  ','  ','  ',
-    	]
+        self.res = [
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+            '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ', '  ',
+        ]
 
         if ob.env == None:
-            ob.sendLine('\r\n* æ∆π´∞Õµµ ∫∏¿Ã¡ˆ æ Ω¿¥œ¥Ÿ.\r\n')
+            ob.sendLine('\r\n* ÏïÑÎ¨¥Í≤ÉÎèÑ Î≥¥Ïù¥ÏßÄ ÏïäÏäµÎãàÎã§.\r\n')
             return
         c = 0
         for exitName in ob.env.exitList:
@@ -37,7 +35,7 @@ class CmdObj(Command):
                 continue
             c += 1
         if c == 0:
-            ob.sendLine('¢— æ∆π´∞Õµµ ∫∏¿Ã¡ˆ æ Ω¿¥œ¥Ÿ.')
+            ob.sendLine('‚òû ÏïÑÎ¨¥Í≤ÉÎèÑ Î≥¥Ïù¥ÏßÄ ÏïäÏäµÎãàÎã§.')
             return
         self.exit_mark(ob.env, 60)
         ob.write(self.map())
@@ -46,11 +44,11 @@ class CmdObj(Command):
         maptext=''
         j = 0
         for i in range(len(self.res)):
-    	    j += 1
-    	    maptext += self.res[i];
-            if j == 11: 
-                maptext += '\r\n';
-                j = 0;
+            j += 1
+            maptext += self.res[i]
+            if j == 11:
+                maptext += '\r\n'
+                j = 0
         return maptext
 
     def exit_mark(self, room, roomnum):
@@ -64,103 +62,102 @@ class CmdObj(Command):
             return
         if roomnum < 0:
             return
-        
+
         if self.res[roomnum] == '  ':
             if roomnum == 60:
-                self.res[roomnum] = '[1;33m°€[37;0m'
+                self.res[roomnum] = '[1;33m‚óã[37;0m'
             else:
-                self.res[roomnum] = '°€'
+                self.res[roomnum] = '‚óã'
         else:
             return
         exits = room.Exits
-        
+
         for exitName in exits:
-            if exitName == 'µø': 
+            if exitName == 'Îèô':
                 if roomnum + 1 >= 132:
                     continue
                 if self.res[roomnum+1] == '  ':
-                    self.res[roomnum+1] = '°Ê'
+                    self.res[roomnum+1] = '‚Üí'
                 else:
-                    self.res[roomnum+1] = '¶°'
-                
+                    self.res[roomnum+1] = '‚îÄ'
+
                 self.exit_mark(room.getExit1(exitName), roomnum+2)
-            elif exitName == 'º≠': 
+            elif exitName == 'ÏÑú':
                 if roomnum - 1 < 0:
                     continue
                 if self.res[roomnum-1] == '  ':
-                    self.res[roomnum-1] = '°Á'
+                    self.res[roomnum-1] = '‚Üê'
                 else:
-                    self.res[roomnum-1] = '¶°'
-                
+                    self.res[roomnum-1] = '‚îÄ'
+
                 self.exit_mark(room.getExit1(exitName), roomnum-2)
-            elif exitName == '≥≤': 
+            elif exitName == 'ÎÇ®':
                 if roomnum + 11 >= 132:
                     continue
                 if self.res[roomnum+11] == '  ':
-                    self.res[roomnum+11] = '°È'
+                    self.res[roomnum+11] = '‚Üì'
                 else:
-                    self.res[roomnum+11] = '¶¢'
+                    self.res[roomnum+11] = '‚îÇ'
                 self.exit_mark(room.getExit1(exitName), roomnum+22)
-            elif exitName == '∫œ': 
+            elif exitName == 'Î∂Å':
                 if roomnum - 11 < 0:
                     continue
                 if self.res[roomnum-11] == '  ':
-                    self.res[roomnum-11] = '°Ë'
+                    self.res[roomnum-11] = '‚Üë'
                 else:
-                    self.res[roomnum-11] = '¶¢'
+                    self.res[roomnum-11] = '‚îÇ'
                 self.exit_mark(room.getExit1(exitName), roomnum-22)
-            elif exitName == '∫œµø': 
+            elif exitName == 'Î∂ÅÎèô':
                 if roomnum - 10 < 0:
                     continue
                 if self.res[roomnum-10] == '  ':
-                    self.res[roomnum-10] = '¢÷'
+                    self.res[roomnum-10] = '‚Üó'
                 else:
-                    self.res[roomnum-10] = '£Ø'
+                    self.res[roomnum-10] = 'Ôºè'
                 self.exit_mark(room.getExit1(exitName), roomnum-20)
-            elif exitName == '∫œº≠': 
+            elif exitName == 'Î∂ÅÏÑú':
                 if roomnum - 12 < 0:
                     continue
                 if self.res[roomnum-12] == '  ':
-                    self.res[roomnum-12] = '¢ÿ'
+                    self.res[roomnum-12] = '‚Üñ'
                 else:
-                    self.res[roomnum-12] = '°¨'
+                    self.res[roomnum-12] = 'Ôºº'
                 self.exit_mark(room.getExit1(exitName), roomnum-24)
-            elif exitName == '≥≤µø':
+            elif exitName == 'ÎÇ®Îèô':
                 if roomnum + 12 >= 132:
                     continue
                 if self.res[roomnum+12] == '  ':
-                    self.res[roomnum+12] = '¢Ÿ'
+                    self.res[roomnum+12] = '‚Üò'
                 else:
-                    self.res[roomnum+12] = '°¨'
+                    self.res[roomnum+12] = 'Ôºº'
                 self.exit_mark(room.getExit1(exitName), roomnum+24)
-            elif exitName == '≥≤º≠': 
+            elif exitName == 'ÎÇ®ÏÑú':
                 if roomnum + 10 >= 132:
                     continue
                 if self.res[roomnum+10] == '  ':
-                    self.res[roomnum+10] = '¢◊'
+                    self.res[roomnum+10] = '‚Üô'
                 else:
-                    self.res[roomnum+10] = '£Ø'
+                    self.res[roomnum+10] = 'Ôºè'
                 self.exit_mark(room.getExit1(exitName), roomnum+20)
-            elif exitName == '¿ß': 
+            elif exitName == 'ÏúÑ':
                 if roomnum == 60:
-                	if self.res[roomnum] == '[1;33m°€[37;0m':
-                	    self.res[roomnum] = '[1;33m°¸[37;0m'
-                	else:
-                	    self.res[roomnum] = '[1;33m¢’[37;0m'
+                    if self.res[roomnum] == '[1;33m‚óã[37;0m':
+                        self.res[roomnum] = '[1;33m‚àß[37;0m'
+                    else:
+                        self.res[roomnum] = '[1;33m‚Üï[37;0m'
                 else:
-                	if self.res[roomnum] == '°€':
-                	    self.res[roomnum] = '°¸'
-                	else:
-                	    self.res[roomnum] = '¢’'
-            elif exitName == 'æ∆∑°' or exitName == 'πÿ': 
+                    if self.res[roomnum] == '‚óã':
+                        self.res[roomnum] = '‚àß'
+                    else:
+                        self.res[roomnum] = '‚Üï'
+            elif exitName == 'ÏïÑÎûò' or exitName == 'Î∞ë':
                 if roomnum == 60:
-            	    if self.res[roomnum] == '[1;33m°€[37;0m':
-            	        self.res[roomnum] = '[1;33m°˝[37;0m'
-                    else:                                     
-                        self.res[roomnum] = '[1;33m¢’[37;0m'
+                    if self.res[roomnum] == '[1;33m‚óã[37;0m':
+                        self.res[roomnum] = '[1;33m‚à®[37;0m'
+                    else:
+                        self.res[roomnum] = '[1;33m‚Üï[37;0m'
                 else:
-            	    if self.res[roomnum] == '°€':
-            	        self.res[roomnum] = '°˝'
-            	    else:
-            	        self.res[roomnum] = '¢’'
-
+                    if self.res[roomnum] == '‚óã':
+                        self.res[roomnum] = '‚à®'
+                    else:
+                        self.res[roomnum] = '‚Üï'

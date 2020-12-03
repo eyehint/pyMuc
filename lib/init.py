@@ -1,4 +1,3 @@
-
 def init_server():
     init_commands()
     init_emotes()

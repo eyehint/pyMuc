@@ -1,25 +1,23 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if len(line) == 0:
-            ob.sendLine('»ç¿ë¹ý: [¸÷ ÀÌ¸§] »ý¼º')
+            ob.sendLine('ì‚¬ìš©ë²•: [ëª¹ ì´ë¦„] ìƒì„±')
             return
 
         mob = getMob(line)
 
         if mob == None:
-            ob.sendLine('* »ý¼º ½ÇÆÐ!!!')
+            ob.sendLine('* ìƒì„± ì‹¤íŒ¨!!!')
             return
             
 
         mob = mob.clone()
         mob.place()
-        ob.sendLine('[1;32m* [' + mob.get('ÀÌ¸§') + '] »ý¼º µÇ¾ú½À´Ï´Ù.[0;37m')
+        ob.sendLine('[1;32m* [' + mob.get('ì´ë¦„') + '] ìƒì„± ë˜ì—ˆìŠµë‹ˆë‹¤.[0;37m')
 

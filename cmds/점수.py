@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
@@ -8,77 +6,77 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         write = ob.sendLine
         get = ob.get
-        write('¢Ñ ' + ob.getDesc(True))
-        write('¦È¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Â')
-        write('¦¢[0m[44m[1m[37m ¢¹¢º¢¹¢º¢¹¢º      ´ç½ÅÀÇ ÇöÀç »óÅÂ      ¢¸¢·¢¸¢·¢¸¢· [0m[40m[37m¦¢')
-        write('¦¼¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¸¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¾')
-        write('¦¢ [·¹  º§]        [%6d] ¦¢ [³ª  ÀÌ]          %6d ¦¢' % (get('·¹º§'), get('³ªÀÌ')) )
+        write('â˜ ' + ob.getDesc(True))
+        write('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”‘')
+        write('â”‚[0m[44m[1m[37m â–·â–¶â–·â–¶â–·â–¶      ë‹¹ì‹ ì˜ í˜„ì¬ ìƒíƒœ      â—€â—â—€â—â—€â— [0m[40m[37mâ”‚')
+        write('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”¯â”â”â”â”â”â”â”â”â”â”â”â”â”â”¥')
+        write('â”‚ [ë ˆ  ë²¨]        [%6d] â”‚ [ë‚˜  ì´]          %6d â”‚' % (get('ë ˆë²¨'), get('ë‚˜ì´')) )
         temp = '%d/%d' % (ob.getHp(), ob.getMaxHp())
-        tmp = get('¼º°İ')
+        tmp = get('ì„±ê²©')
         if tmp == '':
             tmp = '----------'
-        write('¦¢ [Ã¼  ·Â] %15s ¦¢ [¼º  °İ]      %10s ¦¢' % (temp, tmp))
+        write('â”‚ [ì²´  ë ¥] %15s â”‚ [ì„±  ê²©]      %10s â”‚' % (temp, tmp))
         temp = 0
         
-        write('¦¢ [  Èû  ]  %5d + %6d ¦¢ [¼º  º°]              %2s ¦¢' % (ob.getAttPower(), ob.getStr(), get('¼ºº°')) )
-        tmp = get('¼Ò¼Ó')
+        write('â”‚ [  í˜  ]  %5d + %6d â”‚ [ì„±  ë³„]              %2s â”‚' % (ob.getAttPower(), ob.getStr(), get('ì„±ë³„')) )
+        tmp = get('ì†Œì†')
         if tmp == '':
             tmp = '----------'
-        write('¦¢ [¸Ë  Áı] %6d + %6d ¦¢ [¼Ò  ¼Ó]      %10s ¦¢' % (ob.getArmor(), ob.getArm(), tmp) )
-        tmp = get('Á÷À§')
+        write('â”‚ [ë§·  ì§‘] %6d + %6d â”‚ [ì†Œ  ì†]      %10s â”‚' % (ob.getArmor(), ob.getArm(), tmp) )
+        tmp = get('ì§ìœ„')
         if tmp == '':
             tmp = '----------'
         else:
-            g = GUILD[ob['¼Ò¼Ó']]
-            if '%s¸íÄª' % ob['Á÷À§'] in g:
-                tmp = g['%s¸íÄª' % ob['Á÷À§']]
+            g = GUILD[ob['ì†Œì†']]
+            if '%sëª…ì¹­' % ob['ì§ìœ„'] in g:
+                tmp = g['%sëª…ì¹­' % ob['ì§ìœ„']]
             else:
-                tmp = ob['Á÷À§']
-        write('¦¢ [¹Î  Ã¸] %15d ¦¢ [Á÷  À§]      %10s ¦¢' % (ob.getDex(), tmp) )
-        write('¦¢ [Ù¤  ñé] %15d ¦¢ [üŞ  ù­] %15d ¦¢' % (ob.getHit(), ob.getMiss()))
-        write('¦¢ [ù±  ß¯] %15d ¦¢ [  ê¡  ] %15d ¦¢' % (ob.getCritical(), ob.getCriticalChance()))
-        tmp = get('¹è¿ìÀÚ')
+                tmp = ob['ì§ìœ„']
+        write('â”‚ [ë¯¼  ì²©] %15d â”‚ [ì§  ìœ„]      %10s â”‚' % (ob.getDex(), tmp) )
+        write('â”‚ [å‘½  ä¸­] %15d â”‚ [å›  é¿] %15d â”‚' % (ob.getHit(), ob.getMiss()))
+        write('â”‚ [å¿…  æ®º] %15d â”‚ [  é‹  ] %15d â”‚' % (ob.getCritical(), ob.getCriticalChance()))
+        tmp = get('ë°°ìš°ì')
         if tmp == '':
             tmp = '----------'
         temp = '%d/%d' % (ob.getMp(), ob.getMaxMp())
-        #write('¦¢ [³»  °ø] %15d ¦¢ [¹è¿ìÀÚ]      %10s ¦¢' % (ob.getMp(), tmp) )
-        write('¦¢ [³»  °ø] %15s ¦¢ [¹è¿ìÀÚ]      %10s ¦¢' % (temp, tmp) )
+        #write('â”‚ [ë‚´  ê³µ] %15d â”‚ [ë°°ìš°ì]      %10s â”‚' % (ob.getMp(), tmp) )
+        write('â”‚ [ë‚´  ê³µ] %15s â”‚ [ë°°ìš°ì]      %10s â”‚' % (temp, tmp) )
 
         temp = '%d/%d' % (ob.getItemWeight(), ob.getStr() * 10)
-        write('¦¢ [Çö  °æ] %15d ¦¢ [¼ÒÁöÇ°] %15s ¦¢' % (ob['ÇöÀç°æÇèÄ¡'], temp) )
-        anger = getInt(ob['ºĞ³ë'])
+        write('â”‚ [í˜„  ê²½] %15d â”‚ [ì†Œì§€í’ˆ] %15s â”‚' % (ob['í˜„ì¬ê²½í—˜ì¹˜'], temp) )
+        anger = getInt(ob['ë¶„ë…¸'])
         if anger >= 100:
             temp = '[1;31m%d[0;37m' % anger
         else:
             temp = '%d' % anger
-        write('¦¢ [¸ñ  °æ] %15d ¦¢ [ºĞ  ³ë]             %3s ¦¢' % (ob.getTotalExp(), temp))
-        write('¦§¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦ª¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦©')
-        write('¦¢[0m[47m[30m [Àº  Àü]    %40d [0m[40m[37m¦¢' % get('ÀºÀü'))
-        if ob['±İÀü'] == '':
-            ob['±İÀü'] = 0
-        if ob['±İÀü'] > 0:
-            write('¦¢[0m[43m[30m [±İ  Àü]    %40d [0m[40m[37m¦¢' % get('±İÀü'))
-        write('¦Æ¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦Ä')
-        if ob['¼Ò¼Ó'] != '':
-            g = GUILD[ob['¼Ò¼Ó']]
-            if '%s¸íÄª' % ob['Á÷À§'] in g:
-                buf = g['%s¸íÄª' % ob['Á÷À§']]
+        write('â”‚ [ëª©  ê²½] %15d â”‚ [ë¶„  ë…¸]             %3s â”‚' % (ob.getTotalExp(), temp))
+        write('â”œâ”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”´â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”¤')
+        write('â”‚[0m[47m[30m [ì€  ì „]    %40d [0m[40m[37mâ”‚' % get('ì€ì „'))
+        if ob['ê¸ˆì „'] == '':
+            ob['ê¸ˆì „'] = 0
+        if ob['ê¸ˆì „'] > 0:
+            write('â”‚[0m[43m[30m [ê¸ˆ  ì „]    %40d [0m[40m[37mâ”‚' % get('ê¸ˆì „'))
+        write('â”•â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”™')
+        if ob['ì†Œì†'] != '':
+            g = GUILD[ob['ì†Œì†']]
+            if '%sëª…ì¹­' % ob['ì§ìœ„'] in g:
+                buf = g['%sëª…ì¹­' % ob['ì§ìœ„']]
             else:
-                buf = ob['Á÷À§']
+                buf = ob['ì§ìœ„']
             temp = ''
-            if ob['¹æÆÄº°È£'] != '':
-                temp = '(%s)' % ob['¹æÆÄº°È£']
-            write('¡Ú %s%s [1m¡¼%s¡½[0m ¹®ÆÄÀÇ [1m%s%s[0m ÀÔ´Ï´Ù.' % \
-                ('´ç½Å', han_un('´ç½Å'), ob['¼Ò¼Ó'], buf, temp ))
+            if ob['ë°©íŒŒë³„í˜¸'] != '':
+                temp = '(%s)' % ob['ë°©íŒŒë³„í˜¸']
+            write('â˜… %s%s [1mã€%sã€‘[0m ë¬¸íŒŒì˜ [1m%s%s[0m ì…ë‹ˆë‹¤.' % \
+                ('ë‹¹ì‹ ', han_un('ë‹¹ì‹ '), ob['ì†Œì†'], buf, temp ))
         from lib.script import get_hp_script, get_mp_script
-        write( '¡Ú ' + han_parse('´ç½Å', get_hp_script(ob)) )
+        write( 'â˜… ' + han_parse('ë‹¹ì‹ ', get_hp_script(ob)) )
         p = ob.getInsureCount()
         if p == 0:
-            ob.sendLine('¡Ú ´ç½ÅÀÇ Ç¥±¹º¸ÇèÀº È¿·ÂÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜… ë‹¹ì‹ ì˜ í‘œêµ­ë³´í—˜ì€ íš¨ë ¥ì´ ì—†ìŠµë‹ˆë‹¤.')
         else:
-            ob.sendLine('¡Ú ´ç½ÅÀº %d¹øÀÇ Ç¥±¹º¸Çè ÇıÅÃÀ» ¹ŞÀ¸½Ç ¼ö ÀÖ½À´Ï´Ù.' % p)
-        write( '¡Ú ' + han_parse('´ç½Å', get_mp_script(ob)) )
+            ob.sendLine('â˜… ë‹¹ì‹ ì€ %dë²ˆì˜ í‘œêµ­ë³´í—˜ í˜œíƒì„ ë°›ìœ¼ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤.' % p)
+        write( 'â˜… ' + han_parse('ë‹¹ì‹ ', get_mp_script(ob)) )
 
-        p = getInt(ob['Æ¯¼ºÄ¡'])
+        p = getInt(ob['íŠ¹ì„±ì¹˜'])
         if p != 0:
-            ob.sendLine('¡Ú ´ç½ÅÀº %d°³ÀÇ ¿©À¯ Æ¯¼ºÄ¡¸¦ º¸À¯ÇÏ°í ÀÖ½À´Ï´Ù.' % p)
+            ob.sendLine('â˜… ë‹¹ì‹ ì€ %dê°œì˜ ì—¬ìœ  íŠ¹ì„±ì¹˜ë¥¼ ë³´ìœ í•˜ê³  ìˆìŠµë‹ˆë‹¤.' % p)

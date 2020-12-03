@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
@@ -10,39 +8,39 @@ class CmdObj(Command):
         tmp = ''
         n, guard = self.getGuardNum(ob)
         if n == 0:
-            ob.sendLine('¢Ñ È£À§¸¦ °Å´À¸®Áö ¾Ê°í ÀÖ½À´Ï´Ù.')
+            ob.sendLine('â˜ í˜¸ìœ„ë¥¼ ê±°ëŠë¦¬ì§€ ì•Šê³  ìˆìŠµë‹ˆë‹¤.')
             return
         for obj in guard:
-            maxhp = getItem(obj.index)['Ã¼·Â']
+            maxhp = getItem(obj.index)['ì²´ë ¥']
             if obj.hp >= maxhp:
                 continue
-            mp = ob['Èû'] * obj['³»°ø°¨¼Ò'] / 100
-            if ob['³»°ø'] - mp < 0:
+            mp = ob['í˜'] * obj['ë‚´ê³µê°ì†Œ'] / 100
+            if ob['ë‚´ê³µ'] - mp < 0:
                 if c == 0:
-                    ob.sendLine('¢Ñ ³»°¡Áø±â¸¦ ÁÖÀÔÇÒ ³»°øÀÌ ºÎÁ·ÇÕ´Ï´Ù.')
+                    ob.sendLine('â˜ ë‚´ê°€ì§„ê¸°ë¥¼ ì£¼ì…í•  ë‚´ê³µì´ ë¶€ì¡±í•©ë‹ˆë‹¤.')
                     return
                 break
-            ob['³»°ø'] -= mp
+            ob['ë‚´ê³µ'] -= mp
             c += 1
-            hp = maxhp * obj['Ã¼·ÂÁõ°¡'] / 100
+            hp = maxhp * obj['ì²´ë ¥ì¦ê°€'] / 100
             obj.hp += hp
             if obj.hp >= maxhp:
                 obj.hp = maxhp
 
-            tmp += '´ç½ÅÀÌ %s¿¡°Ô ³»°¡Áø±â¸¦ ÁÖÀÔÇÏ¿© Ã¼·ÂÀ» È¸º¹ ½ÃÅµ´Ï´Ù. ([1;36m+%d[0;37m)\r\n' % (obj['ÀÌ¸§'], hp)
+            tmp += 'ë‹¹ì‹ ì´ %sì—ê²Œ ë‚´ê°€ì§„ê¸°ë¥¼ ì£¼ì…í•˜ì—¬ ì²´ë ¥ì„ íšŒë³µ ì‹œí‚µë‹ˆë‹¤. ([1;36m+%d[0;37m)\r\n' % (obj['ì´ë¦„'], hp)
         
         if c == 0:
-            ob.sendLine('¢Ñ È¸º¹ÇÒ È£À§°¡ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ íšŒë³µí•  í˜¸ìœ„ê°€ ì—†ìŠµë‹ˆë‹¤.')
             return
 
         ob.sendLine(tmp)
-        ob.sendLine('´ç½ÅÀÌ ¼Ò¸ğµÈ Áø±â¸¦ ´Ù½º¸³´Ï´Ù. ([1;32m-%d[0;37m)' % (mp * c))
+        ob.sendLine('ë‹¹ì‹ ì´ ì†Œëª¨ëœ ì§„ê¸°ë¥¼ ë‹¤ìŠ¤ë¦½ë‹ˆë‹¤. ([1;32m-%d[0;37m)' % (mp * c))
         
     def getGuardNum(self, ob):
         n = 0
         guard = []
         for obj in ob.objs:
-            if obj['Á¾·ù'] == 'È£À§':
+            if obj['ì¢…ë¥˜'] == 'í˜¸ìœ„':
                 n += 1
                 guard.append(obj)
         return n, guard

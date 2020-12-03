@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 class autoScript():
     def start(self, script, player):
         self.tick = 0
@@ -11,7 +9,7 @@ class autoScript():
         self.name = ''
         
     def run(self):
-        print(self.player['ÀÌ¸§'] + ' %d/%d' %(self.lineNum, self.lastNum))
+        print(self.player['ì´ë¦„'] + ' %d/%d' %(self.lineNum, self.lastNum))
         if self.player == None:
             return
         printLine = False
@@ -19,7 +17,7 @@ class autoScript():
         while(True):
             if loopcount > 50:
                 print('Exceed loop count in autoscript.py : lineNum = %d' % self.lineNum)
-                self.player.sendLine('* Ãë¼ÒÇÕ´Ï´Ù.')
+                self.player.sendLine('* ì·¨ì†Œí•©ë‹ˆë‹¤.')
                 self.player.stopAutoScript()
                 return
             
@@ -34,22 +32,22 @@ class autoScript():
                 continue
             elif line[0] == '$':
                 l = line.strip()
-                if  l == '$Ãâ·Â½ÃÀÛ':
+                if  l == '$ì¶œë ¥ì‹œì‘':
                     printLine = True
-                elif l == '$Ãâ·Â³¡':
+                elif l == '$ì¶œë ¥ë':
                     printLine = False
                     self.lineNum += 1
                     continue
-                elif l[:5] == '$Á¾·á':
+                elif l[:5] == '$ì¢…ë£Œ':
                     self.player.stopAutoScript()
                     return
-                elif l[:3] == '$Æ½':
+                elif l[:3] == '$í‹±':
                     tick = getInt(l[4:])
                     if tick != 0:
                         self.tick = tick * 0.1 * 1.5
                     self.lineNum += 1
                     continue
-                elif l[:7] == '$Å°ÀÔ·Â':
+                elif l[:7] == '$í‚¤ì…ë ¥':
                     key = l.find(':')
                     if key == -1:
                         self.player.input_to(self.player.pressEnter1)
@@ -57,12 +55,12 @@ class autoScript():
                         self.player.input_to(self.player.getKeyInput, l[key + 1:])
                     self.lineNum += 1
                     return
-                elif l[:9] == '$ÇÑ±ÛÈ®ÀÎ':
+                elif l[:9] == '$í•œê¸€í™•ì¸':
                     if is_han(stripANSI(self.player.temp_input)) == False:
                         self.lineNum -= int(l[10:])
-                        self.player.sendLine('ÇÑ±Û¸¸ ÀÔ·Â °¡´ÉÇÕ´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.')
+                        self.player.sendLine('í•œê¸€ë§Œ ì…ë ¥ ê°€ëŠ¥í•©ë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.')
                         continue
-                elif l[:9] == '$´Ü¾îÀÔ·Â':
+                elif l[:9] == '$ë‹¨ì–´ì…ë ¥':
                     words = l[10:].split()
                     limit = 10
                     keywords = []
@@ -73,104 +71,104 @@ class autoScript():
                     self.lineNum += 1
                     self.player.input_to(self.player.getWord, limit, keywords)
                     return
-                elif l[:9] == '$ÇÑÁÙÀÔ·Â':
+                elif l[:9] == '$í•œì¤„ì…ë ¥':
                     self.lineNum += 1
                     self.player.input_to(self.player.getLine, l[10:])
                     return
-                elif l[:9] == '$¶óÀÎÀÔ·Â':
+                elif l[:9] == '$ë¼ì¸ì…ë ¥':
                     self.lineNum += 1
                     self.player.temp_input = []
-                    self.player.sendLine('ÀÔ·ÂÀ» ¸¶Ä¡½Ã·Á¸é \'.\' ¸¦ ÀÔ·ÂÇÏ¼¼¿ä.')
+                    self.player.sendLine('ì…ë ¥ì„ ë§ˆì¹˜ì‹œë ¤ë©´ \'.\' ë¥¼ ì…ë ¥í•˜ì„¸ìš”.')
                     self.player.input_to(self.player.getLines, l[10:])
                     return
-                elif l[:9] == '$ÀÔ·ÂÈ®ÀÎ':
+                elif l[:9] == '$ì…ë ¥í™•ì¸':
                     self.lineNum += 1
                     from __builtin__ import type
                     if type(self.player.temp_input) == list:
-                        self.player.write('ÀÔ·ÂÇÏ½Å ³»¿ëÀÌ ¸Â½À´Ï±î? (³×/Ãë¼Ò) : ')
+                        self.player.write('ì…ë ¥í•˜ì‹  ë‚´ìš©ì´ ë§ìŠµë‹ˆê¹Œ? (ë„¤/ì·¨ì†Œ) : ')
                     else:
-                        self.player.write('ÀÔ·ÂÇÏ½Å ³»¿ëÀÌ \'' + self.player.temp_input + '\' ¸Â½À´Ï±î? (³×/Ãë¼Ò) : ')
+                        self.player.write('ì…ë ¥í•˜ì‹  ë‚´ìš©ì´ \'' + self.player.temp_input + '\' ë§ìŠµë‹ˆê¹Œ? (ë„¤/ì·¨ì†Œ) : ')
                     self.player.input_to(self.player.checkInput)
                     return
-                elif l[:9] == '$Áßº¹È®ÀÎ':
+                elif l[:9] == '$ì¤‘ë³µí™•ì¸':
                     find = False
                     for index in Item.Items:
                         item = Item.Items[index]
-                        if item['ÀÌ¸§'] == stripANSI(self.player.temp_input):
+                        if item['ì´ë¦„'] == stripANSI(self.player.temp_input):
                             self.lineNum -= int(l[10:])
-                            self.player.sendLine('Áßº¹µÈ ÀÌ¸§ÀÌ ÀÖ½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä.')
+                            self.player.sendLine('ì¤‘ë³µëœ ì´ë¦„ì´ ìˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”.')
                             find = True
                             break
                     if find == True:
                         continue
-                elif l[:9] == '$¹«±â»ı¼º':
-                    #self.player.temp_item = Item() ¶Ç´Â
-                    self.player.temp_item = getItem('¿Ã¼÷¹«±â').deepclone()
-                    self.player.temp_item.index = self.player['ÀÌ¸§'] + '_¿Ã¼÷¹«±â' 
+                elif l[:9] == '$ë¬´ê¸°ìƒì„±':
+                    #self.player.temp_item = Item() ë˜ëŠ”
+                    self.player.temp_item = getItem('ì˜¬ìˆ™ë¬´ê¸°').deepclone()
+                    self.player.temp_item.index = self.player['ì´ë¦„'] + '_ì˜¬ìˆ™ë¬´ê¸°' 
                     self.player.temp_item.path = 'data/item/' + self.player.temp_item.index + '.itm'
                     type = int(self.player.temp_input) 
-                    self.player.temp_item['¹«±âÁ¾·ù'] = type
+                    self.player.temp_item['ë¬´ê¸°ì¢…ë¥˜'] = type
                     if type == 1:
-                        msg = '°Ë'
+                        msg = 'ê²€'
                     elif type == 2:
-                        msg = 'µµ'
+                        msg = 'ë„'
                     elif type == 3:
-                        msg = 'Ã¢'
+                        msg = 'ì°½'
                     elif type == 4:
-                        msg = '±âÅ¸'
+                        msg = 'ê¸°íƒ€'
                     elif type == 5:
-                        msg = 'ÁÖ¸Ô1'
-                    self.player.temp_item['ÀüÅõ½ºÅ©¸³'] = msg
-                    self.player.temp_item['»ç¿ëÀÚ'] = self.player['ÀÌ¸§']
-                elif l[:9] == '$¹«±â¼Ó¼º':
-                    if l[10:] == 'ÀÌ¸§':
+                        msg = 'ì£¼ë¨¹1'
+                    self.player.temp_item['ì „íˆ¬ìŠ¤í¬ë¦½'] = msg
+                    self.player.temp_item['ì‚¬ìš©ì'] = self.player['ì´ë¦„']
+                elif l[:9] == '$ë¬´ê¸°ì†ì„±':
+                    if l[10:] == 'ì´ë¦„':
                         self.player.temp_item[l[10:]] = self.player.temp_input
-                        self.player.temp_item['¹İÀÀÀÌ¸§'] = stripANSI(self.player.temp_input)
-                    elif l[10:] == '¼³¸í2':
-                        self.player.temp_item['¼³¸í2'] = ''
+                        self.player.temp_item['ë°˜ì‘ì´ë¦„'] = stripANSI(self.player.temp_input)
+                    elif l[10:] == 'ì„¤ëª…2':
+                        self.player.temp_item['ì„¤ëª…2'] = ''
                         for li in self.player.temp_input:
-                            self.player.temp_item['¼³¸í2'] += li + '\r\n'
-                    elif l[10:] == '¹«°øÀÌ¸§':
+                            self.player.temp_item['ì„¤ëª…2'] += li + '\r\n'
+                    elif l[10:] == 'ë¬´ê³µì´ë¦„':
                         mugong = self.player.temp_input 
-                        jung = ['Ã¶»çÀå', '°İ°øÀå', '³«È­À¯¼ö', '°İ°øÁø·Â', '³­È­ºÒÇ÷¼ö', '»ïÀı¿¬È¯', 'º¹È£Àå', 'º®°øÀå', 'ÇÑºùÀå', 'µ¿ÇØ½ÅÀå', 'È­¼±À¯ºÒÀå', 'Ã»»êÀå', '¹éº¸½Å±Ç', 'ÅºÁö½Å°ø', 'Å»¸í±¸½Ä', '´ë·Â±İ°­Àå', '¹İ¾ß´ë¼öÀÎ', 'Ãµ¼¼Ç÷°İ', '¸ÅÈ­³­¹«', 'È¥Ãµ°ø', '³ú°İ½Å·æÂü', '¹«±Ø´ë·Â', '¹«ÇüÀÏ½Ä', '³­È­¸¸¹ø', 'ÆÄÃµ°Ë', 'ÀÏÁö¼±°ø', 'º®·ÂÁø½Ä', 'ÃßÃ¢¸Á¿ù', '¹«¿µ½Å°ø', '±³Å»Á¶È­', '°üÀ½Àå', '»ïÈ­ÃëÁ¤Àå', 'Ãµ¼ö´ë¶óÀÎ', '³ú·ÉÀÏ½Ä', 'ÇöÃµ¹«±Ø°­', '´Ş¸¶»ï°Ë', 'Ç¥°ËÇâ¿ì', '´ëºñ´ÜÈ¥°­', '³úÀ½ÀÚÈæ°­', '¸¸ºÒÁ¶Á¾', '¹«±Ø°Ë']
+                        jung = ['ì² ì‚¬ì¥', 'ê²©ê³µì¥', 'ë‚™í™”ìœ ìˆ˜', 'ê²©ê³µì§„ë ¥', 'ë‚œí™”ë¶ˆí˜ˆìˆ˜', 'ì‚¼ì ˆì—°í™˜', 'ë³µí˜¸ì¥', 'ë²½ê³µì¥', 'í•œë¹™ì¥', 'ë™í•´ì‹ ì¥', 'í™”ì„ ìœ ë¶ˆì¥', 'ì²­ì‚°ì¥', 'ë°±ë³´ì‹ ê¶Œ', 'íƒ„ì§€ì‹ ê³µ', 'íƒˆëª…êµ¬ì‹', 'ëŒ€ë ¥ê¸ˆê°•ì¥', 'ë°˜ì•¼ëŒ€ìˆ˜ì¸', 'ì²œì„¸í˜ˆê²©', 'ë§¤í™”ë‚œë¬´', 'í˜¼ì²œê³µ', 'ë‡Œê²©ì‹ ë£¡ì°¸', 'ë¬´ê·¹ëŒ€ë ¥', 'ë¬´í˜•ì¼ì‹', 'ë‚œí™”ë§Œë²ˆ', 'íŒŒì²œê²€', 'ì¼ì§€ì„ ê³µ', 'ë²½ë ¥ì§„ì‹', 'ì¶”ì°½ë§ì›”', 'ë¬´ì˜ì‹ ê³µ', 'êµíƒˆì¡°í™”', 'ê´€ìŒì¥', 'ì‚¼í™”ì·¨ì •ì¥', 'ì²œìˆ˜ëŒ€ë¼ì¸', 'ë‡Œë ¹ì¼ì‹', 'í˜„ì²œë¬´ê·¹ê°•', 'ë‹¬ë§ˆì‚¼ê²€', 'í‘œê²€í–¥ìš°', 'ëŒ€ë¹„ë‹¨í˜¼ê°•', 'ë‡ŒìŒìí‘ê°•', 'ë§Œë¶ˆì¡°ì¢…', 'ë¬´ê·¹ê²€']
 
-                        sa = ['½ÅÃµÈ£ÆĞ', 'µ¿Ãß¼ö', '±¤Ç¥±Ç', 'ÇÕ¸¶°ø', 'Ç÷Ãµ°ø', '¹¬Ç÷°­', 'ºùÇ÷½ÅÀå', '±¸»ó°Ë', 'ÆÄÇ÷°ø', 'Ç³¸¶Àå', 'Ç÷»ê¼³È­', 'È­¿ìÆøÁø', '³ì¼ö¸¶Àå', '¼Ò¼ö°Ì', 'Ç÷È­ºñÃµ', 'Çö¸¶Àå', 'Ç÷È­Àå', 'Ç÷Ãµ¼¶±¤', '¹ĞÁ¾´ë¼öÀÎ', '´ë¼öÀÎ', 'Ç÷¿ùºñÀû', '³ú°İ½Å·æÂü', '¸¸ÃµÈ­¿ì', 'ºñÇ÷Àå', 'ºÒÃµ°İ³ú', '¹¬·É´ëÈ¥', '¹«ÁøÆø¸¶', '°İÃµ»ì', '±İÈ²¸¶¶ó¼ö', '¼ö¶óÆø', 'Ç÷Áö°ø', 'ÀÜ»ìÇ÷¿µ°ø', '¸êÃµÇ÷Æø', 'Ãµ¸¶Æø', 'Ãµ¸¶¹«°İ½ÅÀå', '¼ö¶ó¸ê', 'Ãµ¸¶°Ë', 'Ç÷¼¼ÃµÇÏ']
+                        sa = ['ì‹ ì²œí˜¸íŒ¨', 'ë™ì¶”ìˆ˜', 'ê´‘í‘œê¶Œ', 'í•©ë§ˆê³µ', 'í˜ˆì²œê³µ', 'ë¬µí˜ˆê°•', 'ë¹™í˜ˆì‹ ì¥', 'êµ¬ìƒê²€', 'íŒŒí˜ˆê³µ', 'í’ë§ˆì¥', 'í˜ˆì‚°ì„¤í™”', 'í™”ìš°í­ì§„', 'ë…¹ìˆ˜ë§ˆì¥', 'ì†Œìˆ˜ê²', 'í˜ˆí™”ë¹„ì²œ', 'í˜„ë§ˆì¥', 'í˜ˆí™”ì¥', 'í˜ˆì²œì„¬ê´‘', 'ë°€ì¢…ëŒ€ìˆ˜ì¸', 'ëŒ€ìˆ˜ì¸', 'í˜ˆì›”ë¹„ì ', 'ë‡Œê²©ì‹ ë£¡ì°¸', 'ë§Œì²œí™”ìš°', 'ë¹„í˜ˆì¥', 'ë¶ˆì²œê²©ë‡Œ', 'ë¬µë ¹ëŒ€í˜¼', 'ë¬´ì§„í­ë§ˆ', 'ê²©ì²œì‚´', 'ê¸ˆí™©ë§ˆë¼ìˆ˜', 'ìˆ˜ë¼í­', 'í˜ˆì§€ê³µ', 'ì”ì‚´í˜ˆì˜ê³µ', 'ë©¸ì²œí˜ˆí­', 'ì²œë§ˆí­', 'ì²œë§ˆë¬´ê²©ì‹ ì¥', 'ìˆ˜ë¼ë©¸', 'ì²œë§ˆê²€', 'í˜ˆì„¸ì²œí•˜']
                         if mugong in jung:
-                            type = 'Á¤ÆÄ'
+                            type = 'ì •íŒŒ'
                         elif mugong in sa:
-                            type = '»çÆÄ'
+                            type = 'ì‚¬íŒŒ'
                         else:
-                            type = 'Á¤»ç'
+                            type = 'ì •ì‚¬'
 
-                        self.player.temp_item['¹«°øÀÌ¸§'] = '%s %s 1000000 10000000 10' % (mugong, type)
+                        self.player.temp_item['ë¬´ê³µì´ë¦„'] = '%s %s 1000000 10000000 10' % (mugong, type)
                     else:
                         self.player.temp_item[l[10:]] = self.player.temp_input
-                    #ÀÌ¸§
-                    #¹İÀÀÀÌ¸§
-                    #»ç¿ë½ºÅ©¸³
-                    #ÀüÅõ½ÃÀÛ
+                    #ì´ë¦„
+                    #ë°˜ì‘ì´ë¦„
+                    #ì‚¬ìš©ìŠ¤í¬ë¦½
+                    #ì „íˆ¬ì‹œì‘
 
-                    #¹«°øÀÌ¸§
-                    #¼³¸í1
-                    #¼³¸í2
+                    #ë¬´ê³µì´ë¦„
+                    #ì„¤ëª…1
+                    #ì„¤ëª…2
                     pass
-                elif l[:13] == '$¼÷·Ãµµ¼±ÅÃ':
+                elif l[:13] == '$ìˆ™ë ¨ë„ì„ íƒ':
                     if self.player.temp_input == '1':
                         self.player.temp_move = 1
                     else:
                         self.player.temp_move = 0
-                elif l[:11] == '$¼÷·ÃµµÀÌÀü':
+                elif l[:11] == '$ìˆ™ë ¨ë„ì´ì „':
                     if self.player.temp_move == 1:
-                        main = self.player.temp_item['¹«±âÁ¾·ù']
+                        main = self.player.temp_item['ë¬´ê¸°ì¢…ë¥˜']
                         exp = 0
                         for i in range(1,6):
                             if i == main:
                                 continue
-                            s = self.player['%d ¼÷·Ãµµ' % i]
-                            exp += self.player['%d ¼÷·Ãµµ°æÇèÄ¡' % i]
+                            s = self.player['%d ìˆ™ë ¨ë„' % i]
+                            exp += self.player['%d ìˆ™ë ¨ë„ê²½í—˜ì¹˜' % i]
                             for i in range(0, s+1):
                                 exp += (i + 5) * 7
-                        s = self.player['%d ¼÷·Ãµµ' % main]
+                        s = self.player['%d ìˆ™ë ¨ë„' % main]
                         a = 0
                         while(True):
                             e = (s + a + 1 + 5) * 7 
@@ -178,63 +176,63 @@ class autoScript():
                                 break
                             exp -= e
                             a += 1
-                        self.player['%d ¼÷·Ãµµ' % main] = s + a
+                        self.player['%d ìˆ™ë ¨ë„' % main] = s + a
                         for i in range(1,6):
                             if i == main:
                                 continue
-                            self.player['%d ¼÷·Ãµµ' % i] = 0
-                            self.player['%d ¼÷·Ãµµ°æÇèÄ¡' % i] = 0
-                        self.player.sendLine('¢Ñ ¼÷·Ãµµ °æÇèÄ¡°¡ ¿Å°ÜÁ³½À´Ï´Ù.')
-                elif l[:9] == '$¹«±âÁö±Ş':
-                    self.player['¿Ã¼÷¿Ï·á'] = 1
+                            self.player['%d ìˆ™ë ¨ë„' % i] = 0
+                            self.player['%d ìˆ™ë ¨ë„ê²½í—˜ì¹˜' % i] = 0
+                        self.player.sendLine('â˜ ìˆ™ë ¨ë„ ê²½í—˜ì¹˜ê°€ ì˜®ê²¨ì¡ŒìŠµë‹ˆë‹¤.')
+                elif l[:9] == '$ë¬´ê¸°ì§€ê¸‰':
+                    self.player['ì˜¬ìˆ™ì™„ë£Œ'] = 1
                     self.player.temp_item.save()
                     del self.player.temp_item
                     self.player.temp_item = None
-                    item = getItem(self.player['ÀÌ¸§'] + '_¿Ã¼÷¹«±â').deepclone()
+                    item = getItem(self.player['ì´ë¦„'] + '_ì˜¬ìˆ™ë¬´ê¸°').deepclone()
                     self.player.objs.append(item)
                     self.player.save()
-                elif l[:11] == '$¾ÆÀÌÅÛ»èÁ¦':
+                elif l[:11] == '$ì•„ì´í…œì‚­ì œ':
                     index, cnt = getStrCnt(line)
                     self.player.delItem(index, cnt)
-                elif l[:11] == '$¾ÆÀÌÅÛÈ®ÀÎ':
+                elif l[:11] == '$ì•„ì´í…œí™•ì¸':
                     if self.player.checkItemName(self.player.temp_input, 1) == False:
-                        self.player.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     self.player.temp_item = self.player.getItemName(self.player.temp_input)
                     """
-                        self.player.sendLine('¢Ñ ¹«±â¸¸ °¡´ÉÇÕ´Ï´Ù.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('â˜ ë¬´ê¸°ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     """ 
-                elif l[:9] == '$¿É¼ÇÈ®ÀÎ':
-                    if self.player['ÃÖ°í³»°ø'] < 5:
-                        self.player.sendLine('¢Ñ ³»°øÀÌ ºÎÁ·ÇØ¿ä.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                elif l[:9] == '$ì˜µì…˜í™•ì¸':
+                    if self.player['ìµœê³ ë‚´ê³µ'] < 5:
+                        self.player.sendLine('â˜ ë‚´ê³µì´ ë¶€ì¡±í•´ìš”.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
 
                     op = self.player.temp_input
                     item = self.player.temp_item
                     option = item.getOption()
-                    if op == '¹æ¾î·Â':
-                        self.player.sendLine('¢Ñ ÇØ´ç Æ¯¼ºÄ¡´Â ¾ÈµÇ¿ä.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                    if op == 'ë°©ì–´ë ¥':
+                        self.player.sendLine('â˜ í•´ë‹¹ íŠ¹ì„±ì¹˜ëŠ” ì•ˆë˜ìš”.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
 
                     if op not in option:
-                        self.player.sendLine('¢Ñ ±×·± Æ¯¼ºÄ¡´Â ¾ø¾î¿ä.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('â˜ ê·¸ëŸ° íŠ¹ì„±ì¹˜ëŠ” ì—†ì–´ìš”.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     val = option[op]
-                    myItem = self.player.getItemIndex(self.player['ÀÌ¸§'] + '_¿Ã¼÷¹«±â')
+                    myItem = self.player.getItemIndex(self.player['ì´ë¦„'] + '_ì˜¬ìˆ™ë¬´ê¸°')
                     if myItem == None or myItem.inUse == True:
-                        self.player.sendLine('¢Ñ ¹«±â¸¦ ¹ş°í ÇÏ¼¼¿ä.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('â˜ ë¬´ê¸°ë¥¼ ë²—ê³  í•˜ì„¸ìš”.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     myOp = myItem.getOption()
@@ -245,8 +243,8 @@ class autoScript():
                     else:
                         myVal = myOp[op]
                     if myVal >= val:
-                        self.player.sendLine('ÇöÀç Æ¯¼ºÄ¡ °ªº¸´Ù ³ô¾Æ¾ß ÇÕ´Ï´Ù.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('í˜„ì¬ íŠ¹ì„±ì¹˜ ê°’ë³´ë‹¤ ë†’ì•„ì•¼ í•©ë‹ˆë‹¤.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     d = int( (val - myVal) / 3 )
@@ -254,32 +252,32 @@ class autoScript():
                         d = 1     
                     myOp[op] = myVal + d
                     myItem.setOption(myOp)
-                    if myItem['°ø°İ·Â'] < 9999:
-                        myItem['°ø°İ·Â'] = myItem['°ø°İ·Â'] + 10
-                        myItem['±â·®'] = myItem['°ø°İ·Â']
-                    self.player['ÃÖ°í³»°ø'] = self.player['ÃÖ°í³»°ø'] - 5
+                    if myItem['ê³µê²©ë ¥'] < 9999:
+                        myItem['ê³µê²©ë ¥'] = myItem['ê³µê²©ë ¥'] + 10
+                        myItem['ê¸°ëŸ‰'] = myItem['ê³µê²©ë ¥']
+                    self.player['ìµœê³ ë‚´ê³µ'] = self.player['ìµœê³ ë‚´ê³µ'] - 5
                     self.player.delItem(item.index, 1)
                     myItem.save()
                     self.player.save()
 
-                elif l[:9] == '$¿É¼ÇÃâ·Â':
+                elif l[:9] == '$ì˜µì…˜ì¶œë ¥':
                     item = self.player.temp_item
                     if item == None:
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     option = item.getOption()
                     if option is None:
-                        self.player.sendLine('¢Ñ ÇØ´ç ¾ÆÀÌÅÛÀº Æ¯¼ºÄ¡°¡ ¾ø¾î¿ä.')
-                        self.player.sendLine('* ¹«±â°­È­¸¦ Á¾·áÇÕ´Ï´Ù.')
+                        self.player.sendLine('â˜ í•´ë‹¹ ì•„ì´í…œì€ íŠ¹ì„±ì¹˜ê°€ ì—†ì–´ìš”.')
+                        self.player.sendLine('* ë¬´ê¸°ê°•í™”ë¥¼ ì¢…ë£Œí•©ë‹ˆë‹¤.')
                         self.player.stopAutoScript()
                         return
                     self.player.sendLine(item.getOptionStr())
-                elif l[:9] == '$¹«±â°­È­':
+                elif l[:9] == '$ë¬´ê¸°ê°•í™”':
                     pass
                 
             else:
-                #msg = line.replace('[°ø]', self.player['ÀÌ¸§'])
+                #msg = line.replace('[ê³µ]', self.player['ì´ë¦„'])
                 #self.player.write(postPosition1(msg))
                 self.player.sendLine(line)
             self.lineNum += 1

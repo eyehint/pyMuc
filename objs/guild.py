@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import cPickle
 from objs.object import Object
 from lib.loader import load_script, save_script

@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,17 +5,17 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         if len(line) != 0:
             for ply in ob.channel.players:
-                if ply.env == None or ply.state != ACTIVE or ply['Åõ¸í»óÅÂ'] == 1:
+                if ply.env == None or ply.state != ACTIVE or ply['íˆ¬ëª…ìƒíƒœ'] == 1:
                     continue
-                if ply['ÀÌ¸§'] == line:
-                    ob.sendLine('[1m%-10s[0;37m ¢¹ %s' % ( line, ply.env['ÀÌ¸§']))
+                if ply['ì´ë¦„'] == line:
+                    ob.sendLine('[1m%-10s[0;37m â–· %s' % ( line, ply.env['ì´ë¦„']))
                     return
-            ob.sendLine('¢Ñ È°µ¿ÁßÀÎ ±×·± ¹«¸²ÀÎÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ í™œë™ì¤‘ì¸ ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ì–´ìš”. ^^')
             return
         else:
             for ply in ob.channel.players:
-                if ply['Åõ¸í»óÅÂ'] == 1:
+                if ply['íˆ¬ëª…ìƒíƒœ'] == 1:
                     continue
                 if ply.env != None and ply.env.zone == ob.env.zone:
-                    ob.sendLine('[1m%-10s[0;37m ¢¹ %s' % ( ply['ÀÌ¸§'], ply.env['ÀÌ¸§']))
+                    ob.sendLine('[1m%-10s[0;37m â–· %s' % ( ply['ì´ë¦„'], ply.env['ì´ë¦„']))
 

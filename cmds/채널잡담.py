@@ -1,36 +1,34 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [³»¿ë] Ã¤³ÎÀâ´ã([)')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë‚´ìš©] ì±„ë„ì¡ë‹´([)')
             return
         if ob not in ob.adultCH:
-            ob.sendLine('¢Ñ ¸ÕÀú Ã¤³Î¿¡ ÀÔÀåÇÏ¼¼¿ä.')
+            ob.sendLine('â˜ ë¨¼ì € ì±„ë„ì— ì…ì¥í•˜ì„¸ìš”.')
             return
         if len(line) > 160:
-            ob.sendLine('¢Ñ ³Ê¹« ±æ¾î¿ä. ^^')
+            ob.sendLine('â˜ ë„ˆë¬´ ê¸¸ì–´ìš”. ^^')
             return
             
-        if ob.checkConfig('¿ÜÄ§°ÅºÎ'):
-            ob.sendLine('¢Ñ ¿ÜÄ§°ÅºÎÁß¿£ ¿ÜÄ¥ ¼ö ¾ø¾î¿ä. ^^')
+        if ob.checkConfig('ì™¸ì¹¨ê±°ë¶€'):
+            ob.sendLine('â˜ ì™¸ì¹¨ê±°ë¶€ì¤‘ì—” ì™¸ì¹  ìˆ˜ ì—†ì–´ìš”. ^^')
             return
         if ob.act == ACT_REST:
-            ob.sendLine('¢Ñ ¿î±âÁ¶½ÄÁß¿¡ ¿ÜÄ¡°Ô µÇ¸é ±â°¡ ÈåÆ®·¯Áı´Ï´Ù.')
+            ob.sendLine('â˜ ìš´ê¸°ì¡°ì‹ì¤‘ì— ì™¸ì¹˜ê²Œ ë˜ë©´ ê¸°ê°€ ííŠ¸ëŸ¬ì§‘ë‹ˆë‹¤.')
             return
         if ob.env.noComm():
-            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            ob.sendLine('â˜ ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
             return
 
-        buf = '[1;31m¨ç¨ï[0;37m ' + ob.getNameA() + ': %s' % line
+        buf = '[1;31mâ‘ â‘¨[0;37m ' + ob.getNameA() + ': %s' % line
 
         for ply in ob.adultCH:
             if ply.state != ACTIVE:
                 continue
-            if ply.checkConfig('¿ÜÄ§°ÅºÎ'):
+            if ply.checkConfig('ì™¸ì¹¨ê±°ë¶€'):
                 continue
             if ply == ob:
                 ply.sendLine(buf)
@@ -39,7 +37,7 @@ class CmdObj(Command):
                 ply.lpPrompt()
 
     def checkConfig(self, ob, config):
-        kl = ob['¼³Á¤»óÅÂ'].splitlines()
+        kl = ob['ì„¤ì •ìƒíƒœ'].splitlines()
         for k in kl:
             if k.find(config) == 0:
                 if len(k.split()) > 1 and k.split()[1] == '1':

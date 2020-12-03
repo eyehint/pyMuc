@@ -1,33 +1,31 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
         ob.sendLine('%d' % time.time())
-        if getInt(ob['°ü¸®ÀÚµî±Ş']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ğ¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         
         words = line.split(',', 2)
         if line == '' or len(words) < 3:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [´ë»ó],[Å°],[°ª] °ª¼³Á¤')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëŒ€ìƒ],[í‚¤],[ê°’] ê°’ì„¤ì •')
             return
-        #ob.sendLine('¢Ñ °ø»çÁßÀÔ´Ï´Ù.')
+        #ob.sendLine('â˜ ê³µì‚¬ì¤‘ì…ë‹ˆë‹¤.')
         #return
         if len(words[2]) > 20:
-            ob.sendLine('¢Ñ ³Ê¹« ±æ¾î¿ä!')
+            ob.sendLine('â˜ ë„ˆë¬´ ê¸¸ì–´ìš”!')
             return
         target = ob.env.findObjName(words[0])
 
         if target == None:
-            ob.sendLine('¢Ñ ±×·± ´ë»óÀÌ ¾ø¾î¿ä!')
+            ob.sendLine('â˜ ê·¸ëŸ° ëŒ€ìƒì´ ì—†ì–´ìš”!')
             return
         """    
-        if ob['°ü¸®ÀÚµî±Ş'] < 2000:
+        if ob['ê´€ë¦¬ìë“±ê¸‰'] < 2000:
             if words[1] not in target.attr:
-                ob.sendLine('¢Ñ ÇØ´ç Å°°¡ ¾ø½À´Ï´Ù.')
+                ob.sendLine('â˜ í•´ë‹¹ í‚¤ê°€ ì—†ìŠµë‹ˆë‹¤.')
                 return
         """
         if words[1] in target.attr:
@@ -35,7 +33,7 @@ class CmdObj(Command):
             try:
                 v = t(words[2])
             except:
-                ob.sendLine('¢Ñ Àß¸øµÈ °ªÀÔ´Ï´Ù.')
+                ob.sendLine('â˜ ì˜ëª»ëœ ê°’ì…ë‹ˆë‹¤.')
                 return
         else:
             try:
@@ -43,6 +41,6 @@ class CmdObj(Command):
             except:
                 v = words[2]
         target[words[1]] = v
-        ob.sendLine('¢Ñ °ªÀÌ ¼³Á¤µÇ¾ú½À´Ï´Ù.')
+        ob.sendLine('â˜ ê°’ì´ ì„¤ì •ë˜ì—ˆìŠµë‹ˆë‹¤.')
         
 

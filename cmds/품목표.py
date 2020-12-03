@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,11 +5,11 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         mob = ob.env.findMerchant()
         if mob == None:
-            ob.sendLine('¢Ñ Ç°¸ñÀ» º¸¿©ÁÙ »óÀÎÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ í’ˆëª©ì„ ë³´ì—¬ì¤„ ìƒì¸ì´ ì—†ì–´ìš”. ^^')
             return
-        if mob['¹°°ÇÆÇ¸Å½ºÅ©¸³'] == '':
-            ob.sendLine('¢Ñ Ç°¸ñÀ» º¸¿©ÁÙ »óÀÎÀÌ ¾ø¾î¿ä. ^^')
+        if mob['ë¬¼ê±´íŒë§¤ìŠ¤í¬ë¦½'] == '':
+            ob.sendLine('â˜ í’ˆëª©ì„ ë³´ì—¬ì¤„ ìƒì¸ì´ ì—†ì–´ìš”. ^^')
             return
-        ob.sendLine(mob['¹°°ÇÆÇ¸Å½ºÅ©¸³'])
+        ob.sendLine(mob['ë¬¼ê±´íŒë§¤ìŠ¤í¬ë¦½'])
 
 

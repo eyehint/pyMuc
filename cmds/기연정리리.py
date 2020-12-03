@@ -1,20 +1,18 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [±â¿¬ÀÌ¸§] ±â¿¬Á¤¸®')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ê¸°ì—°ì´ë¦„] ê¸°ì—°ì •ë¦¬')
             return
             
         msg = ''
         if line not in ONEITEM.index:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀº ¾ø½À´Ï´Ù.!')
+            ob.sendLine('â˜ž ê·¸ëŸ° ì•„ì´í…œì€ ì—†ìŠµë‹ˆë‹¤.!')
             return
         index = ONEITEM.index[line]
         owner = ONEITEM[index]
@@ -26,27 +24,27 @@ class CmdObj(Command):
             who = words[0]
             where = words[1]
         else:
-            ob.sendLine('¾Æ¹«µµ ¼ÒÁöÇÏ°í ÀÖÁö ¾Ê½À´Ï´Ù.!')
+            ob.sendLine('ì•„ë¬´ë„ ì†Œì§€í•˜ê³  ìžˆì§€ ì•ŠìŠµë‹ˆë‹¤.!')
             return
         for obj in ob.channel.players:
-            if obj['ÀÌ¸§'] == who:
-                ob.sendLine('»ç¿ëÀÚ°¡ Á¢¼ÓÁßÀÔ´Ï´Ù.!')
+            if obj['ì´ë¦„'] == who:
+                ob.sendLine('ì‚¬ìš©ìžê°€ ì ‘ì†ì¤‘ìž…ë‹ˆë‹¤.!')
                 return
         if where == '':
             player = Player()
             if player.load(who) == False:
-                ob.sendLine('Á¸ÀçÇÏÁö¾Ê´Â »ç¿ëÀÚÀÔ´Ï´Ù.')
+                ob.sendLine('ì¡´ìž¬í•˜ì§€ì•ŠëŠ” ì‚¬ìš©ìžìž…ë‹ˆë‹¤.')
                 return
-            last = player['¸¶Áö¸·ÀúÀå½Ã°£']
+            last = player['ë§ˆì§€ë§‰ì €ìž¥ì‹œê°„']
             if last != '' and time.time() - last < 259200:
-                ob.sendLine('¾ÆÁ÷ 3ÀÏÀÌ °æ°úÇÏÁö ¾Ê¾Ò½À´Ï´Ù.')
+                ob.sendLine('ì•„ì§ 3ì¼ì´ ê²½ê³¼í•˜ì§€ ì•Šì•˜ìŠµë‹ˆë‹¤.')
                 return
             for obj in player.objs:
-                print obj['ÀÌ¸§']
+                print obj['ì´ë¦„']
                 if obj.index == index:
                     player.objs.remove(obj)
                     player.save(False)
-                    ob.sendLine('%sÀÇ %s%s Á¤¸®ÇÏ¿´½À´Ï´Ù.' % (who, line, han_obj(line)))
+                    ob.sendLine('%sì˜ %s%s ì •ë¦¬í•˜ì˜€ìŠµë‹ˆë‹¤.' % (who, line, han_obj(line)))
                     del player
                     ONEITEM.attr.__delitem__(index)
                     ONEITEM.save()

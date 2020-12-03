@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 _TGCODE = (
 0x88, 0x61, 0x88, 0x62, 0x88, 0x65, 0x88, 0x68, 
 0x88, 0x69, 0x88, 0x6a, 0x88, 0x6b, 0x88, 0x71, 
@@ -594,7 +592,7 @@ _JONGSUNG = (
 0, 0, 1, 2, 3, 4, 5, 6,7, 8, 9,10,11,12,13,14,
 15,16, 0,17,18,19,20,21,22,23,24,25,26,27, 0, 0)
 
-_CHOSUNG = '¤¡¤¢¤¤¤§¤¨¤©¤±¤²¤³¤µ¤¶¤·¤¸¤¹¤º¤»¤¼¤½¤¾'
+_CHOSUNG = 'ã„±ã„²ã„´ã„·ã„¸ã„¹ã…ã…‚ã…ƒã……ã…†ã…‡ã…ˆã…‰ã…Šã…‹ã…Œã…ã…'
 
 def is_han(word):
     if len(word) == 0: return False
@@ -641,46 +639,46 @@ def han_cho(word):
 
 def han_iga(word):
     if _is_jong(word):
-        return 'ÀÌ'
-    return '°¡'
+        return 'ì´'
+    return 'ê°€'
 
 def han_ira(word):
     if _is_jong(word):
-        return 'ÀÌ¶ó'
-    return '¶ó'
+        return 'ì´ë¼'
+    return 'ë¼'
     
 def han_obj(word):
     if _is_jong(word):
-        return 'À»'
-    return '¸¦'
+        return 'ì„'
+    return 'ë¥¼'
 
 def han_un(word):
     if _is_jong(word):
-        return 'Àº'
-    return '´Â'
+        return 'ì€'
+    return 'ëŠ”'
 
 def han_wa(word):
     if _is_jong(word):
-        return '°ú'
-    return '¿Í'
+        return 'ê³¼'
+    return 'ì™€'
 
 def han_uro(word):
     if _is_jong(word):
-        return 'À¸·Î'
-    return '·Î'
+        return 'ìœ¼ë¡œ'
+    return 'ë¡œ'
 
 def han_i(word):
     if _is_jong(word):
-        return 'ÀÌ'
+        return 'ì´'
     return ''
 
 def han_aya(word):
     if _is_jong(word):
-        return '¾Æ'
-    return '¾ß'
+        return 'ì•„'
+    return 'ì•¼'
 
 
-S_ATT = ['(Àº/´Â)', '(À»/¸¦)', '(ÀÌ/°¡)', '(ÀÇ/ÀÇ)', '(¿¡°Ô/¿¡°Ô)', '(À¸·Î/·Î)', '(ÀÌ¶ó/¶ó)', '(°ú/¿Í)', '(¾Æ/¾ß)']
+S_ATT = ['(ì€/ëŠ”)', '(ì„/ë¥¼)', '(ì´/ê°€)', '(ì˜/ì˜)', '(ì—ê²Œ/ì—ê²Œ)', '(ìœ¼ë¡œ/ë¡œ)', '(ì´ë¼/ë¼)', '(ê³¼/ì™€)', '(ì•„/ì•¼)']
 def han_parse(name, line):
     n = 0
     for cmp in S_ATT:

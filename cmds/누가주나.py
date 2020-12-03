@@ -1,16 +1,14 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ ¿î¿µÀÚ ¸í·É: [¾ÆÀÌÅÛÀÎµ¦½º] ´©°¡ÁÖ³ª')
+            ob.sendLine('â˜ž ìš´ì˜ìž ëª…ë ¹: [ì•„ì´í…œì¸ë±ìŠ¤] ëˆ„ê°€ì£¼ë‚˜')
             return
         c = 0
         
@@ -20,16 +18,16 @@ class CmdObj(Command):
             zone = Mob.Mobs[zoneName]
             for mobName in zone:
                 mob = zone[mobName]
-                s = mob['¾ÆÀÌÅÛ'] 
+                s = mob['ì•„ì´í…œ'] 
                 if s != '':
                     s = s.splitlines()
                     for l in s:
                         if l.split(' ')[0] == line.strip() :
-                            ob.sendLine(mob['ÀÌ¸§'] + ' : ' + mob.index)
-                s = mob['»ç¿ë¾ÆÀÌÅÛ'] 
+                            ob.sendLine(mob['ì´ë¦„'] + ' : ' + mob.index)
+                s = mob['ì‚¬ìš©ì•„ì´í…œ'] 
                 if s != '':
                     s = s.splitlines()
                     for l in s:
                         if l.split(' ')[0] == line.strip() :
-                            ob.sendLine(mob['ÀÌ¸§'] + ' : ' + mob.index)
+                            ob.sendLine(mob['ì´ë¦„'] + ' : ' + mob.index)
 

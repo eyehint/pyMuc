@@ -1,27 +1,25 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from include.ansi import *
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ ¿î¿µÀÚ ¸í·É: [´ë»ó] ¾Õ')
+            ob.sendLine('â˜ž ìš´ì˜ìž ëª…ë ¹: [ëŒ€ìƒ] ì•ž')
             return
         for ply in ob.channel.players:
-            if ply['ÀÌ¸§'] == line:
+            if ply['ì´ë¦„'] == line:
                 if ob.env == ply.env:
-                    ob.sendLine('¢Ñ °°Àº ÀÚ¸®¿¡¿ä.')
+                    ob.sendLine('â˜ž ê°™ì€ ìžë¦¬ì—ìš”.')
                     return
-                if ob.enterRoom(ply.env, '¼ÒÈ¯', '¼ÒÈ¯') == False:
-                    ob.sendLine('¢Ñ °ø°£ÀÌµ¿¿¡ ½ÇÆÐÇÏ¿´½À´Ï´Ù.')
+                if ob.enterRoom(ply.env, 'ì†Œí™˜', 'ì†Œí™˜') == False:
+                    ob.sendLine('â˜ž ê³µê°„ì´ë™ì— ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.')
                 ob.clearTarget()
                 return
-        ob.sendLine('¢Ñ È°µ¿ÁßÀÎ ±×·± ¹«¸²ÀÎÀÌ ¾ø¾î¿ä. ^^')
+        ob.sendLine('â˜ž í™œë™ì¤‘ì¸ ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ì–´ìš”. ^^')
         return
         
         

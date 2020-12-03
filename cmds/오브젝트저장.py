@@ -1,12 +1,10 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         words = line.split()
         if line == '':
@@ -16,16 +14,16 @@ class CmdObj(Command):
         if target == None:
             target = ob.findObjName(line)
             if target == None:
-                ob.sendLine('¢Ñ ±×·± ´ë»óÀÌ ¾ø¾î¿ä!')
+                ob.sendLine('â˜ž ê·¸ëŸ° ëŒ€ìƒì´ ì—†ì–´ìš”!')
                 return
         if is_item(target):
-            msg = '[¾ÆÀÌÅÛÁ¤º¸]\n\n'
+            msg = '[ì•„ì´í…œì •ë³´]\n\n'
         elif is_mob(target):
-            msg = '[¸÷Á¤º¸]\n\n'
+            msg = '[ëª¹ì •ë³´]\n\n'
         elif line == '':
-            msg = '[¸ÊÁ¤º¸]\r\n'
+            msg = '[ë§µì •ë³´]\r\n'
         else:
-            ob.sendLine('¢Ñ ÀúÀåÇÒ ¼ö ¾ø¾î¿ä!')
+            ob.sendLine('â˜ž ì €ìž¥í•  ìˆ˜ ì—†ì–´ìš”!')
             return
         l = target.attr.keys()
         l.sort()
@@ -38,10 +36,10 @@ class CmdObj(Command):
         try:
             f = open(target.path, 'w')
         except:
-            ob.sendLine('* ÆÄÀÏ ¿­±â¸¦ ½ÇÆÐÇÏ¿´½À´Ï´Ù.')
+            ob.sendLine('* íŒŒì¼ ì—´ê¸°ë¥¼ ì‹¤íŒ¨í•˜ì˜€ìŠµë‹ˆë‹¤.')
             return False
         f.write(msg)
         f.close()
        
-        ob.sendLine('* %s ÀúÀåµÇ¾ú½À´Ï´Ù.' % target.path)
+        ob.sendLine('* %s ì €ìž¥ë˜ì—ˆìŠµë‹ˆë‹¤.' % target.path)
         

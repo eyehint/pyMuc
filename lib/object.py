@@ -1,4 +1,3 @@
-# -*- coding: euc-kr -*-
 from objs.object import Object
 from objs.world import World
 from include.path import *
@@ -42,7 +41,7 @@ def create_object(path):
     #o.init()
     return o
 
-# ³«¾ç¼º/µµ±¸Á¡
+# ë‚™ì–‘ì„±/ë„êµ¬ì 
 def get_room(ZoneRoom):
 
     i = ZoneRoom.find('/')
@@ -73,7 +72,7 @@ def get_room(ZoneRoom):
 def find_obj(env, objName, cnt = 1):
     count = 1
     for obj in env.objs:
-        name = obj.get('ÀÌ¸§')
+        name = obj.get('ì´ë¦„')
         if name == objName or (is_player(obj) == False and name.find(objName) == 0):
             if cnt == count:
                 return obj
@@ -94,7 +93,7 @@ def find_objN(env, line):
 def count_object(env, objName):
     count = 0
     for obj in env.objs:
-        if obj.get('ÀÌ¸§') == objName:
+        if obj.get('ì´ë¦„') == objName:
             count += 1
     return count
 
@@ -102,12 +101,12 @@ def item_count(objs):
     lst = {}
     for obj in objs:
         if is_item(obj):
-            name = obj.get('ÀÌ¸§')
+            name = obj.get('ì´ë¦„')
             if name in lst:
                 lst[name][1] += 1
             else:
                 lst[name] = {}
-                lst[name][0] = obj.get('ÀÌ¸§')
+                lst[name][0] = obj.get('ì´ë¦„')
                 lst[name][1] = 1
     return lst
 
@@ -116,21 +115,21 @@ def item_countA(objs):
     lst = {}
     for obj in objs:
         if is_item(obj):
-            name = obj.get('ÀÌ¸§')
+            name = obj.get('ì´ë¦„')
             if name in lst:
                 lst[name][1] += 1
             else:
                 lst[name] = {}
-                lst[name][0] = obj.getA('ÀÌ¸§')
+                lst[name][0] = obj.getA('ì´ë¦„')
                 lst[name][1] = 1
-                lst[name][2] = obj.get('¼³¸í1')
+                lst[name][2] = obj.get('ì„¤ëª…1')
     return lst
     
 def mob_count(objs):
     lst = {}
     for obj in objs:
         if is_mob(obj):
-            name = obj.getA('ÀÌ¸§')
+            name = obj.getA('ì´ë¦„')
             if name in lst:
                 lst[name] += 1
             else:
@@ -174,8 +173,8 @@ def load_script(path):
         if len(line) == 0:
             continue
         
-        #comment = line.find('£»')
-        comment = find(line, '£»')
+        #comment = line.find('ï¼›')
+        comment = find(line, 'ï¼›')
         if comment == 0:
             continue
         elif comment != -1:
@@ -322,7 +321,7 @@ def save_script(f, x):
                     f.write(':' + str(x[segName][keyName]) + '\n')
                 f.write('\n')
             f.seek(-2, os.SEEK_CUR)
-            #f.write('£»¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\n')
+            #f.write('ï¼›â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\n')
         else:
             seglist = x[segName]
             for segment in seglist:
@@ -337,7 +336,7 @@ def save_script(f, x):
                         f.write(':' + str(segment[keyName]) + '\n')
                     f.write('\n')
                 f.seek(-2, os.SEEK_CUR)
-                #f.write('£»¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\n')
+                #f.write('ï¼›â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\n')
 
 
 def save_object(f, x):

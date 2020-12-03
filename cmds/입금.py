@@ -1,27 +1,25 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [±İ¾×] ÀÔ±İ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ê¸ˆì•¡] ì…ê¸ˆ')
             return
-        mob = ob.env.findObjName('Ç¥µÎ')
+        mob = ob.env.findObjName('í‘œë‘')
         if mob == None:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ Ç¥±¹¹«»ç°¡ ¾ø³×¿ä.')
+            ob.sendLine('â˜ ì´ê³³ì— í‘œêµ­ë¬´ì‚¬ê°€ ì—†ë„¤ìš”.')
             return
         m = getInt(line)
         if m <= 0:
-            ob.sendLine('¢Ñ ÀºÀü 1°³ ÀÌ»ó ÀÔ±İ ÇÏ¼Å¾ß ÇØ¿ä.')
+            ob.sendLine('â˜ ì€ì „ 1ê°œ ì´ìƒ ì…ê¸ˆ í•˜ì…”ì•¼ í•´ìš”.')
             return
-        if m > ob['ÀºÀü']:
-            m = ob['ÀºÀü']
-        ob['ÀºÀü'] -= m
-        ob['º¸Çè·á'] += m
-        msg = '´ç½ÅÀÌ ÀºÀü %d°³¸¦ Ç¥±¹¹«»ç¿¡°Ô ÀÔ±İÇÕ´Ï´Ù.\r\n\r\n' % m
-        msg += '´ç½ÅÀÇ º¸Çè·á ÃÑ¾×Àº ÀºÀü [1m%d[0;37m°³ÀÌ¸ç\r\nº¸Çè ÇıÅÃÀº [1m%d[0m[40m[37m¹ø ¹ŞÀ¸½Ç ¼ö ÀÖ½À´Ï´Ù.' %(ob['º¸Çè·á'], ob.getInsureCount())
+        if m > ob['ì€ì „']:
+            m = ob['ì€ì „']
+        ob['ì€ì „'] -= m
+        ob['ë³´í—˜ë£Œ'] += m
+        msg = 'ë‹¹ì‹ ì´ ì€ì „ %dê°œë¥¼ í‘œêµ­ë¬´ì‚¬ì—ê²Œ ì…ê¸ˆí•©ë‹ˆë‹¤.\r\n\r\n' % m
+        msg += 'ë‹¹ì‹ ì˜ ë³´í—˜ë£Œ ì´ì•¡ì€ ì€ì „ [1m%d[0;37mê°œì´ë©°\r\në³´í—˜ í˜œíƒì€ [1m%d[0m[40m[37më²ˆ ë°›ìœ¼ì‹¤ ìˆ˜ ìˆìŠµë‹ˆë‹¤.' %(ob['ë³´í—˜ë£Œ'], ob.getInsureCount())
 
         ob.sendLine(msg)
             

@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 def doEvent(self, mob, key, words):
     from lib.hangul import postPosition1, han_iga, han_obj
     from objs.rank import RANK
@@ -39,143 +37,143 @@ def doEvent(self, mob, key, words):
             tab = 0
             continue
 
-        if sline.find('$Á¾·á') == 0:
+        if sline.find('$ì¢…ë£Œ') == 0:
             break
 
-        sline = sline.replace('[»ç¿ëÀÚÀÌ¸§]', self['ÀÌ¸§'])
+        sline = sline.replace('[ì‚¬ìš©ìì´ë¦„]', self['ì´ë¦„'])
 
         if sline[0] == '$':
             if len(words) > 2:
-                sline = sline.replace('$º¯¼ö:1', words[1])
+                sline = sline.replace('$ë³€ìˆ˜:1', words[1])
 
             func = line.split()[0]
             #self.sendLine( line )
-            if func == '$ÀÌº¥Æ®È®ÀÎ!':
+            if func == '$ì´ë²¤íŠ¸í™•ì¸!':
                 if self.checkEvent(sline[13:].strip()) == True:
                     searchEnd = True
-            elif func == '$ÀÌº¥Æ®È®ÀÎ':
+            elif func == '$ì´ë²¤íŠ¸í™•ì¸':
                 if self.checkEvent(sline[12:].strip()) == False:
                     searchEnd = True
-            elif func == '$ÀÌº¥Æ®¼³Á¤':
+            elif func == '$ì´ë²¤íŠ¸ì„¤ì •':
                 self.setEvent(sline[12:].strip())
-            elif func == '$ÀÌº¥Æ®»èÁ¦':
+            elif func == '$ì´ë²¤íŠ¸ì‚­ì œ':
                 self.delEvent(sline[12:].strip())
-            elif func == '$Âø¿ëÈ®ÀÎ!':
+            elif func == '$ì°©ìš©í™•ì¸!':
                 index, cnt = getStrCnt(sline)
-                if '$º¯¼ö:' in line:
+                if '$ë³€ìˆ˜:' in line:
                     item = self.getItemName(index)
                     if item != None and item.inUse == False:
                         searchEnd = True
-            elif func == '$¾ÆÀÌÅÛ¼Ó¼ºÈ®ÀÎ!':
+            elif func == '$ì•„ì´í…œì†ì„±í™•ì¸!':
                 index, cnt = getStrCnt(sline)
-                if '$º¯¼ö:' in line:
+                if '$ë³€ìˆ˜:' in line:
                     item = self.getItemName(index)
                     if item != None and item.getOption() != None:
                         searchEnd = True
-            elif func == '$°­È­È®ÀÎ4000!':
+            elif func == '$ê°•í™”í™•ì¸4000!':
                 index, cnt = getStrCnt(sline)
                 item = self.getItemIndex(index)
                 print '11'
-                if item != None and item['°ø°İ·Â'] < 4000:
+                if item != None and item['ê³µê²©ë ¥'] < 4000:
                     searchEnd = True
                     print '22'
-            elif func == '$¾ÆÀÌÅÛÈ®ÀÎ!':
+            elif func == '$ì•„ì´í…œí™•ì¸!':
                 index, cnt = getStrCnt(sline)
-                if index == 'ÀºÀü' and cnt < 1:
+                if index == 'ì€ì „' and cnt < 1:
                     continue
-                if index == '±İÀü' and cnt < 1:
+                if index == 'ê¸ˆì „' and cnt < 1:
                     continue
-                if '$º¯¼ö:' in line:
+                if '$ë³€ìˆ˜:' in line:
                     if self.checkItemName(index, cnt) == True:
                         searchEnd = True
                 else:
                     if self.checkItemIndex(index, cnt) == True:
                         searchEnd = True
-            elif func == '$¼Ó¼º¼³Á¤':
+            elif func == '$ì†ì„±ì„¤ì •':
                 self[sline[10:].strip()] = 1
-            elif func == '$¾ÆÀÌÅÛ¿É¼Ç»èÁ¦':
+            elif func == '$ì•„ì´í…œì˜µì…˜ì‚­ì œ':
                 index, cnt = getStrCnt(sline)
-                if '$º¯¼ö:' in line:
+                if '$ë³€ìˆ˜:' in line:
                     item = self.getItemName(index)
                     if item != None:
                         item.delOption()
                     else:
                         searchEnd = True
-            elif func == '$¾ÆÀÌÅÛÈ®ÀÎ':
+            elif func == '$ì•„ì´í…œí™•ì¸':
                 index, cnt = getStrCnt(sline)
-                if index == 'ÀºÀü' and cnt < 1:
+                if index == 'ì€ì „' and cnt < 1:
                     searchEnd = True
                     continue
-                if index == '±İÀü' and cnt < 1:
+                if index == 'ê¸ˆì „' and cnt < 1:
                     searchEnd = True
                     continue
-                if '$º¯¼ö:' in sline:
+                if '$ë³€ìˆ˜:' in sline:
                     if self.checkItemName(words[1], cnt) == False:
                         searchEnd = True
                 else:
                     if self.checkItemIndex(index, cnt) == False:
                         searchEnd = True
-            elif func == '$¾ÆÀÌÅÛÈ®ÀåÈ®ÀÎ':
+            elif func == '$ì•„ì´í…œí™•ì¥í™•ì¸':
                 item = self.getItemName(words[1])
-                if item != None and item.get('È®Àå ÀÌ¸§') != '':
+                if item != None and item.get('í™•ì¥ ì´ë¦„') != '':
                     continue
                 else:
                     searchEnd = True
-            elif func == '$¾ÆÀÌÅÛÈ®ÀåÈ®ÀÎ!':
+            elif func == '$ì•„ì´í…œí™•ì¥í™•ì¸!':
                 item = self.getItemName(words[1])
-                if item != None and item.get('È®Àå ÀÌ¸§') != '':
+                if item != None and item.get('í™•ì¥ ì´ë¦„') != '':
                     searchEnd = True
-            elif func == '$¾ÆÀÌÅÛÈ®Àå¼³Á¤':
+            elif func == '$ì•„ì´í…œí™•ì¥ì„¤ì •':
                 item = self.getItemName(words[1])
                 if item != None and len(words) == 4:
-                    item.set('È®Àå ÀÌ¸§', words[2])
-                    item.setAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÆÈÁö¸øÇÔ')
-                    ac = item['¹İÀÀÀÌ¸§']
+                    item.set('í™•ì¥ ì´ë¦„', words[2])
+                    item.setAttr('ì•„ì´í…œì†ì„±', 'íŒ”ì§€ëª»í•¨')
+                    ac = item['ë°˜ì‘ì´ë¦„']
                     aclist = ac.splitlines()
                     aclist.append(words[2])
                     acline = ''
                     for a in aclist:
                         acline += a + '\r\n'
-                    item['¹İÀÀÀÌ¸§'] = acline[:-2]
+                    item['ë°˜ì‘ì´ë¦„'] = acline[:-2]
                         
-            elif func == '$¾ÆÀÌÅÛÈ®Àå¼³Á¤Áö¿ò':  # ³«¾ç¼º:ÀÌ¸§¸Ç (Å©·¡ÇÁÆ®)
+            elif func == '$ì•„ì´í…œí™•ì¥ì„¤ì •ì§€ì›€':  # ë‚™ì–‘ì„±:ì´ë¦„ë§¨ (í¬ë˜í”„íŠ¸)
                 item = self.getItemName(words[1])
                 if item != None and len(words) == 3:
-                    acname = item['È®Àå ÀÌ¸§']
-                    ac = item['¹İÀÀÀÌ¸§']
+                    acname = item['í™•ì¥ ì´ë¦„']
+                    ac = item['ë°˜ì‘ì´ë¦„']
                     aclist = ac.splitlines()
                     aclist.remove(acname)
                     acline = ''
                     for a in aclist:
                         acline += a + '\r\n'
-                    item['¹İÀÀÀÌ¸§'] = acline[:-2]
-                    item.set('È®Àå ÀÌ¸§', '')
-            elif func == '$¾ÆÀÌÅÛ»èÁ¦':
+                    item['ë°˜ì‘ì´ë¦„'] = acline[:-2]
+                    item.set('í™•ì¥ ì´ë¦„', '')
+            elif func == '$ì•„ì´í…œì‚­ì œ':
                 index, cnt = getStrCnt(sline)
-                if '$º¯¼ö:' in line:
+                if '$ë³€ìˆ˜:' in line:
                     item = self.getItemName(index)
                     self.remove(item)
                 else:
                     self.delItem(index, cnt)
-            elif func == '$¼Ó¼ºÅÛÁÖ±â':
+            elif func == '$ì†ì„±í…œì£¼ê¸°':
                 index, cnt = getStrCnt(sline)
                 self.addItem(index, cnt, 1)
-            elif func == '$¾ÆÀÌÅÛÁÖ±â':
+            elif func == '$ì•„ì´í…œì£¼ê¸°':
                 index, cnt = getStrCnt(sline)
                 self.addItem(index, cnt)
-            elif func == '$¾ÆÀÌÅÛÁ¾·ùÈ®ÀÎ':
+            elif func == '$ì•„ì´í…œì¢…ë¥˜í™•ì¸':
                 item = self.getItemName(words[1])
                 if item != None and item.getType() == sline.split()[1]:
                     continue
                 else:
                     searchEnd = True
-            elif func == '$¹«¸²º°È£Á¶°Ç':
+            elif func == '$ë¬´ë¦¼ë³„í˜¸ì¡°ê±´':
                 if self.getTendency(sline[13:]) == False:
                     searchEnd = True
-            elif func == '$À§Ä¡ÀÌµ¿':
+            elif func == '$ìœ„ì¹˜ì´ë™':
                 roomName = sline[10:].strip()
                 #try:
-                d = str( mob['³­ÀÌµµ'] )
+                d = str( mob['ë‚œì´ë„'] )
                 if d != '':
                     idx = roomName.find(':')
                     if idx != -1:
@@ -184,38 +182,38 @@ def doEvent(self, mob, key, words):
                 #    pass
                 room = getRoom(roomName)
                 if room == None:
-                    self.sendLine('¾î´À°÷À¸·Îµµ À§Ä¡ÀÌµ¿ ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+                    self.sendLine('ì–´ëŠê³³ìœ¼ë¡œë„ ìœ„ì¹˜ì´ë™ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
                     continue
                 self.sendLine('')
-                self.enterRoom(room, '¼ÒÈ¯', '¼ÒÈ¯')
+                self.enterRoom(room, 'ì†Œí™˜', 'ì†Œí™˜')
                 self.lpPrompt()
-            elif func == '$Ãâ·Â':
+            elif func == '$ì¶œë ¥':
                 self.printScript(sline[6:])
-            elif func == '$¹«°ø¸®½ºÆ®È®ÀÎ':
+            elif func == '$ë¬´ê³µë¦¬ìŠ¤íŠ¸í™•ì¸':
                 if self.checkMugongList(sline[16:]) == False:
                     searchEnd = True
-            elif func == '$¹«°ø¸®½ºÆ®È®ÀÎ!':
+            elif func == '$ë¬´ê³µë¦¬ìŠ¤íŠ¸í™•ì¸!':
                 if self.checkMugongList(sline[17:]) == True:
                     searchEnd = True
-            elif func == '$¹«°ø¸®½ºÆ®»èÁ¦':
+            elif func == '$ë¬´ê³µë¦¬ìŠ¤íŠ¸ì‚­ì œ':
                 var = sline.split()
                 for m in var:
                     if m in self.skillList:
                         self.skillList.remove(m)
-            elif func == '$¹«°ø°³¼öÈ®ÀÎ':
+            elif func == '$ë¬´ê³µê°œìˆ˜í™•ì¸':
                 if len(self.skillList) < getInt(sline[14:]):
                     searchEnd = True                        
-            elif func == '$¹«°øÈ®ÀÎ':
+            elif func == '$ë¬´ê³µí™•ì¸':
                 if self.checkMugong(sline[10:]) == False:
                     searchEnd = True
-            elif func == '$¹«°øÈ®ÀÎ!':
+            elif func == '$ë¬´ê³µí™•ì¸!':
                 if self.checkMugong(sline[11:]) == True:
                     searchEnd = True
-            elif func == '$¹«°øÀü¼ö':
+            elif func == '$ë¬´ê³µì „ìˆ˜':
                 self.addMugong(sline[10:])
-            elif func == '$¹«°øÈ¸¼ö':
+            elif func == '$ë¬´ê³µíšŒìˆ˜':
                 self.delMugong(sline[10:])
-            elif func == '$¹«°ø½ÃÀü':
+            elif func == '$ë¬´ê³µì‹œì „':
                 skill_found = False
                 for s in self.skills:
                     if s.name == sline[10:]:
@@ -223,63 +221,63 @@ def doEvent(self, mob, key, words):
                         break
                 if skill_found == False:
                     s = MUGONG[sline[10:]].clone()
-                    s.start_time = s['¹æ¾î½Ã°£']
+                    s.start_time = s['ë°©ì–´ì‹œê°„']
                     self.skills.append(s)
                     self._str += s._str
                     self._dex += s._dex
                     self._arm += s._arm
-                    buf1, buf2, buf3 = mob.makeFightScript(s['¹«°ø½ºÅ©¸³'], self)
+                    buf1, buf2, buf3 = mob.makeFightScript(s['ë¬´ê³µìŠ¤í¬ë¦½'], self)
                     self.sendLine(buf2)
-            elif func == '$ÀüÅõ°­Á¦½ÃÀÛ':
+            elif func == '$ì „íˆ¬ê°•ì œì‹œì‘':
     		if mob.act == ACT_DEATH:
-                    self.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ğ¸£°Ú¾î¿ä. *^_^*')
+                    self.sendLine('â˜ ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
                     return
                 if self.act == ACT_FIGHT:
                     if mob in self.target:
-                        self.sendLine('¢Ñ ÀÌ¹Ì °ø°İÁßÀÌ¿¡¿ä. ^_^')
+                        self.sendLine('â˜ ì´ë¯¸ ê³µê²©ì¤‘ì´ì—ìš”. ^_^')
                     else:
-                        self.sendLine('¢Ñ ÇöÀçÀÇ ºñ¹«¿¡ ½Å°æÀ» ÁıÁßÇÏ¼¼¿ä. @_@')
+                        self.sendLine('â˜ í˜„ì¬ì˜ ë¹„ë¬´ì— ì‹ ê²½ì„ ì§‘ì¤‘í•˜ì„¸ìš”. @_@')
                 else:
                     self.setFight(mob, True)
-            elif func == '$ÀüÅõ½ÃÀÛ':
+            elif func == '$ì „íˆ¬ì‹œì‘':
                 searchEnd = True
                 if mob.act == ACT_DEATH:
-                    self.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ğ¸£°Ú¾î¿ä. *^_^*')
+                    self.sendLine('â˜ ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
                     return
                 if mob.act == ACT_FIGHT:
                     if mob in self.target:
-                        self.sendLine('¢Ñ ÀÌ¹Ì °ø°İÁßÀÌ¿¡¿ä. ^_^')
+                        self.sendLine('â˜ ì´ë¯¸ ê³µê²©ì¤‘ì´ì—ìš”. ^_^')
                     else:
-                        self.sendLine('¢Ñ ÀÌ¹Ì ´Ù¸¥ »ç¶÷°ú ÀüÅõÁßÀÌ¶ó °ø°İÇÒ ¼ö°¡ ¾ø³×¿ä')
+                        self.sendLine('â˜ ì´ë¯¸ ë‹¤ë¥¸ ì‚¬ëŒê³¼ ì „íˆ¬ì¤‘ì´ë¼ ê³µê²©í•  ìˆ˜ê°€ ì—†ë„¤ìš”')
                     continue
                 if self.act == ACT_FIGHT:
                     if mob in self.target:
-                        self.sendLine('¢Ñ ÀÌ¹Ì °ø°İÁßÀÌ¿¡¿ä. ^_^')
+                        self.sendLine('â˜ ì´ë¯¸ ê³µê²©ì¤‘ì´ì—ìš”. ^_^')
                     else:
-                        self.sendLine('¢Ñ ÇöÀçÀÇ ºñ¹«¿¡ ½Å°æÀ» ÁıÁßÇÏ¼¼¿ä. @_@')
+                        self.sendLine('â˜ í˜„ì¬ì˜ ë¹„ë¬´ì— ì‹ ê²½ì„ ì§‘ì¤‘í•˜ì„¸ìš”. @_@')
                 else:
                     self.setFight(mob, True)
                     searchEnd = False
-            elif func == '$¸÷»óÅÂÈ®ÀÎ!':
+            elif func == '$ëª¹ìƒíƒœí™•ì¸!':
                 if mob.getAct() == sline[13:].strip():
                     searchEnd = True
-            elif func == '$¸÷»óÅÂÈ®ÀÎ':
+            elif func == '$ëª¹ìƒíƒœí™•ì¸':
                 if mob.getAct() != sline[12:].strip():
                     searchEnd = True
-            elif func == '$¸÷»óÅÂ¼³Á¤':
+            elif func == '$ëª¹ìƒíƒœì„¤ì •':
                 mob.setAct(sline[12:].strip())
-            elif func == '$Ã¼·Â¼Ò¸ğ':
+            elif func == '$ì²´ë ¥ì†Œëª¨':
                 self.minusHP( getInt(sline[10:].strip()) )
-            elif func == '$Ã¼·Â°¨¼Ò':
+            elif func == '$ì²´ë ¥ê°ì†Œ':
                 self.minusHP( getInt(sline[10:].strip()) )
-            elif func == '$º¯¼öÈ®ÀÎ':
+            elif func == '$ë³€ìˆ˜í™•ì¸':
                 var = sline.split()
                 c = getInt(var[1])
                 if len(words) < 3 or len(var) < 3 or c > len(words) - 2:
                     searchEnd = True
                 elif words[c] != var[2]:
                     searchEnd = True
-            elif func == '$Æ¯¼ºÄ¡º¯°æ':
+            elif func == '$íŠ¹ì„±ì¹˜ë³€ê²½':
                 var = sline.split()
                 c = getInt(var[2])
                 cc = getInt(self.get(var[1]))
@@ -287,77 +285,77 @@ def doEvent(self, mob, key, words):
                 self.set(var[1], cc)
                 self.lpPrompt()
 
-            elif func == '$Á¤»çÀüÈ¯':
-                if self.get('¼º°İ') == '»çÆÄ':
-                    self.set('¼º°İ', 'Á¤ÆÄ')
-                elif self.get('¼º°İ') == 'Á¤ÆÄ':
-                    self.set('¼º°İ', '»çÆÄ')
+            elif func == '$ì •ì‚¬ì „í™˜':
+                if self.get('ì„±ê²©') == 'ì‚¬íŒŒ':
+                    self.set('ì„±ê²©', 'ì •íŒŒ')
+                elif self.get('ì„±ê²©') == 'ì •íŒŒ':
+                    self.set('ì„±ê²©', 'ì‚¬íŒŒ')
                 
-            elif func == '$¼ºº°È®ÀÎ':
-                if self.get('¼ºº°') == '³²':
+            elif func == '$ì„±ë³„í™•ì¸':
+                if self.get('ì„±ë³„') == 'ë‚¨':
                     searchEnd = True
                     
-            elif func == '$³²ÀÚ¼³Á¤':
-                self.set('¼ºº°', '³²')
-            elif func == '$¿©ÀÚ¼³Á¤':
-                self.set('¼ºº°', '¿©')                                
-            elif func == '$Æ¯¼ºÄ¡¼³Á¤':
+            elif func == '$ë‚¨ìì„¤ì •':
+                self.set('ì„±ë³„', 'ë‚¨')
+            elif func == '$ì—¬ìì„¤ì •':
+                self.set('ì„±ë³„', 'ì—¬')                                
+            elif func == '$íŠ¹ì„±ì¹˜ì„¤ì •':
                 var = sline.split()
                 c = getInt(var[2])
                 self.set(var[1], c)
-            elif func == '$Æ¯¼ºÄ¡È®ÀÎ':
+            elif func == '$íŠ¹ì„±ì¹˜í™•ì¸':
                 var = sline.split()
                 c = getInt(var[2])
                 if self.get(var[1]) < c:
                     searchEnd = True
-            elif func == '$ÀºµĞÄ¨°Å¼³Á¤':
+            elif func == '$ì€ë‘”ì¹©ê±°ì„¤ì •':
                 self.setEunDun()
-            elif func == '$¿ìÈ­µî¼±¼³Á¤':
+            elif func == '$ìš°í™”ë“±ì„ ì„¤ì •':
                 self.setSunIn()
-            elif func == '$¼Ò¿À°­È£¼³Á¤':
+            elif func == '$ì†Œì˜¤ê°•í˜¸ì„¤ì •':
                 self.setGiIn()
 
-            elif func == '$º°È£º¯°æ':
+            elif func == '$ë³„í˜¸ë³€ê²½':
                 if len(words) != 3:
-                    self.sendLine('¢Ñ ¹Ù²Üº°È£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.')
+                    self.sendLine('â˜ ë°”ê¿€ë³„í˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.')
                     continue
                 print words[1]
-                if self['¹«¸²º°È£'] == '':
-                    self.sendLine('¢Ñ ´ç½ÅÀº ¹«¸í°´ÀÔ´Ï´Ù.')
+                if self['ë¬´ë¦¼ë³„í˜¸'] == '':
+                    self.sendLine('â˜ ë‹¹ì‹ ì€ ë¬´ëª…ê°ì…ë‹ˆë‹¤.')
                     continue
                 if len(words[1]) < 3:
-                    self.sendLine('¢Ñ »ç¿ëÇÏ½Ã·Á´Â º°È£°¡ ³Ê¹« Âª¾Æ¿ä.')
+                    self.sendLine('â˜ ì‚¬ìš©í•˜ì‹œë ¤ëŠ” ë³„í˜¸ê°€ ë„ˆë¬´ ì§§ì•„ìš”.')
                     continue
                 if len(words[1]) > 10:
-                    self.sendLine('¢Ñ »ç¿ëÇÏ½Ã·Á´Â º°È£°¡ ³Ê¹« ±æ¾î¿ä.')
+                    self.sendLine('â˜ ì‚¬ìš©í•˜ì‹œë ¤ëŠ” ë³„í˜¸ê°€ ë„ˆë¬´ ê¸¸ì–´ìš”.')
                     continue
                 from objs.nickname import Nickname, NICKNAME
                 if words[1] in NICKNAME.attr:
-                    self.sendLine('¢Ñ ´Ù¸¥ ¹«¸²ÀÎÀÌ »ç¿ëÁßÀÎ º°È£ÀÔ´Ï´Ù. ^^')
+                    self.sendLine('â˜ ë‹¤ë¥¸ ë¬´ë¦¼ì¸ì´ ì‚¬ìš©ì¤‘ì¸ ë³„í˜¸ì…ë‹ˆë‹¤. ^^')
                     continue
-                NICKNAME.attr.__delitem__(self['¹«¸²º°È£'])
-                NICKNAME[words[1]] = self['ÀÌ¸§']
+                NICKNAME.attr.__delitem__(self['ë¬´ë¦¼ë³„í˜¸'])
+                NICKNAME[words[1]] = self['ì´ë¦„']
                 NICKNAME.save()
-                self['¹«¸²º°È£'] = words[1]
-                self.do_command('±ÍÈ¯')
-            elif func == '$±â¿¬Á¸ÀçÈ®ÀÎ':
+                self['ë¬´ë¦¼ë³„í˜¸'] = words[1]
+                self.do_command('ê·€í™˜')
+            elif func == '$ê¸°ì—°ì¡´ì¬í™•ì¸':
                 bRet, owner = ONEITEM.checkOneItemName(sline[14:].strip())
                 if bRet:
-                    sub['[±â¿¬¼ÒÁöÀÚ]'] = owner
+                    sub['[ê¸°ì—°ì†Œì§€ì]'] = owner
                 else:
                     searchEnd = True
-            elif func == '$±â¿¬È®ÀÎ':
+            elif func == '$ê¸°ì—°í™•ì¸':
                 bRet, owner = ONEITEM.checkOneItemIndex(sline[10:].strip())
                 if bRet:
-                    sub['[±â¿¬¼ÒÁöÀÚ]'] = owner
+                    sub['[ê¸°ì—°ì†Œì§€ì]'] = owner
                 else:
                     searchEnd = True
-            elif func == '$±â¿¬È®ÀÎ!':
+            elif func == '$ê¸°ì—°í™•ì¸!':
                 bRet, owner = ONEITEM.checkOneItemIndex(sline[11:].strip())
                 if bRet:
-                    sub['[±â¿¬¼ÒÁöÀÚ]'] = owner
+                    sub['[ê¸°ì—°ì†Œì§€ì]'] = owner
                     searchEnd = True
-            elif func == '$¼øÀ§±â·Ï':
+            elif func == '$ìˆœìœ„ê¸°ë¡':
                 ws = sline.split(None, 2)
                 if len(ws) != 3:
                     #print '!!!!'
@@ -366,20 +364,20 @@ def doEvent(self, mob, key, words):
                 value = self[ws[2]]
                 if value == '':
                     value = -1
-                rank1 = RANK.read_rank(ws[2], self['ÀÌ¸§'])
-                rank2 = RANK.write_rank(ws[2], self['ÀÌ¸§'], value, int(ws[1]))
+                rank1 = RANK.read_rank(ws[2], self['ì´ë¦„'])
+                rank2 = RANK.write_rank(ws[2], self['ì´ë¦„'], value, int(ws[1]))
                 #print rank1, rank2
                 if rank2 == 0:
                     searchEnd = True
-            elif func == '$¼øÀ§°»½Å':
+            elif func == '$ìˆœìœ„ê°±ì‹ ':
                 ws = sline.split(None, 1)
                 if rank1 != rank2 and rank2 == 1:
-                    l = ws[1].replace('[°ø]', '´ç½Å')
+                    l = ws[1].replace('[ê³µ]', 'ë‹¹ì‹ ')
                     self.sendLine(postPosition1(l))
-                    l = ws[1].replace('[°ø]', self['ÀÌ¸§'])
+                    l = ws[1].replace('[ê³µ]', self['ì´ë¦„'])
                     self.channel.sendToAll1(postPosition1(l), ex = self, noPrompt = True)
                     broadcast = True
-            elif func == '$¼øÀ§È®ÀÎ':
+            elif func == '$ìˆœìœ„í™•ì¸':
                 
                 ws = sline.split(None, 2)
                 if len(ws) != 3:
@@ -387,7 +385,7 @@ def doEvent(self, mob, key, words):
                     continue
                 if len(words) == 3:
                     r = getInt(words[1])
-                    if words[1] == '¸ğµÎ':
+                    if words[1] == 'ëª¨ë‘':
                         msg = RANK.getRankAll(ws[2])
                         self.sendLine(msg)
                         return
@@ -396,29 +394,29 @@ def doEvent(self, mob, key, words):
                             r = int(ws[1])
                         name = RANK.getRankNum(ws[2], r)
                         if name != None:
-                            sub['[¼øÀ§ÀÚ]'] = name
-                            sub['[¼øÀ§]'] = str(r)
+                            sub['[ìˆœìœ„ì]'] = name
+                            sub['[ìˆœìœ„]'] = str(r)
                         else:
-                            sub['[¼øÀ§ÀÚ]'] = '[%dÀ§]' % r
+                            sub['[ìˆœìœ„ì]'] = '[%dìœ„]' % r
                             searchEnd = True
                         continue
                     else:
                         name = words[1]
                 else:
-                    name = self['ÀÌ¸§']
+                    name = self['ì´ë¦„']
                 rank1 = RANK.read_rank(ws[2], name)
-                sub['[¼øÀ§ÀÚ]'] = name
-                sub['[¼øÀ§]'] = str(rank1)
+                sub['[ìˆœìœ„ì]'] = name
+                sub['[ìˆœìœ„]'] = str(rank1)
                 if rank1 == 0:
                     searchEnd = True
-            elif func == '$¼øÀ§È®ÀÎ!':
+            elif func == '$ìˆœìœ„í™•ì¸!':
                 ws = sline.split(None, 2)
                 if len(ws) != 3:
                     searchEnd = True
                     continue
                 if len(words) == 3:
                     r = getInt(words[1])
-                    if words[1] == '¸ğµÎ':
+                    if words[1] == 'ëª¨ë‘':
                         msg = RANK.getRankAll(ws[2])
                         self.sendLine(msg)
                         return
@@ -427,136 +425,136 @@ def doEvent(self, mob, key, words):
                             r = int(ws[1])
                         name = RANK.getRankNum(ws[2], r)
                         if name != None:
-                            sub['[¼øÀ§ÀÚ]'] = name
-                            sub['[¼øÀ§]'] = str(r)
+                            sub['[ìˆœìœ„ì]'] = name
+                            sub['[ìˆœìœ„]'] = str(r)
                         else:
-                            sub['[¼øÀ§ÀÚ]'] = '[%dÀ§]' % r
+                            sub['[ìˆœìœ„ì]'] = '[%dìœ„]' % r
                             searchEnd = True
                         continue
                     else:
                         name = words[1]
                 else:
-                    name = self['ÀÌ¸§']
+                    name = self['ì´ë¦„']
                 rank1 = RANK.read_rank(ws[2], name)
-                sub['[¼øÀ§ÀÚ]'] = name
-                sub['[¼øÀ§]'] = str(rank1)
+                sub['[ìˆœìœ„ì]'] = name
+                sub['[ìˆœìœ„]'] = str(rank1)
                 if rank1 != 0:
                     searchEnd = True
-            elif func == '$·¹º§»óÀ§È®ÀÎ':
-                if int(sline[13:]) > self['·¹º§']:
+            elif func == '$ë ˆë²¨ìƒìœ„í™•ì¸':
+                if int(sline[13:]) > self['ë ˆë²¨']:
                     searchEnd = True
-            elif func == '$·¹º§»óÀ§È®ÀÎ!':
-                if int(sline[14:]) <= self['·¹º§']:
+            elif func == '$ë ˆë²¨ìƒìœ„í™•ì¸!':
+                if int(sline[14:]) <= self['ë ˆë²¨']:
                     searchEnd = True
-            elif func == '$ºñÀü¼³Á¤':
-                self.setAttr('ºñÀüÀÌ¸§', sline.split()[1])
-            elif func == '$ºñÀü¼ö·ÃÈ®ÀÎ': # ³«¾ç¼º:¹«°ø¸Ç (ºñÀü³ëÀÎ)
-                if self['ºñÀü¼ö·Ã'] == '':
+            elif func == '$ë¹„ì „ì„¤ì •':
+                self.setAttr('ë¹„ì „ì´ë¦„', sline.split()[1])
+            elif func == '$ë¹„ì „ìˆ˜ë ¨í™•ì¸': # ë‚™ì–‘ì„±:ë¬´ê³µë§¨ (ë¹„ì „ë…¸ì¸)
+                if self['ë¹„ì „ìˆ˜ë ¨'] == '':
                     searchEnd = True
-            elif func == '$ºñÀüÁ¾·ùÈ®ÀÎ':
+            elif func == '$ë¹„ì „ì¢…ë¥˜í™•ì¸':
                 var = sline.split()
                 if len(var) != 2:
-                    print('[ºñÀüÁ¾·ùÈ®ÀÎ] Å°¿öµå È¤Àº ÀÎÀÚ ¾øÀ½')
+                    print('[ë¹„ì „ì¢…ë¥˜í™•ì¸] í‚¤ì›Œë“œ í˜¹ì€ ì¸ì ì—†ìŒ')
                     return
-                if var[1] not in self['ºñÀüÀÌ¸§']:
+                if var[1] not in self['ë¹„ì „ì´ë¦„']:
                     searchEnd = True
-            elif func == '$ºñÀüÁ¾·ùÈ®ÀÎ!':
+            elif func == '$ë¹„ì „ì¢…ë¥˜í™•ì¸!':
                 var = sline.split()
                 if len(var) != 2:
-                    print('[ºñÀüÁ¾·ùÈ®ÀÎ] Å°¿öµå È¤Àº ÀÎÀÚ ¾øÀ½')
+                    print('[ë¹„ì „ì¢…ë¥˜í™•ì¸] í‚¤ì›Œë“œ í˜¹ì€ ì¸ì ì—†ìŒ')
                     return
-                if var[1] in self['ºñÀüÀÌ¸§']:
+                if var[1] in self['ë¹„ì „ì´ë¦„']:
                     searchEnd = True
-            elif func == '$ºñÀü¼ö·Ã¼³Á¤È®ÀÎ':
+            elif func == '$ë¹„ì „ìˆ˜ë ¨ì„¤ì •í™•ì¸':
                 var = sline.split()
                 if len(var) != 3:
-                    print('[ºñÀü¼ö·Ã¼³Á¤È®ÀÎ] Å°¿öµå È¤Àº ÀÎÀÚ ¾øÀ½')
+                    print('[ë¹„ì „ìˆ˜ë ¨ì„¤ì •í™•ì¸] í‚¤ì›Œë“œ í˜¹ì€ ì¸ì ì—†ìŒ')
                     return
                 if var[1] != var[2]:
                     searchEnd = True
-            elif func == '$ºñÀü¼ö·Ã°¡´ÉÈ®ÀÎ!':
+            elif func == '$ë¹„ì „ìˆ˜ë ¨ê°€ëŠ¥í™•ì¸!':
                 var = sline.split() 
                 if var[1] in var[2:]:
                     searchEnd = True
-            elif func == '$ºñÀü¼ö·Ã»èÁ¦':
-                self['ºñÀü¼ö·Ã'] = ''
-            elif func == '$ºñÀü¼ö·Ã¼³Á¤':
+            elif func == '$ë¹„ì „ìˆ˜ë ¨ì‚­ì œ':
+                self['ë¹„ì „ìˆ˜ë ¨'] = ''
+            elif func == '$ë¹„ì „ìˆ˜ë ¨ì„¤ì •':
                 var = sline.split()
                 if len(var) != 2:
-                    print('[ºñÀü¼ö·Ã¼³Á¤] Å°¿öµå È¤Àº ÀÎÀÚ ¾øÀ½')
+                    print('[ë¹„ì „ìˆ˜ë ¨ì„¤ì •] í‚¤ì›Œë“œ í˜¹ì€ ì¸ì ì—†ìŒ')
                     return
-                self['ºñÀü¼ö·Ã'] = var[1]
-            elif func == '$³­ÀÌµµÁøÀÔ±â·Ï':
-                self['³­ÀÌµµÁøÀÔ½Ã°£'] = int(time.time())
+                self['ë¹„ì „ìˆ˜ë ¨'] = var[1]
+            elif func == '$ë‚œì´ë„ì§„ì…ê¸°ë¡':
+                self['ë‚œì´ë„ì§„ì…ì‹œê°„'] = int(time.time())
 
-            elif func == '$³­ÀÌµµÀçÁøÀÔÈ®ÀÎ':
-                t = self['³­ÀÌµµÁøÀÔ½Ã°£']
+            elif func == '$ë‚œì´ë„ì¬ì§„ì…í™•ì¸':
+                t = self['ë‚œì´ë„ì§„ì…ì‹œê°„']
                 if t == '':
                     t = 0
-                    self['³­ÀÌµµÁøÀÔ½Ã°£'] = 0
+                    self['ë‚œì´ë„ì§„ì…ì‹œê°„'] = 0
                 if int(time.time()) > t + 60 * 5:
                     searchEnd = True
                 else:
                     searchEnd = False
 
-            elif func == '$³­ÀÌµµÀçÁøÀÔÈ®ÀÎ!':
-                t = self['³­ÀÌµµÁøÀÔ½Ã°£']
+            elif func == '$ë‚œì´ë„ì¬ì§„ì…í™•ì¸!':
+                t = self['ë‚œì´ë„ì§„ì…ì‹œê°„']
                 if t == '':
                     t = 0
-                    self['³­ÀÌµµÁøÀÔ½Ã°£'] = 0
+                    self['ë‚œì´ë„ì§„ì…ì‹œê°„'] = 0
                 if int(time.time()) > t + 60 * 5:
                     searchEnd = False
                 else:
                     searchEnd = True
 
-            elif func == '$½ºÅ©¸³Æ®È£Ãâ':
+            elif func == '$ìŠ¤í¬ë¦½íŠ¸í˜¸ì¶œ':
                 scr = sline[13:].strip()
                 self.INTERACTIVE = 0
                 #from objs.autoscript import autoScript
                 self.autoscript = self.autoScript()
                 self.autoscript.start(loadScriptFile(scr), self)
                 return
-            elif func == '$¿Ã¼÷È®ÀÎ':
-                if getInt(self['¿Ã¼÷¿Ï·á']) == 1:
+            elif func == '$ì˜¬ìˆ™í™•ì¸':
+                if getInt(self['ì˜¬ìˆ™ì™„ë£Œ']) == 1:
                     searchEnd = False 
                     continue
                 searchEnd = True
-            elif func == '$¿Ã¼÷È®ÀÎ!':
-                if getInt(self['¿Ã¼÷¿Ï·á']) == 0:
+            elif func == '$ì˜¬ìˆ™í™•ì¸!':
+                if getInt(self['ì˜¬ìˆ™ì™„ë£Œ']) == 0:
                     searchEnd = False 
                     continue
                 searchEnd = True
-            elif func == '$¿Ã¼÷ÀÚ°İÈ®ÀÎ':
-                if self['1 ¼÷·Ãµµ'] >= 1000 and self['2 ¼÷·Ãµµ'] >= 1000 and self['3 ¼÷·Ãµµ'] >= 1000 and self['4 ¼÷·Ãµµ'] >= 1000 and self['5 ¼÷·Ãµµ'] >= 1000: 
+            elif func == '$ì˜¬ìˆ™ìê²©í™•ì¸':
+                if self['1 ìˆ™ë ¨ë„'] >= 1000 and self['2 ìˆ™ë ¨ë„'] >= 1000 and self['3 ìˆ™ë ¨ë„'] >= 1000 and self['4 ìˆ™ë ¨ë„'] >= 1000 and self['5 ìˆ™ë ¨ë„'] >= 1000: 
                     searchEnd = False 
                     continue
                 searchEnd = True
-            elif func == '$Æ¯¼ºÄ¡º¹»ç':
+            elif func == '$íŠ¹ì„±ì¹˜ë³µì‚¬':
                 oldattr = mob.attr
                 #mob.attr = copy.deepcopy(oldattr)
                 mob.attr = {}
                 for k in oldattr.keys():
                     mob.attr[k] = oldattr[k]
                 del oldattr
-                mob['Ã¼·Â'] = mob.hp = self['ÃÖ°íÃ¼·Â'] * 6
-                mob['Èû'] = self['Èû'] * 2
-                if self['·¹º§'] >= 1800:
-                    mob['Èû'] = 20000
-                mob['·¹º§'] = self['·¹º§'] + 180
-                mob['¸ËÁı'] = self['¸ËÁı'] * 2.5
-            elif func == '$Áß±Ş¼ö·Ã':
+                mob['ì²´ë ¥'] = mob.hp = self['ìµœê³ ì²´ë ¥'] * 6
+                mob['í˜'] = self['í˜'] * 2
+                if self['ë ˆë²¨'] >= 1800:
+                    mob['í˜'] = 20000
+                mob['ë ˆë²¨'] = self['ë ˆë²¨'] + 180
+                mob['ë§·ì§‘'] = self['ë§·ì§‘'] * 2.5
+            elif func == '$ì¤‘ê¸‰ìˆ˜ë ¨':
                 oldattr = mob.attr
                 mob.attr = {}
                 for k in oldattr.keys():
                     mob.attr[k] = oldattr[k]
                 del oldattr
-                mob['Èû'] = self['Èû'] * 1
-                mob['·¹º§'] = self['·¹º§'] + 200
-                mob['È¸ÇÇ'] = 160
+                mob['í˜'] = self['í˜'] * 1
+                mob['ë ˆë²¨'] = self['ë ˆë²¨'] + 200
+                mob['íšŒí”¼'] = 160
             """
-            elif func == '$ºñ¹«°ü¶÷½ÃÀÛ':
+            elif func == '$ë¹„ë¬´ê´€ëŒì‹œì‘':
                 pass
-            elif func == '$ºñ¹«°ü¶÷³¡':
+            elif func == '$ë¹„ë¬´ê´€ëŒë':
                 pass
             """
         elif sline[0] == '{':
@@ -564,32 +562,32 @@ def doEvent(self, mob, key, words):
         elif sline[0] == '}':
             pass
         else:
-            if '[¹è¿ï¹«°øÀÌ¸§°¹¼ö]' in line:
+            if '[ë°°ìš¸ë¬´ê³µì´ë¦„ê°¯ìˆ˜]' in line:
                 nCount = 0
                 w = self.findObjInven(words[1])
                 if w != None:
-                    mlist = w['¹«°øÀÌ¸§'].splitlines()
+                    mlist = w['ë¬´ê³µì´ë¦„'].splitlines()
                     for m in mlist:
                         if m.split()[0] in self.skillList:
                             continue
                         type = m.split()[1]
-                        if type != 'Á¤»ç':
-                            if self['¼º°İ'] != type and self['¼º°İ'] != '±âÀÎ' and self['¼º°İ'] != '¼±ÀÎ':
+                        if type != 'ì •ì‚¬':
+                            if self['ì„±ê²©'] != type and self['ì„±ê²©'] != 'ê¸°ì¸' and self['ì„±ê²©'] != 'ì„ ì¸':
                                 continue
                         nCount += 1
-                sub['[¹è¿ï¹«°øÀÌ¸§°¹¼ö]'] = str(nCount)
-            elif '[¾ÆÀÌÅÛ»ç¿ëÈ½¼ö]' in line:
+                sub['[ë°°ìš¸ë¬´ê³µì´ë¦„ê°¯ìˆ˜]'] = str(nCount)
+            elif '[ì•„ì´í…œì‚¬ìš©íšŸìˆ˜]' in line:
                 nCount = 0
                 for it in self.objs:
-                    if it.inUse == False and stripANSI(it['ÀÌ¸§']) == words[1]:
-                        words[1] = it['ÀÌ¸§']
+                    if it.inUse == False and stripANSI(it['ì´ë¦„']) == words[1]:
+                        words[1] = it['ì´ë¦„']
                         break
                         
                 if words[1] in self.itemSkillMap:
                     nCount = self.itemSkillMap[words[1]]
-                sub['[¾ÆÀÌÅÛ»ç¿ëÈ½¼ö]'] = str(nCount)
-            elif '[º¯¼ö]' in line:
-                sub['º¯¼ö'] = words[1]
+                sub['[ì•„ì´í…œì‚¬ìš©íšŸìˆ˜]'] = str(nCount)
+            elif '[ë³€ìˆ˜]' in line:
+                sub['ë³€ìˆ˜'] = words[1]
 
             for su in sub:
                 line = line.replace(su, sub[su])

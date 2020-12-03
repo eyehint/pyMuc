@@ -1,47 +1,45 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['Á÷À§'] != '¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
         words = line.split()
-        l = ['¹æÁÖ', 'ºÎ¹æÁÖ', 'Àå·Î', '¹æÆÄÀÎ']
+        l = ['ë°©ì£¼', 'ë¶€ë°©ì£¼', 'ì¥ë¡œ', 'ë°©íŒŒì¸']
         if line == '' or len(words) < 2 or words[1] not in l:
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [´ë»ó] [¹æÁÖ|ºÎ¹æÁÖ|Àå·Î|¹æÆÄÀÎ] Á÷À§ÀÓ¸í')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ëŒ€ìƒ] [ë°©ì£¼|ë¶€ë°©ì£¼|ì¥ë¡œ|ë°©íŒŒì¸] ì§ìœ„ì„ëª…')
             return
         obj = ob.env.findObjName(words[0])
         if obj == None:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ±×·± ¹«¸²ÀÎÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì´ê³³ì— ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
         if obj == ob:
-            ob.sendLine('¢Ñ ÀÚ±â ÀÚ½ÅÀÔ´Ï´Ù.')
+            ob.sendLine('â˜ ìê¸° ìì‹ ì…ë‹ˆë‹¤.')
             return
-        if obj['¼Ò¼Ó'] != ob['¼Ò¼Ó']:
-            ob.sendLine('¢Ñ ´ç½ÅÀÇ ¼Ò¼ÓÀÌ ¾Æ´Õ´Ï´Ù.')
+        if obj['ì†Œì†'] != ob['ì†Œì†']:
+            ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì†Œì†ì´ ì•„ë‹™ë‹ˆë‹¤.')
             return
-        if obj['Á÷À§'] == words[1]:
-            ob.sendLine('¢Ñ °°Àº Á÷À§ÀÔ´Ï´Ù.')
+        if obj['ì§ìœ„'] == words[1]:
+            ob.sendLine('â˜ ê°™ì€ ì§ìœ„ì…ë‹ˆë‹¤.')
             return
-        g = GUILD[ob['¼Ò¼Ó']]
-        c = MAIN_CONFIG['¹æÆÄ %s ÀÎ¿ø' % words[1]]
-        if '%s¸®½ºÆ®' % words[1] in g:
-            l1 = g['%s¸®½ºÆ®' % words[1]]
+        g = GUILD[ob['ì†Œì†']]
+        c = MAIN_CONFIG['ë°©íŒŒ %s ì¸ì›' % words[1]]
+        if '%së¦¬ìŠ¤íŠ¸' % words[1] in g:
+            l1 = g['%së¦¬ìŠ¤íŠ¸' % words[1]]
         else:
             l1 = []
-            g['%s¸®½ºÆ®' % words[1]] = l1
+            g['%së¦¬ìŠ¤íŠ¸' % words[1]] = l1
             
         if c <= len(l1):
-            ob.sendLine('¢Ñ °°Àº Á÷À§ÀÇ ÀÎ¿øÀÌ ³Ê¹« ¸¹½À´Ï´Ù.')
+            ob.sendLine('â˜ ê°™ì€ ì§ìœ„ì˜ ì¸ì›ì´ ë„ˆë¬´ ë§ìŠµë‹ˆë‹¤.')
             return
-        g['%s¸®½ºÆ®' % obj['Á÷À§']].remove(obj['ÀÌ¸§'])
-        g['%s¸®½ºÆ®' % words[1]].append(obj['ÀÌ¸§'])
-        obj['Á÷À§'] = words[1]
+        g['%së¦¬ìŠ¤íŠ¸' % obj['ì§ìœ„']].remove(obj['ì´ë¦„'])
+        g['%së¦¬ìŠ¤íŠ¸' % words[1]].append(obj['ì´ë¦„'])
+        obj['ì§ìœ„'] = words[1]
         GUILD.save()
 
-        msg = '%s %s [1m%s[0m%s Á÷À§¸¦ ÀÓ¸íÇÕ´Ï´Ù.' % (ob.han_iga(), obj.han_obj(), words[1], han_uro(words[1]))
+        msg = '%s %s [1m%s[0m%s ì§ìœ„ë¥¼ ì„ëª…í•©ë‹ˆë‹¤.' % (ob.han_iga(), obj.han_obj(), words[1], han_uro(words[1]))
         ob.sendGroup(msg, prompt = True)
         

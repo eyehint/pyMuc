@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,11 +5,11 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         from objs.help import Help, HELP
         if line == '':
-            ob.sendLine(HELP['µµ¿ò¸»'])
+            ob.sendLine(HELP['ë„ì›€ë§'])
         else:
             help = HELP[line]
             if help == '':
-                ob.sendLine('¢Ñ ÇØ´ç µµ¿ò¸»ÀÌ ¾ø¾î¿ä. ^^')
+                ob.sendLine('â˜ í•´ë‹¹ ë„ì›€ë§ì´ ì—†ì–´ìš”. ^^')
             else:
                 ob.sendLine(help)
 

@@ -1,18 +1,16 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        hp = ob.get('√º∑¬')
-        maxhp = ob.get('√÷∞Ì√º∑¬')
+        hp = ob.get('Ï≤¥Î†•')
+        maxhp = ob.get('ÏµúÍ≥†Ï≤¥Î†•')
 
         hcnt = 10*hp/maxhp
         msg = '[32m'
         for i in range(hcnt):
-            msg += '¶¨'
+            msg += '‚îÅ'
         msg += '[37m'
         for i in range(10-hcnt):
-            msg += '¶¨'
+            msg += '‚îÅ'
         ob.sendLine(msg)

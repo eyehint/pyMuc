@@ -1,19 +1,17 @@
-#-*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
 
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [Ãâ±¸] ¸Éµ¹ÀÌ')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ì¶œêµ¬] ë§´ëŒì´')
             return
 
-        exits = ob.env['Ãâ±¸'].splitlines()
+        exits = ob.env['ì¶œêµ¬'].splitlines()
         nexists = ''
         c = 0
         for ex in exits:
@@ -31,13 +29,13 @@ class CmdObj(Command):
             else: 
                 nexists = nexists + '\r\n' + nexit
             
-        ob.env['Ãâ±¸'] = nexists
+        ob.env['ì¶œêµ¬'] = nexists
         del nexists
         ob.env.init()
 
         if c == 1:
-            ob.sendLine('¢Ñ Ãâ±¸°¡ ¸Éµ¹ÀÌ µÇ¾ú½À´Ï´Ù.')
+            ob.sendLine('â˜ž ì¶œêµ¬ê°€ ë§´ëŒì´ ë˜ì—ˆìŠµë‹ˆë‹¤.')
         else:
-            ob.sendLine('¢Ñ ±×·± Ãâ±¸°¡ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ž ê·¸ëŸ° ì¶œêµ¬ê°€ ì—†ìŠµë‹ˆë‹¤.')
 
 

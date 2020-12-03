@@ -1,28 +1,26 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         from lib.script import get_arm_script
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        ob.sendLine('[0m[44m[1m[37m¢¹ %-51s[0m[37m[40m' % han_parse('´ç½Å', get_arm_script(ob)))
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        ob.sendLine('[0m[44m[1m[37mâ–· %-51s[0m[37m[40m' % han_parse('ë‹¹ì‹ ', get_arm_script(ob)))
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         c = 0
         item_str = ''
         for lv in ob.ItemLevelList:
             for item in ob.objs:
-                if item.inUse and lv == item['°èÃş']:
+                if item.inUse and lv == item['ê³„ì¸µ']:
                     c += 1
-                    name = stripANSI(item.get('ÀÌ¸§'))
+                    name = stripANSI(item.get('ì´ë¦„'))
                     if is_han(name):
-                        item_str += '[' + ob.ItemUseLevel[item.get('°èÃş')] + '] [36m' + item.get('ÀÌ¸§') + '[37m\r\n'
+                        item_str += '[' + ob.ItemUseLevel[item.get('ê³„ì¸µ')] + '] [36m' + item.get('ì´ë¦„') + '[37m\r\n'
                     else:
-                        item_str += '[' + ob.ItemUseLevel[item.get('°èÃş')] + '] [36m' + item.get('ÀÌ¸§') + '(' + item.get('¹İÀÀÀÌ¸§').split()[0] + ')[37m\r\n'
+                        item_str += '[' + ob.ItemUseLevel[item.get('ê³„ì¸µ')] + '] [36m' + item.get('ì´ë¦„') + '(' + item.get('ë°˜ì‘ì´ë¦„').split()[0] + ')[37m\r\n'
         ob.write(item_str)
         if c == 0:
-            ob.sendLine('[36m¢Ñ Ç÷Ç÷´Ü½Å ¸Ç¸öÀ¸·Î °­È£¸¦ ÁÖÀ¯ÁßÀÔ´Ï´Ù.[37m')
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-        ob.sendLine('¡¼¹æ¾î·Â¡½¢¹ %d    ¡¼°ø°İ·Â¡½¢¹ %d' % (ob.getArmor(),ob.getAttPower()))
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+            ob.sendLine('[36mâ˜ í˜ˆí˜ˆë‹¨ì‹  ë§¨ëª¸ìœ¼ë¡œ ê°•í˜¸ë¥¼ ì£¼ìœ ì¤‘ì…ë‹ˆë‹¤.[37m')
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+        ob.sendLine('ã€ë°©ì–´ë ¥ã€‘â–· %d    ã€ê³µê²©ë ¥ã€‘â–· %d' % (ob.getArmor(),ob.getAttPower()))
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')

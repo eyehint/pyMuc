@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 from lib.hangul import *
 
@@ -7,42 +5,42 @@ class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            name = '´ç½Å'
+            name = 'ë‹¹ì‹ '
             target = ob
         else:
             target = ob.env.findObjName(line)
             if target == None or is_player(target) == False:
-                ob.sendLine('¢Ñ ´ç½ÅÀÇ ¾È±¤À¸·Î´Â ±×·±°ÍÀ» º¼¼ö ¾ø´Ù³×')
+                ob.sendLine('â˜ ë‹¹ì‹ ì˜ ì•ˆê´‘ìœ¼ë¡œëŠ” ê·¸ëŸ°ê²ƒì„ ë³¼ìˆ˜ ì—†ë‹¤ë„¤')
                 return
-            name = target['ÀÌ¸§']
+            name = target['ì´ë¦„']
         c = 0
         tmp = ''
         for obj in target.objs:
-            if obj['Á¾·ù'] == 'È£À§':
+            if obj['ì¢…ë¥˜'] == 'í˜¸ìœ„':
                 try:
                     a = obj.hp
                 except:
-                    obj.hp = obj['Ã¼·Â']
+                    obj.hp = obj['ì²´ë ¥']
                 guard = obj
                 c += 1
-                hp = (obj.hp * 100 )/ getItem(obj.index)['Ã¼·Â']
+                hp = (obj.hp * 100 )/ getItem(obj.index)['ì²´ë ¥']
                 
-                tmp += '[1;32m¡¤[0;36m%2d.%s[0;37m ¢° %s (%d)\r\n' % (c, obj['ÀÌ¸§'], ob.strBar[hp/10] , hp)
+                tmp += '[1;32mÂ·[0;36m%2d.%s[0;37m Ë %s (%d)\r\n' % (c, obj['ì´ë¦„'], ob.strBar[hp/10] , hp)
         
         if c == 0:
             if target == ob:
-                ob.sendLine('´ç½ÅÀº È£À§¸¦ °Å´À¸®Áö ¾Ê°í ÀÖ½À´Ï´Ù.')
+                ob.sendLine('ë‹¹ì‹ ì€ í˜¸ìœ„ë¥¼ ê±°ëŠë¦¬ì§€ ì•Šê³  ìˆìŠµë‹ˆë‹¤.')
             else:
-                ob.sendLine('%s È£À§¸¦ °Å´À¸®Áö ¾Ê°í ÀÖ½À´Ï´Ù.' % target.han_un())
+                ob.sendLine('%s í˜¸ìœ„ë¥¼ ê±°ëŠë¦¬ì§€ ì•Šê³  ìˆìŠµë‹ˆë‹¤.' % target.han_un())
             return
-        msg = '¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬\r\n'
-        buf = '¢Ñ %sÀÇ È£À§ : %s, È£À§¼ö : %d, ºĞ³ë : %d' % (name, guard['ÀÌ¸§'], c, getInt(target['ºĞ³ë']))
+        msg = 'â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”\r\n'
+        buf = 'â˜ %sì˜ í˜¸ìœ„ : %s, í˜¸ìœ„ìˆ˜ : %d, ë¶„ë…¸ : %d' % (name, guard['ì´ë¦„'], c, getInt(target['ë¶„ë…¸']))
         msg += '[1;44m%-56s[0;40m\r\n' % buf
-        msg += '¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\r\n'
-        msg += guard['¼³¸í2'] + '\r\n'
-        msg += '¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡\r\n'
+        msg += 'â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\r\n'
+        msg += guard['ì„¤ëª…2'] + '\r\n'
+        msg += 'â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€\r\n'
         msg += tmp
-        msg += '¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬'
+        msg += 'â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”'
         ob.sendLine(msg)
 
 

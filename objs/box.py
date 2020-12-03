@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import os
 import glob
 import time
@@ -29,72 +27,72 @@ class Box(Object):
         if scr == None:
             return False
         try:
-            self.attr = scr['»óÀÚÁ¤º¸']
+            self.attr = scr['ìƒìì •ë³´']
         except:
             return False
         
         items = None
-        if '¾ÆÀÌÅÛ' not in scr:
+        if 'ì•„ì´í…œ' not in scr:
             return True
 
-        items = scr['¾ÆÀÌÅÛ']
+        items = scr['ì•„ì´í…œ']
 
         if type(items) == dict:
             items = [items]
 
         for item in items:
-            obj = getItem(str(item['ÀÎµ¦½º']))
+            obj = getItem(str(item['ì¸ë±ìŠ¤']))
             if obj == None:
-                print 'º¸°üÇÔ¾ÆÀÌÅÛ ·Îµù ½ÇÆĞ : %s' % str(item['ÀÎµ¦½º'])
+                print 'ë³´ê´€í•¨ì•„ì´í…œ ë¡œë”© ì‹¤íŒ¨ : %s' % str(item['ì¸ë±ìŠ¤'])
             if obj != None:
                 obj = obj.deepclone()
-                if 'È®Àå ÀÌ¸§' in item:
-                    obj.set('È®Àå ÀÌ¸§', item['È®Àå ÀÌ¸§'])
-                if 'ÀÌ¸§' in item:
-                    obj['ÀÌ¸§'] = item['ÀÌ¸§']
-                if '¹İÀÀÀÌ¸§' in item:
-                    obj['¹İÀÀÀÌ¸§'] = item['¹İÀÀÀÌ¸§']
-                if '°ø°İ·Â' in item:
-                    obj['°ø°İ·Â'] = item['°ø°İ·Â']
-                if '¹æ¾î·Â' in item:
-                    obj['¹æ¾î·Â'] = item['¹æ¾î·Â']
-                if '±â·®' in item:
-                    obj['±â·®'] = item['±â·®']
-                if '¿É¼Ç' in item:
-                    obj.set('¿É¼Ç', item['¿É¼Ç'])
-                if '¾ÆÀÌÅÛ¼Ó¼º' in item:
-                    obj.set('¾ÆÀÌÅÛ¼Ó¼º', item['¾ÆÀÌÅÛ¼Ó¼º'])
-                if '½Ã°£' in item:
-                    obj.set('½Ã°£', item['½Ã°£'])
+                if 'í™•ì¥ ì´ë¦„' in item:
+                    obj.set('í™•ì¥ ì´ë¦„', item['í™•ì¥ ì´ë¦„'])
+                if 'ì´ë¦„' in item:
+                    obj['ì´ë¦„'] = item['ì´ë¦„']
+                if 'ë°˜ì‘ì´ë¦„' in item:
+                    obj['ë°˜ì‘ì´ë¦„'] = item['ë°˜ì‘ì´ë¦„']
+                if 'ê³µê²©ë ¥' in item:
+                    obj['ê³µê²©ë ¥'] = item['ê³µê²©ë ¥']
+                if 'ë°©ì–´ë ¥' in item:
+                    obj['ë°©ì–´ë ¥'] = item['ë°©ì–´ë ¥']
+                if 'ê¸°ëŸ‰' in item:
+                    obj['ê¸°ëŸ‰'] = item['ê¸°ëŸ‰']
+                if 'ì˜µì…˜' in item:
+                    obj.set('ì˜µì…˜', item['ì˜µì…˜'])
+                if 'ì•„ì´í…œì†ì„±' in item:
+                    obj.set('ì•„ì´í…œì†ì„±', item['ì•„ì´í…œì†ì„±'])
+                if 'ì‹œê°„' in item:
+                    obj.set('ì‹œê°„', item['ì‹œê°„'])
                 self.insert(obj)
             
     def save(self):
         o = {}
-        o['»óÀÚÁ¤º¸'] = self.attr
+        o['ìƒìì •ë³´'] = self.attr
         
         items = []
         for item in self.objs:
             obj = {}
-            obj['ÀÎµ¦½º'] = item.index
-            obj['ÀÌ¸§'] = item.get('ÀÌ¸§')
-            obj['¹İÀÀÀÌ¸§'] = item.get('¹İÀÀÀÌ¸§').splitlines()
-            if item.get('°ø°İ·Â') != '':
-                obj['°ø°İ·Â'] = item.get('°ø°İ·Â')
-            if item.get('¹æ¾î·Â') != '':
-                obj['¹æ¾î·Â'] = item.get('¹æ¾î·Â')
-            if item.get('±â·®') != '':
-                obj['±â·®'] = item.get('±â·®')
-            if item.get('¿É¼Ç') != '':
-                obj['¿É¼Ç'] = item.get('¿É¼Ç').splitlines()
-            if item.get('¾ÆÀÌÅÛ¼Ó¼º') != '':
-                obj['¾ÆÀÌÅÛ¼Ó¼º'] = item.get('¾ÆÀÌÅÛ¼Ó¼º').splitlines()
-            if item.get('È®Àå ÀÌ¸§') != '':
-                obj['È®Àå ÀÌ¸§'] = item.get('È®Àå ÀÌ¸§')
-            if item.get('½Ã°£') != '':
-                obj['½Ã°£'] = item.get('½Ã°£')
+            obj['ì¸ë±ìŠ¤'] = item.index
+            obj['ì´ë¦„'] = item.get('ì´ë¦„')
+            obj['ë°˜ì‘ì´ë¦„'] = item.get('ë°˜ì‘ì´ë¦„').splitlines()
+            if item.get('ê³µê²©ë ¥') != '':
+                obj['ê³µê²©ë ¥'] = item.get('ê³µê²©ë ¥')
+            if item.get('ë°©ì–´ë ¥') != '':
+                obj['ë°©ì–´ë ¥'] = item.get('ë°©ì–´ë ¥')
+            if item.get('ê¸°ëŸ‰') != '':
+                obj['ê¸°ëŸ‰'] = item.get('ê¸°ëŸ‰')
+            if item.get('ì˜µì…˜') != '':
+                obj['ì˜µì…˜'] = item.get('ì˜µì…˜').splitlines()
+            if item.get('ì•„ì´í…œì†ì„±') != '':
+                obj['ì•„ì´í…œì†ì„±'] = item.get('ì•„ì´í…œì†ì„±').splitlines()
+            if item.get('í™•ì¥ ì´ë¦„') != '':
+                obj['í™•ì¥ ì´ë¦„'] = item.get('í™•ì¥ ì´ë¦„')
+            if item.get('ì‹œê°„') != '':
+                obj['ì‹œê°„'] = item.get('ì‹œê°„')
             items.append(obj)
 
-        o['¾ÆÀÌÅÛ'] = items
+        o['ì•„ì´í…œ'] = items
         
         try:
             f = open(self.path, 'w')
@@ -105,29 +103,29 @@ class Box(Object):
         return True
         
     def viewShort(self):
-        return '%s (%d/%d)' % (self['ÀÌ¸§'], len(self.objs), int(self['º¸°ü¼ö·®']))
+        return '%s (%d/%d)' % (self['ì´ë¦„'], len(self.objs), int(self['ë³´ê´€ìˆ˜ëŸ‰']))
         
     def view(self, ob):
-        p = int(self['º¸°ü¼ö·®'])
-        pm = self['º¸°üÁõ°¡ÀºÀü']
-        pp = self['º¸°üÃÖ´ë¼ö·®']
+        p = int(self['ë³´ê´€ìˆ˜ëŸ‰'])
+        pm = self['ë³´ê´€ì¦ê°€ì€ì „']
+        pp = self['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']
         
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-        buf = '¢· %sÀÇ %s ¢¹' % (self['ÁÖÀÎ'], self['ÀÌ¸§'])
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+        buf = 'â— %sì˜ %s â–·' % (self['ì£¼ì¸'], self['ì´ë¦„'])
         ob.sendLine('[1m[44m[37m%-78s[0m[40m[37m' % buf)
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         c = 0
         nCnt = {}
         for item in self.objs:
             c += 1
             nc = 0
             try:
-                nc = nCnt[item['ÀÌ¸§']]
+                nc = nCnt[item['ì´ë¦„']]
             except:
-                nCnt[item['ÀÌ¸§']] = 0
-            nCnt[item['ÀÌ¸§']] = nc + 1
+                nCnt[item['ì´ë¦„']] = 0
+            nCnt[item['ì´ë¦„']] = nc + 1
         if c == 0:
-            ob.sendLine('¢Ñ ¾Æ¹«°Íµµ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì•„ë¬´ê²ƒë„ ì—†ìŠµë‹ˆë‹¤.')
         else:
             msg = ''
             c = 0
@@ -136,22 +134,22 @@ class Box(Object):
                 if nc == 1:
                     buf = name
                 else:
-                    buf = '%s %d°³' % (name, nc)
+                    buf = '%s %dê°œ' % (name, nc)
                 c += 1
-                msg += '[1;36m¡¤[0;36m%-20s[0;37m  ' % buf
+                msg += '[1;36mÂ·[0;36m%-20s[0;37m  ' % buf
                 if c % 3 == 0:
                     msg += '\r\n'
             if c % 3 == 0:
                 msg = msg[:-2]
             ob.sendLine(msg)
-        if self['º¸°ü¼ö·®'] == self['º¸°üÃÖ´ë¼ö·®']:
-            buf = '¡ß ¼ö·® (%d/%d)' % ( len(self.objs), self['º¸°ü¼ö·®'])
+        if self['ë³´ê´€ìˆ˜ëŸ‰'] == self['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']:
+            buf = 'â—† ìˆ˜ëŸ‰ (%d/%d)' % ( len(self.objs), self['ë³´ê´€ìˆ˜ëŸ‰'])
         else:
-            buf = '¡ß ¼ö·® (%d/%d)  ¡ß ÃÖ´ë¼ö·® (%d)  ¡ß È®Àå¿¡ ÇÊ¿äÇÑ ÀºÀü (%d/%d)' % ( len(self.objs), self['º¸°ü¼ö·®'], \
-            self['º¸°üÃÖ´ë¼ö·®'], getInt(self['ÀºÀü']), self['º¸°üÁõ°¡ÀºÀü'])
-        ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            buf = 'â—† ìˆ˜ëŸ‰ (%d/%d)  â—† ìµœëŒ€ìˆ˜ëŸ‰ (%d)  â—† í™•ì¥ì— í•„ìš”í•œ ì€ì „ (%d/%d)' % ( len(self.objs), self['ë³´ê´€ìˆ˜ëŸ‰'], \
+            self['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰'], getInt(self['ì€ì „']), self['ë³´ê´€ì¦ê°€ì€ì „'])
+        ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
         ob.sendLine('[0m[47m[30m%-78s[0m[40m[37m' % buf)
-        ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+        ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
 
         
     def destroy(self):
@@ -160,36 +158,36 @@ class Box(Object):
         del self
         
     def getNameA(self):
-        return '[36m' + self.get('ÀÌ¸§') + '[37m'
+        return '[36m' + self.get('ì´ë¦„') + '[37m'
         
     def isFull(self):
         l = len(self.objs)
-        if l >= self['º¸°ü¼ö·®']:
+        if l >= self['ë³´ê´€ìˆ˜ëŸ‰']:
             return True
         return False
         
     def isExpandable(self):
-        if self['º¸°ü¼ö·®'] == self['º¸°üÃÖ´ë¼ö·®']:
+        if self['ë³´ê´€ìˆ˜ëŸ‰'] == self['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']:
             return False
         return True
         
     def addMoney(self, money):
-        if self['ÀºÀü'] == '':
-            self['ÀºÀü'] = 0
-        self['ÀºÀü'] += money
-        a = self['º¸°üÃÖ´ë¼ö·®'] - self['º¸°ü¼ö·®']
-        req = self['º¸°üÁõ°¡ÀºÀü']
-        cnt = self['ÀºÀü'] / req
+        if self['ì€ì „'] == '':
+            self['ì€ì „'] = 0
+        self['ì€ì „'] += money
+        a = self['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰'] - self['ë³´ê´€ìˆ˜ëŸ‰']
+        req = self['ë³´ê´€ì¦ê°€ì€ì „']
+        cnt = self['ì€ì „'] / req
         if cnt == 0:
             return money
         if cnt > a:
             cnt = a
-        self['ÀºÀü'] -= cnt * req
-        self['º¸°ü¼ö·®'] += cnt
-        if self['º¸°ü¼ö·®'] == self['º¸°üÃÖ´ë¼ö·®']:
-            if self['ÀºÀü'] != 0:
-                m = self['ÀºÀü']
-                self['ÀºÀü'] = 0
+        self['ì€ì „'] -= cnt * req
+        self['ë³´ê´€ìˆ˜ëŸ‰'] += cnt
+        if self['ë³´ê´€ìˆ˜ëŸ‰'] == self['ë³´ê´€ìµœëŒ€ìˆ˜ëŸ‰']:
+            if self['ì€ì „'] != 0:
+                m = self['ì€ì „']
+                self['ì€ì „'] = 0
                 return money - m
         return money
         

@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 def log(line):
     import time
     print time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime()) + line

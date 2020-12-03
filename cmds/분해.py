@@ -1,38 +1,36 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¸ğµÎ] ºĞÇØ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëª¨ë‘] ë¶„í•´')
             return
         words = line.split()
 
         if len(words) != 1:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¸ğµÎ] ºĞÇØ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëª¨ë‘] ë¶„í•´')
             return
 
         mob = ob.env.findMerchant()
         if mob == None:
-            ob.sendLine('¢Ñ »óÀÎÀÌ ¾ø¾î¿ä. ^_^')
+            ob.sendLine('â˜ ìƒì¸ì´ ì—†ì–´ìš”. ^_^')
             return
-        if mob['¹°°Ç±¸ÀÔ'] == '':
-            ob.sendLine('¢Ñ »óÀÎÀÌ ¾ø¾î¿ä. ^_^')
+        if mob['ë¬¼ê±´êµ¬ì…'] == '':
+            ob.sendLine('â˜ ìƒì¸ì´ ì—†ì–´ìš”. ^_^')
             return
 
-        if line == '¸ğµÎ':
+        if line == 'ëª¨ë‘':
             c = 0
             objs = copy.copy(ob.objs)
             for item in objs:
-                if '¿Ã¼÷¹«±â' in item.index:
+                if 'ì˜¬ìˆ™ë¬´ê¸°' in item.index:
                     continue
-                if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+                if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                     continue
                 if item.inUse == True:
                     continue
-                if item['Á¾·ù'] != '¹æ¾î±¸' and item['Á¾·ù'] != '¹«±â':
+                if item['ì¢…ë¥˜'] != 'ë°©ì–´êµ¬' and item['ì¢…ë¥˜'] != 'ë¬´ê¸°':
                     continue
  
                 op = item.getOption()
@@ -44,19 +42,19 @@ class CmdObj(Command):
                 ob.remove(item)
                 if item.isOneItem():
                     ONEITEM.destroy(item.index)
-                ob.sendLine('´ç½ÅÀÌ %s 1°³¸¦ ºĞÇØÇÕ´Ï´Ù.' % item.getNameA())
-                ob.sendRoom('%s %s 1°³¸¦ ºĞÇØÇÕ´Ï´Ù.' % ( ob.han_iga(), item.getNameA()))
+                ob.sendLine('ë‹¹ì‹ ì´ %s 1ê°œë¥¼ ë¶„í•´í•©ë‹ˆë‹¤.' % item.getNameA())
+                ob.sendRoom('%s %s 1ê°œë¥¼ ë¶„í•´í•©ë‹ˆë‹¤.' % ( ob.han_iga(), item.getNameA()))
                 del item
                 c += 1
             if c == 0:
-                ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+                ob.sendLine('â˜ ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
                 return
-            itm = getItem('°­Ã¶Á¶°¢')
+            itm = getItem('ê°•ì² ì¡°ê°')
             for i in xrange(c):
                 it = itm.deepclone()
                 ob.objs.append(it)
         else:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [¸ğµÎ] ºĞÇØ')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ëª¨ë‘] ë¶„í•´')
             return
 
 

@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -9,15 +7,15 @@ class CmdObj(Command):
 
     def cmd(self, ob, line):
         if ob.act != ACT_FIGHT:
-            ob.sendLine('¢Ñ ¹«¸²ÀÎÀº ¾Æ¹«¶§³ª µµ¸Á°¡´Â°ÍÀÌ ¾Æ´Ï¶ó³×')
+            ob.sendLine('â˜ ë¬´ë¦¼ì¸ì€ ì•„ë¬´ë•Œë‚˜ ë„ë§ê°€ëŠ”ê²ƒì´ ì•„ë‹ˆë¼ë„¤')
             return
-        if ob.env.checkAttr('µµ¸Á±İÁö'):
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+        if ob.env.checkAttr('ë„ë§ê¸ˆì§€'):
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
         if ob['_runaway'] == None:
             ob['_runaway'] = 0
         if ob['_runaway'] == 1:
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
         ob['_runaway'] = 1
         from twisted.internet import reactor
@@ -25,13 +23,13 @@ class CmdObj(Command):
         bonus = 0
 
         try:
-            if ob.cooltime['´ÉÆÄ¹Ìº¸'] == 1:
+            if ob.cooltime['ëŠ¥íŒŒë¯¸ë³´'] == 1:
                 bonus = 40
         except:
             pass
 
         mob = ob.target[0]
-        c1 = mob['·¹º§'] * (mob.getDex() + 1) - ob['·¹º§'] * (ob.getDex() + 1)
+        c1 = mob['ë ˆë²¨'] * (mob.getDex() + 1) - ob['ë ˆë²¨'] * (ob.getDex() + 1)
         if c1 < 1:
             c1 = 1
         c1 = 100 - c1
@@ -40,28 +38,28 @@ class CmdObj(Command):
         c1 += bonus
         c2 = randint(0, 100)
         if c2 > c1:
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
         
         room, dir = ob.env.getRandomExit()
         if room == None or room == ob.env:
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
             
-        if getInt(room['·¹º§Á¦ÇÑ']) > ob['·¹º§']:
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+        if getInt(room['ë ˆë²¨ì œí•œ']) > ob['ë ˆë²¨']:
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
         if room.checkLimitNum():
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
-        if room.checkAttr('»çÆÄÃâÀÔ±İÁö') and ob['¼º°İ'] == '»çÆÄ':
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+        if room.checkAttr('ì‚¬íŒŒì¶œì…ê¸ˆì§€') and ob['ì„±ê²©'] == 'ì‚¬íŒŒ':
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
-        if room.checkAttr('Á¤ÆÄÃâÀÔ±İÁö') and ob['¼º°İ'] == 'Á¤ÆÄ':
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+        if room.checkAttr('ì •íŒŒì¶œì…ê¸ˆì§€') and ob['ì„±ê²©'] == 'ì •íŒŒ':
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
         
-        if ob.enterRoom(room, dir, 'µµ¸Á') == False:
-            ob.sendLine('¢Ñ µµ¸Á °¥·Á´Ù ÀâÇû¾î¿ä. \'ÈæÈæ~~ T_T\'')
+        if ob.enterRoom(room, dir, 'ë„ë§') == False:
+            ob.sendLine('â˜ ë„ë§ ê°ˆë ¤ë‹¤ ì¡í˜”ì–´ìš”. \'í‘í‘~~ T_T\'')
             return
 

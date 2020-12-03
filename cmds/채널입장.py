@@ -1,16 +1,14 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if ob in ob.adultCH:
-            ob.sendLine('¢Ñ ÀÌ¹Ì ÀÔÀåÇÏ¼Ì½À´Ï´Ù.')
+            ob.sendLine('â˜ ì´ë¯¸ ì…ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.')
             return
         ob.adultCH.append(ob)
-        ob.sendLine('¢Ñ Ã¤³Î¿¡ ÀÔÀåÇÕ´Ï´Ù.')
-        buf = '\r\n[1;31m¨ç¨ï[0;37m ' + ob.getNameA() + '´ÔÀÌ ÀÔÀåÇÏ¼Ì½À´Ï´Ù.'
+        ob.sendLine('â˜ ì±„ë„ì— ì…ì¥í•©ë‹ˆë‹¤.')
+        buf = '\r\n[1;31mâ‘ â‘¨[0;37m ' + ob.getNameA() + 'ë‹˜ì´ ì…ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.'
         for ply in ob.adultCH:
             if ob != ply:
                 ply.sendLine(buf)

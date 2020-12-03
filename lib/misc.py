@@ -1,26 +1,24 @@
-# -*- coding: euc-kr -*-
-
 def status_ansi(ob):
     from include.ansi import *
-    hp = ob.get('√º∑¬')
-    maxhp = ob.get('√÷∞Ì√º∑¬')
-    mp = ob.get('≥ª∞¯')
-    maxmp = ob.get('√÷∞Ì≥ª∞¯')
+    hp = ob.get('Ï≤¥Î†•')
+    maxhp = ob.get('ÏµúÍ≥†Ï≤¥Î†•')
+    mp = ob.get('ÎÇ¥Í≥µ')
+    maxmp = ob.get('ÏµúÍ≥†ÎÇ¥Í≥µ')
 
     hcnt = 20*hp/maxhp
     msg = '[1;1H' + HIR
     for i in range(hcnt):
-        msg += '¶¨'
+        msg += '‚îÅ'
     msg += RED
     for i in range(20-hcnt):
-        msg += '¶¨'
+        msg += '‚îÅ'
     
     mcnt = 20*mp/maxmp
     msg += HIB
     for i in range(mcnt):
-        msg += '¶¨'
+        msg += '‚îÅ'
     msg += BLU
     for i in range(20-mcnt):
-        msg += '¶¨'
+        msg += '‚îÅ'
     msg += WHT + '[26;1H'
     ob.sendLine(msg);

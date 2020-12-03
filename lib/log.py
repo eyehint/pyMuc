@@ -1,14 +1,12 @@
-# -*- coding: euc-kr -*-
-
 from os import makedirs
 from os.path import isfile, split
 from lib.io import write_file
 from lib.sutil import isNull
 
 #---------------------------------------
-# ¼³¸í : ·Î±× ±â·Ï.
-# strFilePath   : ±â·ÏÇÒ ÆÄÀÏ °æ·Î.
-# strDesc       : ±â·ÏÇÒ ³»¿ë
+# ì„¤ëª… : ë¡œê·¸ ê¸°ë¡.
+# strFilePath   : ê¸°ë¡í•  íŒŒì¼ ê²½ë¡œ.
+# strDesc       : ê¸°ë¡í•  ë‚´ìš©
 #---------------------------------------
 def writeLog(strFilePath, strDesc = ''):
 
@@ -24,7 +22,7 @@ def writeLog(strFilePath, strDesc = ''):
         tupPath = split(strFilePath)
         try:
         #-------------------------------------
-        # µğ·ºÅÍ¸®°¡ ÀÌ¹Ì Á¸ÀçÇÑ´Ù¸é? except
+        # ë””ë ‰í„°ë¦¬ê°€ ì´ë¯¸ ì¡´ì¬í•œë‹¤ë©´? except
             makedirs(tupPath[0])
         except OSError:
             pass
@@ -33,9 +31,9 @@ def writeLog(strFilePath, strDesc = ''):
 
 
 #---------------------------------------
-# ¼³¸í : [xx¿ù/xxÀÏ] ·Î±×³»¿ë À¸·Î ÆíÁı
+# ì„¤ëª… : [xxì›”/xxì¼] ë¡œê·¸ë‚´ìš© ìœ¼ë¡œ í¸ì§‘
 #---------------------------------------
-# writeLog ³»ºÎÀûÀ¸·ç »ç¿ëÇÔ.
+# writeLog ë‚´ë¶€ì ìœ¼ë£¨ ì‚¬ìš©í•¨.
 def procDesc(strDesc):
     from time import time
     from lib.timeutil import frmTime_A

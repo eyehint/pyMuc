@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import copy
 from random import randint
 from objs.item import getItem
@@ -13,31 +11,32 @@ from lib.func import *
 from include.define import *
 import math
 
+
 class Body(Object):
     ItemUseLevel = \
-    { 'Åõ±¸':	'Åõ    ±¸', '¿Õ°ü':	  '   °ü   ', '¸Ó¸®':	'¸Ó    ¸®',
-	  '±Í°ÉÀÌ':	'±Í °É ÀÌ', '¸ñ°ÉÀÌ': '¸ñ °É ÀÌ', '¾î±ú':	'¾î    ±ú',
-	  '»óÀÇ':	'»ó    ÀÇ', 'ÇÏÀÇ':   'ÇÏ    ÀÇ', 'Àå½Å±¸':	'Àå ½Å ±¸',
-	  '°©¿Ê':	'°©    ¿Ê', 'Çã¸®':   'Çã    ¸®', 'ÆÈÂî':	'ÆÈ    Âî',
-	  'Àå°©':	'Àå    °©', '¹İÁö':	  '¹İ    Áö', '½½È£':	'½½    È£',
-	  '½Å¹ß':	'½Å    ¹ß', '¹«±â':	  '¹«    ±â', '±âÅ¸':	'±â    Å¸', }
-    
+        {'íˆ¬êµ¬': 'íˆ¬    êµ¬', 'ì™•ê´€': '   ê´€   ', 'ë¨¸ë¦¬': 'ë¨¸    ë¦¬',
+         'ê·€ê±¸ì´': 'ê·€ ê±¸ ì´', 'ëª©ê±¸ì´': 'ëª© ê±¸ ì´', 'ì–´ê¹¨': 'ì–´    ê¹¨',
+         'ìƒì˜': 'ìƒ    ì˜', 'í•˜ì˜': 'í•˜    ì˜', 'ì¥ì‹ êµ¬': 'ì¥ ì‹  êµ¬',
+         'ê°‘ì˜·': 'ê°‘    ì˜·', 'í—ˆë¦¬': 'í—ˆ    ë¦¬', 'íŒ”ì°Œ': 'íŒ”    ì°Œ',
+         'ì¥ê°‘': 'ì¥    ê°‘', 'ë°˜ì§€': 'ë°˜    ì§€', 'ìŠ¬í˜¸': 'ìŠ¬    í˜¸',
+         'ì‹ ë°œ': 'ì‹     ë°œ', 'ë¬´ê¸°': 'ë¬´    ê¸°', 'ê¸°íƒ€': 'ê¸°    íƒ€', }
+
     ItemLevelList = \
-    [ 'Åõ±¸', '¿Õ°ü', '¸Ó¸®', '±Í°ÉÀÌ', '¸ñ°ÉÀÌ', '¾î±ú', '»óÀÇ', 'ÇÏÀÇ', 'Àå½Å±¸',
-     '°©¿Ê', 'Çã¸®', 'ÆÈÂî', 'Àå°©', '¹İÁö', '½½È£', '½Å¹ß', '¹«±â', '±âÅ¸']
-    
-    strBar = [\
-    '[37m¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m',
-    '[31m¦¬[37m¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m',
-    '[31m¦¬¦¬[37m¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m',
-    '[31m¦¬¦¬¦¬[37m¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m',
-    '[33m¦¬¦¬¦¬¦¬[37m¦¬¦¬¦¬¦¬¦¬¦¬[37m',
-    '[33m¦¬¦¬¦¬¦¬¦¬[37m¦¬¦¬¦¬¦¬¦¬[37m',
-    '[33m¦¬¦¬¦¬¦¬¦¬¦¬[37m¦¬¦¬¦¬¦¬[37m',
-    '[32m¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m¦¬¦¬¦¬[37m',
-    '[32m¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m¦¬¦¬[37m',
-    '[32m¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m¦¬[37m',
-    '[32m¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬[37m']
+        ['íˆ¬êµ¬', 'ì™•ê´€', 'ë¨¸ë¦¬', 'ê·€ê±¸ì´', 'ëª©ê±¸ì´', 'ì–´ê¹¨', 'ìƒì˜', 'í•˜ì˜', 'ì¥ì‹ êµ¬',
+         'ê°‘ì˜·', 'í—ˆë¦¬', 'íŒ”ì°Œ', 'ì¥ê°‘', 'ë°˜ì§€', 'ìŠ¬í˜¸', 'ì‹ ë°œ', 'ë¬´ê¸°', 'ê¸°íƒ€']
+
+    strBar = [ \
+        '[37mâ”â”â”â”â”â”â”â”â”â”[37m',
+        '[31mâ”[37mâ”â”â”â”â”â”â”â”â”[37m',
+        '[31mâ”â”[37mâ”â”â”â”â”â”â”â”[37m',
+        '[31mâ”â”â”[37mâ”â”â”â”â”â”â”[37m',
+        '[33mâ”â”â”â”[37mâ”â”â”â”â”â”[37m',
+        '[33mâ”â”â”â”â”[37mâ”â”â”â”â”[37m',
+        '[33mâ”â”â”â”â”â”[37mâ”â”â”â”[37m',
+        '[32mâ”â”â”â”â”â”â”[37mâ”â”â”[37m',
+        '[32mâ”â”â”â”â”â”â”â”[37mâ”â”[37m',
+        '[32mâ”â”â”â”â”â”â”â”â”[37mâ”[37m',
+        '[32mâ”â”â”â”â”â”â”â”â”â”[37m']
 
     difficulty = [
         [2, 1.3, 1.75, 1.75],
@@ -50,7 +49,7 @@ class Body(Object):
         [53.69, 17.5194, 12.5, 12.5],
         [85.9, 25.4031, 16, 16],
     ]
-    
+
     def __init__(self):
         Object.__init__(self)
         self.act = ACT_STAND
@@ -76,43 +75,43 @@ class Body(Object):
         self.weaponItem = None
 
     def getStr(self):
-        if self._str + self['Èû'] < 0:
+        if self._str + self['í˜'] < 0:
             return 0
-        return self._str + self['Èû']
-        
+        return self._str + self['í˜']
+
     def getDex(self):
-        if self._dex + self['¹ÎÃ¸¼º'] < 0:
+        if self._dex + self['ë¯¼ì²©ì„±'] < 0:
             return 0
-        return self._dex + self['¹ÎÃ¸¼º']
-        
+        return self._dex + self['ë¯¼ì²©ì„±']
+
     def getArm(self):
-        if self._arm + self['¸ËÁı'] < 0:
+        if self._arm + self['ë§·ì§‘'] < 0:
             return 0
         alpha = 0
-        if self['¸ËÁı»ó½Â'] != '':
+        if self['ë§·ì§‘ìƒìŠ¹'] != '':
             alpha = 1000
-        return self._arm + self['¸ËÁı'] + alpha
-        
+        return self._arm + self['ë§·ì§‘'] + alpha
+
     def getMp(self):
         if self._mp != 0:
-            mp = self['³»°ø'] + (self['³»°ø'] * self._mp) / 100
+            mp = self['ë‚´ê³µ'] + (self['ë‚´ê³µ'] * self._mp) / 100
             return mp
-        return self['³»°ø']
-        
+        return self['ë‚´ê³µ']
+
     def getMaxMp(self):
         if self._maxmp != 0:
-            # mp = self['ÃÖ°í³»°ø'] + (self['ÃÖ°í³»°ø'] * self._maxmp) / 100
+            # mp = self['ìµœê³ ë‚´ê³µ'] + (self['ìµœê³ ë‚´ê³µ'] * self._maxmp) / 100
             # limit max 
-            mp = self['ÃÖ°í³»°ø'] + self._maxmp
+            mp = self['ìµœê³ ë‚´ê³µ'] + self._maxmp
             return mp
-        return self['ÃÖ°í³»°ø']
-        
+        return self['ìµœê³ ë‚´ê³µ']
+
     def getHp(self):
-        return self['Ã¼·Â']
-        
+        return self['ì²´ë ¥']
+
     def getMaxHp(self):
-        #h = self['ÃÖ°íÃ¼·Â'] + (self.getArm() - (self['·¹º§'] + 14)) * 30
-        h = self['ÃÖ°íÃ¼·Â'] + (self.getArm()) * 30
+        # h = self['ìµœê³ ì²´ë ¥'] + (self.getArm() - (self['ë ˆë²¨'] + 14)) * 30
+        h = self['ìµœê³ ì²´ë ¥'] + (self.getArm()) * 30
         if self._maxhp != 0:
             # return h + (h * self._maxhp) / 100
             # limit max 
@@ -120,33 +119,33 @@ class Body(Object):
         return h
 
     def getHit(self):
-        if self['¸íÁß'] == '':
-            self['¸íÁß'] = 0
+        if self['ëª…ì¤‘'] == '':
+            self['ëª…ì¤‘'] = 0
         if self._hit != 0:
-            return self['¸íÁß'] + self._hit
-        return self['¸íÁß']
-        
+            return self['ëª…ì¤‘'] + self._hit
+        return self['ëª…ì¤‘']
+
     def getCritical(self):
-        if self['ÇÊ»ì'] == '':
-            self['ÇÊ»ì'] = 0
+        if self['í•„ì‚´'] == '':
+            self['í•„ì‚´'] = 0
         if self._critical != 0:
-            return self['ÇÊ»ì'] + self._critical
-        return self['ÇÊ»ì']
+            return self['í•„ì‚´'] + self._critical
+        return self['í•„ì‚´']
 
     def getCriticalChance(self):
-        if self['¿î'] == '':
-            self['¿î'] = 0
+        if self['ìš´'] == '':
+            self['ìš´'] = 0
         if self._criticalChance != 0:
-            return self['¿î'] + self._criticalChance
-        return self['¿î']
-            
+            return self['ìš´'] + self._criticalChance
+        return self['ìš´']
+
     def getMiss(self):
-        if self['È¸ÇÇ'] == '':
-            self['È¸ÇÇ'] = 0
+        if self['íšŒí”¼'] == '':
+            self['íšŒí”¼'] = 0
         if self._miss != 0:
-            return self['È¸ÇÇ'] + self._miss
-        return self['È¸ÇÇ']
-        
+            return self['íšŒí”¼'] + self._miss
+        return self['íšŒí”¼']
+
     def getBonusExp(self):
         return self._exp
 
@@ -158,9 +157,9 @@ class Body(Object):
         ob.act = ACT_FIGHT
         if ob not in self.target:
             self.target.append(ob)
-        
-    def clearTarget(self, ob = None):
-        
+
+    def clearTarget(self, ob=None):
+
         if ob != None:
             if ob in self.target:
                 self.target.remove(ob)
@@ -176,7 +175,7 @@ class Body(Object):
         target = copy.copy(self.target)
         for ob in target:
             self.clearTarget(ob)
-        
+
     def getSkill(self, sName):
         if self.lastskill != None:
             if sName == self.lastskill.name:
@@ -185,383 +184,384 @@ class Body(Object):
             else:
                 del self.lastskill
         self.skill = MUGONG[sName].clone()
-        #self.lastskill = self.skill
+        # self.lastskill = self.skill
         return self.skill
-        
+
     def stopSkill(self):
         if self.skill != None:
             self.lastskill = self.skill
             self.skill = None
-        
+
     def clearSkills(self):
         self.stopSkill()
         ss = copy.copy(self.skills)
         for s in ss:
             self.skills.remove(s)
-        
+
     def isMovable(self):
         if self.act == ACT_FIGHT or self.act == ACT_REST:
             return False
         return True
 
     def init_body(self):
-        self.set('·¹º§', 1)
-        self.set('Ã¼·Â', 450)
-        self.set('ÃÖ°íÃ¼·Â', 450)
-        self.set('Èû', 15)
-        self.set('¸ËÁı', 15)
-        self.set('¹ÎÃ¸¼º', 0)
-        self.set('ÀºÀü', 100000)
-        self.set('±İÀü', 0)
-        self.set('³»°ø', 18)
-        self.set('ÃÖ°í³»°ø', 18)
-        self.set('³ªÀÌ', 18)
-        self.set('³ªÀÌ¿À¸§Æ½', 0)
-        self.set('ÇöÀç°æÇèÄ¡', 0)
-        self.set('1 ¼÷·Ãµµ', 0)
-        self.set('2 ¼÷·Ãµµ', 0)
-        self.set('3 ¼÷·Ãµµ', 0)
-        self.set('4 ¼÷·Ãµµ', 0)
-        self.set('5 ¼÷·Ãµµ', 0)
-        self.set('1 ¼÷·Ãµµ°æÇèÄ¡', 0)
-        self.set('2 ¼÷·Ãµµ°æÇèÄ¡', 0)
-        self.set('3 ¼÷·Ãµµ°æÇèÄ¡', 0)
-        self.set('4 ¼÷·Ãµµ°æÇèÄ¡', 0)
-        self.set('5 ¼÷·Ãµµ°æÇèÄ¡', 0)
-        self.set('Èû°æÇèÄ¡', 0)
-        self.set('¹ÎÃ¸¼º°æÇèÄ¡', 0)
-        self.set('0 ¼º°İÇÃÅ³', 0)
-        self.set('1 ¼º°İÇÃÅ³', 0)
-        self.set('2 ¼º°İÇÃÅ³', 0)
-        self.set('¹«°ø¼÷·Ãµµ', '')
-        self.set('¹«°øÀÌ¸§', '')
-        self.set('º¸Çè·á', 0)
-        
+        self.set('ë ˆë²¨', 1)
+        self.set('ì²´ë ¥', 450)
+        self.set('ìµœê³ ì²´ë ¥', 450)
+        self.set('í˜', 15)
+        self.set('ë§·ì§‘', 15)
+        self.set('ë¯¼ì²©ì„±', 0)
+        self.set('ì€ì „', 100000)
+        self.set('ê¸ˆì „', 0)
+        self.set('ë‚´ê³µ', 18)
+        self.set('ìµœê³ ë‚´ê³µ', 18)
+        self.set('ë‚˜ì´', 18)
+        self.set('ë‚˜ì´ì˜¤ë¦„í‹±', 0)
+        self.set('í˜„ì¬ê²½í—˜ì¹˜', 0)
+        self.set('1 ìˆ™ë ¨ë„', 0)
+        self.set('2 ìˆ™ë ¨ë„', 0)
+        self.set('3 ìˆ™ë ¨ë„', 0)
+        self.set('4 ìˆ™ë ¨ë„', 0)
+        self.set('5 ìˆ™ë ¨ë„', 0)
+        self.set('1 ìˆ™ë ¨ë„ê²½í—˜ì¹˜', 0)
+        self.set('2 ìˆ™ë ¨ë„ê²½í—˜ì¹˜', 0)
+        self.set('3 ìˆ™ë ¨ë„ê²½í—˜ì¹˜', 0)
+        self.set('4 ìˆ™ë ¨ë„ê²½í—˜ì¹˜', 0)
+        self.set('5 ìˆ™ë ¨ë„ê²½í—˜ì¹˜', 0)
+        self.set('í˜ê²½í—˜ì¹˜', 0)
+        self.set('ë¯¼ì²©ì„±ê²½í—˜ì¹˜', 0)
+        self.set('0 ì„±ê²©í”Œí‚¬', 0)
+        self.set('1 ì„±ê²©í”Œí‚¬', 0)
+        self.set('2 ì„±ê²©í”Œí‚¬', 0)
+        self.set('ë¬´ê³µìˆ™ë ¨ë„', '')
+        self.set('ë¬´ê³µì´ë¦„', '')
+        self.set('ë³´í—˜ë£Œ', 0)
+
     def GetHPString(self):
-        scripts = SCRIPT['»ç¿ëÀÚ½ºÅ©¸³']
+        scripts = SCRIPT['ì‚¬ìš©ììŠ¤í¬ë¦½']
         cnt = len(scripts)
         if cnt == 0:
             return ''
         s = scripts[(cnt - 1) - ((cnt - 1) * self.getHp()) / self.getMaxHp()]
-        s = self['ÀÌ¸§'] + postPosition(s, self['ÀÌ¸§'])
+        s = self['ì´ë¦„'] + postPosition(s, self['ì´ë¦„'])
         return s
-        
+
     def getItemWeight(self):
         w = 0
         for obj in self.objs:
-            if obj.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+            if obj.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                 continue
-            w += getInt(obj['¹«°Ô'])
+            w += getInt(obj['ë¬´ê²Œ'])
         return w
-        
+
     def getItemCount(self):
         c = 0
         for item in self.objs:
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                 continue
             c += 1
         return c
-        
+
     def getInvenItemCount(self):
         c = 0
         for item in self.objs:
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ') or item.inUse:
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨') or item.inUse:
                 continue
             c += 1
         return c
-    
+
     def getTotalExp(self):
-        cc = self['·¹º§']
-        c =(((cc * cc) / 3) + 30) * (cc + 4)
-        n = MAIN_CONFIG['ÃÖ°í°æÇèÄ¡']
-#        if cc >= 1800:
-#            return cc * 200000 
-#        if  n < 1: 
-#            n = MAX_INT
+        cc = self['ë ˆë²¨']
+        c = (((cc * cc) / 3) + 30) * (cc + 4)
+        n = MAIN_CONFIG['ìµœê³ ê²½í—˜ì¹˜']
+        #        if cc >= 1800:
+        #            return cc * 200000
+        #        if  n < 1:
+        #            n = MAX_INT
         if c < 1:
             c = 1
-#        if c > n:
-#            c = n
+        #        if c > n:
+        #            c = n
         if c > n:
             N = 200
-            if self['·¹º§'] >= 3000:
-                N = int(self['·¹º§'] / 10)
-            c1 = getInt(self['·¹º§'])
+            if self['ë ˆë²¨'] >= 3000:
+                N = int(self['ë ˆë²¨'] / 10)
+            c1 = getInt(self['ë ˆë²¨'])
             c2 = c1 + 200
 
             a = ((c2 * c2) / 3) + 30
             b = (a * (c2 - c1)) / 100
             c = (a + b) * N
-        return	c
-        
+        return c
+
     def addExp(self, exp):
-        self['ÇöÀç°æÇèÄ¡'] += exp
+        self['í˜„ì¬ê²½í—˜ì¹˜'] += exp
         t_exp = self.getTotalExp()
-        if self['ÇöÀç°æÇèÄ¡'] >= t_exp:
-            #self['ÇöÀç°æÇèÄ¡'] -= t_exp
-            self['ÇöÀç°æÇèÄ¡'] = 0
-            self['·¹º§'] += 1
+        if self['í˜„ì¬ê²½í—˜ì¹˜'] >= t_exp:
+            # self['í˜„ì¬ê²½í—˜ì¹˜'] -= t_exp
+            self['í˜„ì¬ê²½í—˜ì¹˜'] = 0
+            self['ë ˆë²¨'] += 1
             self.levelUp()
-        
-    def addStr(self, str, check = True):
-        self['Èû°æÇèÄ¡'] += str
-        c = (self['Èû'] - 10) * 20
-        if check and self['Èû°æÇèÄ¡'] >= c:
-            self['Èû°æÇèÄ¡'] = 0
-            self['Èû'] += 1
-            self.sendLine(MAIN_CONFIG['ÈûÁõ°¡½ºÅ©¸³'])
-    
+
+    def addStr(self, str, check=True):
+        self['í˜ê²½í—˜ì¹˜'] += str
+        c = (self['í˜'] - 10) * 20
+        if check and self['í˜ê²½í—˜ì¹˜'] >= c:
+            self['í˜ê²½í—˜ì¹˜'] = 0
+            self['í˜'] += 1
+            self.sendLine(MAIN_CONFIG['í˜ì¦ê°€ìŠ¤í¬ë¦½'])
+
     def addDex(self, dex):
-        self['¹ÎÃ¸¼º°æÇèÄ¡'] += dex
-        c = (self['¹ÎÃ¸¼º'] + 4) * 8
-        if self['¹ÎÃ¸¼º°æÇèÄ¡'] >= c:
-            self['¹ÎÃ¸¼º°æÇèÄ¡'] = 0
-            if self['¹ÎÃ¸¼º'] < MAIN_CONFIG['¹ÎÃ¸¼ºÃÖ°í¼öÄ¡']:
-                self['¹ÎÃ¸¼º'] += 1
-                self.sendLine(MAIN_CONFIG['¹ÎÃ¸¼ºÁõ°¡½ºÅ©¸³'])
+        self['ë¯¼ì²©ì„±ê²½í—˜ì¹˜'] += dex
+        c = (self['ë¯¼ì²©ì„±'] + 4) * 8
+        if self['ë¯¼ì²©ì„±ê²½í—˜ì¹˜'] >= c:
+            self['ë¯¼ì²©ì„±ê²½í—˜ì¹˜'] = 0
+            if self['ë¯¼ì²©ì„±'] < MAIN_CONFIG['ë¯¼ì²©ì„±ìµœê³ ìˆ˜ì¹˜']:
+                self['ë¯¼ì²©ì„±'] += 1
+                self.sendLine(MAIN_CONFIG['ë¯¼ì²©ì„±ì¦ê°€ìŠ¤í¬ë¦½'])
 
     def addAnger(self):
-        anger = getInt(self['ºĞ³ë'])
-        
+        anger = getInt(self['ë¶„ë…¸'])
+
         if anger >= 600:
             return
         anger += 1
         if anger == 100:
-            self.sendFightScript('´ç½ÅÀÌ °©ÀÚ±â [1;40;31m±«¼º[0;40;37mÀ» Áö¸£¸ç [1;40;31m³­µ¿[0;40;37mÀ» ºÎ¸³´Ï´Ù. \'²ô¿À¿À¿À¿À~~\'')
-            self.sendFightScriptRoom('%s °©ÀÚ±â [1;40;31m±«¼º[0;40;37mÀ» Áö¸£¸ç [1;40;31m³­µ¿[0;40;37mÀ» ºÎ¸³´Ï´Ù. \'²ô¿À¿À¿À¿À~~\'' % self.han_iga())
-        self['ºĞ³ë'] = anger
-        
+            self.sendFightScript('ë‹¹ì‹ ì´ ê°‘ìê¸° [1;40;31mê´´ì„±[0;40;37mì„ ì§€ë¥´ë©° [1;40;31më‚œë™[0;40;37mì„ ë¶€ë¦½ë‹ˆë‹¤. \'ë„ì˜¤ì˜¤ì˜¤ì˜¤~~\'')
+            self.sendFightScriptRoom(
+                '%s ê°‘ìê¸° [1;40;31mê´´ì„±[0;40;37mì„ ì§€ë¥´ë©° [1;40;31më‚œë™[0;40;37mì„ ë¶€ë¦½ë‹ˆë‹¤. \'ë„ì˜¤ì˜¤ì˜¤ì˜¤~~\'' % self.han_iga())
+        self['ë¶„ë…¸'] = anger
+
     def levelUp(self):
-        self.sendLine(MAIN_CONFIG['·¹º§Áõ°¡½ºÅ©¸³'])
+        self.sendLine(MAIN_CONFIG['ë ˆë²¨ì¦ê°€ìŠ¤í¬ë¦½'])
         hpUp = randint(0, 9) + 25;
-        self['ÃÖ°íÃ¼·Â'] += hpUp
-        self['¸ËÁı'] += 1
-        self['Ã¼·Â'] = self.getMaxHp()
-        self['³»°ø'] = self.getMaxMp()
-        self.sendLine('¢Ñ Ã¼·Â »ó½Â ¢¹ %d¡²%d¡³, ¸ËÁı »ó½Â ¢¹ 1¡²%d¡³' % \
-        ( hpUp, self['ÃÖ°íÃ¼·Â'], self['¸ËÁı']))
-        if self['·¹º§'] >= 2000:
-            self['Æ¯¼ºÄ¡'] += 1
+        self['ìµœê³ ì²´ë ¥'] += hpUp
+        self['ë§·ì§‘'] += 1
+        self['ì²´ë ¥'] = self.getMaxHp()
+        self['ë‚´ê³µ'] = self.getMaxMp()
+        self.sendLine('â˜ ì²´ë ¥ ìƒìŠ¹ â–· %dã€”%dã€•, ë§·ì§‘ ìƒìŠ¹ â–· 1ã€”%dã€•' % \
+                      (hpUp, self['ìµœê³ ì²´ë ¥'], self['ë§·ì§‘']))
+        if self['ë ˆë²¨'] >= 2000:
+            self['íŠ¹ì„±ì¹˜'] += 1
         else:
-            if self['·¹º§'] % 10 == 0:
-                self['Æ¯¼ºÄ¡'] += 1
+            if self['ë ˆë²¨'] % 10 == 0:
+                self['íŠ¹ì„±ì¹˜'] += 1
 
     def loadSkillUp(self):
         self.skillMap = {}
-        lines = self['¹«°ø¼÷·Ãµµ'].splitlines()
+        lines = self['ë¬´ê³µìˆ™ë ¨ë„'].splitlines()
         for line in lines:
             words = line.split()
             self.skillMap[words[0]] = (int(words[1]), int(words[2]))
-            
+
     def buildSkillUp(self):
         msg = ''
         for sup in self.skillMap:
             msg += '%s %d %d\r' % (sup, self.skillMap[sup][0], self.skillMap[sup][1])
-        self['¹«°ø¼÷·Ãµµ'] = msg
-        
-    def skillUp(self, s = None):
+        self['ë¬´ê³µìˆ™ë ¨ë„'] = msg
+
+    def skillUp(self, s=None):
         if s == None:
             s = self.skill
 
         if s.name not in self.skillMap:
             self.skillMap[s.name] = (1, 0)
-        
+
         s1 = self.skillMap[s.name][0]
         s2 = self.skillMap[s.name][1]
         s2 += 1
-        if s2 >= s['È®·üÁõ°¡']:
+        if s2 >= s['í™•ë¥ ì¦ê°€']:
             s1 += 1
             s2 = 0
             if s1 > 10:
                 return
             else:
-                self.sendLine('[1m´ç½ÅÀÌ ¹«°øÀ» ÆîÄ¡±âÀ§ÇÑ Áø±âÁı¼ºÀÌ ¼ö¿ùÇØ Áö´Â°ÍÀ» ´À³§´Ï´Ù.[0m[40m[37m')
+                self.sendLine('[1më‹¹ì‹ ì´ ë¬´ê³µì„ í¼ì¹˜ê¸°ìœ„í•œ ì§„ê¸°ì§‘ì„±ì´ ìˆ˜ì›”í•´ ì§€ëŠ”ê²ƒì„ ëŠë‚ë‹ˆë‹¤.[0m[40m[37m')
         self.skillMap[s.name] = (s1, s2)
-        
-    def weaponSkillUp(self, n = 1):
+
+    def weaponSkillUp(self, n=1):
         type = self.getWeaponType()
-        buf1 = '%d ¼÷·Ãµµ' % type
-        buf2 = '%d ¼÷·Ãµµ°æÇèÄ¡' % type
+        buf1 = '%d ìˆ™ë ¨ë„' % type
+        buf2 = '%d ìˆ™ë ¨ë„ê²½í—˜ì¹˜' % type
         c = getInt(self[buf1])
         cc = getInt(self[buf2])
         cc += n
         self[buf2] = cc
-        c = (c + 5 ) * 7
+        c = (c + 5) * 7
         if cc >= c:
             self[buf1] += 1
             self[buf2] = 0
-            self.sendLine(MAIN_CONFIG['¼÷·ÃµµÁõ°¡½ºÅ©¸³'])
-            
+            self.sendLine(MAIN_CONFIG['ìˆ™ë ¨ë„ì¦ê°€ìŠ¤í¬ë¦½'])
+
     def getAttackFailScript(self, mob):
-        s = SCRIPT[self.getWeaponFightType() + 'ÀüÅõ½ÇÆĞ½ºÅ©¸³']
+        s = SCRIPT[self.getWeaponFightType() + 'ì „íˆ¬ì‹¤íŒ¨ìŠ¤í¬ë¦½']
         s = s[randint(0, len(s) - 1)]
         return self.makeFightScript(s, mob)
-        
+
     def getAttackScript(self, mob, dmg, c1, c2):
-        s = SCRIPT[self.getWeaponFightType() + 'ÀüÅõ½ºÅ©¸³']
+        s = SCRIPT[self.getWeaponFightType() + 'ì „íˆ¬ìŠ¤í¬ë¦½']
         if len(s) == 0:
-            return '¹ö±×¹ö±×¹ö±×¹ö±×¹ö±×¹ö±×¹ö±×¹ö±×¹ö±×¹ö±×½Å°íÇÏ¼À½Å°íÇÏ¼À'
+            return 'ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ë²„ê·¸ì‹ ê³ í•˜ì…ˆì‹ ê³ í•˜ì…ˆ'
         s = s[randint(0, len(s) - 1)]
         return self.makeFightScript(s, mob)
-        
+
     def getSkillChance(self, mob):
-        l1 = self['·¹º§']
-        l2 = mob['·¹º§']
-        
+        l1 = self['ë ˆë²¨']
+        l2 = mob['ë ˆë²¨']
+
         # limit attack level
-        if (l2 - l1) >= MAIN_CONFIG['ÃÖ´ë»ç³É·¹º§Â÷ÀÌ']:
-            return -1        
-        
+        if (l2 - l1) >= MAIN_CONFIG['ìµœëŒ€ì‚¬ëƒ¥ë ˆë²¨ì°¨ì´']:
+            return -1
+
         if self.skill != None:
-            CHANCE = self.skill['È®·ü']
-            #¹«°ø¼÷·Ãµµ Ãß°¡ÇÊ¿ä
+            CHANCE = self.skill['í™•ë¥ ']
+            # ë¬´ê³µìˆ™ë ¨ë„ ì¶”ê°€í•„ìš”
             if self.skill.name in self.skillMap:
-                CHANCE += self.skillMap[self.skill.name][0] * MAIN_CONFIG['±â¼úÈ®·ü¹è¼ö']
+                CHANCE += self.skillMap[self.skill.name][0] * MAIN_CONFIG['ê¸°ìˆ í™•ë¥ ë°°ìˆ˜']
         else:
             CHANCE = 100
-        bonus = self.getHit() * float(MAIN_CONFIG['¸íÁßÈ®·ü'])
-        bonus -= mob.getMiss() * float(MAIN_CONFIG['È¸ÇÇÈ®·ü']) 
-            
-        return CHANCE - (((l2-l1)+90)/3) + bonus
-        
+        bonus = self.getHit() * float(MAIN_CONFIG['ëª…ì¤‘í™•ë¥ '])
+        bonus -= mob.getMiss() * float(MAIN_CONFIG['íšŒí”¼í™•ë¥ '])
+
+        return CHANCE - (((l2 - l1) + 90) / 3) + bonus
+
     def getAttackChance(self, mob):
-        l1 = self['·¹º§']
-        l2 = mob['·¹º§']
-        
+        l1 = self['ë ˆë²¨']
+        l2 = mob['ë ˆë²¨']
+
         # limit attack level
-        if (l2 - l1) >= MAIN_CONFIG['ÃÖ´ë»ç³É·¹º§Â÷ÀÌ']:
+        if (l2 - l1) >= MAIN_CONFIG['ìµœëŒ€ì‚¬ëƒ¥ë ˆë²¨ì°¨ì´']:
             return -1
-        
+
         CHANCE = 100
-        bonus = self.getHit() * float(MAIN_CONFIG['¸íÁßÈ®·ü'])
-        bonus -= mob.getMiss() * float(MAIN_CONFIG['È¸ÇÇÈ®·ü']) 
-        return CHANCE - (((l2-l1)+90)/3) + bonus
-        
+        bonus = self.getHit() * float(MAIN_CONFIG['ëª…ì¤‘í™•ë¥ '])
+        bonus -= mob.getMiss() * float(MAIN_CONFIG['íšŒí”¼í™•ë¥ '])
+        return CHANCE - (((l2 - l1) + 90) / 3) + bonus
+
     def getAttackPoint(self, mob):
         item = self.getWeapon()
         s1 = 0
         from objs.player import is_player
-        if is_player(self): 
-            if item != getItem('ÁÖ¸Ô'):
-                s1 = getInt(item['±â·®'])
-        s2 = getInt(self['%d ¼÷·Ãµµ' % self.getWeaponType()])
-        if self['¼÷·Ãµµ»ó½Â'] != '':
-            s2 += 2000 
+        if is_player(self):
+            if item != getItem('ì£¼ë¨¹'):
+                s1 = getInt(item['ê¸°ëŸ‰'])
+        s2 = getInt(self['%d ìˆ™ë ¨ë„' % self.getWeaponType()])
+        if self['ìˆ™ë ¨ë„ìƒìŠ¹'] != '':
+            s2 += 2000
         ss = s1 - s2;
         if ss < 0:
             ss = 0
         c1 = self.getStr() * 2
-        if is_player(self): 
-            #c1 += math.sqrt( self.getStr() * self.getMaxMp() )
+        if is_player(self):
+            # c1 += math.sqrt( self.getStr() * self.getMaxMp() )
             c1 += self.getMaxMp() / 4
         c2 = self.getAttPower() - ss
         m1 = (c1 + c2) - (mob.getArm() + mob.getArmor())
         if m1 < 1:
             m1 = 1
         m = m1
-        #print 's1=%d, s2=%d, ss=%d, c1=%d, c2=%d, m1=%d, m=%d' % (s1, s2, ss, c1, c2, m1, m)
+        # print 's1=%d, s2=%d, ss=%d, c1=%d, c2=%d, m1=%d, m=%d' % (s1, s2, ss, c1, c2, m1, m)
         c1 = int(m * 0.80)
         c2 = int(m * 1.20)
-        
+
         s1 = c2 - c1 + 1
-        #print 's1=%d, c1=%d, c2=%d' % (s1, c1, c2)
+        # print 's1=%d, c1=%d, c2=%d' % (s1, c1, c2)
         if s1 < 1:
-            s1=1;
-    
+            s1 = 1;
+
         m = randint(0, s1 - 1) + c1
-        
+
         if m < 1:
             m = 1
-        #print 'c1=%d, c2=%d, m=%d' % (c1, c2, m)
+        # print 'c1=%d, c2=%d, m=%d' % (c1, c2, m)
         return int(m), c1, c2
-        
+
     def getArmor(self):
         return self.armor
-        
+
     def getAttPower(self):
         return self.attpower
-        
+
     def getSkillPoint(self, mob):
         m, c1, c2 = self.getAttackPoint(mob)
-        f = float(self.skill['Å¸°İ·ü'])
-        
+        f = float(self.skill['íƒ€ê²©ë¥ '])
+
         if f <= 0:
             f = 0.1
         m += m * f
         m = int(m)
-        chance = self.getCriticalChance() * float(MAIN_CONFIG['¿îÈ®·ü'])
+        chance = self.getCriticalChance() * float(MAIN_CONFIG['ìš´í™•ë¥ '])
         bonus = 1
         if chance > randint(0, 100):
-            bonus = self.getCritical() * float(MAIN_CONFIG['ÇÊ»ì¹è¼ö'])
+            bonus = self.getCritical() * float(MAIN_CONFIG['í•„ì‚´ë°°ìˆ˜'])
             if bonus < 1:
                 bonus = 1
         return int(m * bonus)
-        
+
     def getWeaponType(self):
-        return self.getWeapon()['¹«±âÁ¾·ù']
-        
+        return self.getWeapon()['ë¬´ê¸°ì¢…ë¥˜']
+
     def getWeaponFightType(self):
-        #¹«±â Å¸ÀÔÀÌ ÇÊ¿äÇÔ
-        return self.getWeapon()['ÀüÅõ½ºÅ©¸³']
-        
+        # ë¬´ê¸° íƒ€ì…ì´ í•„ìš”í•¨
+        return self.getWeapon()['ì „íˆ¬ìŠ¤í¬ë¦½']
+
     def getWeapon(self):
         if self.weaponItem != None:
             return self.weaponItem
-        return getItem('ÁÖ¸Ô')
-        
-    def makeFightScript(self, line, mob, weapon = None):
+        return getItem('ì£¼ë¨¹')
+
+    def makeFightScript(self, line, mob, weapon=None):
         if mob == None:
             mName = ''
         else:
             mName = mob.getNameA()
-            
+
         if weapon == None:
             m = self.getWeapon()
-            if m == getItem('ÁÖ¸Ô'):
-                mstr = '[36mÁÖ¸Ô[37m'
+            if m == getItem('ì£¼ë¨¹'):
+                mstr = '[36mì£¼ë¨¹[37m'
             else:
                 mstr = m.getNameA()
         else:
             mstr = weapon.getNameA()
-            
-        buf1 = line.replace('[°ø]', '´ç½Å')
-        buf1 = buf1.replace('[¹æ]', mName)
-        buf1 = buf1.replace('[¹«]', mstr)
+
+        buf1 = line.replace('[ê³µ]', 'ë‹¹ì‹ ')
+        buf1 = buf1.replace('[ë°©]', mName)
+        buf1 = buf1.replace('[ë¬´]', mstr)
         buf1 = postPosition1(buf1)
         buf1 = postPosition1(buf1)
         buf1 = postPosition1(buf1)
-        
-        buf2 = line.replace('[°ø]', self.getNameA())
-        buf2 = buf2.replace('[¹æ]', '´ç½Å')
-        buf2 = buf2.replace('[¹«]', mstr)
+
+        buf2 = line.replace('[ê³µ]', self.getNameA())
+        buf2 = buf2.replace('[ë°©]', 'ë‹¹ì‹ ')
+        buf2 = buf2.replace('[ë¬´]', mstr)
         buf2 = postPosition1(buf2)
         buf2 = postPosition1(buf2)
         buf2 = postPosition1(buf2)
-        
-        buf3 = line.replace('[°ø]', self.getNameA())
-        buf3 = buf3.replace('[¹æ]', mName)
-        buf3 = buf3.replace('[¹«]', mstr)
+
+        buf3 = line.replace('[ê³µ]', self.getNameA())
+        buf3 = buf3.replace('[ë°©]', mName)
+        buf3 = buf3.replace('[ë¬´]', mstr)
         buf3 = postPosition1(buf3)
         buf3 = postPosition1(buf3)
         buf3 = postPosition1(buf3)
-        
+
         return buf1, buf2, buf3
-    
+
     def sendLine(self, line):
         return
-    
+
     def sendRoom(self, line):
         return
-        
+
     def writeRoom(self, line):
         return
-        
+
     def sendRoomFightScript(self, line):
         return
-        
+
     def lpPrompt(self):
         return
-        
+
     def checkDefenceSkill(self):
         skills = copy.copy(self.skills)
         msg = '\r\n'
@@ -575,7 +575,7 @@ class Body(Object):
                 self._arm -= s._arm
                 self._mp -= s._mp
                 self._maxmp -= s._maxmp
-                buf1, buf2, buf3 = self.makeFightScript(s['¹«°øÇØÁ¦½ºÅ©¸³'], None)
+                buf1, buf2, buf3 = self.makeFightScript(s['ë¬´ê³µí•´ì œìŠ¤í¬ë¦½'], None)
                 msg += buf1 + '\r\n'
                 autoSkill.append(s.name)
                 del s
@@ -583,23 +583,23 @@ class Body(Object):
             self.write(msg)
             self.lpPrompt()
             self.sendFightScriptRoom(buf3)
-            
-        if len(autoSkill) != 0 and 'ÀÚµ¿¹«°ø' in self.alias:
-            a = self.alias['ÀÚµ¿¹«°ø']
+
+        if len(autoSkill) != 0 and 'ìë™ë¬´ê³µ' in self.alias:
+            a = self.alias['ìë™ë¬´ê³µ']
             askill = a.split(';')
             for s in autoSkill:
                 if s in askill:
-                    self.do_command('%s ½ÃÀü' % s)
+                    self.do_command('%s ì‹œì „' % s)
 
     def checkItemSkill(self):
         m = self.getWeapon()
-        if m == getItem('ÁÖ¸Ô'):
+        if m == getItem('ì£¼ë¨¹'):
             return
-        mlist = m['¹«°øÀÌ¸§'].splitlines()
+        mlist = m['ë¬´ê³µì´ë¦„'].splitlines()
         if len(mlist) == 0:
             return
-        mName = m['ÀÌ¸§']
-        if m['ÀÌ¸§'] not in self.itemSkillMap:
+        mName = m['ì´ë¦„']
+        if m['ì´ë¦„'] not in self.itemSkillMap:
             self.itemSkillMap[mName] = 1
         else:
             self.itemSkillMap[mName] += 1
@@ -610,8 +610,8 @@ class Body(Object):
             if sName in self.skillList:
                 continue
             type = words[1]
-            if type != 'Á¤»ç':
-                if self['¼º°İ'] != type and self['¼º°İ'] != '±âÀÎ' and self['¼º°İ'] != '¼±ÀÎ':
+            if type != 'ì •ì‚¬':
+                if self['ì„±ê²©'] != type and self['ì„±ê²©'] != 'ê¸°ì¸' and self['ì„±ê²©'] != 'ì„ ì¸':
                     continue
             n1 = int(words[2])
             count = self.itemSkillMap[mName]
@@ -621,31 +621,34 @@ class Body(Object):
             if p % n2 != 0:
                 continue
             n3 = int(words[4])
-            
+
             r = randint(0, 99)
-            #print n1, n2, n3, r
-            if  count < 2500000 and r > n3:
+            # print n1, n2, n3, r
+            if count < 2500000 and r > n3:
                 continue
 
             self.skillList.append(sName)
             self.itemSkillMap[mName] = 0
-            self.sendLine('\r\n[1m[40m[37m´ç½ÅÀÌ ¡º[1m[40m[32m%s[1m[40m[37m¡»ÀÇ ¹«°ø ±¸°áÀ» ±ú¿ìÄ¡±â ½ÃÀÛÇÕ´Ï´Ù. \'¥Ä¥×¥Î¥ë¥Ï~\'[0m[40m[37m\r\n' % sName)
-            self.sendRoom('[1m[40m[37m%s ¡º[1m[40m[32m%s[1m[40m[37m¡»ÀÇ ¹«°ø ±¸°áÀ» ±ú¿ìÄ¡±â ½ÃÀÛÇÕ´Ï´Ù. \'¥Ä¥×¥Î¥ë¥Ï~\'[0m[40m[37m' % (self.getNameA(), sName))
-            attr = m['¾ÆÀÌÅÛ¼Ó¼º'].splitlines()
+            self.sendLine(
+                '\r\n[1m[40m[37më‹¹ì‹ ì´ ã€[1m[40m[32m%s[1m[40m[37mã€ì˜ ë¬´ê³µ êµ¬ê²°ì„ ê¹¨ìš°ì¹˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤. \'Î”Î¨ÎÎ»ÎŸ~\'[0m[40m[37m\r\n' % sName)
+            self.sendRoom(
+                '[1m[40m[37m%s ã€[1m[40m[32m%s[1m[40m[37mã€ì˜ ë¬´ê³µ êµ¬ê²°ì„ ê¹¨ìš°ì¹˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤. \'Î”Î¨ÎÎ»ÎŸ~\'[0m[40m[37m' % (
+                self.getNameA(), sName))
+            attr = m['ì•„ì´í…œì†ì„±'].splitlines()
             for at in attr:
-                if at.find('¹«°ø¹è¿îÈÄ¼Ò¸ê') == 0:
+                if at.find('ë¬´ê³µë°°ìš´í›„ì†Œë©¸') == 0:
                     m.inUse = False
-                    self.armor -= getInt(m['¹æ¾î·Â'])
-                    self.attpower -= getInt(m['°ø°İ·Â'])
+                    self.armor -= getInt(m['ë°©ì–´ë ¥'])
+                    self.attpower -= getInt(m['ê³µê²©ë ¥'])
                     m.env = None
-                    self.weaponItem = None 
-                    self.objs.remove(m) 
+                    self.weaponItem = None
+                    self.objs.remove(m)
                     del m
                     break
             break
-            
+
     def loadSkills(self):
-        for line in self['¹æ¾î¹«°ø½ÃÀü'].splitlines():
+        for line in self['ë°©ì–´ë¬´ê³µì‹œì „'].splitlines():
             words = line.split()
             s = MUGONG[words[0]]
             s = copy.copy(s)
@@ -656,30 +659,30 @@ class Body(Object):
             self._arm += s._arm
             self._mp += s._mp
             self._maxmp += s._maxmp
-    
+
     def buildSkills(self):
-        self['¹æ¾î¹«°ø½ÃÀü'] = ''
+        self['ë°©ì–´ë¬´ê³µì‹œì „'] = ''
         for s in self.skills:
             buf = '%s %d' % (s.name, s.start_time)
-            self.setAttr('¹æ¾î¹«°ø½ÃÀü', buf)
-            
+            self.setAttr('ë°©ì–´ë¬´ê³µì‹œì „', buf)
+
     def loadSkillList(self):
-        self.skillList = self['¹«°øÀÌ¸§'].splitlines()
-        lines = self['¹«°øÀÌ¸§¼ö·Ã¸®½ºÆ®'].splitlines()
+        self.skillList = self['ë¬´ê³µì´ë¦„'].splitlines()
+        lines = self['ë¬´ê³µì´ë¦„ìˆ˜ë ¨ë¦¬ìŠ¤íŠ¸'].splitlines()
         for line in lines:
             words = line.split()
             self.itemSkillMap[words[0]] = int(words[1])
-        
+
     def buildSkillList(self):
         msg = ''
         for s in self.skillList:
             msg += s + '\r\n'
-        self['¹«°øÀÌ¸§'] = msg
-        
+        self['ë¬´ê³µì´ë¦„'] = msg
+
         msg = ''
         for s in self.itemSkillMap:
             msg += '%s %s\r\n' % (s, self.itemSkillMap[s])
-        self['¹«°øÀÌ¸§¼ö·Ã¸®½ºÆ®'] = msg
+        self['ë¬´ê³µì´ë¦„ìˆ˜ë ¨ë¦¬ìŠ¤íŠ¸'] = msg
 
     def unwearAll(self):
         self.attpower = 0
@@ -700,8 +703,8 @@ class Body(Object):
         for item in self.objs:
             if item.inUse == True:
                 item.inUse = False
-                if item['Á¾·ù'] == '¹«±â':
-                        self.weaponItem = None
+                if item['ì¢…ë¥˜'] == 'ë¬´ê¸°':
+                    self.weaponItem = None
 
     def dropAllItem(self):
         p = self.getInsureCount()
@@ -711,17 +714,17 @@ class Body(Object):
         c = 0
         objs = copy.copy(self.objs)
         for item in objs:
-            if p > 0 and item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'º¸ÇèÀû¿ë¾ÈµÊ') == False:
+            if p > 0 and item.checkAttr('ì•„ì´í…œì†ì„±', 'ë³´í—˜ì ìš©ì•ˆë¨') == False:
                 self.insure += 1
                 continue
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÁÙ¼ö¾øÀ½'):
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¤„ìˆ˜ì—†ìŒ'):
                 continue
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '¹ö¸®Áö¸øÇÔ'):
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ë²„ë¦¬ì§€ëª»í•¨'):
                 continue
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', 'Ãâ·Â¾ÈÇÔ'):
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ì¶œë ¥ì•ˆí•¨'):
                 continue
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '´ÜÀÏ¾ÆÀÌÅÛ'):
-                ONEITEM.drop2(item.index, self['ÀÌ¸§'])
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ë‹¨ì¼ì•„ì´í…œ'):
+                ONEITEM.drop2(item.index, self['ì´ë¦„'])
             item.inUse = False
             self.objs.remove(item)
             c += 1
@@ -730,108 +733,107 @@ class Body(Object):
                 item.drop()
                 nc = 0
                 try:
-                    nc = nCnt[item['ÀÌ¸§']]
+                    nc = nCnt[item['ì´ë¦„']]
                 except:
-                    nCnt[item.get('ÀÌ¸§')] = 0
-                nCnt[item.get('ÀÌ¸§')] = nc + 1
+                    nCnt[item.get('ì´ë¦„')] = 0
+                nCnt[item.get('ì´ë¦„')] = nc + 1
             else:
                 nc = 0
                 try:
-                    nc = nFail[item.get('ÀÌ¸§')]
+                    nc = nFail[item.get('ì´ë¦„')]
                 except:
-                    nFail[item.get('ÀÌ¸§')] = 0
-                nFail[item.get('ÀÌ¸§')] = nc + 1
+                    nFail[item.get('ì´ë¦„')] = 0
+                nFail[item.get('ì´ë¦„')] = nc + 1
                 del item
         self.decInsureCount()
         if c == 0:
             return
-            
+
         for name in nCnt:
             nc = nCnt[name]
             if nc == 1:
-                self.sendLine('´ç½ÅÀÌ [36m' + name + '[37m' + han_obj(name) + ' ¶³¾î¶ß¸³´Ï´Ù.')
+                self.sendLine('ë‹¹ì‹ ì´ [36m' + name + '[37m' + han_obj(name) + ' ë–¨ì–´ëœ¨ë¦½ë‹ˆë‹¤.')
             else:
-                self.sendLine('´ç½ÅÀÌ [36m' + name + '[37m %d°³¸¦ ¶³¾î¶ß¸³´Ï´Ù..' % nc)
+                self.sendLine('ë‹¹ì‹ ì´ [36m' + name + '[37m %dê°œë¥¼ ë–¨ì–´ëœ¨ë¦½ë‹ˆë‹¤..' % nc)
         for name in nFail:
             nc = nFail[name]
             if nc == 1:
-                self.sendLine('´ç½ÅÀÌ [36m' + name + '[37m' + han_obj(name) + ' ¶³¾î¶ß¸®ÀÚ ¹Ù·Î ºÎ¼­Áı´Ï´Ù.')
+                self.sendLine('ë‹¹ì‹ ì´ [36m' + name + '[37m' + han_obj(name) + ' ë–¨ì–´ëœ¨ë¦¬ì ë°”ë¡œ ë¶€ì„œì§‘ë‹ˆë‹¤.')
             else:
-                self.sendLine('´ç½ÅÀÌ [36m' + name + '[37m %d°³¸¦ ¶³¾î¶ß¸®ÀÚ ¹Ù·Î ºÎ¼­Áı´Ï´Ù.' % nc)
-        
-        
+                self.sendLine('ë‹¹ì‹ ì´ [36m' + name + '[37m %dê°œë¥¼ ë–¨ì–´ëœ¨ë¦¬ì ë°”ë¡œ ë¶€ì„œì§‘ë‹ˆë‹¤.' % nc)
+
     def decInsureCount(self):
-        p = self['º¸Çè·á']
-        c1 = self['·¹º§'] * MAIN_CONFIG['º¸Çè·á´Ü°¡']
-        c2 = c1 * MAIN_CONFIG['º¸ÇèÃâÀå·ü'] / 100
+        p = self['ë³´í—˜ë£Œ']
+        c1 = self['ë ˆë²¨'] * MAIN_CONFIG['ë³´í—˜ë£Œë‹¨ê°€']
+        c2 = c1 * MAIN_CONFIG['ë³´í—˜ì¶œì¥ë¥ '] / 100
         p -= c2
         if p < 0:
             p = 0
-        self['º¸Çè·á'] = p
-        
+        self['ë³´í—˜ë£Œ'] = p
+
     def getInsureCount(self):
-        return getInt(self['º¸Çè·á']) / (self['·¹º§'] * MAIN_CONFIG['º¸Çè·á´Ü°¡'])
-        
+        return getInt(self['ë³´í—˜ë£Œ']) / (self['ë ˆë²¨'] * MAIN_CONFIG['ë³´í—˜ë£Œë‹¨ê°€'])
+
     def addFollow(self, f):
         self.follow = f
         f.addFollower(self)
-        self.sendLine('´ç½ÅÀº %s µû¶ó´Ù´Ï±â ½ÃÀÛÇÕ´Ï´Ù.' % f.han_obj())
-        
-    def delFollow(self, other = False):
+        self.sendLine('ë‹¹ì‹ ì€ %s ë”°ë¼ë‹¤ë‹ˆê¸° ì‹œì‘í•©ë‹ˆë‹¤.' % f.han_obj())
+
+    def delFollow(self, other=False):
         if self.follow != None:
             if other == True:
                 self.sendLine('')
-            self.sendLine('´ç½ÅÀÌ %s µû¶ó´Ù´Ï´Â °ÍÀ» ±×¸¸µÓ´Ï´Ù.' % self.follow.han_obj())
+            self.sendLine('ë‹¹ì‹ ì´ %s ë”°ë¼ë‹¤ë‹ˆëŠ” ê²ƒì„ ê·¸ë§Œë‘¡ë‹ˆë‹¤.' % self.follow.han_obj())
             if other == True:
                 self.lpPrompt()
             self.follow.delFollower(self)
             self.follow = None
-        
+
     def addFollower(self, f):
         if f not in self.follower:
             self.follower.append(f)
-            self.sendLine('\r\n%s ´ç½ÅÀ» µû¶ó´Ù´Ï±â ½ÃÀÛÇÕ´Ï´Ù.' % f.han_iga())
+            self.sendLine('\r\n%s ë‹¹ì‹ ì„ ë”°ë¼ë‹¤ë‹ˆê¸° ì‹œì‘í•©ë‹ˆë‹¤.' % f.han_iga())
             self.lpPrompt()
-            
-    def delFollower(self, f = None, noPrompt = False):
+
+    def delFollower(self, f=None, noPrompt=False):
         if f != None:
             if f in self.follower:
                 self.follower.remove(f)
-                self.sendLine('\r\n%s ´ç½Å°ú µû¶ó´Ù´Ï´Â °ÍÀ» ±×¸¸µÓ´Ï´Ù.' % f.han_iga())
+                self.sendLine('\r\n%s ë‹¹ì‹ ê³¼ ë”°ë¼ë‹¤ë‹ˆëŠ” ê²ƒì„ ê·¸ë§Œë‘¡ë‹ˆë‹¤.' % f.han_iga())
                 self.lpPrompt()
             return
         fs = copy.copy(self.follower)
         for f in fs:
             f.delFollow(True)
         self.follower = []
-        
+
     def recoverDemage(self, dmg):
         t = 0
         if dmg == 0:
             return 0
         for s in self.skills:
-            if s['°è¿­'] == 'ÀüÅõÈ¸º¹':
-                p = int(s['È¸º¹´É·Â'].split()[1])
+            if s['ê³„ì—´'] == 'ì „íˆ¬íšŒë³µ':
+                p = int(s['íšŒë³µëŠ¥ë ¥'].split()[1])
                 r = dmg * p / 100
                 t += r
-                if self.checkConfig('¼ö·Ã¸ğµå') == False:
-                    buf1, buf2, buf3 = self.makeFightScript(s['È¸º¹½ºÅ©¸³'], None)
+                if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
+                    buf1, buf2, buf3 = self.makeFightScript(s['íšŒë³µìŠ¤í¬ë¦½'], None)
                     self.sendLine(buf1 + ' ([1;32m+ %d[0;37m)' % r)
         return t
-        
-    def minusHP(self, demage, mode = True, who = None):
-        cc = self.get('Ã¼·Â')
+
+    def minusHP(self, demage, mode=True, who=None):
+        cc = self.get('ì²´ë ¥')
         cc -= demage
 
         if cc <= 0:
-            self.set('Ã¼·Â', 0)
+            self.set('ì²´ë ¥', 0)
             self.die(mode)
             return True
-        self.set('Ã¼·Â', cc)
+        self.set('ì²´ë ¥', cc)
         return False
 
     def checkVision(self, skill):
-        line = self['ºñÀü¼ö·Ã']
+        line = self['ë¹„ì „ìˆ˜ë ¨']
         if line == '':
             return
         if skill == None:
@@ -845,16 +847,16 @@ class Body(Object):
             p = int(var[1])
         n1 = 10
         n2 = 10
-        
+
         n3 = 1
         if randint(0, 99) > 1:
             p += 1
-            self['ºñÀü¼ö·Ã'] = '%s %d' % (var[0], p) 
+            self['ë¹„ì „ìˆ˜ë ¨'] = '%s %d' % (var[0], p)
             return
-        self.attr.__delitem__('ºñÀü¼ö·Ã')
-        if self['ºñÀüÀÌ¸§'] == '':
-            self['ºñÀüÀÌ¸§'] = var[0]
+        self.attr.__delitem__('ë¹„ì „ìˆ˜ë ¨')
+        if self['ë¹„ì „ì´ë¦„'] == '':
+            self['ë¹„ì „ì´ë¦„'] = var[0]
         else:
-            self['ºñÀüÀÌ¸§'] += '\r\n' + var[0]
-        self.sendLine('[1m´ç½ÅÀÌ ¡º[32m%s[37m¡»ÀÇ ¹«°ø ±¸°áÀ» ±ú¿ìÄ¡±â ½ÃÀÛÇÕ´Ï´Ù. \'¥Ä¥×¥Î¥ë¥Ï~\'[0;37m\r\n' % var[0])
-        self.sendRoom('[1m%s ¡º[32m%s[37m¡»ÀÇ ¹«°ø ±¸°áÀ» ±ú¿ìÄ¡±â ½ÃÀÛÇÕ´Ï´Ù. \'¥Ä¥×¥Î¥ë¥Ï~\'[0;37m' % (self.han_iga(), var[0]))
+            self['ë¹„ì „ì´ë¦„'] += '\r\n' + var[0]
+        self.sendLine('[1më‹¹ì‹ ì´ ã€[32m%s[37mã€ì˜ ë¬´ê³µ êµ¬ê²°ì„ ê¹¨ìš°ì¹˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤. \'Î”Î¨ÎÎ»ÎŸ~\'[0;37m\r\n' % var[0])
+        self.sendRoom('[1m%s ã€[32m%s[37mã€ì˜ ë¬´ê³µ êµ¬ê²°ì„ ê¹¨ìš°ì¹˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤. \'Î”Î¨ÎÎ»ÎŸ~\'[0;37m' % (self.han_iga(), var[0]))

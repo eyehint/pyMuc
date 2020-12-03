@@ -1,16 +1,14 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if len(line) == 0:
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [³»¿ë] Ç¥Çö(\')')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë‚´ìš©] í‘œí˜„(\')')
             return
         if ob.env.noComm():
-            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            ob.sendLine('â˜ ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
             return
-        ob.sendLine('´ç½ÅÀÌ ' + line)
-        ob.sendRoom(ob['ÀÌ¸§'] + han_iga(ob['ÀÌ¸§']) + ' ' + line)
+        ob.sendLine('ë‹¹ì‹ ì´ ' + line)
+        ob.sendRoom(ob['ì´ë¦„'] + han_iga(ob['ì´ë¦„']) + ' ' + line)
 

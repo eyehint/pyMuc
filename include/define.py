@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 HEART_BEAT_INTERVAL = 2
 SAY_INTERVAL = 60
 NOTICE = 3

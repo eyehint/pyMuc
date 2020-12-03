@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -14,15 +12,15 @@ class CmdObj(Command):
 
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         words = line.split()
         if len(words) < 1:
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [Á¦¿ÜÇÒ¹æÇâ] ¸Ê')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ì œì™¸í• ë°©í–¥] ë§µ')
             return
         if ob.env == None:
-            ob.sendLine('\r\n* ¾Æ¹«°Íµµ º¸ÀÌÁö ¾Ê½À´Ï´Ù.\r\n')
+            ob.sendLine('\r\n* ì•„ë¬´ê²ƒë„ ë³´ì´ì§€ ì•ŠìŠµë‹ˆë‹¤.\r\n')
             return
         c = 0
         for exitName in ob.env.exitList:
@@ -30,10 +28,10 @@ class CmdObj(Command):
                 continue
             c += 1
         if c == 0:
-            ob.sendLine('¢Ñ ¾Æ¹«°Íµµ º¸ÀÌÁö ¾Ê½À´Ï´Ù.')
+            ob.sendLine('â˜ž ì•„ë¬´ê²ƒë„ ë³´ì´ì§€ ì•ŠìŠµë‹ˆë‹¤.')
             return
         if words[0] not in ob.env.exitList:
-            ob.sendLine('¢Ñ ±× ¹æÇâÀ¸·Î´Â °¥¼ö°¡ ¾ø¾î¿ä!.')
+            ob.sendLine('â˜ž ê·¸ ë°©í–¥ìœ¼ë¡œëŠ” ê°ˆìˆ˜ê°€ ì—†ì–´ìš”!.')
             return
 
         ob.walkhis = []
@@ -42,12 +40,12 @@ class CmdObj(Command):
         l.remove(words[0])
         a = []
         for ex in l:
-            if ex in ['µ¿', '¼­', '³²', 'ºÏ', 'ºÏ¼­', 'ºÏµ¿', '³²¼­', '³²µ¿']:
+            if ex in ['ë™', 'ì„œ', 'ë‚¨', 'ë¶', 'ë¶ì„œ', 'ë¶ë™', 'ë‚¨ì„œ', 'ë‚¨ë™']:
                 a.append(ex)
         l = a
         ob.mapQ[ob.env.index] = []
         if len(l) == 0:
-            ob.sendLine('¢Ñ ±× ¹æÇâÀ¸·Î´Â °¥¼ö°¡ ¾ø¾î¿ä!.')
+            ob.sendLine('â˜ž ê·¸ ë°©í–¥ìœ¼ë¡œëŠ” ê°ˆìˆ˜ê°€ ì—†ì–´ìš”!.')
             del ob.mapQ
             del ob.walkhis
             return
@@ -80,7 +78,7 @@ class CmdObj(Command):
 
         n = 0
         for exit in l:
-            if exit not in ['µ¿', '¼­', '³²', 'ºÏ', 'ºÏ¼­', 'ºÏµ¿', '³²¼­', '³²µ¿']:
+            if exit not in ['ë™', 'ì„œ', 'ë‚¨', 'ë¶', 'ë¶ì„œ', 'ë¶ë™', 'ë‚¨ì„œ', 'ë‚¨ë™']:
                 continue
             r = env.getExit(exit)
             if r == None:
@@ -119,7 +117,7 @@ class CmdObj(Command):
         dirs = {}
         for exit in l:
             ob.tempQ = {}
-            if exit not in ['µ¿', '¼­', '³²', 'ºÏ', 'ºÏ¼­', 'ºÏµ¿', '³²¼­', '³²µ¿']:
+            if exit not in ['ë™', 'ì„œ', 'ë‚¨', 'ë¶', 'ë¶ì„œ', 'ë¶ë™', 'ë‚¨ì„œ', 'ë‚¨ë™']:
                 continue
             r = env.getExit(exit)
             if r == None:
@@ -140,7 +138,7 @@ class CmdObj(Command):
             if len(l) == 0:
                 break
             exit = l.pop()
-            if exit not in ['µ¿', '¼­', '³²', 'ºÏ', 'ºÏ¼­', 'ºÏµ¿', '³²¼­', '³²µ¿']:
+            if exit not in ['ë™', 'ì„œ', 'ë‚¨', 'ë¶', 'ë¶ì„œ', 'ë¶ë™', 'ë‚¨ì„œ', 'ë‚¨ë™']:
                 continue
             r = env.getExit(exit)
             if r == None:
@@ -165,26 +163,26 @@ class CmdObj(Command):
         return True
 
     def reverseDir(self, direction):
-        if direction == 'µ¿':
-            return '¼­'
-        if direction == '¼­':
-            return 'µ¿'
-        if direction == '³²':
-            return 'ºÏ'
-        if direction == 'ºÏ':
-            return '³²'
-        if direction == 'ºÏ¼­':
-            return '³²µ¿'
-        if direction == '³²µ¿':
-            return 'ºÏ¼­'
-        if direction == 'ºÏµ¿':
-            return '³²¼­'
-        if direction == '³²¼­':
-            return 'ºÏµ¿'
-        if direction == 'À§':
-            return '¾Æ·¡'
-        if direction == '¾Æ·¡':
-            return 'À§'
+        if direction == 'ë™':
+            return 'ì„œ'
+        if direction == 'ì„œ':
+            return 'ë™'
+        if direction == 'ë‚¨':
+            return 'ë¶'
+        if direction == 'ë¶':
+            return 'ë‚¨'
+        if direction == 'ë¶ì„œ':
+            return 'ë‚¨ë™'
+        if direction == 'ë‚¨ë™':
+            return 'ë¶ì„œ'
+        if direction == 'ë¶ë™':
+            return 'ë‚¨ì„œ'
+        if direction == 'ë‚¨ì„œ':
+            return 'ë¶ë™'
+        if direction == 'ìœ„':
+            return 'ì•„ëž˜'
+        if direction == 'ì•„ëž˜':
+            return 'ìœ„'
         return ''
 
     def map(self, l):

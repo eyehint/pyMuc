@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         from objs.rank import Rank, RANK
         if line == '':
             RANK.attr = {}
             RANK.save()
-            ob.sendLine('* ÀüÃ¼°¡ ÃÊ±âÈ­ µÇ¾ú½À´Ï´Ù.')
+            ob.sendLine('* ì „ì²´ê°€ ì´ˆê¸°í™” ë˜ì—ˆìŠµë‹ˆë‹¤.')
             return
         
         if line not in RANK.attr:
-            ob.sendLine('¢Ñ ±×·± ¼øÀ§´Â ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ž ê·¸ëŸ° ìˆœìœ„ëŠ” ì—†ìŠµë‹ˆë‹¤.')
             return
         RANK.attr[line] = []
         RANK.save()
-        ob.sendLine('* ÃÊ±âÈ­ µÇ¾ú½À´Ï´Ù.')
+        ob.sendLine('* ì´ˆê¸°í™” ë˜ì—ˆìŠµë‹ˆë‹¤.')

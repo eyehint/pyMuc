@@ -1,43 +1,41 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['¼Ò¼Ó'] != '':
-            ob.sendLine('¢Ñ ¹æÆÄ¿¡ ÀÔ¹® ½ÅÃ»À» ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+        if ob['ì†Œì†'] != '':
+            ob.sendLine('â˜ ë°©íŒŒì— ì…ë¬¸ ì‹ ì²­ì„ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             return
             
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [¹æÁÖÀÌ¸§] ÀÔ¹®½ÅÃ»')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ë°©ì£¼ì´ë¦„] ì…ë¬¸ì‹ ì²­')
             return
 
         obj = ob.env.findObjName(line)
         if obj == None  or is_player(obj) == False:
-            ob.sendLine('¢Ñ ÀÌ°÷¿¡ ±×·± ¹«¸²ÀÎÀÌ ¾ø½À´Ï´Ù.')
+            ob.sendLine('â˜ ì´ê³³ì— ê·¸ëŸ° ë¬´ë¦¼ì¸ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
         if obj == ob:
-            ob.sendLine('¢Ñ ÀÚ±â ÀÚ½ÅÀÔ´Ï´Ù.')
+            ob.sendLine('â˜ ìê¸° ìì‹ ì…ë‹ˆë‹¤.')
             return
-        if obj['Á÷À§'] != '¹æÁÖ' and obj['Á÷À§'] != 'ºÎ¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if obj['ì§ìœ„'] != 'ë°©ì£¼' and obj['ì§ìœ„'] != 'ë¶€ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
-        if obj['¼º°İ'] == '±âÀÎ':
-            if ob['¼º°İ'] != '±âÀÎ' and ob['¼º°İ'] != '¼±ÀÎ' and ob['¼º°İ'] != obj['±âÁ¸¼º°İ']:
-                ob.sendLine('¢Ñ ¹æÆÄ¿¡ ÀÔ¹® ½ÅÃ»À» ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+        if obj['ì„±ê²©'] == 'ê¸°ì¸':
+            if ob['ì„±ê²©'] != 'ê¸°ì¸' and ob['ì„±ê²©'] != 'ì„ ì¸' and ob['ì„±ê²©'] != obj['ê¸°ì¡´ì„±ê²©']:
+                ob.sendLine('â˜ ë°©íŒŒì— ì…ë¬¸ ì‹ ì²­ì„ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
                 return
-        elif obj['¼º°İ'] == '¼±ÀÎ' and ob['¼º°İ'] == '':
-            ob.sendLine('¢Ñ ¹æÆÄ¿¡ ÀÔ¹® ½ÅÃ»À» ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+        elif obj['ì„±ê²©'] == 'ì„ ì¸' and ob['ì„±ê²©'] == '':
+            ob.sendLine('â˜ ë°©íŒŒì— ì…ë¬¸ ì‹ ì²­ì„ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             return
         else:
-             if ob['¼º°İ'] != '±âÀÎ' and ob['¼º°İ'] != '¼±ÀÎ' and obj['¼º°İ'] != ob['¼º°İ']:
-                ob.sendLine('¢Ñ ¹æÆÄ¿¡ ÀÔ¹® ½ÅÃ»À» ÇÒ ¼ö ¾ø½À´Ï´Ù.')
+             if ob['ì„±ê²©'] != 'ê¸°ì¸' and ob['ì„±ê²©'] != 'ì„ ì¸' and obj['ì„±ê²©'] != ob['ì„±ê²©']:
+                ob.sendLine('â˜ ë°©íŒŒì— ì…ë¬¸ ì‹ ì²­ì„ í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
                 return
-        if obj.checkAttr('ÀÔ¹®½ÅÃ»ÀÚ', ob['ÀÌ¸§']):
-            ob.sendLine('¢Ñ ÀÌ¹Ì ÀÔ¹® ½ÅÃ»À» ÇÏ¿´½À´Ï´Ù.')
+        if obj.checkAttr('ì…ë¬¸ì‹ ì²­ì', ob['ì´ë¦„']):
+            ob.sendLine('â˜ ì´ë¯¸ ì…ë¬¸ ì‹ ì²­ì„ í•˜ì˜€ìŠµë‹ˆë‹¤.')
             return
-        obj.setAttr('ÀÔ¹®½ÅÃ»ÀÚ', ob['ÀÌ¸§'])
-        ob.sendLine('´ç½ÅÀÌ %sÀÇ ¹æÆÄ¿¡ ÀÔ¹®À» ½ÅÃ»ÇÕ´Ï´Ù.' % obj.getNameA())
-        obj.sendLine('\r\n%s ´ç½ÅÀÇ ¹æÆÄ¿¡ ÀÔ¹®À» ½ÅÃ»ÇÕ´Ï´Ù.' % ob.han_iga())
+        obj.setAttr('ì…ë¬¸ì‹ ì²­ì', ob['ì´ë¦„'])
+        ob.sendLine('ë‹¹ì‹ ì´ %sì˜ ë°©íŒŒì— ì…ë¬¸ì„ ì‹ ì²­í•©ë‹ˆë‹¤.' % obj.getNameA())
+        obj.sendLine('\r\n%s ë‹¹ì‹ ì˜ ë°©íŒŒì— ì…ë¬¸ì„ ì‹ ì²­í•©ë‹ˆë‹¤.' % ob.han_iga())
         obj.lpPrompt()

@@ -1,22 +1,20 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['Á÷À§'] != '¹æÁÖ':
-            ob.sendLine('¢Ñ ¹æÆÄÀÇ ¹æÁÖ¸¸ÀÌ ÇÒ ¼ö ÀÖ½À´Ï´Ù.')
+        if ob['ì§ìœ„'] != 'ë°©ì£¼':
+            ob.sendLine('â˜ ë°©íŒŒì˜ ë°©ì£¼ë§Œì´ í•  ìˆ˜ ìˆìŠµë‹ˆë‹¤.')
             return
         words = line.split()
-        l = ['¹æÁÖ', 'ºÎ¹æÁÖ', 'Àå·Î', '¹æÆÄÀÎ']
+        l = ['ë°©ì£¼', 'ë¶€ë°©ì£¼', 'ì¥ë¡œ', 'ë°©íŒŒì¸']
         if line == '' or len(words) < 2 or words[0] not in l:
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [¹æÁÖ|ºÎ¹æÁÖ|Àå·Î|¹æÆÄÀÎ] [ÀÌ¸§] ¸íÄª¼³Á¤')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ë°©ì£¼|ë¶€ë°©ì£¼|ì¥ë¡œ|ë°©íŒŒì¸] [ì´ë¦„] ëª…ì¹­ì„¤ì •')
             return
 
-        GUILD[ob['¼Ò¼Ó']]['%s¸íÄª' % words[0]] = words[1]
+        GUILD[ob['ì†Œì†']]['%sëª…ì¹­' % words[0]] = words[1]
         GUILD.save()
-        print GUILD[ob['¼Ò¼Ó']]['%s¸íÄª' % words[0]]
-        msg = '%s %sÀÇ ¸íÄªÀ» [1m%s[0;37m%s º¯°æÇÏ¿© ¼±Æ÷ÇÕ´Ï´Ù.' % (ob.han_iga(), words[0], words[1], han_uro(words[1]))
+        print GUILD[ob['ì†Œì†']]['%sëª…ì¹­' % words[0]]
+        msg = '%s %sì˜ ëª…ì¹­ì„ [1m%s[0;37m%s ë³€ê²½í•˜ì—¬ ì„ í¬í•©ë‹ˆë‹¤.' % (ob.han_iga(), words[0], words[1], han_uro(words[1]))
         ob.sendGroup(msg, prompt = True)
         

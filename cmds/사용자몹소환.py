@@ -1,21 +1,19 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 1000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 1000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 1000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] »ç¿ëÀÚ¸÷¼ÒÈ¯')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ëŒ€ìƒ] ì‚¬ìš©ìžëª¹ì†Œí™˜')
             return
         ply = Player()
         if ply.load(line) == False:
-            ob.sendLine('Á¸ÀçÇÏÁö¾Ê´Â »ç¿ëÀÚÀÔ´Ï´Ù.')
+            ob.sendLine('ì¡´ìž¬í•˜ì§€ì•ŠëŠ” ì‚¬ìš©ìžìž…ë‹ˆë‹¤.')
             return
         ply.state = ACTIVE
         ob.env.insert(ply)
         ob.channel.players.append(ply)
-        ob.sendLine('%s ¼ÒÈ¯ÇÏ¿´½À´Ï´Ù.' % ply.han_obj())
+        ob.sendLine('%s ì†Œí™˜í•˜ì˜€ìŠµë‹ˆë‹¤.' % ply.han_obj())

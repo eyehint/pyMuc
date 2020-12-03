@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
@@ -7,11 +5,11 @@ class CmdObj(Command):
     def cmd(self, ob, line):
         if len(line) == 0:
             if len(ob.autoMoveList) == 0:
-                ob.sendLine('¢Ñ »ç¿ë¹ı: [ÁöÁ¤ÇÑÁÙÀÓ¸»] ÀÚµ¿°æ·Î')
+                ob.sendLine('â˜ ì‚¬ìš©ë²•: [ì§€ì •í•œì¤„ì„ë§] ìë™ê²½ë¡œ')
                 return
             else:
                 ob.autoMoveList = []
-                ob.sendLine('¢Ñ ÀÚµ¿°æ·Î°¡ »èÁ¦µÇ¾ú½À´Ï´Ù.')
+                ob.sendLine('â˜ ìë™ê²½ë¡œê°€ ì‚­ì œë˜ì—ˆìŠµë‹ˆë‹¤.')
                 return
 
             msg = '['
@@ -22,10 +20,10 @@ class CmdObj(Command):
             return
         
         if line not in ob.alias:
-            ob.sendLine('¢Ñ ÇØ´ç ÁÙÀÓ¸»ÀÌ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ í•´ë‹¹ ì¤„ì„ë§ì´ ì—†ì–´ìš”. ^^')
             return
         ob.autoMoveList = ob.alias[line].split(';') 
-        ob.sendLine('¢Ñ ÀÚµ¿°æ·Î¸¦ ¼³Á¤ÇÏ¿´¾î¿ä. ^^')
+        ob.sendLine('â˜ ìë™ê²½ë¡œë¥¼ ì„¤ì •í•˜ì˜€ì–´ìš”. ^^')
         next = ob.autoMoveList.pop(0)
         ob.do_command(next)
         

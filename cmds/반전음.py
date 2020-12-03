@@ -1,34 +1,32 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı: [³»¿ë] ¹İÀüÀ½(:)')
+            ob.sendLine('â˜ ì‚¬ìš©ë²•: [ë‚´ìš©] ë°˜ì „ìŒ(:)')
             return
         words = line.split()
         if ob._talker == None:
-            ob.sendLine('¢Ñ ÀüÀ½ÀÌ Àü´ŞµÉ¸¸ÇÑ »ó´ë°¡ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ì „ìŒì´ ì „ë‹¬ë ë§Œí•œ ìƒëŒ€ê°€ ì—†ì–´ìš”. ^^')
             return
         if ob._talker not in ob.channel.players:
             ob._talker = None
-            ob.sendLine('¢Ñ ÀüÀ½ÀÌ Àü´ŞµÉ¸¸ÇÑ »ó´ë°¡ ¾ø¾î¿ä. ^^')
+            ob.sendLine('â˜ ì „ìŒì´ ì „ë‹¬ë ë§Œí•œ ìƒëŒ€ê°€ ì—†ì–´ìš”. ^^')
             return
         ply = ob._talker
 
-        if ob.checkConfig('ÀüÀ½°ÅºÎ') or ply.checkConfig('ÀüÀ½°ÅºÎ'):
-            ob.sendLine('¢Ñ ÀüÀ½ °ÅºÎÁßÀÌ¿¡¿ä. ^^')
+        if ob.checkConfig('ì „ìŒê±°ë¶€') or ply.checkConfig('ì „ìŒê±°ë¶€'):
+            ob.sendLine('â˜ ì „ìŒ ê±°ë¶€ì¤‘ì´ì—ìš”. ^^')
             return
         if ob.env.noComm():
-            ob.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+            ob.sendLine('â˜ ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
             return
         msg = ''
         for i in range(0, len(words)):
             msg += words[i] + ' ' 
-        msg1 = '[[1m[36mÀüÀ½[0m[37m] %s¿¡°Ô º¸³¿ : %s' % (ply['ÀÌ¸§'], msg)
-        msg2 = '[[1m[36mÀüÀ½[0m[37m] %s : %s' % (ob['ÀÌ¸§'], msg)
+        msg1 = '[[1m[36mì „ìŒ[0m[37m] %sì—ê²Œ ë³´ëƒ„ : %s' % (ply['ì´ë¦„'], msg)
+        msg2 = '[[1m[36mì „ìŒ[0m[37m] %s : %s' % (ob['ì´ë¦„'], msg)
 
         ob.sendLine(msg1)
         ply._talker = ob

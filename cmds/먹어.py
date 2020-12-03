@@ -1,72 +1,70 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [¾ÆÀÌÅÛ ÀÌ¸§] ¸Ô¾î')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ì•„ì´í…œ ì´ë¦„] ë¨¹ì–´')
             return
         if ob.act == ACT_REST:
-            ob.sendLine('¢Ñ ¸ÔÀ» ¼ö ÀÖ´Â »óÈ²ÀÌ ¾Æ´Ï³×¿ä. ^_^')
+            ob.sendLine('â˜ž ë¨¹ì„ ìˆ˜ ìžˆëŠ” ìƒí™©ì´ ì•„ë‹ˆë„¤ìš”. ^_^')
             return
         name, order = getNameOrder(line)
         item = ob.findObjInven(name, order)
         if item == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ž ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
-        if item['Á¾·ù'] != '¸Ô´Â°Í':
-            ob.sendLine('¢Ñ ¸ÔÀ» ¼ö ÀÖ´Â°ÍÀÌ ¾Æ´Ï¿¡¿ä. ^_^')
+        if item['ì¢…ë¥˜'] != 'ë¨¹ëŠ”ê²ƒ':
+            ob.sendLine('â˜ž ë¨¹ì„ ìˆ˜ ìžˆëŠ”ê²ƒì´ ì•„ë‹ˆì—ìš”. ^_^')
             return
         
         maxHp = ob.getMaxHp()
         maxMp = ob.getMaxMp()
         
-        hp = getInt(item['Ã¼·Â'])
-        mp = getInt(item['³»°ø'])
-        if ob['Ã¼·Â'] + hp > maxHp:
-            ob['Ã¼·Â'] = maxHp
+        hp = getInt(item['ì²´ë ¥'])
+        mp = getInt(item['ë‚´ê³µ'])
+        if ob['ì²´ë ¥'] + hp > maxHp:
+            ob['ì²´ë ¥'] = maxHp
         else:
-            ob['Ã¼·Â'] += hp
-        if ob['³»°ø'] + mp > maxMp:
-            ob['³»°ø'] = maxMp
+            ob['ì²´ë ¥'] += hp
+        if ob['ë‚´ê³µ'] + mp > maxMp:
+            ob['ë‚´ê³µ'] = maxMp
         else:
-            ob['³»°ø'] += mp
+            ob['ë‚´ê³µ'] += mp
         
-        maxmp = getInt(item['³»°øÁõÁø'])
+        maxmp = getInt(item['ë‚´ê³µì¦ì§„'])
         if maxmp != 0:
-            if item.checkAttr('¾ÆÀÌÅÛ¼Ó¼º', '³»°ø°è¼ÓÁõÁø') == False:
-                if ob.checkAttr('³»°øÁõÁø¾ÆÀÌÅÛ¸®½ºÆ®', item['ÀÌ¸§']):
+            if item.checkAttr('ì•„ì´í…œì†ì„±', 'ë‚´ê³µê³„ì†ì¦ì§„') == False:
+                if ob.checkAttr('ë‚´ê³µì¦ì§„ì•„ì´í…œë¦¬ìŠ¤íŠ¸', item['ì´ë¦„']):
                     maxmp = 0
                 else:
-                    ob.setAttr('³»°øÁõÁø¾ÆÀÌÅÛ¸®½ºÆ®', item['ÀÌ¸§'])
-                    ob['ÃÖ°í³»°ø'] += maxmp
+                    ob.setAttr('ë‚´ê³µì¦ì§„ì•„ì´í…œë¦¬ìŠ¤íŠ¸', item['ì´ë¦„'])
+                    ob['ìµœê³ ë‚´ê³µ'] += maxmp
             else:
-                ob['ÃÖ°í³»°ø'] += maxmp
-        msg = item['»ç¿ë½ºÅ©¸³']
-        msg = msg.replace('$¾ÆÀÌÅÛ$', item.getNameA())
+                ob['ìµœê³ ë‚´ê³µ'] += maxmp
+        msg = item['ì‚¬ìš©ìŠ¤í¬ë¦½']
+        msg = msg.replace('$ì•„ì´í…œ$', item.getNameA())
         ob.remove(item)
         del item
-        ob.sendLine('´ç½ÅÀÌ %s' % msg)
+        ob.sendLine('ë‹¹ì‹ ì´ %s' % msg)
         
         roomMsg = '%s %s' % ( ob.han_iga(), msg)
         if maxmp > 0:
-            ob.sendLine('\r\n[1m´ç½ÅÀÇ ´ÜÀü¿¡ È¸¿À¸®°¡ ¸ô¾ÆÄ¡¸ç ¸öÁÖÀ§¿¡ ÇÏ¾á Áø±â°¡ ¸Éµ½´Ï´Ù.[0;37m ([1;36m+%d[0;37m)' % maxmp)
-            roomMsg += '\r\n\r\n[1m%sÀÇ ´ÜÀü¿¡ È¸¿À¸®°¡ ¸ô¾ÆÄ¡¸ç ¸öÁÖÀ§¿¡ ÇÏ¾á Áø±â°¡ ¸Éµ½´Ï´Ù.[0;37m ([1;36m+%d[0;37m)' % (ob.getNameA() ,maxmp)
+            ob.sendLine('\r\n[1më‹¹ì‹ ì˜ ë‹¨ì „ì— íšŒì˜¤ë¦¬ê°€ ëª°ì•„ì¹˜ë©° ëª¸ì£¼ìœ„ì— í•˜ì–€ ì§„ê¸°ê°€ ë§´ë•ë‹ˆë‹¤.[0;37m ([1;36m+%d[0;37m)' % maxmp)
+            roomMsg += '\r\n\r\n[1m%sì˜ ë‹¨ì „ì— íšŒì˜¤ë¦¬ê°€ ëª°ì•„ì¹˜ë©° ëª¸ì£¼ìœ„ì— í•˜ì–€ ì§„ê¸°ê°€ ë§´ë•ë‹ˆë‹¤.[0;37m ([1;36m+%d[0;37m)' % (ob.getNameA() ,maxmp)
         elif maxmp < 0:
-            ob.sendLine('\r\n[1m´ç½ÅÀÇ ´ÜÀü¿¡ ½ÉÇÑ ¿äµ¿ÀÌ ÀÏ¾î³ª¸ç °íÅëÀÌ ¸ô·Á¿À±â ½ÃÀÛÇÕ´Ï´Ù.[0;37m ([1;31m%d[0;37m)' % maxmp)
-            roomMsg += '\r\n\r\n[1m%sÀÇ ´ÜÀü¿¡ ½ÉÇÑ ¿äµ¿ÀÌ ÀÏ¾î³ª¸ç °íÅëÀÌ ¸ô·Á¿À±â ½ÃÀÛÇÕ´Ï´Ù.[0;37m ([1;31m%d[0;37m)' % (ob.getNameA() ,maxmp)
+            ob.sendLine('\r\n[1më‹¹ì‹ ì˜ ë‹¨ì „ì— ì‹¬í•œ ìš”ë™ì´ ì¼ì–´ë‚˜ë©° ê³ í†µì´ ëª°ë ¤ì˜¤ê¸° ì‹œìž‘í•©ë‹ˆë‹¤.[0;37m ([1;31m%d[0;37m)' % maxmp)
+            roomMsg += '\r\n\r\n[1m%sì˜ ë‹¨ì „ì— ì‹¬í•œ ìš”ë™ì´ ì¼ì–´ë‚˜ë©° ê³ í†µì´ ëª°ë ¤ì˜¤ê¸° ì‹œìž‘í•©ë‹ˆë‹¤.[0;37m ([1;31m%d[0;37m)' % (ob.getNameA() ,maxmp)
         ob.sendFightScriptRoom(roomMsg)
 
-        if '¿¬¼Óº¹¿ë' not in ob.alias:
+        if 'ì—°ì†ë³µìš©' not in ob.alias:
             return
-        if ob.alias['¿¬¼Óº¹¿ë'] != 'ÄÑ±â':
+        if ob.alias['ì—°ì†ë³µìš©'] != 'ì¼œê¸°':
             return
         if hp == 0:
             return
-        if 'Ã¼·Â' not in ob.alias or 'Ã¼·Â¾à' not in ob.alias:
+        if 'ì²´ë ¥' not in ob.alias or 'ì²´ë ¥ì•½' not in ob.alias:
             return
-        if ob.getHp() < getInt(ob.alias['Ã¼·Â']):
+        if ob.getHp() < getInt(ob.alias['ì²´ë ¥']):
             #print ob.getHp()
-            ob.do_command('%s ¸Ô¾î' % line)
+            ob.do_command('%s ë¨¹ì–´' % line)

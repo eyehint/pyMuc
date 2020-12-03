@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 import os
 import sys
 import glob
@@ -65,11 +63,11 @@ class Player(Body):
     chatHistory = []
     adultCH = []
 
-    CFG = ['ÀÚµ¿½Àµæ', 'ºñ±³°ÅºÎ', 'Á¢ÃË°ÅºÎ', 'µ¿Çà°ÅºÎ', 'ÀüÀ½°ÅºÎ', 
-    '¿ÜÄ§°ÅºÎ', '¹æÆÄ¸»°ÅºÎ', '°£·«¼³¸í', '¿¤ÇÇÃâ·Â', '³ªÄ§¹İÁ¦°Å',
-    '¿î¿µÀÚ¾È½Ã°ÅºÎ', '»ç¿ëÀÚ¾È½Ã°ÅºÎ', 'ÀÔÃâÀÔ¸Ş¼¼Áö°ÅºÎ', 
-    'Å¸ÀÎÀüÅõÃâ·Â°ÅºÎ', 'ÀÚµ¿¹«°ø½ÃÀü', '¼øÀ§°ÅºÎ', '¼ö·Ã¸ğµå', 'Àâ´ã½Ã°£º¸±â',
-    'ÀÚµ¿Ã¤³ÎÀÔÀå']
+    CFG = ['ìë™ìŠµë“', 'ë¹„êµê±°ë¶€', 'ì ‘ì´‰ê±°ë¶€', 'ë™í–‰ê±°ë¶€', 'ì „ìŒê±°ë¶€', 
+    'ì™¸ì¹¨ê±°ë¶€', 'ë°©íŒŒë§ê±°ë¶€', 'ê°„ëµì„¤ëª…', 'ì—˜í”¼ì¶œë ¥', 'ë‚˜ì¹¨ë°˜ì œê±°',
+    'ìš´ì˜ìì•ˆì‹œê±°ë¶€', 'ì‚¬ìš©ìì•ˆì‹œê±°ë¶€', 'ì…ì¶œì…ë©”ì„¸ì§€ê±°ë¶€', 
+    'íƒ€ì¸ì „íˆ¬ì¶œë ¥ê±°ë¶€', 'ìë™ë¬´ê³µì‹œì „', 'ìˆœìœ„ê±°ë¶€', 'ìˆ˜ë ¨ëª¨ë“œ', 'ì¡ë‹´ì‹œê°„ë³´ê¸°',
+    'ìë™ì±„ë„ì…ì¥']
 	
     def __init__(self):
         Body.__init__(self)
@@ -104,10 +102,10 @@ class Player(Body):
 
     def __del__(self):
         pass
-        #print 'Delete!!! ' + self.get('ÀÌ¸§')
+        #print 'Delete!!! ' + self.get('ì´ë¦„')
 
     def getNameA(self):
-        return '[1m' + self.get('ÀÌ¸§') + '[0;37m'
+        return '[1m' + self.get('ì´ë¦„') + '[0;37m'
 
     def clearItems(self):
         objs = copy.copy(self.objs)
@@ -125,7 +123,7 @@ class Player(Body):
 
         if self in self.adultCH:
             self.adultCH.remove(self)
-	    buf = '\r\n[1;31m¨ç¨ï[0;37m ' + self.getNameA() + '´ÔÀÌ ÅğÀåÇÏ¼Ì½À´Ï´Ù.'
+	    buf = '\r\n[1;31mâ‘ â‘¨[0;37m ' + self.getNameA() + 'ë‹˜ì´ í‡´ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.'
             for ply in self.adultCH:
                 ply.sendLine(buf)
                 ply.lpPrompt()
@@ -135,27 +133,27 @@ class Player(Body):
         self._talker = None
 
         self.clearItems()
-        if self['Åõ¸í»óÅÂ'] == 1:
+        if self['íˆ¬ëª…ìƒíƒœ'] == 1:
             return
 
         buf = ''
-        nick = self['¹«¸²º°È£']
+        nick = self['ë¬´ë¦¼ë³„í˜¸']
         if nick == '':
-            nick = '¹«¸í°´'
-        char = self['¼º°İ']
-        if char == '¼±ÀÎ':
-            buf = '¢Ñ [[1m¼±ÀÎ[0;37m] ¡º[1m%s[0;37m¡»' % nick
-        elif char == '±âÀÎ':
-            buf = '¢Ñ [[1;33m±âÀÎÀÌ»ç[0;37m] ¡º[1;33m%s[0;37m¡»' % nick
-        elif char == 'Á¤ÆÄ':
-            buf = '¢Ñ [[1;32mÁ¤ÆÄ[0;37m] ¡º[1;32m%s[0;37m¡»' % nick
-        elif char == '»çÆÄ':
-            buf = '¢Ñ [[1;31m»çÆÄ[0;37m] ¡º[1;31m%s[0;37m¡»' % nick
-        elif char == 'ÀºµĞÄ¨°Å':
-            buf = '¢Ñ [[1;35mÀºµĞÄ¨°Å[0;37m] ¡º[0;37m%s[0;37m¡»' % nick
+            nick = 'ë¬´ëª…ê°'
+        char = self['ì„±ê²©']
+        if char == 'ì„ ì¸':
+            buf = 'â˜ [[1mì„ ì¸[0;37m] ã€[1m%s[0;37mã€' % nick
+        elif char == 'ê¸°ì¸':
+            buf = 'â˜ [[1;33mê¸°ì¸ì´ì‚¬[0;37m] ã€[1;33m%s[0;37mã€' % nick
+        elif char == 'ì •íŒŒ':
+            buf = 'â˜ [[1;32mì •íŒŒ[0;37m] ã€[1;32m%s[0;37mã€' % nick
+        elif char == 'ì‚¬íŒŒ':
+            buf = 'â˜ [[1;31mì‚¬íŒŒ[0;37m] ã€[1;31m%s[0;37mã€' % nick
+        elif char == 'ì€ë‘”ì¹©ê±°':
+            buf = 'â˜ [[1;35mì€ë‘”ì¹©ê±°[0;37m] ã€[0;37m%s[0;37mã€' % nick
         else:
-            buf = '¢Ñ [[0;30;47m¹«¸í°´[0;37;40m] '
-        msg = '%s %s °­È£¸¦ ¶°³ª ÃÊ¿Á¿¡ Àº°Å ÇÕ´Ï´Ù.' % (buf, self.han_iga())
+            buf = 'â˜ [[0;30;47më¬´ëª…ê°[0;37;40m] '
+        msg = '%s %s ê°•í˜¸ë¥¼ ë– ë‚˜ ì´ˆì˜¥ì— ì€ê±° í•©ë‹ˆë‹¤.' % (buf, self.han_iga())
         self.channel.sendToAllInOut(msg, ex = self)
 
     def load(self, path):
@@ -166,7 +164,7 @@ class Player(Body):
             return False
 
         try:
-            self.attr = scr['»ç¿ëÀÚ¿ÀºêÁ§Æ®']
+            self.attr = scr['ì‚¬ìš©ìì˜¤ë¸Œì íŠ¸']
         except:
             return False
         
@@ -176,127 +174,127 @@ class Player(Body):
         self.loadSkillUp()
         
         items = None
-        if '¾ÆÀÌÅÛ' not in scr:
+        if 'ì•„ì´í…œ' not in scr:
             return True
 
-        items = scr['¾ÆÀÌÅÛ']
+        items = scr['ì•„ì´í…œ']
         
         if type(items) == dict:
             items = [items]
         
         for item in items:
-            obj = getItem(str(item['ÀÎµ¦½º']))
+            obj = getItem(str(item['ì¸ë±ìŠ¤']))
             if obj == None:
-                print '»ç¿ëÀÚ¾ÆÀÌÅÛ ·Îµù ½ÇÆĞ : %s' % str(item['ÀÎµ¦½º'])
+                print 'ì‚¬ìš©ìì•„ì´í…œ ë¡œë”© ì‹¤íŒ¨ : %s' % str(item['ì¸ë±ìŠ¤'])
             if obj != None:
                 obj = obj.deepclone()
-                if 'ÀÌ¸§' in item:
-                    obj['ÀÌ¸§'] = item['ÀÌ¸§']
-                if '¹İÀÀÀÌ¸§' in item:
-                    obj['¹İÀÀÀÌ¸§'] = item['¹İÀÀÀÌ¸§']
-                if '°ø°İ·Â' in item:
-                    obj['°ø°İ·Â'] = item['°ø°İ·Â']
-                if '¹æ¾î·Â' in item:
-                    obj['¹æ¾î·Â'] = item['¹æ¾î·Â']
-                if '±â·®' in item:
-                    obj['±â·®'] = item['±â·®']
-                if '»óÅÂ' in item:
+                if 'ì´ë¦„' in item:
+                    obj['ì´ë¦„'] = item['ì´ë¦„']
+                if 'ë°˜ì‘ì´ë¦„' in item:
+                    obj['ë°˜ì‘ì´ë¦„'] = item['ë°˜ì‘ì´ë¦„']
+                if 'ê³µê²©ë ¥' in item:
+                    obj['ê³µê²©ë ¥'] = item['ê³µê²©ë ¥']
+                if 'ë°©ì–´ë ¥' in item:
+                    obj['ë°©ì–´ë ¥'] = item['ë°©ì–´ë ¥']
+                if 'ê¸°ëŸ‰' in item:
+                    obj['ê¸°ëŸ‰'] = item['ê¸°ëŸ‰']
+                if 'ìƒíƒœ' in item:
                     obj.inUse = True
-                    self.armor += getInt(obj['¹æ¾î·Â'])
-                    self.attpower += getInt(obj['°ø°İ·Â'])
-                    if obj['Á¾·ù'] == '¹«±â':
+                    self.armor += getInt(obj['ë°©ì–´ë ¥'])
+                    self.attpower += getInt(obj['ê³µê²©ë ¥'])
+                    if obj['ì¢…ë¥˜'] == 'ë¬´ê¸°':
                         self.weaponItem = obj
-                if '¾ÆÀÌÅÛ¼Ó¼º' in item:
-                    obj.set('¾ÆÀÌÅÛ¼Ó¼º', item['¾ÆÀÌÅÛ¼Ó¼º'])
-                if '¿É¼Ç' in item:
-                    obj.set('¿É¼Ç', item['¿É¼Ç'])
+                if 'ì•„ì´í…œì†ì„±' in item:
+                    obj.set('ì•„ì´í…œì†ì„±', item['ì•„ì´í…œì†ì„±'])
+                if 'ì˜µì…˜' in item:
+                    obj.set('ì˜µì…˜', item['ì˜µì…˜'])
                     if obj.inUse:
                         option = obj.getOption()
                         if option != None:
                             for op in option:
-                                if op == 'Èû':
+                                if op == 'í˜':
                                     self._str += option[op]
-                                elif op == '¹ÎÃ¸¼º':
+                                elif op == 'ë¯¼ì²©ì„±':
                                     self._dex += option[op]
-                                elif op == '¸ËÁı':
+                                elif op == 'ë§·ì§‘':
                                     self._arm += option[op]
-                                elif op == 'Ã¼·Â':
+                                elif op == 'ì²´ë ¥':
                                     self._maxhp += option[op]
-                                elif op == '³»°ø':
+                                elif op == 'ë‚´ê³µ':
                                     self._maxmp += option[op]
-                                elif op == 'ÇÊ»ì':
+                                elif op == 'í•„ì‚´':
                                     self._critical += option[op]
-                                elif op == '¿î':
+                                elif op == 'ìš´':
                                      self._criticalChance += option[op]
-                                elif op == 'È¸ÇÇ':
+                                elif op == 'íšŒí”¼':
                                     self._miss += option[op]
-                                elif op == '¸íÁß':
+                                elif op == 'ëª…ì¤‘':
                                     self._hit += option[op]
-                                elif op == '°æÇèÄ¡':
+                                elif op == 'ê²½í—˜ì¹˜':
                                     self._exp += option[op]
-                                elif op == '¸¶¹ı¹ß°ß':
+                                elif op == 'ë§ˆë²•ë°œê²¬':
                                     self._magicChance += option[op]
 
-                if 'È®Àå ÀÌ¸§' in item:
-                    obj.set('È®Àå ÀÌ¸§', item['È®Àå ÀÌ¸§'])
-                if 'Ã¼·Â' in item:
-                    obj.hp = item['Ã¼·Â']
-                #if '½Ã°£' in item:
-                #    obj.set('½Ã°£', item['½Ã°£'])
+                if 'í™•ì¥ ì´ë¦„' in item:
+                    obj.set('í™•ì¥ ì´ë¦„', item['í™•ì¥ ì´ë¦„'])
+                if 'ì²´ë ¥' in item:
+                    obj.hp = item['ì²´ë ¥']
+                #if 'ì‹œê°„' in item:
+                #    obj.set('ì‹œê°„', item['ì‹œê°„'])
                 self.insert(obj)
             
         for memo in scr:
-            if memo.find('¸Ş¸ğ') == 0:
+            if memo.find('ë©”ëª¨') == 0:
                 self.memo[memo] = scr[memo]
         
         return True
         
     def save(self, mode = True):
         if mode == True:
-            self['¸¶Áö¸·ÀúÀå½Ã°£'] = int(time.time())
+            self['ë§ˆì§€ë§‰ì €ì¥ì‹œê°„'] = int(time.time())
         self.buildSkillList()
         self.buildSkillUp()
         self.buildSkills()
         
         o = {}
-        o['»ç¿ëÀÚ¿ÀºêÁ§Æ®'] = self.attr
+        o['ì‚¬ìš©ìì˜¤ë¸Œì íŠ¸'] = self.attr
 
         items = []
         for item in self.objs:
             obj = {}
-            obj['ÀÎµ¦½º'] = item.index
-            obj['ÀÌ¸§'] = item.get('ÀÌ¸§')
-            obj['¹İÀÀÀÌ¸§'] = item['¹İÀÀÀÌ¸§'].splitlines()
-            if item.get('°ø°İ·Â') != '':
-                obj['°ø°İ·Â'] = item.get('°ø°İ·Â')
-            if item.get('¹æ¾î·Â') != '':
-                obj['¹æ¾î·Â'] = item.get('¹æ¾î·Â')
-            if item.get('±â·®') != '':
-                obj['±â·®'] = item.get('±â·®')
+            obj['ì¸ë±ìŠ¤'] = item.index
+            obj['ì´ë¦„'] = item.get('ì´ë¦„')
+            obj['ë°˜ì‘ì´ë¦„'] = item['ë°˜ì‘ì´ë¦„'].splitlines()
+            if item.get('ê³µê²©ë ¥') != '':
+                obj['ê³µê²©ë ¥'] = item.get('ê³µê²©ë ¥')
+            if item.get('ë°©ì–´ë ¥') != '':
+                obj['ë°©ì–´ë ¥'] = item.get('ë°©ì–´ë ¥')
+            if item.get('ê¸°ëŸ‰') != '':
+                obj['ê¸°ëŸ‰'] = item.get('ê¸°ëŸ‰')
             if item.inUse:
-                obj['»óÅÂ'] = item.get('°èÃş')
-            if item.get('¿É¼Ç') != '':
-                obj['¿É¼Ç'] = item.get('¿É¼Ç').splitlines()
-            if item.get('¾ÆÀÌÅÛ¼Ó¼º') != '':
-                obj['¾ÆÀÌÅÛ¼Ó¼º'] = item.get('¾ÆÀÌÅÛ¼Ó¼º').splitlines()
-            if item.get('È®Àå ÀÌ¸§') != '':
-                obj['È®Àå ÀÌ¸§'] = item.get('È®Àå ÀÌ¸§')
+                obj['ìƒíƒœ'] = item.get('ê³„ì¸µ')
+            if item.get('ì˜µì…˜') != '':
+                obj['ì˜µì…˜'] = item.get('ì˜µì…˜').splitlines()
+            if item.get('ì•„ì´í…œì†ì„±') != '':
+                obj['ì•„ì´í…œì†ì„±'] = item.get('ì•„ì´í…œì†ì„±').splitlines()
+            if item.get('í™•ì¥ ì´ë¦„') != '':
+                obj['í™•ì¥ ì´ë¦„'] = item.get('í™•ì¥ ì´ë¦„')
             if item.isOneItem():
-                obj['½Ã°£'] = time.time()
-            if item['Á¾·ù'] == 'È£À§':
+                obj['ì‹œê°„'] = time.time()
+            if item['ì¢…ë¥˜'] == 'í˜¸ìœ„':
                 try:
-                    obj['Ã¼·Â'] = item.hp
+                    obj['ì²´ë ¥'] = item.hp
                 except:
-                    obj['Ã¼·Â'] = item['Ã¼·Â']
+                    obj['ì²´ë ¥'] = item['ì²´ë ¥']
             items.append(obj)
 
-        o['¾ÆÀÌÅÛ'] = items
+        o['ì•„ì´í…œ'] = items
 
         for memo in self.memo:
             o[memo] = self.memo[memo]
             
         try:
-            f = open('data/user/' + self.get('ÀÌ¸§'), 'w')
+            f = open('data/user/' + self.get('ì´ë¦„'), 'w')
         except:
             return False
         save_script(f, o)
@@ -318,23 +316,23 @@ class Player(Body):
         self.channel.transport.write('%s\r\n' % line)
     
     def sendGroup(self, line, prompt = False, ex = None):
-        if self['¼Ò¼Ó'] == '':
+        if self['ì†Œì†'] == '':
             return
-        g = GUILD[self['¼Ò¼Ó']]
-        if '%s¸íÄª' % self['Á÷À§'] in g:
-            buf = g['%s¸íÄª' % self['Á÷À§']]
+        g = GUILD[self['ì†Œì†']]
+        if '%sëª…ì¹­' % self['ì§ìœ„'] in g:
+            buf = g['%sëª…ì¹­' % self['ì§ìœ„']]
         else:
-            buf = self['Á÷À§']
+            buf = self['ì§ìœ„']
         for ply in self.channel.players:
-            if ply.state == ACTIVE and ply['¼Ò¼Ó'] == self['¼Ò¼Ó'] and ply != ex and ply.checkConfig('¹æÆÄ¸»°ÅºÎ') == False:
+            if ply.state == ACTIVE and ply['ì†Œì†'] == self['ì†Œì†'] and ply != ex and ply.checkConfig('ë°©íŒŒë§ê±°ë¶€') == False:
                 if ply != self:
                     ply.sendLine('')
-                ply.sendLine('[1m¡¶[36m%s[37m¢°[36m%s[37m¡·[0;37m ' % ( buf, self['ÀÌ¸§'])+ line)
+                ply.sendLine('[1mã€Š[36m%s[37mË[36m%s[37mã€‹[0;37m ' % ( buf, self['ì´ë¦„'])+ line)
                 if prompt and ply != self:
                     ply.lpPrompt()
                 
     def sendFightScript(self, line):
-        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
             self.channel.transport.write('%s\r\n' % line)
 
     def fightPrompt(self):
@@ -351,51 +349,51 @@ class Player(Body):
         self.process_input_args = args
 
     def view(self, ob):
-            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
-            m = self.get('¹«¸²º°È£')
+            ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
+            m = self.get('ë¬´ë¦¼ë³„í˜¸')
             if m == '':
-                m = '¹«¸í°´'
-            c = self.get('¼º°İ')
+                m = 'ë¬´ëª…ê°'
+            c = self.get('ì„±ê²©')
             if c == '':
-                c = '¾øÀ½'
-            s = '¡º%s¡» %s' % (m, self.get('ÀÌ¸§'))
-            ob.sendLine('[0m[44m[1m[37m¡ß ÀÌ  ¸§ ¢¹ %-24s ¡ß ¼º°İ ¢¹ ¡º%s¡»   [0m[37m[40m' % (s, c))
-            m = self.get('¹è¿ìÀÚ')
+                c = 'ì—†ìŒ'
+            s = 'ã€%sã€ %s' % (m, self.get('ì´ë¦„'))
+            ob.sendLine('[0m[44m[1m[37mâ—† ì´  ë¦„ â–· %-24s â—† ì„±ê²© â–· ã€%sã€   [0m[37m[40m' % (s, c))
+            m = self.get('ë°°ìš°ì')
             if m == '':
-                m = '¹ÌÈ¥'
-            s = '¡º%s¡»' % m
-            s1 = '%d»ì(%s)' %(self.get('³ªÀÌ'), self.get('¼ºº°'))
-            ob.sendLine('[0m[44m[1m[37m¡ß ¹è¿ìÀÚ ¢¹ %-24s ¡ß ³ªÀÌ ¢¹ %-9s  [0m[37m[40m' % (s, s1))
-            m = self['¼Ò¼Ó']
+                m = 'ë¯¸í˜¼'
+            s = 'ã€%sã€' % m
+            s1 = '%dì‚´(%s)' %(self.get('ë‚˜ì´'), self.get('ì„±ë³„'))
+            ob.sendLine('[0m[44m[1m[37mâ—† ë°°ìš°ì â–· %-24s â—† ë‚˜ì´ â–· %-9s  [0m[37m[40m' % (s, s1))
+            m = self['ì†Œì†']
             if m != '':
-                s = '¡á ¼Ò  ¼Ó ¢¹ ¡º%s¡»' % m
+                s = 'â–  ì†Œ  ì† â–· ã€%sã€' % m
                 ob.sendLine('[0m[44m[1m[37m%-60s[0m[37m[40m' % s)
-                g = GUILD[self['¼Ò¼Ó']]
-                if '%s¸íÄª' % self['Á÷À§'] in g:
-                    buf = g['%s¸íÄª' % self['Á÷À§']]
+                g = GUILD[self['ì†Œì†']]
+                if '%sëª…ì¹­' % self['ì§ìœ„'] in g:
+                    buf = g['%sëª…ì¹­' % self['ì§ìœ„']]
                 else:
-                    buf = self['Á÷À§']
-                r = self['¹æÆÄº°È£']
+                    buf = self['ì§ìœ„']
+                r = self['ë°©íŒŒë³„í˜¸']
                 if r == '':
-                    s = '¡á Á÷  À§ ¢¹ ¡º%s¡»' % buf
+                    s = 'â–  ì§  ìœ„ â–· ã€%sã€' % buf
                 else:
-                    s = '¡á Á÷  À§ ¢¹ ¡º%s(%s)¡»' % (buf, r)
+                    s = 'â–  ì§  ìœ„ â–· ã€%s(%s)ã€' % (buf, r)
                 ob.sendLine('[0m[44m[1m[37m%-60s[0m[37m[40m' % s)
 
-            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
+            ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
             c = 0
             item_str = ''
             for lv in ob.ItemLevelList:
                 for item in self.objs:
-                    if item.inUse and lv == item['°èÃş']:
+                    if item.inUse and lv == item['ê³„ì¸µ']:
                         c += 1
-                        item_str += '[' + ob.ItemUseLevel[item.get('°èÃş')] + '] [36m' + item.get('ÀÌ¸§') + '[37m\r\n'
+                        item_str += '[' + ob.ItemUseLevel[item.get('ê³„ì¸µ')] + '] [36m' + item.get('ì´ë¦„') + '[37m\r\n'
             ob.write(item_str)
             if c == 0:
-                ob.sendLine('[36m¢Ñ Ç÷Ç÷´Ü½Å ¸Ç¸öÀ¸·Î °­È£¸¦ ÁÖÀ¯ÁßÀÔ´Ï´Ù.[37m')
-            ob.sendLine('¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡¦¡')
-            ob.sendLine('¡Ú %s' % self.GetHPString())
-            ob.sendLine('¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬¦¬')
+                ob.sendLine('[36mâ˜ í˜ˆí˜ˆë‹¨ì‹  ë§¨ëª¸ìœ¼ë¡œ ê°•í˜¸ë¥¼ ì£¼ìœ ì¤‘ì…ë‹ˆë‹¤.[37m')
+            ob.sendLine('â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€â”€')
+            ob.sendLine('â˜… %s' % self.GetHPString())
+            ob.sendLine('â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”â”')
             
     def viewMapData(self):
         room = self.env
@@ -404,23 +402,23 @@ class Player(Body):
 
         # room Name
         
-        msg = '\r\n[1;30m[[0;37m[[[1;37m[][1m %s [1;37m[][0;37m]][1;30m][0;37m' % room.get('ÀÌ¸§')
-        if getInt(self['°ü¸®ÀÚµî±Ş']) >= 1000:
+        msg = '\r\n[1;30m[[0;37m[[[1;37m[][1m %s [1;37m[][0;37m]][1;30m][0;37m' % room.get('ì´ë¦„')
+        if getInt(self['ê´€ë¦¬ìë“±ê¸‰']) >= 1000:
             msg += ' (%s)' % (room.index)
         self.sendLine(msg)
         # room Desc
-        if not self.checkConfig('°£·«¼³¸í'):
+        if not self.checkConfig('ê°„ëµì„¤ëª…'):
             self.sendLine ( '' )
-            self.sendLine (room.get('¼³¸í'))
+            self.sendLine (room.get('ì„¤ëª…'))
 
-        # room Exit ¢Õ¡è¡é
-        if not self.checkConfig('³ªÄ§¹İÁ¦°Å'):
+        # room Exit â†•â†‘â†“
+        if not self.checkConfig('ë‚˜ì¹¨ë°˜ì œê±°'):
             self.sendLine(room.longExitStr)
         else:
             self.sendLine(room.shortExitStr)
             self.sendLine ( '' )
 
-        msg = '¢Ñ '
+        msg = 'â˜ '
         for obj in room.objs:
             if is_box(obj):
                 msg += obj.viewShort() + '    '
@@ -429,72 +427,72 @@ class Player(Body):
 
         for obj in room.objs:
             if is_mob(obj):
-                if obj.get('¸÷Á¾·ù') == 7:
+                if obj.get('ëª¹ì¢…ë¥˜') == 7:
                     continue
                 if obj.act == ACT_REGEN:
                     continue
                 elif obj.act == ACT_REST:
-                    self.sendLine(obj.han_iga() + ' ÈåÆ®·¯Áø Áø±â¸¦ Ãß½º¸®°í ÀÖ½À´Ï´Ù.')
+                    self.sendLine(obj.han_iga() + ' ííŠ¸ëŸ¬ì§„ ì§„ê¸°ë¥¼ ì¶”ìŠ¤ë¦¬ê³  ìˆìŠµë‹ˆë‹¤.')
                 if obj.act == ACT_STAND:
                     self.sendLine(obj.getDesc1())
                 elif obj.act == ACT_FIGHT:
 
                     msg = ''
                     for s in obj.skills:
-                        msg += s['¹æ¾î»óÅÂ¸Ó¸®¸»'] + ' '
-                    self.sendLine('%s%s ¸ñ¼ûÀ» °Ç »çÅõ¸¦ ¹úÀÌ°í ÀÖ½À´Ï´Ù.' % (msg, obj.han_iga()))
+                        msg += s['ë°©ì–´ìƒíƒœë¨¸ë¦¬ë§'] + ' '
+                    self.sendLine('%s%s ëª©ìˆ¨ì„ ê±´ ì‚¬íˆ¬ë¥¼ ë²Œì´ê³  ìˆìŠµë‹ˆë‹¤.' % (msg, obj.han_iga()))
                 elif obj.act == ACT_DEATH:
-                    self.sendLine(obj.getNameA() + 'ÀÇ ½Î´ÃÇÑ ½ÃÃ¼°¡ ÀÖ½À´Ï´Ù.')
+                    self.sendLine(obj.getNameA() + 'ì˜ ì‹¸ëŠ˜í•œ ì‹œì²´ê°€ ìˆìŠµë‹ˆë‹¤.')
         nStr = {} # { [], [], ... }
         for obj in room.objs:
             if is_item(obj):
                 c = 0
                 try:
-                    l = nStr[obj.get('ÀÌ¸§')]
+                    l = nStr[obj.get('ì´ë¦„')]
                 except:
-                    l = [0, obj.get('¼³¸í1')]
-                    nStr[obj.get('ÀÌ¸§')] = l
+                    l = [0, obj.get('ì„¤ëª…1')]
+                    nStr[obj.get('ì´ë¦„')] = l
                 l[0] = l[0] + 1
 
         for iName in nStr:
             l = nStr[iName]
             if l[0] == 1:
-                self.sendLine( l[1].replace('$¾ÆÀÌÅÛ$', '[36m' + iName + '[37m') )
+                self.sendLine( l[1].replace('$ì•„ì´í…œ$', '[36m' + iName + '[37m') )
             else:
-                self.sendLine( l[1].replace('$¾ÆÀÌÅÛ$', '[36m' + iName + '[37m %d°³' % l[0]) )
+                self.sendLine( l[1].replace('$ì•„ì´í…œ$', '[36m' + iName + '[37m %dê°œ' % l[0]) )
 
         for obj in room.objs:
             if is_player(obj) and obj != self:
-                if obj['Åõ¸í»óÅÂ'] == 1:
+                if obj['íˆ¬ëª…ìƒíƒœ'] == 1:
                     continue
                 self.sendLine(obj.getDesc())
 
     def getDesc(self, myself = False):
         msg = ''
         if myself == False:
-            s = self['¹æÆÄº°È£']
+            s = self['ë°©íŒŒë³„í˜¸']
             if s != '':
-                msg = '[1m¡¼%s¡½[0m' % s
+                msg = '[1mã€%sã€‘[0m' % s
             for s in self.skills:
-                msg += s['¹æ¾î»óÅÂ¸Ó¸®¸»'] + ' '
-        if self['¸Ó¸®¸»'] != '':
-            msg += str(self['¸Ó¸®¸»']) + ' '
+                msg += s['ë°©ì–´ìƒíƒœë¨¸ë¦¬ë§'] + ' '
+        if self['ë¨¸ë¦¬ë§'] != '':
+            msg += str(self['ë¨¸ë¦¬ë§']) + ' '
         if myself == True:
-            msg += '´ç½ÅÀÌ '
+            msg += 'ë‹¹ì‹ ì´ '
         else:
             msg += self.han_iga() + ' '
-        if self['²¿¸®¸»'] != '':
-            msg += str(self['²¿¸®¸»']) + ' '
+        if self['ê¼¬ë¦¬ë§'] != '':
+            msg += str(self['ê¼¬ë¦¬ë§']) + ' '
             
-        # act ¿¡ µû¶ó ¼³¸íÀ» ´Ş¸®ÇØ¾ßÇÔ
+        # act ì— ë”°ë¼ ì„¤ëª…ì„ ë‹¬ë¦¬í•´ì•¼í•¨
         if self.act == ACT_STAND:
-            msg += '¼­ ÀÖ½À´Ï´Ù.'
+            msg += 'ì„œ ìˆìŠµë‹ˆë‹¤.'
         elif self.act == ACT_REST:
-            msg += '¿î±âÁ¶½ÄÀ» ÇÏ°í ÀÖ½À´Ï´Ù.'
+            msg += 'ìš´ê¸°ì¡°ì‹ì„ í•˜ê³  ìˆìŠµë‹ˆë‹¤.'
         elif self.act == ACT_FIGHT:
-            msg += '¸ñ¼ûÀ» °Ç »çÅõ¸¦ ¹úÀÌ°í ÀÖ½À´Ï´Ù.'
+            msg += 'ëª©ìˆ¨ì„ ê±´ ì‚¬íˆ¬ë¥¼ ë²Œì´ê³  ìˆìŠµë‹ˆë‹¤.'
         elif self.act == ACT_DEATH:
-            msg += '¾²·¯Á® ÀÖ½À´Ï´Ù.'
+            msg += 'ì“°ëŸ¬ì ¸ ìˆìŠµë‹ˆë‹¤.'
             
         return msg
         
@@ -539,7 +537,7 @@ class Player(Body):
         if ex != None and type(ex) != list:
             exList = [ ex ]
         for obj in self.env.objs:
-            if is_player(obj) and obj != self and obj not in exList and obj.checkConfig('Å¸ÀÎÀüÅõÃâ·Â°ÅºÎ') == False:
+            if is_player(obj) and obj != self and obj not in exList and obj.checkConfig('íƒ€ì¸ì „íˆ¬ì¶œë ¥ê±°ë¶€') == False:
                 obj.sendLine('\r\n' + line)
                 if noPrompt == False:
                         obj.lpPrompt()
@@ -551,40 +549,40 @@ class Player(Body):
             idDelayedCall = 0
 
     def enterRoom(self, room, move = '', mode = ''):
-        if self.isMovable() == False and  mode != '¼ÒÈ¯' and mode != 'µµ¸Á':
-            self.sendLine('¢Ñ Áö±İ ÀÌµ¿ÇÏ±â¿¡´Â ÁÁÀº »óÈ²ÀÌ ¾Æ´Ï³×¿ä. ^_^')
+        if self.isMovable() == False and  mode != 'ì†Œí™˜' and mode != 'ë„ë§':
+            self.sendLine('â˜ ì§€ê¸ˆ ì´ë™í•˜ê¸°ì—ëŠ” ì¢‹ì€ ìƒí™©ì´ ì•„ë‹ˆë„¤ìš”. ^_^')
             return False
 
-        li = getInt(room['·¹º§»óÇÑ'])
-        if li > 0 and li < self['·¹º§']:
-            self.sendLine('°­ÇÑ ¹«ÇüÀÇ ±â¿îÀÌ ´ç½ÅÀ» ¾Ğ¹ÚÇÕ´Ï´Ù.')
+        li = getInt(room['ë ˆë²¨ìƒí•œ'])
+        if li > 0 and li < self['ë ˆë²¨']:
+            self.sendLine('ê°•í•œ ë¬´í˜•ì˜ ê¸°ìš´ì´ ë‹¹ì‹ ì„ ì••ë°•í•©ë‹ˆë‹¤.')
             return False
 
-        if getInt(room['·¹º§Á¦ÇÑ']) > self['·¹º§']:
-            self.sendLine('°­ÇÑ ¹«ÇüÀÇ ±â¿îÀÌ ´ç½ÅÀ» ¾Ğ¹ÚÇÕ´Ï´Ù.')
+        if getInt(room['ë ˆë²¨ì œí•œ']) > self['ë ˆë²¨']:
+            self.sendLine('ê°•í•œ ë¬´í˜•ì˜ ê¸°ìš´ì´ ë‹¹ì‹ ì„ ì••ë°•í•©ë‹ˆë‹¤.')
             return False
 
-        li = getInt(room['Èû»óÇÑÁ¦ÇÑ'])
-        if li > 0 and li < self['Èû']:
-            self.sendLine('°­ÇÑ ¹«ÇüÀÇ ±â¿îÀÌ ´ç½ÅÀ» ¾Ğ¹ÚÇÕ´Ï´Ù.')
+        li = getInt(room['í˜ìƒí•œì œí•œ'])
+        if li > 0 and li < self['í˜']:
+            self.sendLine('ê°•í•œ ë¬´í˜•ì˜ ê¸°ìš´ì´ ë‹¹ì‹ ì„ ì••ë°•í•©ë‹ˆë‹¤.')
             return False
 
-        li = getInt(room['¹ÎÃ¸»óÇÑÁ¦ÇÑ'])
+        li = getInt(room['ë¯¼ì²©ìƒí•œì œí•œ'])
         if li > 0 and li < self.getDex():
-            self.sendLine('°­ÇÑ ¹«ÇüÀÇ ±â¿îÀÌ ´ç½ÅÀ» ¾Ğ¹ÚÇÕ´Ï´Ù.')
+            self.sendLine('ê°•í•œ ë¬´í˜•ì˜ ê¸°ìš´ì´ ë‹¹ì‹ ì„ ì••ë°•í•©ë‹ˆë‹¤.')
             return False
 
         if room.checkLimitNum():
-            self.sendLine('¢Ñ ¾Ë ¼ö ¾ø´Â ¹«ÇüÀÇ ±â¿îÀÌ ´ç½ÅÀ» °¡·Î¸·½À´Ï´Ù. ^_^')
+            self.sendLine('â˜ ì•Œ ìˆ˜ ì—†ëŠ” ë¬´í˜•ì˜ ê¸°ìš´ì´ ë‹¹ì‹ ì„ ê°€ë¡œë§‰ìŠµë‹ˆë‹¤. ^_^')
             return False
-        if room.checkAttr('»çÆÄÃâÀÔ±İÁö') and self['¼º°İ'] == '»çÆÄ':
-            self.sendLine('¢Ñ »çÆÄ´Â ÃâÀÔÇÒ ¼ö ¾ø´Â °÷ÀÌ¶ó³×!')
+        if room.checkAttr('ì‚¬íŒŒì¶œì…ê¸ˆì§€') and self['ì„±ê²©'] == 'ì‚¬íŒŒ':
+            self.sendLine('â˜ ì‚¬íŒŒëŠ” ì¶œì…í•  ìˆ˜ ì—†ëŠ” ê³³ì´ë¼ë„¤!')
             return False
-        if room.checkAttr('Á¤ÆÄÃâÀÔ±İÁö') and self['¼º°İ'] == 'Á¤ÆÄ':
-            self.sendLine('¢Ñ Á¤ÆÄ´Â ÃâÀÔÇÒ ¼ö ¾ø´Â °÷ÀÌ¶ó³×!')
+        if room.checkAttr('ì •íŒŒì¶œì…ê¸ˆì§€') and self['ì„±ê²©'] == 'ì •íŒŒ':
+            self.sendLine('â˜ ì •íŒŒëŠ” ì¶œì…í•  ìˆ˜ ì—†ëŠ” ê³³ì´ë¼ë„¤!')
             return False
-        if room['¹æÆÄÁÖÀÎ'] != '' and room['¹æÆÄÁÖÀÎ'] != self['¼Ò¼Ó']:
-            self.sendLine('¢Ñ ±×°÷Àº Å¸ ¹æÆÄÀÇ Áö¿ªÀÌ¹Ç·Î ÃâÀÔÇÏ½Ç ¼ö ¾ø½À´Ï´Ù.')
+        if room['ë°©íŒŒì£¼ì¸'] != '' and room['ë°©íŒŒì£¼ì¸'] != self['ì†Œì†']:
+            self.sendLine('â˜ ê·¸ê³³ì€ íƒ€ ë°©íŒŒì˜ ì§€ì—­ì´ë¯€ë¡œ ì¶œì…í•˜ì‹¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             return False
         if self.act == ACT_FIGHT:
             self.clearTarget()
@@ -598,70 +596,70 @@ class Player(Body):
         self.viewMapData()
 
         for mob in room.objs:
-            if is_mob(mob) and mob.get('ÀÌº¥Æ® $%ÀÔÀåÀÌº¥Æ®%') != '':
-                #mob.doEvent(player, 'ÀÌº¥Æ® $%ÀÔÀåÀÌº¥Æ®%', [])
-                self.doEvent(mob, 'ÀÌº¥Æ® $%ÀÔÀåÀÌº¥Æ®%', [])
+            if is_mob(mob) and mob.get('ì´ë²¤íŠ¸ $%ì…ì¥ì´ë²¤íŠ¸%') != '':
+                #mob.doEvent(player, 'ì´ë²¤íŠ¸ $%ì…ì¥ì´ë²¤íŠ¸%', [])
+                self.doEvent(mob, 'ì´ë²¤íŠ¸ $%ì…ì¥ì´ë²¤íŠ¸%', [])
 
-        if self['Åõ¸í»óÅÂ'] != 1:
-            txt = self.env.get('ÁøÀÔ½ºÅ©¸³:' + move)
+        if self['íˆ¬ëª…ìƒíƒœ'] != 1:
+            txt = self.env.get('ì§„ì…ìŠ¤í¬ë¦½:' + move)
             if txt != '':
-                # ¹«¸® ÀÌµ¿½Ã ÀÎ¿ø¸¸Å­ ÀÌµ¿ ÈÄ ÇÁ·ÒÇÁÆ®°¡ Ãâ·Â
-                buf = txt.replace('[°ø]', self.getNameA())
+                # ë¬´ë¦¬ ì´ë™ì‹œ ì¸ì›ë§Œí¼ ì´ë™ í›„ í”„ë¡¬í”„íŠ¸ê°€ ì¶œë ¥
+                buf = txt.replace('[ê³µ]', self.getNameA())
                 buf = postPosition1(buf)
                 self.writeRoom('\r\n' + buf)
             else:
-                if mode == '½ÃÀÛ':
+                if mode == 'ì‹œì‘':
                     buf = ''
-                    nick = self['¹«¸²º°È£']
+                    nick = self['ë¬´ë¦¼ë³„í˜¸']
                     if nick == '':
-                        nick = '¹«¸í°´'
-                    char = self['¼º°İ']
-                    if char == '¼±ÀÎ':
-                        buf = '¢Ñ [[1m¼±ÀÎ[0;37m] ¡º[1m%s[0;37m¡»' % nick
-                    elif char == '±âÀÎ':
-                        buf = '¢Ñ [[1;33m±âÀÎÀÌ»ç[0;37m] ¡º[1;33m%s[0;37m¡»' % nick
-                    elif char == 'Á¤ÆÄ':
-                        buf = '¢Ñ [[1;32mÁ¤ÆÄ[0;37m] ¡º[1;32m%s[0;37m¡»' % nick
-                    elif char == '»çÆÄ':
-                        buf = '¢Ñ [[1;31m»çÆÄ[0;37m] ¡º[1;31m%s[0;37m¡»' % nick
-                    elif char == 'ÀºµĞÄ¨°Å':
-                        buf = '¢Ñ [[1;35mÀºµĞÄ¨°Å[0;37m] ¡º[0;37m%s[0;37m¡»' % nick
+                        nick = 'ë¬´ëª…ê°'
+                    char = self['ì„±ê²©']
+                    if char == 'ì„ ì¸':
+                        buf = 'â˜ [[1mì„ ì¸[0;37m] ã€[1m%s[0;37mã€' % nick
+                    elif char == 'ê¸°ì¸':
+                        buf = 'â˜ [[1;33mê¸°ì¸ì´ì‚¬[0;37m] ã€[1;33m%s[0;37mã€' % nick
+                    elif char == 'ì •íŒŒ':
+                        buf = 'â˜ [[1;32mì •íŒŒ[0;37m] ã€[1;32m%s[0;37mã€' % nick
+                    elif char == 'ì‚¬íŒŒ':
+                        buf = 'â˜ [[1;31mì‚¬íŒŒ[0;37m] ã€[1;31m%s[0;37mã€' % nick
+                    elif char == 'ì€ë‘”ì¹©ê±°':
+                        buf = 'â˜ [[1;35mì€ë‘”ì¹©ê±°[0;37m] ã€[0;37m%s[0;37mã€' % nick
                     else:
-                        buf = '¢Ñ [[0;30;47m¹«¸í°´[0;37;40m] '
-                    msg = '%s %s [1;36m¹«¸²ÁöÁ¸À» ²Ş²Ù¸ç °­È£¿¡ ÃâµÎÇÕ´Ï´Ù.[0;37m' % (buf, self.han_iga())
+                        buf = 'â˜ [[0;30;47më¬´ëª…ê°[0;37;40m] '
+                    msg = '%s %s [1;36më¬´ë¦¼ì§€ì¡´ì„ ê¿ˆê¾¸ë©° ê°•í˜¸ì— ì¶œë‘í•©ë‹ˆë‹¤.[0;37m' % (buf, self.han_iga())
                     self.channel.sendToAllInOut(msg, ex = self)
-                if mode == '±ÍÈ¯':
-                    self.writeRoom('\r\n%s ÇÏ´Ã¿¡¼­ »ç»ÓÈ÷ ³»·Á ¾É½À´Ï´Ù. \'Ã´~~~\'' % self.han_iga())
-                elif mode == '¼ÒÈ¯':
-                    self.writeRoom('\r\n%s ¾Ë¼ö ¾ø´Â ±â¿î¿¡ °¨½Î¿© ³ªÅ¸³³´Ï´Ù. \'°í¿À¿À¿À~~~\'' % self.han_iga())
-                elif mode == 'µµ¸Á':
-                    self.writeRoom('\r\n%s ½ÅÇüÀ» ºñÆ²°Å¸®¸ç °£½ÅÈ÷ µµ¸Á¿É´Ï´Ù. \'ÇäÇä~~\' '  % self.han_iga())
-                elif mode == '»ç¸Á':
-                    self.sendRoom('%s ¼Õ¼ö·¹¿¡ ½Ç·Á¿É´Ï´Ù.' % self.han_iga())
+                if mode == 'ê·€í™˜':
+                    self.writeRoom('\r\n%s í•˜ëŠ˜ì—ì„œ ì‚¬ë¿íˆ ë‚´ë ¤ ì•‰ìŠµë‹ˆë‹¤. \'ì²™~~~\'' % self.han_iga())
+                elif mode == 'ì†Œí™˜':
+                    self.writeRoom('\r\n%s ì•Œìˆ˜ ì—†ëŠ” ê¸°ìš´ì— ê°ì‹¸ì—¬ ë‚˜íƒ€ë‚©ë‹ˆë‹¤. \'ê³ ì˜¤ì˜¤ì˜¤~~~\'' % self.han_iga())
+                elif mode == 'ë„ë§':
+                    self.writeRoom('\r\n%s ì‹ í˜•ì„ ë¹„í‹€ê±°ë¦¬ë©° ê°„ì‹ íˆ ë„ë§ì˜µë‹ˆë‹¤. \'í—‰í—‰~~\' '  % self.han_iga())
+                elif mode == 'ì‚¬ë§':
+                    self.sendRoom('%s ì†ìˆ˜ë ˆì— ì‹¤ë ¤ì˜µë‹ˆë‹¤.' % self.han_iga())
                 else:
-                    #±âÀÎ/¼±ÀÎ/Á¤»çÆÄ¿¡ µû¶ó ´Ù¸§
-                    self.sendRoom('%s ¿Ô½À´Ï´Ù.'% self.han_iga())
+                    #ê¸°ì¸/ì„ ì¸/ì •ì‚¬íŒŒì— ë”°ë¼ ë‹¤ë¦„
+                    self.sendRoom('%s ì™”ìŠµë‹ˆë‹¤.'% self.han_iga())
 
         for attr in room.mapAttr:
-            if attr.find('Ã¼·Â°¨¼Ò') == 0:
+            if attr.find('ì²´ë ¥ê°ì†Œ') == 0:
                 dmg = attr.split(None, 2)[1]
                 msg = attr.split(None, 2)[2]
                 self.lpPrompt()
-                buf = msg.replace('[°ø]', '´ç½Å')
+                buf = msg.replace('[ê³µ]', 'ë‹¹ì‹ ')
                 buf = postPosition1(buf)
                 self.sendLine('\r\n' + buf)
-                buf = msg.replace('[°ø]', self.getNameA())
+                buf = msg.replace('[ê³µ]', self.getNameA())
                 buf = postPosition1(buf)
                 self.sendRoom(buf)
                 if self.minusHP(getInt(dmg), False):
                     return True
                 break
         c = 0
-        #¹æ¿¡ ÀÖ´Â ¼±°ø¸÷ Ã³¸®
-        if self['Åõ¸í»óÅÂ'] != 1:
+        #ë°©ì— ìˆëŠ” ì„ ê³µëª¹ ì²˜ë¦¬
+        if self['íˆ¬ëª…ìƒíƒœ'] != 1:
             for obj in room.objs:
                 if is_mob(obj) and obj not in self.target and obj.act == ACT_STAND:
-                    if obj.get('ÀüÅõÁ¾·ù') == 1:
+                    if obj.get('ì „íˆ¬ì¢…ë¥˜') == 1:
                         self.lpPrompt()
                         self.setFight(obj, True)
                         c += 1
@@ -670,12 +668,12 @@ class Player(Body):
             self.doSkill()
             #self.lpPrompt()
 
-        auto = room.get('ÀÚµ¿ÀÌµ¿')
+        auto = room.get('ìë™ì´ë™')
         if auto != '':
             self.idDelayedCall = reactor.callLater( 1, self.autoMove, [auto.split()[0], room] )
         
         for f in self.follower:
-            if f.env == prev and mode == 'ÀÌµ¿':
+            if f.env == prev and mode == 'ì´ë™':
                 reactor.callLater(0, f.do_command, move)
 
         if auto == '' and len(self.target) == 0:
@@ -685,50 +683,50 @@ class Player(Body):
         return True
 
     def exitRoom(self, move = '', mode = ''):
-        if self.env != None  and self['Åõ¸í»óÅÂ'] != 1:
-            txt = self.env.get('ÀÌµ¿½ºÅ©¸³:' + move)
+        if self.env != None  and self['íˆ¬ëª…ìƒíƒœ'] != 1:
+            txt = self.env.get('ì´ë™ìŠ¤í¬ë¦½:' + move)
             if txt != '':
-                # ¹«¸® ÀÌµ¿½Ã ÀÎ¿ø¸¸Å­ ÀÌµ¿ ÈÄ ÇÁ·ÒÇÁÆ®°¡ Ãâ·Â
-                buf = txt.replace('[°ø]', '´ç½Å')
+                # ë¬´ë¦¬ ì´ë™ì‹œ ì¸ì›ë§Œí¼ ì´ë™ í›„ í”„ë¡¬í”„íŠ¸ê°€ ì¶œë ¥
+                buf = txt.replace('[ê³µ]', 'ë‹¹ì‹ ')
                 buf = postPosition1(buf)
                 self.sendLine('\r\n' + buf)
-                buf = txt.replace('[°ø]', self.getNameA())
+                buf = txt.replace('[ê³µ]', self.getNameA())
                 buf = postPosition1(buf)
                 self.sendRoom('\r\n' + buf)
 
             else:
-                if mode == '±ÍÈ¯':
-                    self.sendLine('´ç½ÅÀÌ °æ°ø¼úÀ» ÆîÄ¡¸ç ÇÏ´Ã·Î Ä¡¼Ú¾Æ ¿À¸¨´Ï´Ù. \'¹«¿µÁö½Å!!!\'')
-                    self.writeRoom('\r\n%s °æ°ø¼úÀ» ÆîÄ¡¸ç ÇÏ´Ã·Î Ä¡¼Ú¾Æ ¿À¸¨´Ï´Ù. \'¹«¿µÁö½Å!!!\'' % self.han_iga())
-                elif mode == '¼ÒÈ¯':
-                    self.sendLine('´ç½ÅÀÌ ¾Ë¼ö ¾ø´Â ±â¿î¿¡ ÈÖ¸»·Á »ç¶óÁı´Ï´Ù. \'°í¿À¿À¿À~~~\'')
-                    self.writeRoom('\r\n%s ¾Ë¼ö ¾ø´Â ±â¿î¿¡ ÈÖ¸»·Á »ç¶óÁı´Ï´Ù. \'°í¿À¿À¿À~~~\'' % self.han_iga())
-                elif mode == 'µµ¸Á':
-                    self.sendLine('´ç½ÅÀÌ ½ÅÇüÀ» ºñÆ²°Å¸®¸ç °£½ÅÈ÷ µµ¸Á°©´Ï´Ù. \'»ì¸®µµ~~\'')
-                    self.writeRoom('\r\n%s ½ÅÇüÀ» ºñÆ²°Å¸®¸ç °£½ÅÈ÷ µµ¸Á°©´Ï´Ù. \'»ì¸®µµ~~\'' % self.han_iga())
-                elif mode == '»ç¸Á':
-                    self.sendRoom('[1mÀåÀÇ»ç[0;37m°¡ %s µ¥·Á°©´Ï´Ù.' % self.han_obj())
-                elif mode == '¼û°ÜÁø¸ÊÀÌµ¿':
-                    self.sendRoom('%s °©ÀÚ±â ¾îµğ·Ğ°¡ »ç¶óÁı´Ï´Ù.' % self.han_iga())
+                if mode == 'ê·€í™˜':
+                    self.sendLine('ë‹¹ì‹ ì´ ê²½ê³µìˆ ì„ í¼ì¹˜ë©° í•˜ëŠ˜ë¡œ ì¹˜ì†Ÿì•„ ì˜¤ë¦…ë‹ˆë‹¤. \'ë¬´ì˜ì§€ì‹ !!!\'')
+                    self.writeRoom('\r\n%s ê²½ê³µìˆ ì„ í¼ì¹˜ë©° í•˜ëŠ˜ë¡œ ì¹˜ì†Ÿì•„ ì˜¤ë¦…ë‹ˆë‹¤. \'ë¬´ì˜ì§€ì‹ !!!\'' % self.han_iga())
+                elif mode == 'ì†Œí™˜':
+                    self.sendLine('ë‹¹ì‹ ì´ ì•Œìˆ˜ ì—†ëŠ” ê¸°ìš´ì— íœ˜ë§ë ¤ ì‚¬ë¼ì§‘ë‹ˆë‹¤. \'ê³ ì˜¤ì˜¤ì˜¤~~~\'')
+                    self.writeRoom('\r\n%s ì•Œìˆ˜ ì—†ëŠ” ê¸°ìš´ì— íœ˜ë§ë ¤ ì‚¬ë¼ì§‘ë‹ˆë‹¤. \'ê³ ì˜¤ì˜¤ì˜¤~~~\'' % self.han_iga())
+                elif mode == 'ë„ë§':
+                    self.sendLine('ë‹¹ì‹ ì´ ì‹ í˜•ì„ ë¹„í‹€ê±°ë¦¬ë©° ê°„ì‹ íˆ ë„ë§ê°‘ë‹ˆë‹¤. \'ì‚´ë¦¬ë„~~\'')
+                    self.writeRoom('\r\n%s ì‹ í˜•ì„ ë¹„í‹€ê±°ë¦¬ë©° ê°„ì‹ íˆ ë„ë§ê°‘ë‹ˆë‹¤. \'ì‚´ë¦¬ë„~~\'' % self.han_iga())
+                elif mode == 'ì‚¬ë§':
+                    self.sendRoom('[1mì¥ì˜ì‚¬[0;37mê°€ %s ë°ë ¤ê°‘ë‹ˆë‹¤.' % self.han_obj())
+                elif mode == 'ìˆ¨ê²¨ì§„ë§µì´ë™':
+                    self.sendRoom('%s ê°‘ìê¸° ì–´ë””ë¡ ê°€ ì‚¬ë¼ì§‘ë‹ˆë‹¤.' % self.han_iga())
                 else:
-                    msg = '%s %sÂÊÀ¸·Î °¬½À´Ï´Ù.\r\n'% ( self.han_iga(), move)
+                    msg = '%s %sìª½ìœ¼ë¡œ ê°”ìŠµë‹ˆë‹¤.\r\n'% ( self.han_iga(), move)
                     self.sendRoom(msg[:-2] , ex = self.follower)
                     for f in self.follower:
-                        if f.env == self.env and mode == 'ÀÌµ¿':
-                            f.sendLine('\r\n' + msg + '´ç½ÅÀÌ %sÂÊÀ¸·Î %s µû¶ó°©´Ï´Ù.' % (move, self.han_obj()))
+                        if f.env == self.env and mode == 'ì´ë™':
+                            f.sendLine('\r\n' + msg + 'ë‹¹ì‹ ì´ %sìª½ìœ¼ë¡œ %s ë”°ë¼ê°‘ë‹ˆë‹¤.' % (move, self.han_obj()))
             self.env.remove(self)
-        if self.env != None  and self['Åõ¸í»óÅÂ'] == 1:
+        if self.env != None  and self['íˆ¬ëª…ìƒíƒœ'] == 1:
             self.env.remove(self)
 
     def welcome(self):
         from lib.io import cat
         cat(self, 'data/text/logoMurim.txt')
-        self.sendLine(WHT+BBLK + '¹«¸²¿¡¼­ ºÒ¸®¿ì´Â Á¸ÇÔÀ» ¾Ë·ÁÁÖ¼¼¿ä. (Ã³À½ ¿À½Ã´Â ºĞÀº [1m¹«¸í°´[0;40mÀÌ¶ó°í ÇÏ¼¼¿ä)')
-        self.write('¹«¸²Á¸ÇÔ¢°')
+        self.sendLine(WHT+BBLK + 'ë¬´ë¦¼ì—ì„œ ë¶ˆë¦¬ìš°ëŠ” ì¡´í•¨ì„ ì•Œë ¤ì£¼ì„¸ìš”. (ì²˜ìŒ ì˜¤ì‹œëŠ” ë¶„ì€ [1më¬´ëª…ê°[0;40mì´ë¼ê³  í•˜ì„¸ìš”)')
+        self.write('ë¬´ë¦¼ì¡´í•¨Ë')
         self.input_to(self.get_name)
 
     def lpPrompt(self, mode = False):
-        if not self.checkConfig('¿¤ÇÇÃâ·Â'):
+        if not self.checkConfig('ì—˜í”¼ì¶œë ¥'):
             self.prompt(True)
             if mode:
                 self.sendLine('')
@@ -742,7 +740,7 @@ class Player(Body):
         self.write(line)
 
     def getDesc1(self):
-        return self.get('¼³¸í1').replace('$¾ÆÀÌÅÛ$', self.get('ÀÌ¸§'))
+        return self.get('ì„¤ëª…1').replace('$ì•„ì´í…œ$', self.get('ì´ë¦„'))
 
     def die(self, mode = True):
         self.act = ACT_DEATH
@@ -753,9 +751,9 @@ class Player(Body):
         
         self.unwearAll()
         if mode:
-            self.sendLine('\r\n[1;37m´ç½ÅÀÌ ¾²·¯Áı´Ï´Ù. \'Äí¿õ~~ Ã¶ÆÛ´ö~~\'[0;37m')
+            self.sendLine('\r\n[1;37më‹¹ì‹ ì´ ì“°ëŸ¬ì§‘ë‹ˆë‹¤. \'ì¿ ì›…~~ ì² í¼ë•~~\'[0;37m')
         self.dropAllItem()
-        self.sendLine('´ç½ÅÀº Á¤½ÅÀÌ È¥¹ÌÇÕ´Ï´Ù.')
+        self.sendLine('ë‹¹ì‹ ì€ ì •ì‹ ì´ í˜¼ë¯¸í•©ë‹ˆë‹¤.')
         self.lpPrompt()
         self.clearTarget()
         self.clearSkills()
@@ -767,7 +765,7 @@ class Player(Body):
 
     def coma(self, line, *args):
         if line != '':
-            self.sendLine('\r\n´ç½ÅÀº Á¤½ÅÀÌ È¥¹ÌÇÕ´Ï´Ù.')
+            self.sendLine('\r\në‹¹ì‹ ì€ ì •ì‹ ì´ í˜¼ë¯¸í•©ë‹ˆë‹¤.')
 
     def checkMobEvent(self, line):
         words = line.split()
@@ -784,32 +782,32 @@ class Player(Body):
         return False
 
     def checkEvent(self, e):
-        return self.checkAttr('ÀÌº¥Æ®¼³Á¤¸®½ºÆ®', e)
+        return self.checkAttr('ì´ë²¤íŠ¸ì„¤ì •ë¦¬ìŠ¤íŠ¸', e)
 
     def setEvent(self, e):
-        self.setAttr('ÀÌº¥Æ®¼³Á¤¸®½ºÆ®', e)
+        self.setAttr('ì´ë²¤íŠ¸ì„¤ì •ë¦¬ìŠ¤íŠ¸', e)
 
     def delEvent(self, e):
-        self.delAttr('ÀÌº¥Æ®¼³Á¤¸®½ºÆ®', e)
+        self.delAttr('ì´ë²¤íŠ¸ì„¤ì •ë¦¬ìŠ¤íŠ¸', e)
         
     def checkArmed(self, level):
         for item in self.objs:
-            if item.inUse and item.get('°èÃş') == level:
+            if item.inUse and item.get('ê³„ì¸µ') == level:
                 return True
         return False
 
     def checkItemIndex(self, index, cnt = 1):
         c = 0
-        if index == 'ÀºÀü':
-            m = self.get('ÀºÀü')
+        if index == 'ì€ì „':
+            m = self.get('ì€ì „')
             if cnt < 1:
                 return False
             if m < cnt:
                 return False
             return True
 
-        if index == '±İÀü':
-            m = self.get('±İÀü')
+        if index == 'ê¸ˆì „':
+            m = self.get('ê¸ˆì „')
             if cnt < 1:
                 return False
             if m < cnt:
@@ -825,18 +823,18 @@ class Player(Body):
 
     def checkItemName(self, name, cnt = 1):
         c = 0
-        if name == 'ÀºÀü':
+        if name == 'ì€ì „':
             if cnt < 1:
                 return False
-            m = self.get('ÀºÀü')
+            m = self.get('ì€ì „')
             if m < cnt:
                 return False
             return True
 
-        if name == '±İÀü':
+        if name == 'ê¸ˆì „':
             if cnt < 1:
                 return False
-            m = self.get('±İÀü')
+            m = self.get('ê¸ˆì „')
             if m < cnt:
                 return False
             return True
@@ -844,7 +842,7 @@ class Player(Body):
         for item in self.objs:
             if item.inUse:
                 continue
-            if stripANSI(item.get('ÀÌ¸§')) == name:
+            if stripANSI(item.get('ì´ë¦„')) == name:
                 c = c + 1
                 if cnt == c:
                     return True
@@ -862,7 +860,7 @@ class Player(Body):
     def getItemName(self, name, cnt = 1):
         c = 0
         for item in self.objs:
-            if item.getStrip('ÀÌ¸§') == name:
+            if item.getStrip('ì´ë¦„') == name:
                 c = c + 1
                 if cnt == c:
                     return item
@@ -870,16 +868,16 @@ class Player(Body):
 
     def addItem(self, index, cnt = 1, gamble = 0):
         c = 0
-        if index == 'ÀºÀü':
-            m = self.get('ÀºÀü')
+        if index == 'ì€ì „':
+            m = self.get('ì€ì „')
             m = m + cnt
-            self.set('ÀºÀü', m)
+            self.set('ì€ì „', m)
             return
 
-        if index == '±İÀü':
-            m = self.get('±İÀü')
+        if index == 'ê¸ˆì „':
+            m = self.get('ê¸ˆì „')
             m = m + cnt
-            self.set('±İÀü', m)
+            self.set('ê¸ˆì „', m)
             return
 
         item = getItem(index)
@@ -888,58 +886,58 @@ class Player(Body):
         for i in range(cnt):
             obj = item.deepclone()
             if obj.isOneItem():
-                ONEITEM.have(index, self['ÀÌ¸§'])
+                ONEITEM.have(index, self['ì´ë¦„'])
             if cnt == 1:
-                obj.applyMagic(self['·¹º§'], 0, 1)
+                obj.applyMagic(self['ë ˆë²¨'], 0, 1)
                 if gamble != 0:
-                    obj.setAttr('¾ÆÀÌÅÛ¼Ó¼º', '¹ö¸®Áö¸øÇÔ')
-                    obj.setAttr('¾ÆÀÌÅÛ¼Ó¼º', 'ÁÙ¼ö¾øÀ½')
+                    obj.setAttr('ì•„ì´í…œì†ì„±', 'ë²„ë¦¬ì§€ëª»í•¨')
+                    obj.setAttr('ì•„ì´í…œì†ì„±', 'ì¤„ìˆ˜ì—†ìŒ')
             self.insert(obj)
 
     def delItem(self, index, cnt = 1):
         c = 0
-        if index == 'ÀºÀü':
-            m = self.get('ÀºÀü')
+        if index == 'ì€ì „':
+            m = self.get('ì€ì „')
             m -= cnt
-            self.set('ÀºÀü',m)
+            self.set('ì€ì „',m)
             return
 
-        if index == '±İÀü':
-            m = self.get('±İÀü')
+        if index == 'ê¸ˆì „':
+            m = self.get('ê¸ˆì „')
             m -= cnt
-            self.set('±İÀü',m)
+            self.set('ê¸ˆì „',m)
             return
 
         objs = copy.copy(self.objs)
         for item in objs:
             if item.index == index:
                 if item.inUse:
-                    self.armor -= getInt(item['¹æ¾î·Â'])
-                    self.attpower -= getInt(item['°ø°İ·Â'])
+                    self.armor -= getInt(item['ë°©ì–´ë ¥'])
+                    self.attpower -= getInt(item['ê³µê²©ë ¥'])
                     option = item.getOption()
                     if option != None:
                         for op in option:
-                            if op == 'Èû':
+                            if op == 'í˜':
                                 self._str -= option[op]
-                            elif op == '¹ÎÃ¸¼º':
+                            elif op == 'ë¯¼ì²©ì„±':
                                 self._dex -= option[op]
-                            elif op == '¸ËÁı':
+                            elif op == 'ë§·ì§‘':
                                 self._arm -= option[op]
-                            elif op == 'Ã¼·Â':
+                            elif op == 'ì²´ë ¥':
                                 self._maxhp -= option[op]
-                            elif op == '³»°ø':
+                            elif op == 'ë‚´ê³µ':
                                 self._maxmp -= option[op]
-                            elif op == 'ÇÊ»ì':
+                            elif op == 'í•„ì‚´':
                                 self._critical -= option[op]
-                            elif op == '¿î':
+                            elif op == 'ìš´':
                                  self._criticalChance -= option[op]
-                            elif op == 'È¸ÇÇ':
+                            elif op == 'íšŒí”¼':
                                 self._miss -= option[op]
-                            elif op == '¸íÁß':
+                            elif op == 'ëª…ì¤‘':
                                 self._hit -= option[op]
-                            elif op == '°æÇèÄ¡':
+                            elif op == 'ê²½í—˜ì¹˜':
                                 self._exp -= option[op]
-                            elif op == '¸¶¹ı¹ß°ß':
+                            elif op == 'ë§ˆë²•ë°œê²¬':
                                 self._magicChance -= option[op]
                             
                 self.remove(item)
@@ -949,28 +947,28 @@ class Player(Body):
 
     def getTendency(self, line):
         type = line.strip()
-        p1 = self['0 ¼º°İÇÃÅ³']
-        p2 = self['1 ¼º°İÇÃÅ³']
-        p3 = self['2 ¼º°İÇÃÅ³']
+        p1 = self['0 ì„±ê²©í”Œí‚¬']
+        p2 = self['1 ì„±ê²©í”Œí‚¬']
+        p3 = self['2 ì„±ê²©í”Œí‚¬']
         
-        if type == '¿Ï¼º':
-            if self.get('¹«¸²º°È£') != '':
+        if type == 'ì™„ì„±':
+            if self.get('ë¬´ë¦¼ë³„í˜¸') != '':
                 return True
             return False
-        elif type == 'Á¤ÆÄ':
-            if p1 + p2 + p3 < MAIN_CONFIG['¹«¸²º°È£ÀÌº¥Æ®Å³¼ö'] or p3 > p2:
+        elif type == 'ì •íŒŒ':
+            if p1 + p2 + p3 < MAIN_CONFIG['ë¬´ë¦¼ë³„í˜¸ì´ë²¤íŠ¸í‚¬ìˆ˜'] or p3 > p2:
                 return False
             return True
-        elif type == '»çÆÄ':
-            if p1 + p2 + p3 < MAIN_CONFIG['¹«¸²º°È£ÀÌº¥Æ®Å³¼ö'] or p2 > p3:
+        elif type == 'ì‚¬íŒŒ':
+            if p1 + p2 + p3 < MAIN_CONFIG['ë¬´ë¦¼ë³„í˜¸ì´ë²¤íŠ¸í‚¬ìˆ˜'] or p2 > p3:
                 return False
             return True
 
     def printScript(self, line):
-        l1 = line.replace('[°ø]', '´ç½Å')
+        l1 = line.replace('[ê³µ]', 'ë‹¹ì‹ ')
         l2 = postPosition1(l1)
         self.sendLine(l2)
-        l1 = line.replace('[°ø]', self.getNameA())
+        l1 = line.replace('[ê³µ]', self.getNameA())
         l2 = postPosition1(l1)
         self.sendRoom(l2)
 
@@ -981,7 +979,7 @@ class Player(Body):
 
     def delMugong(self, line):
         m = line.strip()
-        ms = self.get('¹«°øÀÌ¸§').splitlines()
+        ms = self.get('ë¬´ê³µì´ë¦„').splitlines()
         if line.strip() in self.skillList:
             self.skillList.remove(line.strip())
 
@@ -998,41 +996,41 @@ class Player(Body):
         return True
 
     def setEunDun(self):
-        p1 = self.get('Èû')
+        p1 = self.get('í˜')
         p1 = p1 - 2000
         if p1 < 15:
             p1 = 15        
-        self.set('Èû', p1)
-        self.set('·¹º§', 1)
-        self.set('ÇöÀç°æÇèÄ¡', 0)
-        self.set('Èû°æÇèÄ¡', 0)
-        self.set('¸ËÁı°æÇèÄ¡', 0)
-        self.set('±âÁ¸¼º°İ', self.get('¼º°İ'))
-        self.set('¼º°İ', 'ÀºµĞÄ¨°Å')
-        self.set('³»°øÁõÁø¾ÆÀÌÅÛ¸®½ºÆ®', '')
-        self.set('ÀÌº¥Æ®¼³Á¤¸®½ºÆ®', 'ÀºµĞÄ¨°Å³¡')
+        self.set('í˜', p1)
+        self.set('ë ˆë²¨', 1)
+        self.set('í˜„ì¬ê²½í—˜ì¹˜', 0)
+        self.set('í˜ê²½í—˜ì¹˜', 0)
+        self.set('ë§·ì§‘ê²½í—˜ì¹˜', 0)
+        self.set('ê¸°ì¡´ì„±ê²©', self.get('ì„±ê²©'))
+        self.set('ì„±ê²©', 'ì€ë‘”ì¹©ê±°')
+        self.set('ë‚´ê³µì¦ì§„ì•„ì´í…œë¦¬ìŠ¤íŠ¸', '')
+        self.set('ì´ë²¤íŠ¸ì„¤ì •ë¦¬ìŠ¤íŠ¸', 'ì€ë‘”ì¹©ê±°ë')
 
     def setSunIn(self):
-        self.set('±âÁ¸¼º°İ', self.get('¼º°İ'))
-        self.set('¼º°İ', '¼±ÀÎ')
-        self.set('³»°øÁõÁø¾ÆÀÌÅÛ¸®½ºÆ®', '')
-        self.set('ÀÌº¥Æ®¼³Á¤¸®½ºÆ®', '¿ìÈ­µî¼±³¡')
+        self.set('ê¸°ì¡´ì„±ê²©', self.get('ì„±ê²©'))
+        self.set('ì„±ê²©', 'ì„ ì¸')
+        self.set('ë‚´ê³µì¦ì§„ì•„ì´í…œë¦¬ìŠ¤íŠ¸', '')
+        self.set('ì´ë²¤íŠ¸ì„¤ì •ë¦¬ìŠ¤íŠ¸', 'ìš°í™”ë“±ì„ ë')
 
     def setGiIn(self):
-        p1 = self.get('Èû')
+        p1 = self.get('í˜')
         p1 = p1 - 600
         if p1 < 15:
             p1 = 15
-        self.set('Èû', p1)
-        self.set('¸ËÁı', 15)
-        self.set('·¹º§', 1)
-        self.set('ÇöÀç°æÇèÄ¡', 0)
-        self.set('Èû°æÇèÄ¡', 0)
-        self.set('¸ËÁı°æÇèÄ¡', 0)
-        self.set('±âÁ¸¼º°İ', self.get('¼º°İ'))
-        self.set('¼º°İ', '±âÀÎ')
-        self.set('³»°øÁõÁø¾ÆÀÌÅÛ¸®½ºÆ®', '')
-        self.set('ÀÌº¥Æ®¼³Á¤¸®½ºÆ®', '¼Ò¿À°­È£³¡')
+        self.set('í˜', p1)
+        self.set('ë§·ì§‘', 15)
+        self.set('ë ˆë²¨', 1)
+        self.set('í˜„ì¬ê²½í—˜ì¹˜', 0)
+        self.set('í˜ê²½í—˜ì¹˜', 0)
+        self.set('ë§·ì§‘ê²½í—˜ì¹˜', 0)
+        self.set('ê¸°ì¡´ì„±ê²©', self.get('ì„±ê²©'))
+        self.set('ì„±ê²©', 'ê¸°ì¸')
+        self.set('ë‚´ê³µì¦ì§„ì•„ì´í…œë¦¬ìŠ¤íŠ¸', '')
+        self.set('ì´ë²¤íŠ¸ì„¤ì •ë¦¬ìŠ¤íŠ¸', 'ì†Œì˜¤ê°•í˜¸ë')
 
     def get_name(self, name, *args):
         self.loginRetry += 1
@@ -1041,63 +1039,63 @@ class Player(Body):
             return
         #self.channel.transport.loseConnection()
         if len(name) == 0:
-            self.write('\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
         if is_han(name) == False:
-            self.write('ÇÑ±Û ÀÔ·Â¸¸ °¡´ÉÇÕ´Ï´Ù.\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('í•œê¸€ ì…ë ¥ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
-        if name == '¹«¸í°´':
+        if name == 'ë¬´ëª…ê°':
             #if self.checkMulti():
             #    return
             self.input_to(self.doNothing)
             self.state = sDOUMI
             from objs.doumi import DOUMI, autoScript
             self.autoscript = autoScript()
-            self.autoscript.start(DOUMI['ÃÊ±âµµ¿ì¹Ì'].splitlines(), self)
+            self.autoscript.start(DOUMI['ì´ˆê¸°ë„ìš°ë¯¸'].splitlines(), self)
             return
-        if name == '³ª¸¸¹Ù¶ó¹Ù':
+        if name == 'ë‚˜ë§Œë°”ë¼ë°”':
             #if self.checkMulti():
             #    return
             self.input_to(self.doNothing)
             from objs.doumi import DOUMI, autoScript
             self.autoscript = autoScript()
-            self.autoscript.start(DOUMI['ºü¸¥µµ¿ì¹Ì'].splitlines(), self)
+            self.autoscript.start(DOUMI['ë¹ ë¥¸ë„ìš°ë¯¸'].splitlines(), self)
             return
 
         from client import Client
         for p in Client.players:
-            if p.get('ÀÌ¸§') == name and p != self and p.state != INACTIVE:
-                self.sendLine('¢Ñ ÀÌ¹Ì ¹«¸²¿¡¼­ È°µ¿Áß ÀÔ´Ï´Ù.\r\n')
-                self.write('¹«¸²Á¸ÇÔ¢°')
+            if p.get('ì´ë¦„') == name and p != self and p.state != INACTIVE:
+                self.sendLine('â˜ ì´ë¯¸ ë¬´ë¦¼ì—ì„œ í™œë™ì¤‘ ì…ë‹ˆë‹¤.\r\n')
+                self.write('ë¬´ë¦¼ì¡´í•¨Ë')
                 return
 
         res = self.load(name)
         if res == False:
-            self.write('±×·± »ç¿ëÀÚ´Â ¾ø½À´Ï´Ù.\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('ê·¸ëŸ° ì‚¬ìš©ìëŠ” ì—†ìŠµë‹ˆë‹¤.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
 
-        # ip Áßº¹ °Ë»ç/ÀÎÁõ½Ã ÆĞ½º
+        # ip ì¤‘ë³µ ê²€ì‚¬/ì¸ì¦ì‹œ íŒ¨ìŠ¤
         #if self.checkMulti():
         #    return
 
         curtime = time.time()
-        c = getInt(self['°­Á¦Á¾·á'])
+        c = getInt(self['ê°•ì œì¢…ë£Œ'])
         if c != 0:
-            if curtime - c < getInt(MAIN_CONFIG['ÀçÁ¢¼ÓÁ¦ÇÑ½Ã°£']):
-                self.sendLine('\r\n%d ÃÊ µÚ¿¡ ÀçÁ¢¼ÓÇÏ½Ê½Ã¿À.\r\n' % (getInt(MAIN_CONFIG['ÀçÁ¢¼ÓÁ¦ÇÑ½Ã°£']) - (curtime - c)) )
+            if curtime - c < getInt(MAIN_CONFIG['ì¬ì ‘ì†ì œí•œì‹œê°„']):
+                self.sendLine('\r\n%d ì´ˆ ë’¤ì— ì¬ì ‘ì†í•˜ì‹­ì‹œì˜¤.\r\n' % (getInt(MAIN_CONFIG['ì¬ì ‘ì†ì œí•œì‹œê°„']) - (curtime - c)) )
                 self.channel.transport.loseConnection()
                 return
         
-        #self.set('ÀÌ¸§', name)
-        self.write('Á¸ÇÔ¾ÏÈ£¢°')
+        #self.set('ì´ë¦„', name)
+        self.write('ì¡´í•¨ì•”í˜¸Ë')
         self.loginRetry = 0
         self.input_to(self.get_pass)
 
     def checkMulti(self):
-        if getInt(self['°ü¸®ÀÚµî±Ş']) > 0:
+        if getInt(self['ê´€ë¦¬ìë“±ê¸‰']) > 0:
             return False
 
-        if self['¸ÖÆ¼ÀÎÁõ'] == 1:
+        if self['ë©€í‹°ì¸ì¦'] == 1:
             return False
 
         ip = self.channel.transport.getPeer().host
@@ -1109,50 +1107,50 @@ class Player(Body):
         if cnt < 4:
             return False
 
-        self.sendLine('\r\nÁßº¹ Á¢¼ÓÀ» Á¦ÇÑÇÕ´Ï´Ù.\r\n')
+        self.sendLine('\r\nì¤‘ë³µ ì ‘ì†ì„ ì œí•œí•©ë‹ˆë‹¤.\r\n')
         self.channel.transport.loseConnection()
         return True
 
     def get_oldpass(self, line, *args):
-        if line.strip() != str(self['¾ÏÈ£']):
-            self.sendLine('¢Ñ ÇöÀçÀÇ ¾ÏÈ£°¡ ¸ÂÁö ¾Ê¾Æ¿ä. ^^')
+        if line.strip() != str(self['ì•”í˜¸']):
+            self.sendLine('â˜ í˜„ì¬ì˜ ì•”í˜¸ê°€ ë§ì§€ ì•Šì•„ìš”. ^^')
             self.INTERACTIVE = 1
             self.input_to(self.parse_command)
             return
-        self.write('¢Ñ º¯°æ ÇÏ½Ç ¾ÏÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. \r\nÁ¸ÇÔ¾ÏÈ£¢°')
+        self.write('â˜ ë³€ê²½ í•˜ì‹¤ ì•”í˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. \r\nì¡´í•¨ì•”í˜¸Ë')
         self.input_to(self.change_password)
     
     def change_password(self, line, *args):
         self._pass = line
-        self.write('¢Ñ ÇÑ¹ø ´õ ¾ÏÈ£¸¦ ÀÔ·ÂÇØÁÖ¼¼¿ä. \r\n¾ÏÈ£È®ÀÎ¢°')
+        self.write('â˜ í•œë²ˆ ë” ì•”í˜¸ë¥¼ ì…ë ¥í•´ì£¼ì„¸ìš”. \r\nì•”í˜¸í™•ì¸Ë')
         self.input_to(self.change_password1)
     
     def change_password1(self, line, *args):
         if line != self._pass:
-            self.sendLine('¢Ñ ÀÌÀü ÀÔ·Â°ú ´Ù¸¨´Ï´Ù. ¾ÏÈ£º¯°æÀ» Ãë¼ÒÇÕ´Ï´Ù.')
+            self.sendLine('â˜ ì´ì „ ì…ë ¥ê³¼ ë‹¤ë¦…ë‹ˆë‹¤. ì•”í˜¸ë³€ê²½ì„ ì·¨ì†Œí•©ë‹ˆë‹¤.')
             self.INTERACTIVE = 1
             self.input_to(self.parse_command)
             return
-        self['¾ÏÈ£'] = line
-        self.write('¢Ñ ¾ÏÈ£°¡ º¯°æµÇ¾ú½À´Ï´Ù.')
+        self['ì•”í˜¸'] = line
+        self.write('â˜ ì•”í˜¸ê°€ ë³€ê²½ë˜ì—ˆìŠµë‹ˆë‹¤.')
         self.INTERACTIVE = 1
         self.input_to(self.parse_command)
         
     def get_pass(self, line, *args):
         self.loginRetry += 1
-        if len(line) == 0 or str(self.get('¾ÏÈ£')) != line:
+        if len(line) == 0 or str(self.get('ì•”í˜¸')) != line:
             if self.loginRetry >= 3:
                 self.write('\r\n')
                 self.channel.transport.loseConnection()
                 return
-            self.write('Àß¸øµÈ ¾ÏÈ£ ÀÔ´Ï´Ù.\r\nÁ¸ÇÔ¾ÏÈ£¢°')
+            self.write('ì˜ëª»ëœ ì•”í˜¸ ì…ë‹ˆë‹¤.\r\nì¡´í•¨ì•”í˜¸Ë')
             return
         del self.loginRetry
 
         from client import Client
         for p in Client.players:
-            if p['ÀÌ¸§'] == self['ÀÌ¸§'] and p != self and p.state != INACTIVE:
-                self.sendLine('¢Ñ ÀÌ¹Ì ¹«¸²¿¡¼­ È°µ¿Áß ÀÔ´Ï´Ù.\r\n')
+            if p['ì´ë¦„'] == self['ì´ë¦„'] and p != self and p.state != INACTIVE:
+                self.sendLine('â˜ ì´ë¯¸ ë¬´ë¦¼ì—ì„œ í™œë™ì¤‘ ì…ë‹ˆë‹¤.\r\n')
                 self.channel.transport.loseConnection()
                 return
         #self.channel.players.append(self)
@@ -1170,58 +1168,58 @@ class Player(Body):
 
     def getNewname(self, name, *args):
         if len(name) == 0:
-            self.write('¢Ñ ÇÑ±ÛÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('â˜ í•œê¸€ì ì´ìƒ ì…ë ¥í•˜ì„¸ìš”.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
         if len(name) > 10:
-            self.write('¢Ñ »ç¿ëÇÏ½Ã·Á´Â Á¸ÇÔÀÌ ³Ê¹« ±æ¾î¿ä.\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('â˜ ì‚¬ìš©í•˜ì‹œë ¤ëŠ” ì¡´í•¨ì´ ë„ˆë¬´ ê¸¸ì–´ìš”.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
         if is_han(name) == False:
-            self.write('¢Ñ ÇÑ±Û ÀÔ·Â¸¸ °¡´ÉÇÕ´Ï´Ù.\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('â˜ í•œê¸€ ì…ë ¥ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
-        if name == '¹«¸í°´':
-            self.write('¢Ñ »ç¿ëÇÒ ¼ö ¾ø´Â Á¸ÇÔÀÔ´Ï´Ù. ÇÑ±Û·Î ÀÔ·ÂÇØÁÖ¼¼¿ä.\r\n¹«¸²Á¸ÇÔ¢°')
+        if name == 'ë¬´ëª…ê°':
+            self.write('â˜ ì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ì¡´í•¨ì…ë‹ˆë‹¤. í•œê¸€ë¡œ ì…ë ¥í•´ì£¼ì„¸ìš”.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
         import os
         if os.path.exists(USER_PATH + name) == True:
-            self.write('¢Ñ ÀÌ¹Ì ¹«¸²¿¡¼­ È°µ¿Áß ÀÔ´Ï´Ù.\r\n¹«¸²Á¸ÇÔ¢°')
+            self.write('â˜ ì´ë¯¸ ë¬´ë¦¼ì—ì„œ í™œë™ì¤‘ ì…ë‹ˆë‹¤.\r\në¬´ë¦¼ì¡´í•¨Ë')
             return
         for ply in self.channel.players:
-            if ply['ÀÌ¸§'] == name:
-                self.write('¢Ñ ÀÌ¹Ì ¹«¸²¿¡¼­ È°µ¿Áß ÀÔ´Ï´Ù.\r\n¹«¸²Á¸ÇÔ¢°')
+            if ply['ì´ë¦„'] == name:
+                self.write('â˜ ì´ë¯¸ ë¬´ë¦¼ì—ì„œ í™œë™ì¤‘ ì…ë‹ˆë‹¤.\r\në¬´ë¦¼ì¡´í•¨Ë')
                 return
-        self.set('ÀÌ¸§', name)
+        self.set('ì´ë¦„', name)
         self.init_body()
         item = getItem('368').deepclone()
         self.insert(item)
         #self.channel.players.append(self)
         self.input_to(self.doNothing)
         self.autoscript.run()
-        #self.write('\r\n¿Õ´ëÇùÀÌ ¸»ÇÕ´Ï´Ù. "%s¶ó°í ÇÕ´Ï´Ù."' % name + '\r\n³ëÀÎÀÌ ¸»ÇÕ´Ï´Ù. "À½! ÁÁÀº ÀÌ¸§ÀÌ±º ±×·¸´Ù¸é ¾ÏÈ£´Â??"\r\nÁ¸ÇÔ¾ÏÈ£¢°')
+        #self.write('\r\nì™•ëŒ€í˜‘ì´ ë§í•©ë‹ˆë‹¤. "%së¼ê³  í•©ë‹ˆë‹¤."' % name + '\r\në…¸ì¸ì´ ë§í•©ë‹ˆë‹¤. "ìŒ! ì¢‹ì€ ì´ë¦„ì´êµ° ê·¸ë ‡ë‹¤ë©´ ì•”í˜¸ëŠ”??"\r\nì¡´í•¨ì•”í˜¸Ë')
         #self.input_to(self.getNewpass)
 
     def getNewpass(self, line, *args):
         if len(line) < 3:
-            self.write('\r\n¢Ñ 3ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.\r\nÁ¸ÇÔ¾ÏÈ£¢°')
+            self.write('\r\nâ˜ 3ì ì´ìƒ ì…ë ¥í•˜ì„¸ìš”.\r\nì¡´í•¨ì•”í˜¸Ë')
             return
-        self.set('¾ÏÈ£', line)
-        self.write('\r\n¾ÏÈ£È®ÀÎ¢°')
+        self.set('ì•”í˜¸', line)
+        self.write('\r\nì•”í˜¸í™•ì¸Ë')
         self.input_to(self.getNewpass2)
 
     def getNewpass2(self, line, *args):
-        if line != self.get('¾ÏÈ£'):
-            self.write('\r\n¢Ñ Á¸ÇÔÀÇ ¾ÏÈ£°¡ ÀÏÄ¡ÇÏÁö ¾Ê´Â±º¿ä.\r\nÁ¸ÇÔ¾ÏÈ£¢°')
+        if line != self.get('ì•”í˜¸'):
+            self.write('\r\nâ˜ ì¡´í•¨ì˜ ì•”í˜¸ê°€ ì¼ì¹˜í•˜ì§€ ì•ŠëŠ”êµ°ìš”.\r\nì¡´í•¨ì•”í˜¸Ë')
             self.input_to(self.getNewpass)
             return
         self.input_to(self.doNothing)
         self.autoscript.run()
-        #self.write('\r\n³ëÀÎÀÌ ¸»ÇÕ´Ï´Ù. "±×·±µ¥ ±×¾ÆÀÌ´Â ³²ÀÚÀÎ°¡? ¿©ÀÚÀÎ°¡?"\r\n¼ºº°(³²/¿©)¢°')
+        #self.write('\r\në…¸ì¸ì´ ë§í•©ë‹ˆë‹¤. "ê·¸ëŸ°ë° ê·¸ì•„ì´ëŠ” ë‚¨ìì¸ê°€? ì—¬ìì¸ê°€?"\r\nì„±ë³„(ë‚¨/ì—¬)Ë')
         #self.input_to(self.getSex)
 
     def getSex(self, line, *args):
-        if line not in ['³²', '¿©']:
-            self.write('\r\n¢Ñ [³²], [¿©]·Î ¸»ÇØÁÖ¼¼¿ä.\r\n¼ºº°(³²/¿©)¢°')
+        if line not in ['ë‚¨', 'ì—¬']:
+            self.write('\r\nâ˜ [ë‚¨], [ì—¬]ë¡œ ë§í•´ì£¼ì„¸ìš”.\r\nì„±ë³„(ë‚¨/ì—¬)Ë')
             return
-        self.set('¼ºº°', line)
+        self.set('ì„±ë³„', line)
         self.input_to(self.doNothing)
         self.autoscript.run()
         
@@ -1229,7 +1227,7 @@ class Player(Body):
         self.write('[0m[37m[40m[H[2J')
         from lib.io import cat
         cat(self, 'data/text/notice.txt')
-        self.write('[¿£ÅÍÅ°¸¦ ´©¸£¼¼¿ä]')
+        self.write('[ì—”í„°í‚¤ë¥¼ ëˆ„ë¥´ì„¸ìš”]')
         self.state = NOTICE
         self.input_to(self.getStart)
         
@@ -1241,7 +1239,7 @@ class Player(Body):
                 return False
             f.write(self._lineData)
             f.close()
-            self.sendLine('ÀÛ¼ºÀ» ¸¶Ä¨´Ï´Ù.')
+            self.sendLine('ì‘ì„±ì„ ë§ˆì¹©ë‹ˆë‹¤.')
             del self._lineDataTarget
             del self._lineData
             self.INTERACTIVE = 1
@@ -1259,7 +1257,7 @@ class Player(Body):
         if line == '.':
             self._lineDataTarget[self._lineDataValue] = self._lineData
             self._lineDataTarget.save()
-            self.sendLine('ÀÛ¼ºÀ» ¸¶Ä¨´Ï´Ù.')
+            self.sendLine('ì‘ì„±ì„ ë§ˆì¹©ë‹ˆë‹¤.')
             del self._lineDataTarget
             del self._lineDataValue
             del self._lineData
@@ -1281,17 +1279,17 @@ class Player(Body):
             msg = ''
             found = False
             for ply in self.channel.players:
-                if ply['ÀÌ¸§'] == self._memoWho['ÀÌ¸§']:
+                if ply['ì´ë¦„'] == self._memoWho['ì´ë¦„']:
                     found = True
                     break
             if found:
-                self.sendLine('»ç¿ëÀÚ°¡ Á¢¼ÓÇÏ¿´À¸¹Ç·Î ÀÛ¼ºÀ» ¸¶Ä¨´Ï´Ù.')
+                self.sendLine('ì‚¬ìš©ìê°€ ì ‘ì†í•˜ì˜€ìœ¼ë¯€ë¡œ ì‘ì„±ì„ ë§ˆì¹©ë‹ˆë‹¤.')
             else:
                 if l >= 10:
-                    msg += 'Á¦ÇÑ¿ë·®À» ÃÊ°úÇÏ¿´½À´Ï´Ù.\r\n'
-                msg += 'ÂÊÁö ÀÛ¼ºÀ» ¸¶Ä¨´Ï´Ù.'
-                self._memo['³»¿ë'] = self._memoBody
-                self._memoWho.memo['¸Ş¸ğ:%s' % self['ÀÌ¸§']] = self._memo
+                    msg += 'ì œí•œìš©ëŸ‰ì„ ì´ˆê³¼í•˜ì˜€ìŠµë‹ˆë‹¤.\r\n'
+                msg += 'ìª½ì§€ ì‘ì„±ì„ ë§ˆì¹©ë‹ˆë‹¤.'
+                self._memo['ë‚´ìš©'] = self._memoBody
+                self._memoWho.memo['ë©”ëª¨:%s' % self['ì´ë¦„']] = self._memo
                 self._memoWho.save(False)
                 self.sendLine(msg)
             del self._memo
@@ -1313,38 +1311,38 @@ class Player(Body):
         self['_runaway'] = 0
         self.state = ACTIVE
         self.loadSkills()
-        rName = self.get('±ÍÈ¯Áö¸Ê')
+        rName = self.get('ê·€í™˜ì§€ë§µ')
         if rName == '':
-            rName = '³«¾ç¼º:42'
+            rName = 'ë‚™ì–‘ì„±:42'
         room = getRoom(rName)
-        last = self['¸¶Áö¸·ÀúÀå½Ã°£']
+        last = self['ë§ˆì§€ë§‰ì €ì¥ì‹œê°„']
         if last != '':
-            self.sendLine('¸¶Áö¸· Á¢¼Ó ½Ã°£ : %s' % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last)))
+            self.sendLine('ë§ˆì§€ë§‰ ì ‘ì† ì‹œê°„ : %s' % time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(last)))
         if room != None:
-            self.enterRoom(room, '½ÃÀÛ', '½ÃÀÛ')
+            self.enterRoom(room, 'ì‹œì‘', 'ì‹œì‘')
         else:
-            self.sendLine('½ÃÀÛ¸Ê ¾øÀ½!!!')
+            self.sendLine('ì‹œì‘ë§µ ì—†ìŒ!!!')
         
         l = len(self.memo)
 
         if l > 0:
-            msg = '[1m¡Ú[0;37m µµÂøµÈ ÂÊÁö°¡ %dÅë ÀÖ½À´Ï´Ù.\r\n   Á¤º¸¼öÁı¼Ò¿¡ °¡¼­ ÂÊÁö¸¦ È®ÀÎÇØº¸½Ã±â ¹Ù¶ø´Ï´Ù.' % l
+            msg = '[1mâ˜…[0;37m ë„ì°©ëœ ìª½ì§€ê°€ %dí†µ ìˆìŠµë‹ˆë‹¤.\r\n   ì •ë³´ìˆ˜ì§‘ì†Œì— ê°€ì„œ ìª½ì§€ë¥¼ í™•ì¸í•´ë³´ì‹œê¸° ë°”ëë‹ˆë‹¤.' % l
             self.sendLine(msg)
         self.INTERACTIVE = 1
 
-        v = self['Æ¯¼ºÄ¡']
+        v = self['íŠ¹ì„±ì¹˜']
         if v == '':
-            self['Æ¯¼ºÄ¡'] = int(self['ÃÖ°íÃ¼·Â'] / 300)
+            self['íŠ¹ì„±ì¹˜'] = int(self['ìµœê³ ì²´ë ¥'] / 300)
             self.save()
 
-        if self.checkConfig('ÀÚµ¿Ã¤³ÎÀÔÀå'):
-            buf = '\r\n[1;31m¨ç¨ï[0;37m ' + self.getNameA() + '´ÔÀÌ ÀÔÀåÇÏ¼Ì½À´Ï´Ù.'
+        if self.checkConfig('ìë™ì±„ë„ì…ì¥'):
+            buf = '\r\n[1;31mâ‘ â‘¨[0;37m ' + self.getNameA() + 'ë‹˜ì´ ì…ì¥í•˜ì…¨ìŠµë‹ˆë‹¤.'
             for ply in self.adultCH:
                 ply.sendLine(buf)
                 ply.lpPrompt()
 
             self.adultCH.append(self)
-            self.sendLine('¢Ñ Ã¤³Î¿¡ ÀÔÀåÇÕ´Ï´Ù.')
+            self.sendLine('â˜ ì±„ë„ì— ì…ì¥í•©ë‹ˆë‹¤.')
             
         self.input_to(self.parse_command)
 
@@ -1355,12 +1353,12 @@ class Player(Body):
 
     def parse_command(self, line, *args):
         if self.env == None:
-            print self['ÀÌ¸§']
+            print self['ì´ë¦„']
             return
 
-        if getInt(self['°ü¸®ÀÚµî±Ş']) < 2000:
+        if getInt(self['ê´€ë¦¬ìë“±ê¸‰']) < 2000:
             self.cmdCnt += 1
-            if self.cmdCnt > MAIN_CONFIG['ÀÔ·ÂÃÊ°ú°æ°í¼ö']:
+            if self.cmdCnt > MAIN_CONFIG['ì…ë ¥ì´ˆê³¼ê²½ê³ ìˆ˜']:
                 self.sendLine('^^;')
                 return
         line = stripANSI(line)
@@ -1374,9 +1372,9 @@ class Player(Body):
             
         if line[-1] in (' ', '.', '!', '?'):
             if self.env.noComm():
-                self.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+                self.sendLine('â˜ ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
                 return
-            Player.cmdList['¸»'].cmd(self, line)
+            Player.cmdList['ë§'].cmd(self, line)
             return
 
         cmds = line.split()
@@ -1388,7 +1386,7 @@ class Player(Body):
         param = param.strip()
 
         if self.env != None and cmd in self.env.limitCmds:
-            self.sendLine('ÀÌ°÷¿¡¼­ ±× ¸í·ÉÀ» »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.')
+            self.sendLine('ì´ê³³ì—ì„œ ê·¸ ëª…ë ¹ì„ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
             return
             
         if cmd in self.alias:
@@ -1415,7 +1413,7 @@ class Player(Body):
             msg = ''
             for w in wlist[1:]:
                 #if w in s:
-                #    self.sendLine('ÁßÃ¸µÈ ÁÙÀÓ¸»Àº »ç¿ëÇÒ ¼ö ¾ø½À´Ï´Ù.')
+                #    self.sendLine('ì¤‘ì²©ëœ ì¤„ì„ë§ì€ ì‚¬ìš©í•  ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
                 #    return
                 msg += w + '\r\n'
             self.channel._buffer = msg + self.channel._buffer
@@ -1438,14 +1436,14 @@ class Player(Body):
                 if room == None:
                     self.sendLine('Move where?')
                     return
-                mode = 'ÀÌµ¿'
+                mode = 'ì´ë™'
                 if cmd + '$' in self.env.exitList:
-                    mode = '¼û°ÜÁø¸ÊÀÌµ¿'
+                    mode = 'ìˆ¨ê²¨ì§„ë§µì´ë™'
                 self.enterRoom(room, cmd, mode)
                 return
             else:
-                if cmd in ['µ¿', '¼­', '³²', 'ºÏ', 'À§', '¾Æ·¡', 'ºÏµ¿', 'ºÏ¼­', '³²µ¿', '³²¼­']:
-                    self.sendLine('¢Ñ ±×ÂÊ ¹æÇâÀ¸·Î´Â °¡½Ç ¼ö ¾ø½À´Ï´Ù.')
+                if cmd in ['ë™', 'ì„œ', 'ë‚¨', 'ë¶', 'ìœ„', 'ì•„ë˜', 'ë¶ë™', 'ë¶ì„œ', 'ë‚¨ë™', 'ë‚¨ì„œ']:
+                    self.sendLine('â˜ ê·¸ìª½ ë°©í–¥ìœ¼ë¡œëŠ” ê°€ì‹¤ ìˆ˜ ì—†ìŠµë‹ˆë‹¤.')
                     return
                 for exitName in self.env.Exits:
                     if exitName.find(cmd) == 0:
@@ -1453,19 +1451,19 @@ class Player(Body):
                         if room == None:
                             self.sendLine('Move where?')
                             return
-                        mode = 'ÀÌµ¿'
+                        mode = 'ì´ë™'
                         if exitName + '$' in self.env.exitList:
-                            mode = '¼û°ÜÁø¸ÊÀÌµ¿'
+                            mode = 'ìˆ¨ê²¨ì§„ë§µì´ë™'
                         self.enterRoom(room, exitName, mode)
                         return
 
-        if cmd in ('³¡', 'Á¾·á') and argc == 1:
+        if cmd in ('ë', 'ì¢…ë£Œ') and argc == 1:
             if self.isMovable() == False:
-                self.sendLine('¢Ñ Áö±İÀº ¹«¸²À» ¶°³ª±â¿¡ ÁÁÀº »óÈ²ÀÌ ¾Æ´Ï³×¿ä. ^_^')
+                self.sendLine('â˜ ì§€ê¸ˆì€ ë¬´ë¦¼ì„ ë– ë‚˜ê¸°ì— ì¢‹ì€ ìƒí™©ì´ ì•„ë‹ˆë„¤ìš”. ^_^')
                 return
             self.INTERACTIVE = 2
-            self.sendLine('\r\n´ÙÀ½¿¡ ¶Ç ¸¸³ª¿ä~!!!')
-            #broadcast(self.get('ÀÌ¸§') + '´ÔÀÌ ³ª°¡¼Ì½À´Ï´Ù.', self)
+            self.sendLine('\r\në‹¤ìŒì— ë˜ ë§Œë‚˜ìš”~!!!')
+            #broadcast(self.get('ì´ë¦„') + 'ë‹˜ì´ ë‚˜ê°€ì…¨ìŠµë‹ˆë‹¤.', self)
             #self.save()
             #self.logout()
 
@@ -1480,7 +1478,7 @@ class Player(Body):
             return
         elif cmd in EMOTION.attr:
             if self.env.noComm():
-                self.sendLine('¢Ñ ÀÌÁö¿ª¿¡¼­´Â ¾î¶°ÇÑ Åë½Åµµ ºÒ°¡´ÉÇÕ´Ï´Ù.')
+                self.sendLine('â˜ ì´ì§€ì—­ì—ì„œëŠ” ì–´ë– í•œ í†µì‹ ë„ ë¶ˆê°€ëŠ¥í•©ë‹ˆë‹¤.')
                 return
             try:
                 self.doEmotion(cmd, param)
@@ -1492,21 +1490,21 @@ class Player(Body):
 
         obj = ''
         if self.env != None:
-            obj = self.env['¿ÀºêÁ§Æ®:'+cmd]
+            obj = self.env['ì˜¤ë¸Œì íŠ¸:'+cmd]
         if obj != '':
             self.sendLine(obj)
             return
-        self.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ğ¸£°Ú¾î¿ä. *^_^*')
+        self.sendLine('â˜ ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
 
     def checkInput(self, line, *args):
-        if line == '³×':
+        if line == 'ë„¤':
             self.autoscript.run()
             return
-        if line == 'Ãë¼Ò':
-            self.sendLine('¢Ñ Ãë¼ÒÇÕ´Ï´Ù. *^_^*')
+        if line == 'ì·¨ì†Œ':
+            self.sendLine('â˜ ì·¨ì†Œí•©ë‹ˆë‹¤. *^_^*')
             self.stopAutoScript()
             return 
-        self.sendLine('¢Ñ Ãë¼ÒÇÏ½Ã·Á¸é ¡ºÃë¼Ò¡»¸¦ ÀÔ·Â ÇÏ¼¼¿ä. *^_^*')
+        self.sendLine('â˜ ì·¨ì†Œí•˜ì‹œë ¤ë©´ ã€ì·¨ì†Œã€ë¥¼ ì…ë ¥ í•˜ì„¸ìš”. *^_^*')
         return 
 
     def getLines(self, line, *args):
@@ -1515,24 +1513,24 @@ class Player(Body):
             limit = int(args[0])
         line = line.strip()
         if line == '':
-            self.sendLine('¢Ñ Ãë¼ÒÇÏ½Ã·Á¸é ¡ºÃë¼Ò¡»¸¦ ÀÔ·Â ÇÏ¼¼¿ä. *^_^*')
+            self.sendLine('â˜ ì·¨ì†Œí•˜ì‹œë ¤ë©´ ã€ì·¨ì†Œã€ë¥¼ ì…ë ¥ í•˜ì„¸ìš”. *^_^*')
             return 
         if line == '.':
             if len(self.temp_input) == 0:
-                self.sendLine('¢Ñ ÇÑÁÙ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä. *^_^*')
+                self.sendLine('â˜ í•œì¤„ ì´ìƒ ì…ë ¥í•˜ì„¸ìš”. *^_^*')
                 return 
             self.autoscript.run()
             return 
         if len(line) > 42:
-            self.sendLine('¢Ñ ³Ê¹«±æ¾î¿ä. *^_^*')
+            self.sendLine('â˜ ë„ˆë¬´ê¸¸ì–´ìš”. *^_^*')
             return
-        if line == 'Ãë¼Ò':
-            self.sendLine('¢Ñ Ãë¼ÒÇÕ´Ï´Ù. *^_^*')
+        if line == 'ì·¨ì†Œ':
+            self.sendLine('â˜ ì·¨ì†Œí•©ë‹ˆë‹¤. *^_^*')
             self.stopAutoScript()
             return 
         self.temp_input.append(line)
         if len(self.temp_input) >= limit:
-            self.sendLine('¢Ñ ÀÔ·ÂÀ» ¸¶Ä¨´Ï´Ù. *^_^*')
+            self.sendLine('â˜ ì…ë ¥ì„ ë§ˆì¹©ë‹ˆë‹¤. *^_^*')
             self.autoscript.run()
             return
 
@@ -1540,14 +1538,14 @@ class Player(Body):
         limit = 70
         line = line.strip()
         if line == '':
-            self.sendLine('¢Ñ Ãë¼ÒÇÏ½Ã·Á¸é ¡ºÃë¼Ò¡»¸¦ ÀÔ·Â ÇÏ¼¼¿ä. *^_^*')
+            self.sendLine('â˜ ì·¨ì†Œí•˜ì‹œë ¤ë©´ ã€ì·¨ì†Œã€ë¥¼ ì…ë ¥ í•˜ì„¸ìš”. *^_^*')
             return 
-        if line == 'Ãë¼Ò':
-            self.sendLine('¢Ñ Ãë¼ÒÇÕ´Ï´Ù. *^_^*')
+        if line == 'ì·¨ì†Œ':
+            self.sendLine('â˜ ì·¨ì†Œí•©ë‹ˆë‹¤. *^_^*')
             self.stopAutoScript()
             return 
         if len(stripANSI(line)) > limit:
-            self.sendLine('¢Ñ ³Ê¹«±æ¾î¿ä. *^_^*')
+            self.sendLine('â˜ ë„ˆë¬´ê¸¸ì–´ìš”. *^_^*')
             return
         self.temp_input = line
         self.autoscript.run()
@@ -1557,20 +1555,20 @@ class Player(Body):
         keywords = args[1]
         line = line.strip()
         if line == '':
-            self.sendLine('¢Ñ Ãë¼ÒÇÏ½Ã·Á¸é ¡ºÃë¼Ò¡»¸¦ ÀÔ·Â ÇÏ¼¼¿ä. *^_^*')
+            self.sendLine('â˜ ì·¨ì†Œí•˜ì‹œë ¤ë©´ ã€ì·¨ì†Œã€ë¥¼ ì…ë ¥ í•˜ì„¸ìš”. *^_^*')
             return 
         if ' ' in line:
-            self.sendLine('¢Ñ °ø¹éÀÌ Æ÷ÇÔµÇ¾î ÀÖ½À´Ï´Ù. ´Ù½Ã ÀÔ·ÂÇÏ¼¼¿ä. *^_^*')
+            self.sendLine('â˜ ê³µë°±ì´ í¬í•¨ë˜ì–´ ìˆìŠµë‹ˆë‹¤. ë‹¤ì‹œ ì…ë ¥í•˜ì„¸ìš”. *^_^*')
             return 
-        if line == 'Ãë¼Ò':
-            self.sendLine('¢Ñ Ãë¼ÒÇÕ´Ï´Ù. *^_^*')
+        if line == 'ì·¨ì†Œ':
+            self.sendLine('â˜ ì·¨ì†Œí•©ë‹ˆë‹¤. *^_^*')
             self.stopAutoScript()
             return 
         if len(stripANSI(line)) > limit:
-            self.sendLine('¢Ñ ³Ê¹«±æ¾î¿ä. *^_^*')
+            self.sendLine('â˜ ë„ˆë¬´ê¸¸ì–´ìš”. *^_^*')
             return
         if line not in keywords and len(keywords) > 0:
-            self.sendLine('¢Ñ Àß¸ø ÀÔ·ÂÇÏ¼Ì¾î¿ä. *^_^*')
+            self.sendLine('â˜ ì˜ëª» ì…ë ¥í•˜ì…¨ì–´ìš”. *^_^*')
             return
         self.temp_input = line
         self.autoscript.run()
@@ -1592,7 +1590,7 @@ class Player(Body):
             self.input_to(self.doNothing)
             self.autoscript.run()
         else:
-            self.sendLine('¡º%s¡»À» ÀÔ·Â ÇÏ¼¼¿ä\r\n>' % args)
+            self.sendLine('ã€%sã€ì„ ì…ë ¥ í•˜ì„¸ìš”\r\n>' % args)
             
     def pressEnter(self, line, *args):
         self.INTERACTIVE = 1
@@ -1601,11 +1599,11 @@ class Player(Body):
     def getFightStartStr(self):
         w = self.getWeapon()
         if w == None:
-            buf1 = '´ç½ÅÀÌ ÁÖ¸ÔÀ» Áã¸ç °ø°İ ÇÕ´Ï´Ù.'
-            buf2 = '%s ÁÖ¸ÔÀ» Áã¸ç °ø°İ ÇÕ´Ï´Ù.' % self.han_iga()
+            buf1 = 'ë‹¹ì‹ ì´ ì£¼ë¨¹ì„ ì¥ë©° ê³µê²© í•©ë‹ˆë‹¤.'
+            buf2 = '%s ì£¼ë¨¹ì„ ì¥ë©° ê³µê²© í•©ë‹ˆë‹¤.' % self.han_iga()
         else:
-            buf1 = '´ç½ÅÀÌ %s' % w['ÀüÅõ½ÃÀÛ']
-            buf2 = '%s %s' % (self.han_iga(), w['ÀüÅõ½ÃÀÛ'])
+            buf1 = 'ë‹¹ì‹ ì´ %s' % w['ì „íˆ¬ì‹œì‘']
+            buf2 = '%s %s' % (self.han_iga(), w['ì „íˆ¬ì‹œì‘'])
         return buf1, buf2
 
     def setFight(self, mob, mode = False):
@@ -1650,10 +1648,10 @@ class Player(Body):
             mob.stopSkill()
             self.startMobSkill(mob)
         
-        #¹æ¿¡ ÀÖ´Â ÇÕ°ø¸÷ Ã³¸®(µ¢´ŞÀÌ)
+        #ë°©ì— ìˆëŠ” í•©ê³µëª¹ ì²˜ë¦¬(ë©ë‹¬ì´)
         for obj in self.env.objs:
             if is_mob(obj) and obj not in self.target and obj.act == ACT_STAND:
-                if obj.get('ÀüÅõÁ¾·ù') == 1 or obj.get('ÀüÅõÁ¾·ù') == 2:
+                if obj.get('ì „íˆ¬ì¢…ë¥˜') == 1 or obj.get('ì „íˆ¬ì¢…ë¥˜') == 2:
                     self.setTarget(obj)
                     obj.setTarget(self)
                     buf1, buf2 = obj.getFightStartStr()
@@ -1662,44 +1660,44 @@ class Player(Body):
                     self.startMobSkill(obj)
         
     def startMobSkill(self, mob):
-        if mob.setSkill() and self.checkConfig('¼ö·Ã¸ğµå') == False:
-            buf1, buf2, buf3 = mob.makeFightScript(mob.skill['¹«°ø½ºÅ©¸³'], self)
+        if mob.setSkill() and self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
+            buf1, buf2, buf3 = mob.makeFightScript(mob.skill['ë¬´ê³µìŠ¤í¬ë¦½'], self)
             self.sendLine(buf2)
             self.sendRoomFightScript(buf3)
             
     def update(self):
         self._advance = False
 
-        if self.cmdCnt > MAIN_CONFIG['ÀÔ·ÂÃÊ°ú¿¡·¯¼ö']:
-            self['°­Á¦Á¾·á'] = int(time.time())
+        if self.cmdCnt > MAIN_CONFIG['ì…ë ¥ì´ˆê³¼ì—ëŸ¬ìˆ˜']:
+            self['ê°•ì œì¢…ë£Œ'] = int(time.time())
             self.channel.transport.loseConnection()
             return
         self.cmdCnt = 0
         self.tick += 1
-        self['³ªÀÌ¿À¸§Æ½'] += 1
-        if self['³ªÀÌ¿À¸§Æ½'] >= MAIN_CONFIG['³ªÀÌ¿À¸§Æ½']: #24½Ã°£¿¡ 1»ì
-            self['³ªÀÌ¿À¸§Æ½'] = 0
-            self['³ªÀÌ'] += 1
-            if self['³ªÀÌ'] % 60 == 0:
-                self['ÃÖ°í³»°ø'] += 60
+        self['ë‚˜ì´ì˜¤ë¦„í‹±'] += 1
+        if self['ë‚˜ì´ì˜¤ë¦„í‹±'] >= MAIN_CONFIG['ë‚˜ì´ì˜¤ë¦„í‹±']: #24ì‹œê°„ì— 1ì‚´
+            self['ë‚˜ì´ì˜¤ë¦„í‹±'] = 0
+            self['ë‚˜ì´'] += 1
+            if self['ë‚˜ì´'] % 60 == 0:
+                self['ìµœê³ ë‚´ê³µ'] += 60
             else:
-                self['ÃÖ°í³»°ø'] +=1
-            self.sendRoom('[1m' + self['ÀÌ¸§'] + 'ÀÇ ´ÜÀü¿¡ È¸¿À¸®°¡ ¸ô¾ÆÄ¡¸ç ¸öÁÖÀ§¿¡ ÇÏ¾á Áø±â°¡ ¸Éµ½´Ï´Ù.[0;37m')
-            self.sendLine('\r\n[1m´ç½ÅÀÇ ´ÜÀü¿¡ È¸¿À¸®°¡ ¸ô¾ÆÄ¡¸ç ¸öÁÖÀ§¿¡ ÇÏ¾á Áø±â°¡ ¸Éµ½´Ï´Ù.[0;37m')
+                self['ìµœê³ ë‚´ê³µ'] +=1
+            self.sendRoom('[1m' + self['ì´ë¦„'] + 'ì˜ ë‹¨ì „ì— íšŒì˜¤ë¦¬ê°€ ëª°ì•„ì¹˜ë©° ëª¸ì£¼ìœ„ì— í•˜ì–€ ì§„ê¸°ê°€ ë§´ë•ë‹ˆë‹¤.[0;37m')
+            self.sendLine('\r\n[1më‹¹ì‹ ì˜ ë‹¨ì „ì— íšŒì˜¤ë¦¬ê°€ ëª°ì•„ì¹˜ë©° ëª¸ì£¼ìœ„ì— í•˜ì–€ ì§„ê¸°ê°€ ë§´ë•ë‹ˆë‹¤.[0;37m')
             self.lpPrompt()
         if self.tick % 60 == 0:
-            if self['¹«¸²º°È£'] == '' and self['0 ¼º°İÇÃÅ³'] + self['1 ¼º°İÇÃÅ³'] + self['2 ¼º°İÇÃÅ³'] >= MAIN_CONFIG['¹«¸²º°È£ÀÌº¥Æ®Å³¼ö']:
-                self.sendLine('\r\n' + MAIN_CONFIG['¹«¸²º°È£ÀÌº¥Æ®È£Ãâ'])
+            if self['ë¬´ë¦¼ë³„í˜¸'] == '' and self['0 ì„±ê²©í”Œí‚¬'] + self['1 ì„±ê²©í”Œí‚¬'] + self['2 ì„±ê²©í”Œí‚¬'] >= MAIN_CONFIG['ë¬´ë¦¼ë³„í˜¸ì´ë²¤íŠ¸í‚¬ìˆ˜']:
+                self.sendLine('\r\n' + MAIN_CONFIG['ë¬´ë¦¼ë³„í˜¸ì´ë²¤íŠ¸í˜¸ì¶œ'])
                 self.lpPrompt()
         if self.tick % 600 == 0:
             self.save()
         if self.act == ACT_FIGHT:
-            #ÀüÅõÃ³¸®
+            #ì „íˆ¬ì²˜ë¦¬
             self.doFight()
             if len(self.target) == 0:
                 self.doAfterFight()
         elif self.act == ACT_DEATH:
-            #»ç¸ÁÃ³¸®
+            #ì‚¬ë§ì²˜ë¦¬
             self.doDeath()
             return
         else:
@@ -1719,38 +1717,38 @@ class Player(Body):
 
     def autoHpEat(self):
         h = 0
-        if 'Ã¼·Â' not in self.alias:
+        if 'ì²´ë ¥' not in self.alias:
             return
-        if 'Ã¼·Â¾à' not in self.alias:
+        if 'ì²´ë ¥ì•½' not in self.alias:
             return
 
-        food = self.alias['Ã¼·Â¾à']
+        food = self.alias['ì²´ë ¥ì•½']
         if food == '':
             return
 
-        h = getInt(self.alias['Ã¼·Â'])
+        h = getInt(self.alias['ì²´ë ¥'])
         if h == 0:
             return
 
         if self.getHp() < h:
-            self.do_command('%s ¸Ô¾î' % food)
+            self.do_command('%s ë¨¹ì–´' % food)
 
     def autoMpEat(self):
         m = 0
-        if '³»°ø' not in self.alias:
+        if 'ë‚´ê³µ' not in self.alias:
             return
-        if '³»°ø¾à' not in self.alias:
+        if 'ë‚´ê³µì•½' not in self.alias:
             return
-        food = self.alias['³»°ø¾à']
+        food = self.alias['ë‚´ê³µì•½']
         if food == '':
             return
 
-        m = getInt(self.alias['³»°ø'])
+        m = getInt(self.alias['ë‚´ê³µ'])
         if m == 0:
             return
 
         if self.getMp() < m:
-            self.do_command('%s ¸Ô¾î' % food)
+            self.do_command('%s ë¨¹ì–´' % food)
 
     def doAfterFight(self):
         self.moveNext()
@@ -1762,8 +1760,8 @@ class Player(Body):
         if len(self.autoMoveList) == 0:
             return
         att = ''
-        if '°ø°İ' in self.alias:
-            att = self.alias['°ø°İ']
+        if 'ê³µê²©' in self.alias:
+            att = self.alias['ê³µê²©']
           
         if att != '':
             self.do_command(att)
@@ -1773,32 +1771,32 @@ class Player(Body):
         next = self.autoMoveList.pop(0)
         self.do_command(next)
         if len(self.autoMoveList) == 0:
-            self.sendLine('¢Ñ ´õ ÀÌ»ó ÀÌµ¿ ÇÒ °æ·Î°¡ ¾ø½À´Ï´Ù.')
+            self.sendLine('â˜ ë” ì´ìƒ ì´ë™ í•  ê²½ë¡œê°€ ì—†ìŠµë‹ˆë‹¤.')
             self.lpPrompt()
 
     def doSkill(self):
-        #ÀÚµ¿¹«°ø½ÃÀü¼³Á¤ÀÌ µÇ¾îÀÖ´ÂÁöµµ Ã¼Å©ÇÊ¿ä
-        if self.skill == None and self.checkConfig('ÀÚµ¿¹«°ø½ÃÀü'):
-            sName = self['ÀÚµ¿¹«°ø']
+        #ìë™ë¬´ê³µì‹œì „ì„¤ì •ì´ ë˜ì–´ìˆëŠ”ì§€ë„ ì²´í¬í•„ìš”
+        if self.skill == None and self.checkConfig('ìë™ë¬´ê³µì‹œì „'):
+            sName = self['ìë™ë¬´ê³µ']
             if sName != '':
                 self.getSkill(sName)
                 s = self.skill
                 if self.getMp() < s.mp:
-                    self.sendLine('[1m´ç½ÅÀÌ ³»°øÁø±â¸¦ ²ø¾î ¸ğÀ¸Áö¸¸ ±â°¡ Èğ¾îÁ® ¹ö¸³´Ï´Ù.[0;37m')
+                    self.sendLine('[1më‹¹ì‹ ì´ ë‚´ê³µì§„ê¸°ë¥¼ ëŒì–´ ëª¨ìœ¼ì§€ë§Œ ê¸°ê°€ í©ì–´ì ¸ ë²„ë¦½ë‹ˆë‹¤.[0;37m')
                     self.stopSkill()
                     return
                 if  self.getHp() < (self.getMaxHp() * s.hp) / 100 or self.getHp() < (self.getMaxHp() * s.maxhp) / 100:
-                    self.sendLine('[1m´ç½ÅÀÇ ³»°øÁø±â°¡ Èğ¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                    self.sendLine('[1më‹¹ì‹ ì˜ ë‚´ê³µì§„ê¸°ê°€ í©ì–´ì§€ë©° ê¸°ì˜ ìˆœí™˜ì´ ë©ˆì¶”ì–´ ë²„ë¦½ë‹ˆë‹¤.[0;37m')
                     self.stopSkill()
                     return
-                self['³»°ø'] -= s.mp
-                self['Ã¼·Â'] -= (self.getMaxHp() * s.hp) / 100
+                self['ë‚´ê³µ'] -= s.mp
+                self['ì²´ë ¥'] -= (self.getMaxHp() * s.hp) / 100
                 self.skill.init()
                 self.lpPrompt()
                 
                 #print self.skill.bonus
                 self.addStr(self.skill.bonus, False)
-                buf1, buf2, buf3 = self.makeFightScript(self.skill['¹«°ø½ºÅ©¸³'], self.target[0])
+                buf1, buf2, buf3 = self.makeFightScript(self.skill['ë¬´ê³µìŠ¤í¬ë¦½'], self.target[0])
                 self.sendLine('\r\n' + buf1)
                 self.sendRoomFightScript(buf3)
                 if self.getDex() >= 4200:
@@ -1824,16 +1822,16 @@ class Player(Body):
                     for r in s:
                         type = r
                         msg = s[r]
-                        if type == 'ÃÊ½Ä':
-                            if self.checkConfig('¼ö·Ã¸ğµå') == False:
-                                #print mob['ÀÌ¸§']
+                        if type == 'ì´ˆì‹':
+                            if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
+                                #print mob['ì´ë¦„']
                                 buf1, buf2, buf3 = mob.makeFightScript(msg, self)
                                 self.sendFightScript(buf2)
-                        elif type == '°ø°İ':
+                        elif type == 'ê³µê²©':
                             chance = mob.getSkillChance(self)
                             if chance < randint(0, 100):
-                                if self.checkConfig('¼ö·Ã¸ğµå') == False:
-                                    buf1, buf2, buf3 = mob.makeFightScript(mob.skill['½ÇÆĞ'], self)
+                                if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
+                                    buf1, buf2, buf3 = mob.makeFightScript(mob.skill['ì‹¤íŒ¨'], self)
                                     self.sendFightScript(buf2)
                             else:
                                 if vCheck == False:
@@ -1841,14 +1839,14 @@ class Player(Body):
                                     vCheck = True
 
                                 dmg = mob.getSkillPoint(self)
-                                vision = self['ºñÀü¼³Á¤']
+                                vision = self['ë¹„ì „ì„¤ì •']
                                 if vision != '':
-                                    if mob.skill.name == vision.replace('ºñÀü', '') or \
-                                        (mob.skill.name[:2] == 'µ¶' and mob.skill.name[2:].isdigit()):
+                                    if mob.skill.name == vision.replace('ë¹„ì „', '') or \
+                                        (mob.skill.name[:2] == 'ë…' and mob.skill.name[2:].isdigit()):
                                         dmg = int(dmg/2)
                                    
                                 tdmg += dmg
-                                if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                                if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                                     buf1, buf2, buf3 = mob.makeFightScript(msg, self)
                                     self.sendFightScript(buf2 + ' [1;31m%d[0;37m' % dmg)
                                 if self.minusHP(dmg):
@@ -1856,20 +1854,20 @@ class Player(Body):
                                     return -1
             if more == False and mob.skill != None:
                 mob.stopSkill()
-            if more == False or type == '´ë±â':
+            if more == False or type == 'ëŒ€ê¸°':
                 cnt = int(mob.dex / 700)
                 mob.dex = mob.dex % 700
                 for i in range(cnt):
                     chance = mob.getSkillChance(self)
                     if chance < randint(0, 100):
-                        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             buf1, buf2, buf3 = mob.getAttackFailScript(self)
                             self.sendFightScript(buf2)
                     else:
                         dmg, c1, c2 = mob.getAttackPoint(self)
                         tdmg += dmg
                         
-                        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             buf1, buf2, buf3 = mob.getAttackScript(self, dmg, c1, c2)
                             self.sendFightScript(buf2 +  ' [1;31m%d[0;37m' % dmg)
                         self.addAnger()
@@ -1885,21 +1883,21 @@ class Player(Body):
     def doFight(self, advance = False):
         if advance and self._advance:
             return
-        #self.sendLine('%d' % self['Èû°æÇèÄ¡'])
+        #self.sendLine('%d' % self['í˜ê²½í—˜ì¹˜'])
         if len(self.target) == 0:
             self.act = ACT_STAND
             return
         c = 0
         tdmg = 0
         more = False
-        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
             self.sendLine('')
         if advance == False:
             self.dex += self.getDex() + 700
         else:
             self.dex = self.getDex()
         
-        # È¤½Ã³ª Å¸°ÙÀÌ ´Ù¸¥·ë¿¡ ÀÖ°Å³ª È°¼ºÈ­»óÅÂ°¡ ¾Æ´Ò¶§ Å¸°Ù Á¤¸®
+        # í˜¹ì‹œë‚˜ íƒ€ê²Ÿì´ ë‹¤ë¥¸ë£¸ì— ìˆê±°ë‚˜ í™œì„±í™”ìƒíƒœê°€ ì•„ë‹ë•Œ íƒ€ê²Ÿ ì •ë¦¬
         target = copy.copy(self.target)
         for mob in target:
             if mob.env != self.env or mob.act > 1:
@@ -1911,7 +1909,7 @@ class Player(Body):
         target = copy.copy(self.target)
         mob = self.target[0]
         dmg = 1
-        if target[0].get('ÀüÅõÁ¾·ù') >= 1 or len(target) > 1 or self.fightMode == True:
+        if target[0].get('ì „íˆ¬ì¢…ë¥˜') >= 1 or len(target) > 1 or self.fightMode == True:
             if advance == False:
                 ret = self.fightMobNormal()
                 if ret == -1:
@@ -1924,45 +1922,45 @@ class Player(Body):
                     for r in s:
                         type = r
                         msg = s[r]
-                        if type == 'ÃÊ½Ä':
+                        if type == 'ì´ˆì‹':
                             buf1, buf2, buf3 = self.makeFightScript(msg, mob)
                             self.sendFightScript(buf1)
                             self.checkItemSkill()
-                        elif type == '°ø°İ':
+                        elif type == 'ê³µê²©':
                             target = copy.copy(self.target)
                             for mob in target:
                                 chance = self.getSkillChance(mob)
                                 if chance < randint(0, 100):
-                                    if self.checkConfig('¼ö·Ã¸ğµå') == False:
-                                        buf1, buf2, buf3 = self.makeFightScript(self.skill['½ÇÆĞ'], mob)
+                                    if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
+                                        buf1, buf2, buf3 = self.makeFightScript(self.skill['ì‹¤íŒ¨'], mob)
                                         self.sendFightScript(buf1)
                                     self.checkItemSkill()
-                                    #½ÇÆĞ
+                                    #ì‹¤íŒ¨
                                     self.addDex(1)
-                                    #¹«°ø ¼º ¿Ã¸² Ã¼Å©ÇØ¾ßÇÔ
+                                    #ë¬´ê³µ ì„± ì˜¬ë¦¼ ì²´í¬í•´ì•¼í•¨
                                     self.weaponSkillUp()
                                 else:
                                     
                                     dmg = self.getSkillPoint(mob)
-                                    if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                                    if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                                         buf1, buf2, buf3 = self.makeFightScript(msg, mob)
                                         self.sendFightScript(buf1 + ' [1;36m%d[0;37m' % dmg)
                                     self.checkItemSkill()
                                     self.addStr(1)
                                     self.weaponSkillUp()
-                                    if mob.minusHP(dmg, who = self['ÀÌ¸§']):
+                                    if mob.minusHP(dmg, who = self['ì´ë¦„']):
                                         self.dex = 0
                                         #self.clearTarget(mob)
                                         if self.skill != None and self.skill.is_allAttack() == False:
                                             r = self.recoverDemage(tdmg)
-                                            self['Ã¼·Â'] += r
+                                            self['ì²´ë ¥'] += r
                                             if len(self.target) != 0:
                                                 self.stopSkill()
                                             self.lpPrompt()
                                             return
                                         if len(self.target) == 0:
                                             r = self.recoverDemage(tdmg)
-                                            self['Ã¼·Â'] += r
+                                            self['ì²´ë ¥'] += r
                                             self.stopSkill()
                                             self.lpPrompt()
                                             return
@@ -1973,16 +1971,16 @@ class Player(Body):
             if more == False and self.skill != None:
                 self.skillUp()
                 self.stopSkill()
-            if more == False or type == '´ë±â':
+            if more == False or type == 'ëŒ€ê¸°':
                 cnt = int(self.dex / 700)
                 self.dex = self.dex % 700
                 for l in range(cnt):
                     chance = self.getAttackChance(mob)
                     if chance < randint(0, 100):
                         buf1, buf2, buf3 = self.getAttackFailScript(mob)
-                        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             self.sendFightScript(buf1)
-                        if is_player(mob) and mob.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if is_player(mob) and mob.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             mob.sendFightScript(buf2)
                         self.checkItemSkill()
                         self.addDex(1)
@@ -1991,17 +1989,17 @@ class Player(Body):
                         
                         dmg, c1, c2 = self.getAttackPoint(mob)
                         buf1, buf2, buf3 = self.getAttackScript(mob, dmg, c1, c2)
-                        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             self.sendFightScript(buf1 + ' [1;36m%d[0;37m' % dmg)
-                        if is_player(mob) and mob.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if is_player(mob) and mob.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             mob.sendFightScript(buf2 + ' [1;31m%d[0;37m' % dmg)
                         self.checkItemSkill()
-                        #self.sendLine('´ç½ÅÀº ' + target[0].getName() + han_obj(target[0].getName())+ ' ÈÄ·ÁÄ¨´Ï´Ù. %d' % dmg)
+                        #self.sendLine('ë‹¹ì‹ ì€ ' + target[0].getName() + han_obj(target[0].getName())+ ' í›„ë ¤ì¹©ë‹ˆë‹¤. %d' % dmg)
                         self.addStr(1)
                         self.weaponSkillUp()
-                        if target[0].minusHP(dmg, who = self['ÀÌ¸§']):
+                        if target[0].minusHP(dmg, who = self['ì´ë¦„']):
                             r = self.recoverDemage(tdmg)
-                            self['Ã¼·Â'] += r
+                            self['ì²´ë ¥'] += r
                             #self.clearTarget(target[0])
                             if len(self.target) != 0:
                                 self.stopSkill()
@@ -2016,49 +2014,49 @@ class Player(Body):
                     for r in s:
                         type = r
                         msg = s[r]
-                        if type == 'ÃÊ½Ä':
-                            if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if type == 'ì´ˆì‹':
+                            if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                                 buf1, buf2, buf3 = self.makeFightScript(msg, mob)
                                 self.sendFightScript(buf1)
                             self.checkItemSkill()
-                        elif type == '°ø°İ':
+                        elif type == 'ê³µê²©':
                             chance = self.getSkillChance(mob)
                             if chance < randint(0, 100):
-                                if self.checkConfig('¼ö·Ã¸ğµå') == False:
-                                    buf1, buf2, buf3 = self.makeFightScript(self.skill['½ÇÆĞ'], mob)
+                                if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
+                                    buf1, buf2, buf3 = self.makeFightScript(self.skill['ì‹¤íŒ¨'], mob)
                                     self.sendFightScript(buf1)
                                 self.checkItemSkill()
-                                #½ÇÆĞ
+                                #ì‹¤íŒ¨
                                 self.addDex(1)
-                                #¹«°ø ¼º ¿Ã¸² Ã¼Å©ÇØ¾ßÇÔ
+                                #ë¬´ê³µ ì„± ì˜¬ë¦¼ ì²´í¬í•´ì•¼í•¨
                                 self.weaponSkillUp()
                             else:
                                 dmg = self.getSkillPoint(mob)
-                                if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                                if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                                     buf1, buf2, buf3 = self.makeFightScript(msg, mob)
                                     self.sendFightScript(buf1 + ' [1;36m%d[0;37m' % dmg)
                                 self.checkItemSkill()
                                 self.addStr(1)
                                 self.weaponSkillUp()
-                                if mob.minusHP(dmg, who = self['ÀÌ¸§']):
+                                if mob.minusHP(dmg, who = self['ì´ë¦„']):
                                     r = self.recoverDemage(tdmg)
-                                    self['Ã¼·Â'] += r
+                                    self['ì²´ë ¥'] += r
                                     #self.clearTarget(mob)
                                     self.lpPrompt()
                                     return
             if more == False and self.skill != None:
                 self.skillUp()
                 self.stopSkill()
-            if more == False or type == '´ë±â':
+            if more == False or type == 'ëŒ€ê¸°':
                 cnt = int(self.dex / 700)
                 self.dex = self.dex % 700
                 for l in range(cnt):
                     chance = self.getAttackChance(mob)
                     if chance < randint(0, 100):
-                        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             buf1, buf2, buf3 = self.getAttackFailScript(mob)
                             self.sendFightScript(buf1)
-                        if is_player(mob) and mob.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if is_player(mob) and mob.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             buf1, buf2, buf3 = self.getAttackFailScript(mob)
                             mob.sendFightScript(buf2)
                         self.checkItemSkill()
@@ -2066,18 +2064,18 @@ class Player(Body):
                         self.weaponSkillUp()
                     else:
                         dmg, c1, c2 = self.getAttackPoint(mob)
-                        if self.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             buf1, buf2, buf3 = self.getAttackScript(mob, dmg, c1, c2)
                             self.sendFightScript(buf1 + ' [1;36m%d[0;37m' % dmg)
-                        if is_player(mob) and mob.checkConfig('¼ö·Ã¸ğµå') == False:
+                        if is_player(mob) and mob.checkConfig('ìˆ˜ë ¨ëª¨ë“œ') == False:
                             buf1, buf2, buf3 = self.getAttackScript(mob, dmg, c1, c2)
                             mob.sendFightScript(buf2 + ' [1;31m%d[0;37m' % dmg)
                         self.checkItemSkill()
                         self.addStr(1)
                         self.weaponSkillUp()
-                        if mob.minusHP(dmg, who = self['ÀÌ¸§']):
+                        if mob.minusHP(dmg, who = self['ì´ë¦„']):
                             r = self.recoverDemage(tdmg)
-                            self['Ã¼·Â'] += r
+                            self['ì²´ë ¥'] += r
                             #self.clearTarget(mob)
                             self.lpPrompt()
                             return
@@ -2087,15 +2085,15 @@ class Player(Body):
                     return
                 tdmg += ret
         r = self.recoverDemage(tdmg)
-        self['Ã¼·Â'] += r
+        self['ì²´ë ¥'] += r
         self.startSkill()
-        if self.checkConfig('¼ö·Ã¸ğµå'):
+        if self.checkConfig('ìˆ˜ë ¨ëª¨ë“œ'):
             self.fightPrompt()
         else:
             self.lpPrompt()
         if len(self.target) != 0:
             mob = self.target[0]
-            if is_player(mob) and mob.checkConfig('¼ö·Ã¸ğµå'):
+            if is_player(mob) and mob.checkConfig('ìˆ˜ë ¨ëª¨ë“œ'):
                 mob.fightPrompt()
             else:
                 mob.lpPrompt()
@@ -2103,80 +2101,80 @@ class Player(Body):
     def startSkill(self):
         if self.skill != None:
             pass
-        elif self.checkConfig('ÀÚµ¿¹«°ø½ÃÀü'):
-            sName = self['ÀÚµ¿¹«°ø']
+        elif self.checkConfig('ìë™ë¬´ê³µì‹œì „'):
+            sName = self['ìë™ë¬´ê³µ']
             if sName != '':
                 self.getSkill(sName)
                 s = self.skill
                 if self.getMp() < s.mp:
-                    self.sendLine('[1m´ç½ÅÀÌ ³»°øÁø±â¸¦ ²ø¾î ¸ğÀ¸Áö¸¸ ±â°¡ Èğ¾îÁ® ¹ö¸³´Ï´Ù.[0;37m')
+                    self.sendLine('[1më‹¹ì‹ ì´ ë‚´ê³µì§„ê¸°ë¥¼ ëŒì–´ ëª¨ìœ¼ì§€ë§Œ ê¸°ê°€ í©ì–´ì ¸ ë²„ë¦½ë‹ˆë‹¤.[0;37m')
                     self.stopSkill()
                     return
                 if  self.getHp() < (self.getMaxHp() * s.hp) / 100 or self.getHp() < (self.getMaxHp() * s.maxhp) / 100:
-                    self.sendLine('[1m´ç½ÅÀÇ ³»°øÁø±â°¡ Èğ¾îÁö¸ç ±âÀÇ ¼øÈ¯ÀÌ ¸ØÃß¾î ¹ö¸³´Ï´Ù.[0;37m')
+                    self.sendLine('[1më‹¹ì‹ ì˜ ë‚´ê³µì§„ê¸°ê°€ í©ì–´ì§€ë©° ê¸°ì˜ ìˆœí™˜ì´ ë©ˆì¶”ì–´ ë²„ë¦½ë‹ˆë‹¤.[0;37m')
                     self.stopSkill()
                     return
-                self['³»°ø'] -= s.mp
-                self['Ã¼·Â'] -= (self.getMaxHp() * s.hp) / 100
+                self['ë‚´ê³µ'] -= s.mp
+                self['ì²´ë ¥'] -= (self.getMaxHp() * s.hp) / 100
                 self.skill.init()
                 #print self.skill.bonus
                 self.addStr(self.skill.bonus)
-                buf1, buf2, buf3 = self.makeFightScript(self.skill['¹«°ø½ºÅ©¸³'], self.target[0])
+                buf1, buf2, buf3 = self.makeFightScript(self.skill['ë¬´ê³µìŠ¤í¬ë¦½'], self.target[0])
                 self.sendFightScript(buf1)
                 #self.sendRoomFightScript(buf3)
 
     def doDeath(self):
         if self.stepDeath == 0:
-            self.sendLine('\r\n±âÇ÷ÀÌ °Å²Ù·Î µ¹¸ç Á¤½ÅÀÌ È¥¹ÌÇØ Áı´Ï´Ù.')
+            self.sendLine('\r\nê¸°í˜ˆì´ ê±°ê¾¸ë¡œ ëŒë©° ì •ì‹ ì´ í˜¼ë¯¸í•´ ì§‘ë‹ˆë‹¤.')
             self.lpPrompt()
         elif self.stepDeath == 1:
-            self.sendLine('\r\n´©±º°¡°¡ ´ç½Å ÁÖÀ§¸¦ ¾î½½·· °Å¸³´Ï´Ù.')
+            self.sendLine('\r\nëˆ„êµ°ê°€ê°€ ë‹¹ì‹  ì£¼ìœ„ë¥¼ ì–´ìŠ¬ë  ê±°ë¦½ë‹ˆë‹¤.')
             self.lpPrompt()
         elif self.stepDeath == 2:
-            self.sendLine('\r\n¿õ¼º ¿õ¼º °Å¸®´Â ¼Ò¸®°¡ ±ÓÀü¿¡ ¸Éµ¹¸ç Á¡Á¡ ¸Ö¾îÁ® °©´Ï´Ù.')
+            self.sendLine('\r\nì›…ì„± ì›…ì„± ê±°ë¦¬ëŠ” ì†Œë¦¬ê°€ ê·“ì „ì— ë§´ëŒë©° ì ì  ë©€ì–´ì ¸ ê°‘ë‹ˆë‹¤.')
             self.lpPrompt()
         elif self.stepDeath == 3:
-            room = getRoom('³«¾ç¼º:7')
-            self.enterRoom(room, '»ç¸Á', '»ç¸Á')
+            room = getRoom('ë‚™ì–‘ì„±:7')
+            self.enterRoom(room, 'ì‚¬ë§', 'ì‚¬ë§')
             self.lpPrompt()
         elif self.stepDeath == 4:
-            self.sendLine('\r\nÄÚ³¡À» Âî¸£´Â Çâ³¿»õ¿¡ Á¤½ÅÀ» Â÷·Áº¸´Ï ÀåÀÇ»ç ³»ºÎ´Ù.')
+            self.sendLine('\r\nì½”ëì„ ì°Œë¥´ëŠ” í–¥ëƒ„ìƒˆì— ì •ì‹ ì„ ì°¨ë ¤ë³´ë‹ˆ ì¥ì˜ì‚¬ ë‚´ë¶€ë‹¤.')
             self.lpPrompt()
         elif self.stepDeath == 5:
-            self.sendLine('\r\nÀåÀÇ»ç°¡ ¸»ÇÕ´Ï´Ù. "¾Ñ~~ Á×ÀºÁÙ ¾Ë¾Ò´Âµ¥ ´Ù½Ã ±ú¾î³ª´Â±º~"')
+            self.sendLine('\r\nì¥ì˜ì‚¬ê°€ ë§í•©ë‹ˆë‹¤. "ì•—~~ ì£½ì€ì¤„ ì•Œì•˜ëŠ”ë° ë‹¤ì‹œ ê¹¨ì–´ë‚˜ëŠ”êµ°~"')
             self.lpPrompt()
         elif self.stepDeath == 6:
-            self.sendLine('\r\nÀåÀÇ»ç°¡ ¸»ÇÕ´Ï´Ù. "ÇÏ³ª»ÓÀÎ ¸ñ¼û ¹«¸ğÇÏ°Ô Çàµ¿ÇÏÁö ¸»°í Á¶½ÉÇØ¼­ Çàµ¿ÇÏ°Ô³ª."')
+            self.sendLine('\r\nì¥ì˜ì‚¬ê°€ ë§í•©ë‹ˆë‹¤. "í•˜ë‚˜ë¿ì¸ ëª©ìˆ¨ ë¬´ëª¨í•˜ê²Œ í–‰ë™í•˜ì§€ ë§ê³  ì¡°ì‹¬í•´ì„œ í–‰ë™í•˜ê²Œë‚˜."')
             self.lpPrompt()
         elif self.stepDeath == 7:
-            self.sendLine('\r\n´ç½ÅÀÌ ¶°ÁöÁö ¾Ê´Â ´«À» Èû°ã°Ô ¶ß¸ç ÁÖÀ§¸¦ »ìÆì º¾´Ï´Ù.')
+            self.sendLine('\r\në‹¹ì‹ ì´ ë– ì§€ì§€ ì•ŠëŠ” ëˆˆì„ í˜ê²¹ê²Œ ëœ¨ë©° ì£¼ìœ„ë¥¼ ì‚´í´ ë´…ë‹ˆë‹¤.')
             self.lpPrompt()
         elif self.stepDeath == 8:
-            # º¸Çè°¡ÀÔ À¯¹«Ã³¸® ÇÊ¿ä
+            # ë³´í—˜ê°€ì… ìœ ë¬´ì²˜ë¦¬ í•„ìš”
             if self.insure == 0:
-                self.sendLine('\r\nÀåÀÇ»ç°¡ ¸»ÇÕ´Ï´Ù. "ÂìÂì... Ç¥±¹¿¡¼­ º¸ÇèÀ» µéÁö ¾Ê¾Ò±º..."')
-                self.sendLine('                   "¹«¸®ÇÑ ¹«°ø¼ö·ÃÀº È­¸¦ ÀÚÃÊÇÑ´Ù³×."')
+                self.sendLine('\r\nì¥ì˜ì‚¬ê°€ ë§í•©ë‹ˆë‹¤. "ì¯§ì¯§... í‘œêµ­ì—ì„œ ë³´í—˜ì„ ë“¤ì§€ ì•Šì•˜êµ°..."')
+                self.sendLine('                   "ë¬´ë¦¬í•œ ë¬´ê³µìˆ˜ë ¨ì€ í™”ë¥¼ ìì´ˆí•œë‹¤ë„¤."')
             else:
-                self.sendLine('\r\nÀåÀÇ»ç°¡ ¸»ÇÕ´Ï´Ù. \"ÀÚ³×°¡ °¡Áö°í ´Ù´Ï´ø ¹°°ÇÀº Ç¥±¹¿¡¼­ È¸¼ö ÇØ¿ÔÀ¸´Ï\"')
-                self.sendLine('                   \"ÀÒ¾î¹ö¸° °ÍÀÌ ¾ø´ÂÁö È®ÀÎÇØ º¸°Ô³ª..\"')
-                self.sendLine('                   \"Ç¥±¹¹«»ç°¡ ±×·¯´Âµ¥ º¸Çè·á°¡ ³ª°¬´Ù´õ±º...\"')
+                self.sendLine('\r\nì¥ì˜ì‚¬ê°€ ë§í•©ë‹ˆë‹¤. \"ìë„¤ê°€ ê°€ì§€ê³  ë‹¤ë‹ˆë˜ ë¬¼ê±´ì€ í‘œêµ­ì—ì„œ íšŒìˆ˜ í•´ì™”ìœ¼ë‹ˆ\"')
+                self.sendLine('                   \"ìƒì–´ë²„ë¦° ê²ƒì´ ì—†ëŠ”ì§€ í™•ì¸í•´ ë³´ê²Œë‚˜..\"')
+                self.sendLine('                   \"í‘œêµ­ë¬´ì‚¬ê°€ ê·¸ëŸ¬ëŠ”ë° ë³´í—˜ë£Œê°€ ë‚˜ê°”ë‹¤ë”êµ°...\"')
             self.lpPrompt()
         elif self.stepDeath == 9:
-            self.sendLine('\r\n´ç½ÅÀÌ ÀÚ¼¼¸¦ Æí¾ÈÈ÷ ÇÏ¸ç ¿î±âÁ¶½Ä¿¡ µé¾î°©´Ï´Ù.')
-            self.sendLine(HIC + '´ç½ÅÀÇ ±âÇ÷ÀÌ Å¸µ¿ÇÏ±â ½ÃÀÛÇÕ´Ï´Ù.' + '[0;37m')
-            self.sendRoom('%s ÀÚ¼¼¸¦ Æí¾ÈÈ÷ ÇÏ¸ç ¿î±âÁ¶½Ä¿¡ µé¾î°©´Ï´Ù.' % self.han_iga())
+            self.sendLine('\r\në‹¹ì‹ ì´ ìì„¸ë¥¼ í¸ì•ˆíˆ í•˜ë©° ìš´ê¸°ì¡°ì‹ì— ë“¤ì–´ê°‘ë‹ˆë‹¤.')
+            self.sendLine(HIC + 'ë‹¹ì‹ ì˜ ê¸°í˜ˆì´ íƒ€ë™í•˜ê¸° ì‹œì‘í•©ë‹ˆë‹¤.' + '[0;37m')
+            self.sendRoom('%s ìì„¸ë¥¼ í¸ì•ˆíˆ í•˜ë©° ìš´ê¸°ì¡°ì‹ì— ë“¤ì–´ê°‘ë‹ˆë‹¤.' % self.han_iga())
             self.act = ACT_REST
             self.INTERACTIVE = 1
             self.input_to(self.parse_command)
             self.stepDeath = 0
-            self.set('Ã¼·Â', int(self.get('ÃÖ°íÃ¼·Â') * 0.33))
+            self.set('ì²´ë ¥', int(self.get('ìµœê³ ì²´ë ¥') * 0.33))
             self.lpPrompt()
             return
 
         self.stepDeath += 1
 
     def recover(self):
-        #Ã¼·ÂÈ¸º¹
+        #ì²´ë ¥íšŒë³µ
         hp = self.getHp()
         maxhp = self.getMaxHp()
         
@@ -2184,13 +2182,13 @@ class Player(Body):
         maxmp = self.getMaxMp()
         
         if self.act == ACT_STAND:
-            # 10% È¸º¹
+            # 10% íšŒë³µ
             r = 0.1
         elif self.act == ACT_REST:
-            # 20% È¸º¹
+            # 20% íšŒë³µ
             r = 0.2
         elif self.act == ACT_FIGHT:
-            # 5% È¸º¹
+            # 5% íšŒë³µ
             r = 0.05
         else:
             r = 0
@@ -2198,13 +2196,13 @@ class Player(Body):
             hp += int (maxhp * r)
             if hp >= maxhp:
                 hp = maxhp
-            self.set('Ã¼·Â', hp)
+            self.set('ì²´ë ¥', hp)
         
         if mp < maxmp:
             mp += int (maxmp * r)
             if mp >= maxmp:
                 mp = maxmp
-            self.set('³»°ø', mp)
+            self.set('ë‚´ê³µ', mp)
 
     def doEmotion(self, cmd, line):
         kd = EMOTION[cmd].splitlines()
@@ -2230,7 +2228,7 @@ class Player(Body):
         elif is_player(obj):
             sub = line[len(l[0]):].strip()
             e = kd[1]
-            if obj.checkConfig('Á¢ÃË°ÅºÎ') and len(kd) == 3:
+            if obj.checkConfig('ì ‘ì´‰ê±°ë¶€') and len(kd) == 3:
                 e = kd[2]
             buf1, buf2, buf3 = EMOTION.makeScript(e, self.getNameA(), obj.getNameA(), sub)
             self.sendLine(buf1)
@@ -2253,7 +2251,7 @@ class Player(Body):
         return self.Configs[cfg]
         
     def _checkConfig(self, config):
-        kl = self['¼³Á¤»óÅÂ'].splitlines()
+        kl = self['ì„¤ì •ìƒíƒœ'].splitlines()
         for k in kl:
             if k.find(config) == 0:
                 if len(k.split()) > 1 and k.split()[1] == '1':
@@ -2264,7 +2262,7 @@ class Player(Body):
     def setConfig(self, config):
         c = ''
         find = False
-        kl = self['¼³Á¤»óÅÂ'].splitlines()
+        kl = self['ì„¤ì •ìƒíƒœ'].splitlines()
         for k in kl:
             if k.find(config) == 0:
                 find = True
@@ -2278,13 +2276,13 @@ class Player(Body):
             c += k + '\r\n'
         if find == False:
             c += config + ' 1'
-        self['¼³Á¤»óÅÂ'] = c
+        self['ì„¤ì •ìƒíƒœ'] = c
         
         self.loadConfig()
         
     def loadAlias(self):
         self.alias = {}
-        s = self['ÁÙÀÓ¸»¸®½ºÆ®'].splitlines()
+        s = self['ì¤„ì„ë§ë¦¬ìŠ¤íŠ¸'].splitlines()
         for key in s:
             ss = key.split(None, 1)
             self.alias[ss[0]] = ss[1]
@@ -2293,11 +2291,11 @@ class Player(Body):
         msg = ''
         for key in self.alias:
             msg += key + ' ' + self.alias[key] + '\r\n'
-        self['ÁÙÀÓ¸»¸®½ºÆ®'] = msg
+        self['ì¤„ì„ë§ë¦¬ìŠ¤íŠ¸'] = msg
         
     def setAlias(self, key, data):
         if key in self.alias:
-            self.sendLine('¢Ñ ÀÌ¹Ì ¼³Á¤µÇ¾î ÀÖ´Â ÁÙÀÓ¸»ÀÔ´Ï´Ù.')
+            self.sendLine('â˜ ì´ë¯¸ ì„¤ì •ë˜ì–´ ìˆëŠ” ì¤„ì„ë§ì…ë‹ˆë‹¤.')
             return False
         self.alias[key] = data
         self.buildAlias()
@@ -2305,7 +2303,7 @@ class Player(Body):
     
     def delAlias(self, key):
         if key not in self.alias:
-            self.sendLine('¢Ñ ÁÙÀÓ¸»ÀÌ ¼³Á¤µÇ¾î ÀÖÁö ¾Ê¾Æ¿ä. ^^')
+            self.sendLine('â˜ ì¤„ì„ë§ì´ ì„¤ì •ë˜ì–´ ìˆì§€ ì•Šì•„ìš”. ^^')
             return False
         self.alias.__delitem__(key)
         self.buildAlias()
@@ -2313,21 +2311,21 @@ class Player(Body):
     
     def sendRoomFightScript(self, line, noPrompt = False, ex = []):
         for obj in self.env.objs:
-            if is_player(obj) and obj != self and obj not in ex and obj.checkConfig('Å¸ÀÎÀüÅõÃâ·Â°ÅºÎ') == False:
+            if is_player(obj) and obj != self and obj not in ex and obj.checkConfig('íƒ€ì¸ì „íˆ¬ì¶œë ¥ê±°ë¶€') == False:
                 obj.sendLine('\r\n' + line)
                 if noPrompt == False:
                     obj.lpPrompt()
         
     def makeHome(self):
         room = Room()
-        room.index = '»ç¿ëÀÚ¸Ê:%s' % self['ÀÌ¸§']
-        room.path = 'data/map/»ç¿ëÀÚ¸Ê/%s.map' % self['ÀÌ¸§']
-        room['ÀÌ¸§'] = '%sÀÇ ¹æ' % self['ÀÌ¸§']
-        room['Á¸ÀÌ¸§'] = '»ç¿ëÀÚ¸Ê'
-        room['¼³¸í'] = '%sÀÇ ¹æÀÌ´Ù.' % self['ÀÌ¸§']
-        room['Ãâ±¸'] = '³«¾ç¼º ³«¾ç¼º:1'
-        room.setAttr('¸Ê¼Ó¼º', '»ç¿ëÀÚÀüÅõ±İÁö')
-        room['ÁÖÀÎ'] = self['ÀÌ¸§']
+        room.index = 'ì‚¬ìš©ìë§µ:%s' % self['ì´ë¦„']
+        room.path = 'data/map/ì‚¬ìš©ìë§µ/%s.map' % self['ì´ë¦„']
+        room['ì´ë¦„'] = '%sì˜ ë°©' % self['ì´ë¦„']
+        room['ì¡´ì´ë¦„'] = 'ì‚¬ìš©ìë§µ'
+        room['ì„¤ëª…'] = '%sì˜ ë°©ì´ë‹¤.' % self['ì´ë¦„']
+        room['ì¶œêµ¬'] = 'ë‚™ì–‘ì„± ë‚™ì–‘ì„±:1'
+        room.setAttr('ë§µì†ì„±', 'ì‚¬ìš©ìì „íˆ¬ê¸ˆì§€')
+        room['ì£¼ì¸'] = self['ì´ë¦„']
         room.save()
         
 def is_player(obj):

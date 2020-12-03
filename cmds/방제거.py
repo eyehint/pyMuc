@@ -1,23 +1,21 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [¹æ¹øÈ£] ¹æÁ¦°Å')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ë°©ë²ˆí˜¸] ë°©ì œê±°')
             return
         
         ret = self.delRoom(line)
         if ret == None:
-            ob.sendLine('Á¸ÀçÇÏÁö¾Ê´Â ¹æÀÔ´Ï´Ù.')
+            ob.sendLine('ì¡´ìž¬í•˜ì§€ì•ŠëŠ” ë°©ìž…ë‹ˆë‹¤.')
             return
         del ret
-        ob.sendLine('¹æÀÌ Á¦°ÅµÇ¾ú½À´Ï´Ù.')
+        ob.sendLine('ë°©ì´ ì œê±°ë˜ì—ˆìŠµë‹ˆë‹¤.')
         
     def delRoom(self, path):
     

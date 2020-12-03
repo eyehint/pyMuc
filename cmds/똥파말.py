@@ -1,24 +1,22 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        if ob['¼Ò¼Ó'] == '':
-            ob.sendLine('¢Ñ ´ç½ÅÀº ¼Ò¼ÓÀÌ ¾ø½À´Ï´Ù.')
+        if ob['ì†Œì†'] == '':
+            ob.sendLine('â˜ ë‹¹ì‹ ì€ ì†Œì†ì´ ì—†ìŠµë‹ˆë‹¤.')
             return
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ı : [³»¿ë] ¹æÆÄ¸»(])')
+            ob.sendLine('â˜ ì‚¬ìš©ë²• : [ë‚´ìš©] ë°©íŒŒë§(])')
             return
-        if ob.checkConfig('¹æÆÄ¸»°ÅºÎ'):
-            ob.sendLine('¢Ñ ¹æÆÄ¸» °ÅºÎÁß ÀÌ¿¡¿ä. *^^*')
+        if ob.checkConfig('ë°©íŒŒë§ê±°ë¶€'):
+            ob.sendLine('â˜ ë°©íŒŒë§ ê±°ë¶€ì¤‘ ì´ì—ìš”. *^^*')
             return
         try:    
-            fp = open('data/log/group/' + ob['¼Ò¼Ó'], 'a')
+            fp = open('data/log/group/' + ob['ì†Œì†'], 'a')
         except:
             pass
-        fp.write(time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime()) + '%-10s' % ob['ÀÌ¸§'] + ': ' + line + '\n')
+        fp.write(time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime()) + '%-10s' % ob['ì´ë¦„'] + ': ' + line + '\n')
         fp.close()
         ob.sendGroup(line, prompt = True)
         

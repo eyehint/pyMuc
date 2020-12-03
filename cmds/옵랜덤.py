@@ -1,27 +1,23 @@
-# -*- coding: euc-kr -*-
-
 from objs.cmd import Command
 
 class CmdObj(Command):
 
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['°ü¸®ÀÚµî±Þ']) < 2000:
-            ob.sendLine('¢Ñ ¹«½¼ ¸»ÀÎÁö ¸ð¸£°Ú¾î¿ä. *^_^*')
+        if getInt(ob['ê´€ë¦¬ìžë“±ê¸‰']) < 2000:
+            ob.sendLine('â˜ž ë¬´ìŠ¨ ë§ì¸ì§€ ëª¨ë¥´ê² ì–´ìš”. *^_^*')
             return
         words = line.split()
         if line == '':
-            ob.sendLine('¢Ñ »ç¿ë¹ý: [´ë»ó] ¿É·£´ý')
+            ob.sendLine('â˜ž ì‚¬ìš©ë²•: [ëŒ€ìƒ] ì˜µëžœë¤')
             return
         name, order = getNameOrder(words[0])
         item = ob.findObjInven(name, order)
         if item == None:
-            ob.sendLine('¢Ñ ±×·± ¾ÆÀÌÅÛÀÌ ¼ÒÁöÇ°¿¡ ¾ø¾î¿ä.')
+            ob.sendLine('â˜ž ê·¸ëŸ° ì•„ì´í…œì´ ì†Œì§€í’ˆì— ì—†ì–´ìš”.')
             return
 
-        item.applyMagic(ob['·¹º§'], 6)
-        ob.sendLine('¢Ñ ¼³Á¤µÇ¾ú½À´Ï´Ù.')
-        #n = stripANSI(item['ÀÌ¸§'])
-        item['ÀÌ¸§'] = '[1;34m' + item['ÀÌ¸§'] + '[0;37m'
-
-        
+        item.applyMagic(ob['ë ˆë²¨'], 6)
+        ob.sendLine('â˜ž ì„¤ì •ë˜ì—ˆìŠµë‹ˆë‹¤.')
+        #n = stripANSI(item['ì´ë¦„'])
+        item['ì´ë¦„'] = '[1;34m' + item['ì´ë¦„'] + '[0;37m'

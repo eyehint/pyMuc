@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from include.define import *
 
 from objs.object import Object
@@ -50,16 +48,16 @@ class Skill(Object):
     def parse(self):
         self.getAttr()
         
-        if self['Á¾·ù'] != 'ÀüÅõ':
+        if self['ì¢…ë¥˜'] != 'ì „íˆ¬':
             return
-        #{1: [{'ÃÊ½Ä': '~~~~'}, {'ÃÊ½Ä': '!!!!!!!!'}], 2: [], 3:[], ...}
+        #{1: [{'ì´ˆì‹': '~~~~'}, {'ì´ˆì‹': '!!!!!!!!'}], 2: [], 3:[], ...}
         self.pattern = {}
-        for line in self['°ø°İ'].splitlines():
+        for line in self['ê³µê²©'].splitlines():
             words = line.split(None, 2)
             #print line
             turn = int(words[0])
             type = words[1]
-            if type != '´ë±â':
+            if type != 'ëŒ€ê¸°':
                 msg = words[2]
             else:
                 msg = ''
@@ -71,32 +69,32 @@ class Skill(Object):
         
         
     def getAttr(self):
-        for config in self['¼Ó¼º'].splitlines():
-            if config.find('Èû°æÇèÄ¡Áõ°¡') == 0:
+        for config in self['ì†ì„±'].splitlines():
+            if config.find('í˜ê²½í—˜ì¹˜ì¦ê°€') == 0:
                 self.bonus = getInt(config.split()[1])
-            elif config.find('³»°ø¼Ò¸ğ') == 0:
+            elif config.find('ë‚´ê³µì†Œëª¨') == 0:
                 self.mp = getInt(config.split()[1])
-            elif config.find('Ã¼·Â¼Ò¸ğ') == 0:
+            elif config.find('ì²´ë ¥ì†Œëª¨') == 0:
                 self.hp = getInt(config.split()[1])
-            elif config.find('Ã¼·Â¿ä±¸') == 0:
+            elif config.find('ì²´ë ¥ìš”êµ¬') == 0:
                 self.maxhp = getInt(config.split()[1])
-            elif config.find('ÀüÃ¼¹«°ø') == 0:
+            elif config.find('ì „ì²´ë¬´ê³µ') == 0:
                 self.all = True
-            elif config.find('°è¿­±İÁö') == 0:
+            elif config.find('ê³„ì—´ê¸ˆì§€') == 0:
                 self.deny = config.split()[1]
                 #if len(attr) == 2:
                 #    self.deny = attr[1]
         
-        for config in self['¹æ¾î´É·Â'].splitlines():
-            if config.find('Èû') == 0:
+        for config in self['ë°©ì–´ëŠ¥ë ¥'].splitlines():
+            if config.find('í˜') == 0:
                 self._str = getInt(config.split()[1])
-            elif config.find('¹ÎÃ¸¼º') == 0:
+            elif config.find('ë¯¼ì²©ì„±') == 0:
                 self._dex = getInt(config.split()[1])
-            elif config.find('¸ËÁı') == 0:
+            elif config.find('ë§·ì§‘') == 0:
                 self._arm = getInt(config.split()[1])
-            elif config.find('³»°ø') == 0:
+            elif config.find('ë‚´ê³µ') == 0:
                 a, self._mp = getNumberPercent(config.split()[1])
-            elif config.find('ÃÖ°í³»°ø') == 0:
+            elif config.find('ìµœê³ ë‚´ê³µ') == 0:
                 a, self._maxmp = getNumberPercent(config.split()[1])
 
     def getAntiType(self):

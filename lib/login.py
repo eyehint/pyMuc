@@ -1,5 +1,3 @@
-# -*- coding: euc-kr -*-
-
 from include.path import *
 from include.define import *
 from lib.object import *
@@ -9,25 +7,25 @@ from lib.comm import broadcast
 from lib.cmd import parse_command
 
 def userlist(ob):
-    list = 'ÃÑ (' + str(len(ob.clients)) + ')\r\n'        
+    list = 'ì´ (' + str(len(ob.clients)) + ')\r\n'        
     #list = ''
     for c in ob.channel.clients:
-        if len(c.get('ÀÌ¸§')) != 0:
-            list += ', ' + c.get('ÀÌ¸§')
+        if len(c.get('ì´ë¦„')) != 0:
+            list += ', ' + c.get('ì´ë¦„')
         else: 
-            list += ', <Á¢¼ÓÁß>'
+            list += ', <ì ‘ì†ì¤‘>'
                                                                    
     ob.sendLine(list);
 
 
 def get_name(self, name, *args):
     if len(name) == 0:
-        self.write('\r\nÀÌ¸§ : ')
+        self.write('\r\nì´ë¦„ : ')
         return
     if is_han(name) == False:
-        self.write('\r\nÇÑ±Û ÀÔ·Â¸¸ °¡´ÉÇÕ´Ï´Ù.\r\ÀÌ¸§ : ')
+        self.write('\r\ní•œê¸€ ì…ë ¥ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.\r\ì´ë¦„ : ')
         return
-    if name == '¼Õ´Ô':
+    if name == 'ì†ë‹˜':
         self.newidx = 0
         newbie_msg(self)
         self.input_to(DoNothing)
@@ -35,24 +33,24 @@ def get_name(self, name, *args):
     
     res = self.load(USER_PATH + name)
     if res == False:
-        self.write('\r\n±×·± »ç¿ëÀÚ´Â ¾ø½À´Ï´Ù.\r\nÀÌ¸§ : ')
+        self.write('\r\nê·¸ëŸ° ì‚¬ìš©ìëŠ” ì—†ìŠµë‹ˆë‹¤.\r\nì´ë¦„ : ')
         return
-    #self.set('ÀÌ¸§', name)
-    self.write('\r\n¾ÏÈ£ : ')
+    #self.set('ì´ë¦„', name)
+    self.write('\r\nì•”í˜¸ : ')
     self.loginRetry = 0
     self.input_to(get_pass)
 
 
 def get_pass(self, line, *args):
     self.loginRetry += 1
-    if len(line) == 0 or self.get('¾ÏÈ£') != line:
+    if len(line) == 0 or self.get('ì•”í˜¸') != line:
         if self.loginRetry >= 3:
             self.write('\r\n')
             self.channel.transport.loseConnection()
             return
-        self.write('\r\nÀß¸øµÈ ¾ÏÈ£ ÀÔ´Ï´Ù.\r\n¾ÏÈ£ : ')
+        self.write('\r\nì˜ëª»ëœ ì•”í˜¸ ì…ë‹ˆë‹¤.\r\nì•”í˜¸ : ')
         return    
-    #self.sendLine('\r\n¶Ç ¿À¼Ì±¸¸¸¿ä^^ ¹İ°¡¿ö¿ä')
+    #self.sendLine('\r\në˜ ì˜¤ì…¨êµ¬ë§Œìš”^^ ë°˜ê°€ì›Œìš”')
     del self.loginRetry
     
     self.write('[2;28r[2J')
@@ -60,17 +58,17 @@ def get_pass(self, line, *args):
     self.state = ACTIVE
     self.channel.clients.append(self)
     self.channel.echoON()
-    broadcast(self.get('ÀÌ¸§') + '´ÔÀÌ µé¾î¿À¼Ì½À´Ï´Ù.', self)
+    broadcast(self.get('ì´ë¦„') + 'ë‹˜ì´ ë“¤ì–´ì˜¤ì…¨ìŠµë‹ˆë‹¤.', self)
     
     from lib.io import cat
     cat(self, 'data/text/notice.txt')
-    self.sendLine('[Enter] Å°¸¦ ´©¸£¼¼¿ä.')
+    self.sendLine('[Enter] í‚¤ë¥¼ ëˆ„ë¥´ì„¸ìš”.')
     self.input_to(showNotice)
     self.start_heart_beat()
 
 
 def showNotice(self, line, *args):
-    room = get_room('½ÃÀÛ/½ÃÀÛ')
+    room = get_room('ì‹œì‘/ì‹œì‘')
     if room != None:
         room.append(self)
 
@@ -86,43 +84,43 @@ def newbie_msg(self):
     if self.newidx == 1:
         self.write('[2J') # CLEAR SCREEN
     elif self.newidx == 2:
-        self.sendLine('\r\n¿Ê±êÀ» °¡º±°Ô Àû½Ã´Â °¡¶ûºñ°¡ ÃËÃËÈ÷ ³»¸®´Â »õº® .......')
+        self.sendLine('\r\nì˜·ê¹ƒì„ ê°€ë³ê²Œ ì ì‹œëŠ” ê°€ë‘ë¹„ê°€ ì´‰ì´‰íˆ ë‚´ë¦¬ëŠ” ìƒˆë²½ .......')
     elif self.newidx == 3:
-        self.sendLine('\r\n¾îµÒÀ» ±úÆ®¸®´Â Ã³ÀıÇÑ ºñ¸í ¼Ò¸®¸¦ µÚ·Î ÇÏ°í »ı»ç¸¦ °Ç Å»ÃâÀ» ÇÏ´Â ÀÌµéÀÌ')
-        self.sendLine('ÀÖ¾ú´Ù.')
+        self.sendLine('\r\nì–´ë‘ ì„ ê¹¨íŠ¸ë¦¬ëŠ” ì²˜ì ˆí•œ ë¹„ëª… ì†Œë¦¬ë¥¼ ë’¤ë¡œ í•˜ê³  ìƒì‚¬ë¥¼ ê±´ íƒˆì¶œì„ í•˜ëŠ” ì´ë“¤ì´')
+        self.sendLine('ìˆì—ˆë‹¤.')
     elif self.newidx == 4:
-        self.sendLine('\r\nµÎ ¸íÀÇ »ç³»¿Í °« ¼¼»ìÀ» ³Ñ¾úÀ» ¸¸ÇÑ ¾ÆÀÌ....')
+        self.sendLine('\r\në‘ ëª…ì˜ ì‚¬ë‚´ì™€ ê°“ ì„¸ì‚´ì„ ë„˜ì—ˆì„ ë§Œí•œ ì•„ì´....')
     elif self.newidx == 5:
-        self.sendLine('\r\nÇÑ ³²ÀÚ´Â Áß³âÀÇ °ÇÀåÇÑ ¸ğ½ÀÀÌ³ª ¿ÂÅë ÇÇ·Î ¹°µé¾î ÀÖ¾ú°í ´Ù¸¥ ÇÑ ³²ÀÚ´Â')
-        self.sendLine('½ÉÇÑ ºÎ»óÀ» ÀÔÀº µí º¹ºÎ¸¦ ¿Ş¼ÕÀ¸·Î °¨½Î°í ¿À¸¥ ¼Õ¿£ °ËÀ» Áã°í ÀÖÀ¸³ª')
-        self.sendLine('¾î±ú¿¡¼­ ºÎÅÍ Èê·¯³»¸° ÇÇ°¡ °Ë½ÅÀ» Å¸°í ²÷ÀÓ ¾øÀÌ Èê·¯ ³»¸®°í ÀÖ¾ú´Ù.')
+        self.sendLine('\r\ní•œ ë‚¨ìëŠ” ì¤‘ë…„ì˜ ê±´ì¥í•œ ëª¨ìŠµì´ë‚˜ ì˜¨í†µ í”¼ë¡œ ë¬¼ë“¤ì–´ ìˆì—ˆê³  ë‹¤ë¥¸ í•œ ë‚¨ìëŠ”')
+        self.sendLine('ì‹¬í•œ ë¶€ìƒì„ ì…ì€ ë“¯ ë³µë¶€ë¥¼ ì™¼ì†ìœ¼ë¡œ ê°ì‹¸ê³  ì˜¤ë¥¸ ì†ì—” ê²€ì„ ì¥ê³  ìˆìœ¼ë‚˜')
+        self.sendLine('ì–´ê¹¨ì—ì„œ ë¶€í„° í˜ëŸ¬ë‚´ë¦° í”¼ê°€ ê²€ì‹ ì„ íƒ€ê³  ëŠì„ ì—†ì´ í˜ëŸ¬ ë‚´ë¦¬ê³  ìˆì—ˆë‹¤.')
     elif self.newidx == 6:
-        self.sendLine('\r\nÀÏÁÖ°¡ ¸»ÇÕ´Ï´Ù. "¼Ò·æ!, ³ª´Â ´õ ÀÌ»ó °¥¼ö°¡ ¾øÀ» °Í °°³×...".')
-        self.sendLine('                 "¾î¼­ ¼ÒÁÖÀÎÀ» ¸ğ½Ã°í  ÀÌ °÷À» ºüÁ®³ª°¡°Ô ....."')
+        self.sendLine('\r\nì¼ì£¼ê°€ ë§í•©ë‹ˆë‹¤. "ì†Œë£¡!, ë‚˜ëŠ” ë” ì´ìƒ ê°ˆìˆ˜ê°€ ì—†ì„ ê²ƒ ê°™ë„¤...".')
+        self.sendLine('                 "ì–´ì„œ ì†Œì£¼ì¸ì„ ëª¨ì‹œê³   ì´ ê³³ì„ ë¹ ì ¸ë‚˜ê°€ê²Œ ....."')
     elif self.newidx == 7:
-        self.sendLine('\r\n                 "¾î¼­ ¼ÒÁÖÀÎÀ» ¸ğ½Ã°í  ÀÌ °÷À» ºüÁ®³ª°¡°Ô ....."')
+        self.sendLine('\r\n                 "ì–´ì„œ ì†Œì£¼ì¸ì„ ëª¨ì‹œê³   ì´ ê³³ì„ ë¹ ì ¸ë‚˜ê°€ê²Œ ....."')
     elif self.newidx == 8:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 9:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 10:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 11:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 12:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 13:
-        self.sendLine('\r\n[Enter] Å°¸¦ ´©¸£¼¼¿ä.\r\n')
+        self.sendLine('\r\n[Enter] í‚¤ë¥¼ ëˆ„ë¥´ì„¸ìš”.\r\n')
         self.input_to(NextPage)
         return
     elif self.newidx == 14:
-        self.sendLine('\r\n±×·¯´ø ¾î´À³¯...')
+        self.sendLine('\r\nê·¸ëŸ¬ë˜ ì–´ëŠë‚ ...')
     elif self.newidx == 15:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 16:
-        self.sendLine('\r\nÄôÄôµû... ÄôÄôµû... ÁÖÀú¸®...ÁÖÀú¸®...')
+        self.sendLine('\r\nì¿µì¿µë”°... ì¿µì¿µë”°... ì£¼ì €ë¦¬...ì£¼ì €ë¦¬...')
     elif self.newidx == 17:
-        self.sendLine('\r\n»ç¿ëÇÒ ÀÌ¸§À» ÀÔ·ÂÇÏ¼¼¿ä.\r\nÀÌ¸§ : ')
+        self.sendLine('\r\nì‚¬ìš©í•  ì´ë¦„ì„ ì…ë ¥í•˜ì„¸ìš”.\r\nì´ë¦„ : ')
         self.input_to(getNewname)
         return
     
@@ -143,46 +141,46 @@ def NextPage(self, line, *args):
 
 def getNewname(self, name, *args):
     if len(name) == 0:
-        self.write('\r\nÇÑ±ÛÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.\r\nÀÌ¸§ : ')
+        self.write('\r\ní•œê¸€ì ì´ìƒ ì…ë ¥í•˜ì„¸ìš”.\r\nì´ë¦„ : ')
         return
     if is_han(name) == False:
-        self.write('\r\nÇÑ±Û ÀÔ·Â¸¸ °¡´ÉÇÕ´Ï´Ù.\r\nÀÌ¸§ : ')
+        self.write('\r\ní•œê¸€ ì…ë ¥ë§Œ ê°€ëŠ¥í•©ë‹ˆë‹¤.\r\nì´ë¦„ : ')
         return
-    if name == '¼Õ´Ô':
-        self.write('\r\n»ç¿ëÇÒ ¼ö ¾ø´Â ÀÌ¸§ÀÔ´Ï´Ù.\r\nÀÌ¸§ : ')
+    if name == 'ì†ë‹˜':
+        self.write('\r\nì‚¬ìš©í•  ìˆ˜ ì—†ëŠ” ì´ë¦„ì…ë‹ˆë‹¤.\r\nì´ë¦„ : ')
         return
     import os
     if os.path.exists(USER_PATH + name) == True:
-        self.write('\r\nÀÌ¹Ì »ç¿ëÁßÀÎ ÀÌ¸§ÀÔ´Ï´Ù.\r\nÀÌ¸§ : ')
+        self.write('\r\nì´ë¯¸ ì‚¬ìš©ì¤‘ì¸ ì´ë¦„ì…ë‹ˆë‹¤.\r\nì´ë¦„ : ')
         return
-    self.set('ÀÌ¸§', name)
-    self.write('\r\n»ç¿ëÇÏ½Ç ¾ÏÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+    self.set('ì´ë¦„', name)
+    self.write('\r\nì‚¬ìš©í•˜ì‹¤ ì•”í˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.\r\nì•”í˜¸ : ')
     self.input_to(getNewpass)
 
 def getNewpass(self, line, *args):
     if len(line) < 3:
-        self.write('\r\n3ÀÚ ÀÌ»ó ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+        self.write('\r\n3ì ì´ìƒ ì…ë ¥í•˜ì„¸ìš”.\r\nì•”í˜¸ : ')
         return
-    self.set('¾ÏÈ£', line)
-    self.write('\r\nÇÑ¹ø ´õ ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+    self.set('ì•”í˜¸', line)
+    self.write('\r\ní•œë²ˆ ë” ì…ë ¥í•˜ì„¸ìš”.\r\nì•”í˜¸ : ')
     self.input_to(getNewpass2)
 
 
 def getNewpass2(self, line, *args):
-    if line != self.get('¾ÏÈ£'):
-        self.write('\r\nÀÌÀü ÀÔ·Â°ú ´Ù¸¨´Ï´Ù.\r\n»ç¿ëÇÏ½Ç ¾ÏÈ£¸¦ ÀÔ·ÂÇÏ¼¼¿ä.\r\n¾ÏÈ£ : ')
+    if line != self.get('ì•”í˜¸'):
+        self.write('\r\nì´ì „ ì…ë ¥ê³¼ ë‹¤ë¦…ë‹ˆë‹¤.\r\nì‚¬ìš©í•˜ì‹¤ ì•”í˜¸ë¥¼ ì…ë ¥í•˜ì„¸ìš”.\r\nì•”í˜¸ : ')
         self.input_to(getNewpass)
         return
     self.init_body()
-    self.save(USER_PATH + self.get('ÀÌ¸§'))
+    self.save(USER_PATH + self.get('ì´ë¦„'))
     self.write('[2;28r[2J')
     self.state = ACTIVE
     self.channel.clients.append(self)
     self.channel.echoON()
-    broadcast(self.get('ÀÌ¸§') + '´ÔÀÌ µé¾î¿À¼Ì½À´Ï´Ù.', self)
+    broadcast(self.get('ì´ë¦„') + 'ë‹˜ì´ ë“¤ì–´ì˜¤ì…¨ìŠµë‹ˆë‹¤.', self)
     
     from lib.io import cat
     cat(self, 'data/text/notice.txt')
-    self.sendLine('[Enter] Å°¸¦ ´©¸£¼¼¿ä.')
+    self.sendLine('[Enter] í‚¤ë¥¼ ëˆ„ë¥´ì„¸ìš”.')
     self.input_to(showNotice)
     self.start_heart_beat()
