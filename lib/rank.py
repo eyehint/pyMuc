@@ -44,5 +44,3 @@ def cat(ob, filename):
     else:
         ob.sendLine(f.read().replace('\n', '\r\n'))
         f.close()
-        # ob.sendLine(f.read())
-        # f.close()

@@ -8,14 +8,13 @@ from lib.cmd import parse_command
 
 def userlist(ob):
     list = '총 (' + str(len(ob.clients)) + ')\r\n'        
-    #list = ''
     for c in ob.channel.clients:
         if len(c.get('이름')) != 0:
             list += ', ' + c.get('이름')
         else: 
             list += ', <접속중>'
                                                                    
-    ob.sendLine(list);
+    ob.sendLine(list)
 
 
 def get_name(self, name, *args):
@@ -23,7 +22,7 @@ def get_name(self, name, *args):
         self.write('\r\n이름 : ')
         return
     if is_han(name) == False:
-        self.write('\r\n한글 입력만 가능합니다.\r\이름 : ')
+        self.write('\r\n한글 입력만 가능합니다.\r\n이름 : ')
         return
     if name == '손님':
         self.newidx = 0
@@ -32,10 +31,9 @@ def get_name(self, name, *args):
         return
     
     res = self.load(USER_PATH + name)
-    if res == False:
+    if not res:
         self.write('\r\n그런 사용자는 없습니다.\r\n이름 : ')
         return
-    #self.set('이름', name)
     self.write('\r\n암호 : ')
     self.loginRetry = 0
     self.input_to(get_pass)
@@ -50,7 +48,6 @@ def get_pass(self, line, *args):
             return
         self.write('\r\n잘못된 암호 입니다.\r\n암호 : ')
         return    
-    #self.sendLine('\r\n또 오셨구만요^^ 반가워요')
     del self.loginRetry
     
     self.write('[2;28r[2J')

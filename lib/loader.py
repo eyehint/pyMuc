@@ -5,17 +5,18 @@ def find(line, word):
     i = 0
     l = len(word)
     L = len(line)
-    if l > L :
+    if l > L:
         return -1
     cnt = L - l
     while i < cnt:
-        if line[i:i+l] == word:
+        if line[i:i + l] == word:
             return i
         a = ord(line[i])
-        if a >= 0xB0 and a <= 0xC8:
+        if 0xB0 <= a <= 0xC8:
             i += 1
         i += 1
     return -1
+
 
 def toNumber(s):
     if len(s) > 1 and s[0] == '0':
@@ -28,11 +29,12 @@ def toNumber(s):
         except ValueError:
             return s
 
+
 def load_script(path):
     try:
         f = open(path)
     except IOError:
-        #print 'load_script(%s) IOError' % path
+        # print 'load_script(%s) IOError' % path
         return None
     object = {}
     """
@@ -43,21 +45,19 @@ def load_script(path):
     """
     status = -1
     segname = ''
-
     for line in f:
-
         line = line.strip()
+        print(line)
+
         if len(line) == 0:
             continue
-        
         comment = find(line, '；')
         if comment == 0:
             continue
         elif comment != -1:
             line = line[0:comment]
-        line = line.strip()
-        
         if line[0] == '[':
+            print(line)
             segname = line[1:-1].strip()
             if segname not in object:
                 segment = {}
@@ -73,8 +73,8 @@ def load_script(path):
                 else:
                     segment = {}
                     object[segname].append(segment)
-
         elif line[0] == '#':
+            print(object)
             keyname = line[1:]
             if type(object[segname]) is dict:
                 object[segname][keyname] = ''
@@ -99,11 +99,12 @@ def load_script(path):
                     object[segname][-1][keyname] = str(object[segname][-1][keyname]) + '\r\n' + str(keydata)
         else:
             continue
-            
+
     f.close()
     return object
 
-def save_list(f, x, first = 0):
+
+def save_list(f, x, first=0):
     f.write('[\n')
     for l in x:
         if first != 0:
@@ -129,7 +130,7 @@ def save_list(f, x, first = 0):
     f.write(']')
 
 
-def save_dict(f, x, first = 0):
+def save_dict(f, x, first=0):
     f.write('{\n')
     for key in x:
         if first != 0:
@@ -152,7 +153,7 @@ def save_dict(f, x, first = 0):
         elif type(x[key]) == dict:
             f.write(strk + ': ')
             save_dict(f, x[key], first + 1)
-        
+
         if key is not list(x.keys())[-1]:
             if type(x[key]) == dict:
                 f.write(',\n\n')
@@ -169,6 +170,7 @@ def save_dict(f, x, first = 0):
     else:
         f.write('}')
 
+
 def save_script(f, x):
     """
     [segment_name]
@@ -180,13 +182,13 @@ def save_script(f, x):
         return False
     if type(f) is not file:
         return False
-        
+
     for segName in x:
         if type(x[segName]) != list:
             f.write('[' + str(segName) + ']\n\n')
             for keyName in x[segName]:
                 f.write('#' + str(keyName) + '\n')
-                
+
                 if type(x[segName][keyName]) == list:
                     for keyData in x[segName][keyName]:
                         f.write(':' + str(keyData) + '\n')
@@ -196,7 +198,7 @@ def save_script(f, x):
                     else:
                         lines = x[segName][keyName].splitlines()
                         for line in lines:
-                            #f.write(':' + str(x[segName][keyName]) + '\n')
+                            # f.write(':' + str(x[segName][keyName]) + '\n')
                             f.write(':' + line + '\n')
                 f.write('\n')
             f.seek(-2, os.SEEK_CUR)
@@ -207,7 +209,7 @@ def save_script(f, x):
                 f.write('[' + str(segName) + ']\n\n')
                 for keyName in segment:
                     f.write('#' + str(keyName) + '\n')
-                    
+
                     if type(segment[keyName]) == list:
                         for keyData in segment[keyName]:
                             f.write(':' + str(keyData) + '\n')
@@ -242,6 +244,7 @@ def load_object(path):
         return None
 
     return o
+
 
 """
 o = load_script('용파리')
