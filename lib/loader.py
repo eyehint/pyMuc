@@ -55,7 +55,6 @@ def load_script(path):
         elif comment != -1:
             line = line[0:comment].strip()
         if line[0] == '[':
-            print(line)
             segname = line[1:-1].strip()
             if segname not in object:
                 segment = {}
@@ -72,7 +71,7 @@ def load_script(path):
                     segment = {}
                     object[segname].append(segment)
         elif line[0] == '#':
-            print(object)
+            # print(object)
             keyname = line[1:]
             if type(object[segname]) is dict:
                 object[segname][keyname] = ''
