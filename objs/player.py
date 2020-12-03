@@ -1,37 +1,27 @@
-import os
 import sys
-import glob
-import traceback
 import copy
+import sys
 import time
+import traceback
 from random import randint
+
 from twisted.internet import reactor
 
-# from objs.object import Object
-from objs.body import Body
-from objs.item import Item, getItem, is_item
-from objs.room import Room, getRoom
-from objs.mob import Mob, getMob, is_mob
-from objs.config import Config, MAIN_CONFIG
-from objs.skill import Skill, MUGONG
-from objs.emotion import Emotion, EMOTION
-from objs.nickname import Nickname, NICKNAME
-from objs.oneitem import Oneitem, ONEITEM
-from objs.script import SCRIPT
-from objs.doumi import DOUMI
-from objs.help import HELP
-from objs.box import Box, is_box
-from objs.rank import Rank, RANK
-from objs.guild import GUILD
 from include.ansi import *
-from include.path import *
 from include.define import *
-
+from include.path import *
+from lib.func import *
 from lib.hangul import *
 from lib.loader import load_script, save_script
-from lib.func import *
-
-from client import queue
+from objs.body import Body
+from objs.box import is_box
+from objs.config import MAIN_CONFIG
+from objs.emotion import EMOTION
+from objs.guild import GUILD
+from objs.item import getItem, is_item
+from objs.mob import is_mob
+from objs.oneitem import ONEITEM
+from objs.room import Room, getRoom
 
 
 class Host:
@@ -308,15 +298,14 @@ class Player(Body):
         return True
 
     def write(self, line):
-        if self.channel == None:
+        if self.channel is None:
             return
-        self.channel.transport.write(line)
+        self.channel.transport.write(line.encode("utf-8"))
 
     def sendLine(self, line):
-        # self.channel.write(line + '\r\n')
-        if self.channel == None:
+        if self.channel is None:
             return
-        self.channel.transport.write('%s\r\n' % line)
+        self.channel.transport.write(('%s\r\n' % line).encode("utf-8"))
 
     def sendGroup(self, line, prompt=False, ex=None):
         if self['소속'] == '':
