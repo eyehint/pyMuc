@@ -61,14 +61,14 @@ def parse_command(self, line, *args):
             Player.emotes[cmd].cmd(self, param)
         except :
             traceback.print_exc(file=sys.stderr)
-            print 'Error in %s' % cmd
+            print('Error in %s' % cmd)
         return
     elif cmd in Player.cmdList:
         try:
             Player.cmdList[cmd].cmd(self, param)
         except :
             traceback.print_exc(file=sys.stderr)
-            print 'Error in %s' % cmd
+            print('Error in %s' % cmd)
         
         # 사용자의 명령을 처리후 몹 엑션 후크
         for obj in self.env.objs:

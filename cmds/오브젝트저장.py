@@ -25,7 +25,7 @@ class CmdObj(Command):
         else:
             ob.sendLine('☞ 저장할 수 없어요!')
             return
-        l = target.attr.keys()
+        l = list(target.attr.keys())
         l.sort()
         for at in l:
             msg += '#%s\n' % at

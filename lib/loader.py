@@ -117,7 +117,7 @@ def save_list(f, x, first = 0):
                 f.write('\t')
         if type(l) == int:
             f.write(str(l))
-        elif type(l) == long:
+        elif type(l) == int:
             f.write(str(l))
         elif type(l) == str:
             f.write('\'' + str(l) + '\'')
@@ -147,7 +147,7 @@ def save_dict(f, x, first = 0):
 
         if type(key) == str and key[0] == '_':
             continue
-        if type(x[key]) == int or type(x[key]) == float or type(x[key]) == long:
+        if type(x[key]) == int or type(x[key]) == float or type(x[key]) == int:
             f.write(strk + ': ' + str(x[key]))
         elif type(x[key]) == str:
             """print (strk + ': \'' + str(x[key]) + '\'' + '\n')"""
@@ -159,7 +159,7 @@ def save_dict(f, x, first = 0):
             f.write(strk + ': ')
             save_dict(f, x[key], first + 1)
         
-        if key is not x.keys()[-1]:
+        if key is not list(x.keys())[-1]:
             if type(x[key]) == dict:
                 f.write(',\n\n')
             else:
@@ -197,7 +197,7 @@ def save_script(f, x):
                     for keyData in x[segName][keyName]:
                         f.write(':' + str(keyData) + '\n')
                 else:
-                    if type(x[segName][keyName]) == int or type(x[segName][keyName]) == long:
+                    if type(x[segName][keyName]) == int or type(x[segName][keyName]) == int:
                         f.write(':' + str(x[segName][keyName]) + '\n')
                     else:
                         lines = x[segName][keyName].splitlines()
@@ -236,15 +236,15 @@ def save_object(f, x):
 
 def load_object(path):
     try:
-        execfile(path)
+        exec(compile(open(path, "rb").read(), path, 'exec'))
     except:
-        print 'ERROR : execfile() in load_object(' + path + ')'
+        print('ERROR : execfile() in load_object(' + path + ')')
         return None
 
     try:
         o = locals()['obj']
     except:
-        print 'ERROR : locals()[] in load_object(' + path + ')'
+        print('ERROR : locals()[] in load_object(' + path + ')')
         return None
 
     return o

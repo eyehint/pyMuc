@@ -48,7 +48,7 @@ class Loop:
                     rooms.append(player.env)
         except :
             traceback.print_exc(file=sys.stderr)
-            print player['이름']
+            print(player['이름'])
         
         if len(Client.players) != 0:
             self.updateRooms(rooms)
@@ -67,16 +67,16 @@ class Loop:
         
     def updateZones(self):
         if len(self.zoneList) == 0:
-            self.zoneList = Room.Zones.keys() 
+            self.zoneList = list(Room.Zones.keys()) 
         zoneName = self.zoneList.pop()
         zone = Room.Zones[zoneName]
-	try:
+        try:
             for roomName in zone:
                 room = zone[roomName]
                 room.update()
         except :
             traceback.print_exc(file=sys.stderr)
-   
+
     def updateRooms(self, rooms):
         try:
             for room in rooms:

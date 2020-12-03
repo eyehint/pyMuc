@@ -1,7 +1,7 @@
 import time
-import Queue
+import queue
 
-queue = Queue.Queue()
+queue = queue.Queue()
 
 #from twisted.protocols.telnet import *
 from twisted.protocols import basic

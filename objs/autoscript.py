@@ -9,14 +9,14 @@ class autoScript():
         self.name = ''
         
     def run(self):
-        print(self.player['이름'] + ' %d/%d' %(self.lineNum, self.lastNum))
+        print((self.player['이름'] + ' %d/%d' %(self.lineNum, self.lastNum)))
         if self.player == None:
             return
         printLine = False
         loopcount = 0
         while(True):
             if loopcount > 50:
-                print('Exceed loop count in autoscript.py : lineNum = %d' % self.lineNum)
+                print(('Exceed loop count in autoscript.py : lineNum = %d' % self.lineNum))
                 self.player.sendLine('* 취소합니다.')
                 self.player.stopAutoScript()
                 return
@@ -83,7 +83,7 @@ class autoScript():
                     return
                 elif l[:9] == '$입력확인':
                     self.lineNum += 1
-                    from __builtin__ import type
+                    from builtins import type
                     if type(self.player.temp_input) == list:
                         self.player.write('입력하신 내용이 맞습니까? (네/취소) : ')
                     else:

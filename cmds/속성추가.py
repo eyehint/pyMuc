@@ -16,7 +16,7 @@ class CmdObj(Command):
             ob.sendLine('☞ 그런 대상이 없어요!')
             return
         try:
-            v = long(words[2])
+            v = int(words[2])
         except:
             v = words[2]
          

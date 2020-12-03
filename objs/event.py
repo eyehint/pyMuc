@@ -73,10 +73,10 @@ def doEvent(self, mob, key, words):
             elif func == '$강화확인4000!':
                 index, cnt = getStrCnt(sline)
                 item = self.getItemIndex(index)
-                print '11'
+                print('11')
                 if item != None and item['공격력'] < 4000:
                     searchEnd = True
-                    print '22'
+                    print('22')
             elif func == '$아이템확인!':
                 index, cnt = getStrCnt(sline)
                 if index == '은전' and cnt < 1:
@@ -319,7 +319,7 @@ def doEvent(self, mob, key, words):
                 if len(words) != 3:
                     self.sendLine('☞ 바꿀별호를 입력하세요.')
                     continue
-                print words[1]
+                print(words[1])
                 if self['무림별호'] == '':
                     self.sendLine('☞ 당신은 무명객입니다.')
                     continue
@@ -533,7 +533,7 @@ def doEvent(self, mob, key, words):
                 oldattr = mob.attr
                 #mob.attr = copy.deepcopy(oldattr)
                 mob.attr = {}
-                for k in oldattr.keys():
+                for k in list(oldattr.keys()):
                     mob.attr[k] = oldattr[k]
                 del oldattr
                 mob['체력'] = mob.hp = self['최고체력'] * 6
@@ -545,7 +545,7 @@ def doEvent(self, mob, key, words):
             elif func == '$중급수련':
                 oldattr = mob.attr
                 mob.attr = {}
-                for k in oldattr.keys():
+                for k in list(oldattr.keys()):
                     mob.attr[k] = oldattr[k]
                 del oldattr
                 mob['힘'] = self['힘'] * 1

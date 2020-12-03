@@ -1,6 +1,6 @@
 def log(line):
     import time
-    print time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime()) + line
+    print(time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime()) + line)
 
 def getStrCnt(line):
     from random import randint
@@ -42,14 +42,14 @@ def getInt(s):
     if s == '':
         return 0
     try:
-        i = long(s)
+        i = int(s)
     except:
         if s[0].isdigit() == False:
             return 0
         c = 0
         for c in range(len(s)):
             if s[c].isdigit() == False and c != 0:
-                return long( s[0:c] )
+                return int( s[0:c] )
     return i
 
 def getNameOrder(name):

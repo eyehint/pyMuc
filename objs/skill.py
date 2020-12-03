@@ -120,7 +120,7 @@ class Skill(Object):
         #print self.curturn, self.step, dex, start, self.end
         for i in range(start, self.end + 1):
             if i > self.maxturn:
-                print 'break'
+                print('break')
                 break
             if i not in self.pattern:
                 break

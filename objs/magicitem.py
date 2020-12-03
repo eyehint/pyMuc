@@ -378,7 +378,7 @@ def applyMagic(self, level, num = 0, force = 0):
 
     name = self['이름']
     name1 = self.getStrip('이름')
-    print name, self.getOptionStr()
+    print(name, self.getOptionStr())
 
     if num > 2 or z == True:
         self.setAttr('아이템속성', '버리지못함')

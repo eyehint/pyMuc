@@ -92,7 +92,7 @@ class CmdObj(Command):
 
     def explorer(self, ob, env, direction):
         if env == None:
-            print 'env is None'
+            print('env is None')
             return
         #print env.index, direction
 
@@ -121,14 +121,14 @@ class CmdObj(Command):
                 continue
             r = env.getExit(exit)
             if r == None:
-                print env.index, exit
+                print(env.index, exit)
                 continue
             if env.zone != r.zone:
                 continue
             n = self.count_explorer(ob, r, exit)
             dirs[exit] = n
         import operator
-        sorted_x = sorted(dirs.iteritems(), key=operator.itemgetter(1))
+        sorted_x = sorted(iter(dirs.items()), key=operator.itemgetter(1))
         sorted_l = []
         for item in sorted_x:
             sorted_l.append(item[0]) 
@@ -142,7 +142,7 @@ class CmdObj(Command):
                 continue
             r = env.getExit(exit)
             if r == None:
-                print env.index, exit
+                print(env.index, exit)
                 continue
             if env.zone != r.zone:
                 continue

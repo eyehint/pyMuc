@@ -747,7 +747,7 @@ class Mob(Body):
         #print dmg, c1, c2, c, len(s)
         i = len(s) - 1 - c
         if i < 0 or i > len(s) - 1:
-            print 'mob.getAttackScript'
+            print('mob.getAttackScript')
             i = 0
         s = s[i]
         #s = s[randint(0, len(s) - 1)]

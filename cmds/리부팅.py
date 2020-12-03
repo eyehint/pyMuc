@@ -10,7 +10,7 @@ class CmdObj(Command):
 
     def updateZones(self):
         for zoneName in Room.Zones:
-            print "update zones..." + zoneName
+            print("update zones..." + zoneName)
             zone = Room.Zones[zoneName]
             for roomName in zone:
                 room = zone[roomName]

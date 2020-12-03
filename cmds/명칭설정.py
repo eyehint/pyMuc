@@ -14,7 +14,7 @@ class CmdObj(Command):
 
         GUILD[ob['소속']]['%s명칭' % words[0]] = words[1]
         GUILD.save()
-        print GUILD[ob['소속']]['%s명칭' % words[0]]
+        print(GUILD[ob['소속']]['%s명칭' % words[0]])
         msg = '%s %s의 명칭을 [1m%s[0;37m%s 변경하여 선포합니다.' % (ob.han_iga(), words[0], words[1], han_uro(words[1]))
         ob.sendGroup(msg, prompt = True)
         

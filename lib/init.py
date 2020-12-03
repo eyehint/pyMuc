@@ -12,7 +12,7 @@ def init_commands():
     
     for script in scripts:
         try:
-            execfile(script)
+            exec(compile(open(script, "rb").read(), script, 'exec'))
         except NameError:
             continue
       
@@ -32,7 +32,7 @@ def init_emotes():
     
     for script in scripts:
         try:
-            execfile(script)
+            exec(compile(open(script, "rb").read(), script, 'exec'))
         except NameError:
             continue
         

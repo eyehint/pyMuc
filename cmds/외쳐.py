@@ -67,7 +67,7 @@ class CmdObj(Command):
             else:
                 ply.sendLine('\r\n' + buf + '[0;37;40m')
                 ply.lpPrompt()
-        _content = unicode(stripANSI(m2), 'euc-kr').encode('utf-8')
+        _content = str(stripANSI(m2), 'euc-kr').encode('utf-8')
         queue.put(_content)
 
     def checkConfig(self, ob, config):

@@ -50,7 +50,7 @@ class CmdObj(Command):
                 ob.sendLine('☞ 그런 아이템이 소지품에 없어요.')
                 return
             itm = getItem('강철조각')
-            for i in xrange(c):
+            for i in range(c):
                 it = itm.deepclone()
                 ob.objs.append(it)
         else:

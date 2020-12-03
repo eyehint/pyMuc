@@ -17,7 +17,7 @@ class CmdObj(Command):
                 ob.sendLine('☞ 그런 대상이 없어요!')
                 return
         msg = ''
-        l = target.attr.keys()
+        l = list(target.attr.keys())
         l.sort()
         for at in l:
             msg += '#%s\r\n' % at

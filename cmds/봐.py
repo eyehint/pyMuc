@@ -45,7 +45,7 @@ class CmdObj(Command):
             ob.viewMapData()
             return
         if ob.env == None:
-            print ob['이름']
+            print(ob['이름'])
             return
 
         words = line.split()

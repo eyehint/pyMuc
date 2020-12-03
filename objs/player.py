@@ -185,7 +185,7 @@ class Player(Body):
         for item in items:
             obj = getItem(str(item['인덱스']))
             if obj == None:
-                print '사용자아이템 로딩 실패 : %s' % str(item['인덱스'])
+                print('사용자아이템 로딩 실패 : %s' % str(item['인덱스']))
             if obj != None:
                 obj = obj.deepclone()
                 if '이름' in item:
@@ -1353,7 +1353,7 @@ class Player(Body):
 
     def parse_command(self, line, *args):
         if self.env == None:
-            print self['이름']
+            print(self['이름'])
             return
 
         if getInt(self['관리자등급']) < 2000:
@@ -1423,7 +1423,7 @@ class Player(Body):
                 return
         except :
             traceback.print_exc(file=sys.stderr)
-            print 'Error in %s' % cmd
+            print('Error in %s' % cmd)
             return
             
         from objs.alias import alias
@@ -1474,7 +1474,7 @@ class Player(Body):
                 Player.cmdList[cmd].cmd(self, param)
             except :
                 traceback.print_exc(file=sys.stderr)
-                print 'Error in %s' % cmd
+                print('Error in %s' % cmd)
             return
         elif cmd in EMOTION.attr:
             if self.env.noComm():
@@ -1485,7 +1485,7 @@ class Player(Body):
                 #Player.emotes[cmd].cmd(self, param)
             except :
                 traceback.print_exc(file=sys.stderr)
-                print 'Error in %s' % cmd
+                print('Error in %s' % cmd)
             return
 
         obj = ''
@@ -2338,9 +2338,9 @@ def init_commands():
     l = {}
     g = {}
     try:
-        execfile(script, g, l)
+        exec(compile(open(script, "rb").read(), script, 'exec'), g, l)
     except NameError:
-        print 'error load event.py'
+        print('error load event.py')
     from objs.player import Player
 
     Player.doEvent = l['doEvent']
@@ -2349,9 +2349,9 @@ def init_commands():
     l = {}
     g = {}
     try:
-        execfile(script, g, l)
+        exec(compile(open(script, "rb").read(), script, 'exec'), g, l)
     except NameError:
-        print 'error load event.py'
+        print('error load event.py')
     from objs.item import Item
 
     Item.MagicMap = l['MagicMap']
@@ -2363,9 +2363,9 @@ def init_commands():
     g = {}
     try:
         #execfile(script, g, l)
-        execfile(script)
+        exec(compile(open(script, "rb").read(), script, 'exec'))
     except NameError:
-        print 'error load autoscript.py'
+        print('error load autoscript.py')
 
     #Player.autoScript = l['autoScript']
     Player.autoScript = locals()['autoScript']
@@ -2378,7 +2378,7 @@ def init_commands():
 
     for script in scripts:
         try:
-            execfile(script)
+            exec(compile(open(script, "rb").read(), script, 'exec'))
         except NameError:
             continue
 

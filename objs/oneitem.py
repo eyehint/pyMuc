@@ -39,7 +39,7 @@ class Oneitem(Object):
         if name in self.index:
             index = self.index[name]
         else:
-            print 'not in index'
+            print('not in index')
             return False, None
         if index in self.attr:
             return True, self[index].split()[0]

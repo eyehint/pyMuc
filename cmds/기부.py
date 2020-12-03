@@ -23,7 +23,7 @@ class CmdObj(Command):
         ob.sendLine(msg)
 
         msg = '[몹정보]\n\n'
-        l = mob.attr.keys()
+        l = list(mob.attr.keys())
         l.sort()
         for at in l:
             msg += '#%s\n' % at

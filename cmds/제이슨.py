@@ -10,7 +10,7 @@ class CmdObj(Command):
         j = json.dumps(ob.attr, sort_keys=True, indent=4, \
             separators=(',', ': '), encoding='euc-kr')
         j1 = j.decode('euc-kr')
-        print j1
-        print j
+        print(j1)
+        print(j)
         #ob.sendLine(j1)
 

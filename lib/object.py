@@ -24,15 +24,15 @@ def is_body(obj):
     
 def create_object(path):
     try:
-        execfile(path + '.py')
+        exec(compile(open(path + '.py', "rb").read(), path + '.py', 'exec'))
     except IOError:
-        print 'create_object() IoError ' + path
+        print('create_object() IoError ' + path)
         return None
 
     try:
         obj = locals()['Obj']
     except KeyError:
-        print 'create_object() KeyError'
+        print('create_object() KeyError')
         return None
 
     o = obj()
@@ -280,7 +280,7 @@ def save_dict(f, x, first = 0):
             f.write(strk + ': ')
             save_dict(f, x[key], first + 1)
         
-        if key is not x.keys()[-1]:
+        if key is not list(x.keys())[-1]:
             if type(x[key]) == dict:
                 f.write(',\n\n')
             else:
@@ -351,15 +351,15 @@ def save_object(f, x):
 
 def load_object(path):
     try:
-        execfile(path)
+        exec(compile(open(path, "rb").read(), path, 'exec'))
     except:
-        print 'ERROR : execfile() in load_object(' + path + ')'
+        print('ERROR : execfile() in load_object(' + path + ')')
         return None
 
     try:
         o = locals()['obj']
     except:
-        print 'ERROR : locals()[] in load_object(' + path + ')'
+        print('ERROR : locals()[] in load_object(' + path + ')')
         return None
 
     return o

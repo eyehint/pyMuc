@@ -43,7 +43,7 @@ class Box(Object):
         for item in items:
             obj = getItem(str(item['인덱스']))
             if obj == None:
-                print '보관함아이템 로딩 실패 : %s' % str(item['인덱스'])
+                print('보관함아이템 로딩 실패 : %s' % str(item['인덱스']))
             if obj != None:
                 obj = obj.deepclone()
                 if '확장 이름' in item:

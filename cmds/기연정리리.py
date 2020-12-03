@@ -40,7 +40,7 @@ class CmdObj(Command):
                 ob.sendLine('아직 3일이 경과하지 않았습니다.')
                 return
             for obj in player.objs:
-                print obj['이름']
+                print(obj['이름'])
                 if obj.index == index:
                     player.objs.remove(obj)
                     player.save(False)
