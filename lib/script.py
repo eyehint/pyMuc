@@ -18,31 +18,31 @@ mp_script = [
 
 def get_mp_script(ob):
     mp = ob.get('내공')
-    if mp >= 0 and mp <= 100:
+    if 0 <= mp <= 100:
         return mp_script[0]
-    elif mp > 100 and mp <= 250:
+    elif 100 < mp <= 250:
         return mp_script[1]
-    elif mp > 251 and mp <= 400:
+    elif 251 < mp <= 400:
         return mp_script[2]
-    elif mp > 401 and mp <= 600:
+    elif 401 < mp <= 600:
         return mp_script[3]
-    elif mp > 601 and mp <= 800:
+    elif 601 < mp <= 800:
         return mp_script[4]
-    elif mp > 801 and mp <= 1050:
+    elif 801 < mp <= 1050:
         return mp_script[5]
-    elif mp > 1051 and mp <= 1300:
+    elif 1051 < mp <= 1300:
         return mp_script[6]
-    elif mp > 1301 and mp <= 1550:
+    elif 1301 < mp <= 1550:
         return mp_script[7]
-    elif mp > 1551 and mp <= 1850:
+    elif 1551 < mp <= 1850:
         return mp_script[8]
-    elif mp > 1851 and mp <= 2150:
+    elif 1851 < mp <= 2150:
         return mp_script[9]
-    elif mp > 2151 and mp <= 2550:
+    elif 2151 < mp <= 2550:
         return mp_script[10]
-    elif mp > 2551 and mp <= 3050:
+    elif 2551 < mp <= 3050:
         return mp_script[11]
-    elif mp > 3051 and mp <= 9999:
+    elif 3051 < mp <= 9999:
         return mp_script[12]
     elif mp > 9999:
         return mp_script[13]
@@ -104,41 +104,41 @@ def get_arm_script(ob):
     arm = ob.getArmor()
     if arm is None:
         arm = 0
-    if arm >= 0 and arm <= 10:
+    if 0 <= arm <= 10:
         return arm_script[18]
-    if arm >= 11 and arm <= 31:
+    if 11 <= arm <= 31:
         return arm_script[17]
-    if arm >= 32 and arm <= 57:
+    if 32 <= arm <= 57:
         return arm_script[16]
-    if arm >= 58 and arm <= 88:
+    if 58 <= arm <= 88:
         return arm_script[15]
-    if arm >= 89 and arm <= 119:
+    if 89 <= arm <= 119:
         return arm_script[14]
-    if arm >= 120 and arm <= 135:
+    if 120 <= arm <= 135:
         return arm_script[13]
-    if arm >= 136 and arm <= 176:
+    if 136 <= arm <= 176:
         return arm_script[12]
-    if arm >= 177 and arm <= 217:
+    if 177 <= arm <= 217:
         return arm_script[11]
-    if arm >= 218 and arm <= 262:
+    if 218 <= arm <= 262:
         return arm_script[10]
-    if arm >= 263 and arm <= 313:
+    if 263 <= arm <= 313:
         return arm_script[9]
-    if arm >= 314 and arm <= 368:
+    if 314 <= arm <= 368:
         return arm_script[8]
-    if arm >= 369 and arm <= 429:
+    if 369 <= arm <= 429:
         return arm_script[7]
-    if arm >= 430 and arm <= 495:
+    if 430 <= arm <= 495:
         return arm_script[6]
-    if arm >= 496 and arm <= 566:
+    if 496 <= arm <= 566:
         return arm_script[5]
-    if arm >= 557 and arm <= 642:
+    if 557 <= arm <= 642:
         return arm_script[4]
-    if arm >= 643 and arm <= 723:
+    if 643 <= arm <= 723:
         return arm_script[3]
-    if arm >= 724 and arm <= 804:
+    if 724 <= arm <= 804:
         return arm_script[2]
-    if arm >= 805 and arm <= 885:
+    if 805 <= arm <= 885:
         return arm_script[1]
     if arm >= 886:
         return arm_script[0]

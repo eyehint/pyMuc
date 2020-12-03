@@ -42,7 +42,7 @@ def load_script(path):
     ;comment
     """
     status = -1
-    segName = ''
+    segname = ''
 
     for line in f:
 
@@ -50,7 +50,6 @@ def load_script(path):
         if len(line) == 0:
             continue
         
-        #comment = line.find('；')
         comment = find(line, '；')
         if comment == 0:
             continue
@@ -77,14 +76,9 @@ def load_script(path):
 
         elif line[0] == '#':
             keyname = line[1:]
-
             if type(object[segname]) is dict:
-#if object[segname].has_key(keyname):
-#                    print '%s dup! %s' % (keyname, path)
                 object[segname][keyname] = ''
             else:
-#                if object[segname][-1].has_key(keyname):
-#                    print '%s dup!! %s' % (keyname, path)
                 object[segname][-1][keyname] = ''
         elif line[0] == ':':
             keydata = line[1:]

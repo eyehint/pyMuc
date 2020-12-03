@@ -7,7 +7,7 @@ import time
 from random import randint
 from twisted.internet import reactor
 
-#from objs.object import Object
+# from objs.object import Object
 from objs.body import Body
 from objs.item import Item, getItem, is_item
 from objs.room import Room, getRoom
@@ -33,42 +33,45 @@ from lib.func import *
 
 from client import queue
 
+
 class Host:
     host = ''
+
 
 class Transport:
 
     def write(self, line):
         return
-        
+
     def loseConnection(self):
         return
 
     def getPeer(self):
         host = Host()
         return host
-        
+
+
 class Channel:
     def __init__(self):
         self.transport = Transport()
         self.player = None
         self.players = []
-        
+
     def write(self, line):
         return
 
-class Player(Body):
 
+class Player(Body):
     cmdList = {}
     chatHistory = []
     adultCH = []
 
-    CFG = ['자동습득', '비교거부', '접촉거부', '동행거부', '전음거부', 
-    '외침거부', '방파말거부', '간략설명', '엘피출력', '나침반제거',
-    '운영자안시거부', '사용자안시거부', '입출입메세지거부', 
-    '타인전투출력거부', '자동무공시전', '순위거부', '수련모드', '잡담시간보기',
-    '자동채널입장']
-	
+    CFG = ['자동습득', '비교거부', '접촉거부', '동행거부', '전음거부',
+           '외침거부', '방파말거부', '간략설명', '엘피출력', '나침반제거',
+           '운영자안시거부', '사용자안시거부', '입출입메세지거부',
+           '타인전투출력거부', '자동무공시전', '순위거부', '수련모드', '잡담시간보기',
+           '자동채널입장']
+
     def __init__(self):
         Body.__init__(self)
         self.bPlayer = 1
@@ -102,7 +105,7 @@ class Player(Body):
 
     def __del__(self):
         pass
-        #print 'Delete!!! ' + self.get('이름')
+        # print 'Delete!!! ' + self.get('이름')
 
     def getNameA(self):
         return '[1m' + self.get('이름') + '[0;37m'
@@ -115,7 +118,7 @@ class Player(Body):
             del item
         del objs
         self.objs = []
-    
+
     def logout(self):
         self.delFollow()
         self.delFollower()
@@ -123,7 +126,7 @@ class Player(Body):
 
         if self in self.adultCH:
             self.adultCH.remove(self)
-	    buf = '\r\n[1;31m①⑨[0;37m ' + self.getNameA() + '님이 퇴장하셨습니다.'
+            buf = '\r\n[1;31m①⑨[0;37m ' + self.getNameA() + '님이 퇴장하셨습니다.'
             for ply in self.adultCH:
                 ply.sendLine(buf)
                 ply.lpPrompt()
@@ -154,7 +157,7 @@ class Player(Body):
         else:
             buf = '☞ [[0;30;47m무명객[0;37;40m] '
         msg = '%s %s 강호를 떠나 초옥에 은거 합니다.' % (buf, self.han_iga())
-        self.channel.sendToAllInOut(msg, ex = self)
+        self.channel.sendToAllInOut(msg, ex=self)
 
     def load(self, path):
 
@@ -167,21 +170,21 @@ class Player(Body):
             self.attr = scr['사용자오브젝트']
         except:
             return False
-        
+
         self.loadConfig()
         self.loadAlias()
         self.loadSkillList()
         self.loadSkillUp()
-        
+
         items = None
         if '아이템' not in scr:
             return True
 
         items = scr['아이템']
-        
+
         if type(items) == dict:
             items = [items]
-        
+
         for item in items:
             obj = getItem(str(item['인덱스']))
             if obj == None:
@@ -225,7 +228,7 @@ class Player(Body):
                                 elif op == '필살':
                                     self._critical += option[op]
                                 elif op == '운':
-                                     self._criticalChance += option[op]
+                                    self._criticalChance += option[op]
                                 elif op == '회피':
                                     self._miss += option[op]
                                 elif op == '명중':
@@ -239,23 +242,23 @@ class Player(Body):
                     obj.set('확장 이름', item['확장 이름'])
                 if '체력' in item:
                     obj.hp = item['체력']
-                #if '시간' in item:
+                # if '시간' in item:
                 #    obj.set('시간', item['시간'])
                 self.insert(obj)
-            
+
         for memo in scr:
             if memo.find('메모') == 0:
                 self.memo[memo] = scr[memo]
-        
+
         return True
-        
-    def save(self, mode = True):
+
+    def save(self, mode=True):
         if mode == True:
             self['마지막저장시간'] = int(time.time())
         self.buildSkillList()
         self.buildSkillUp()
         self.buildSkills()
-        
+
         o = {}
         o['사용자오브젝트'] = self.attr
 
@@ -292,7 +295,7 @@ class Player(Body):
 
         for memo in self.memo:
             o[memo] = self.memo[memo]
-            
+
         try:
             f = open('data/user/' + self.get('이름'), 'w')
         except:
@@ -310,12 +313,12 @@ class Player(Body):
         self.channel.transport.write(line)
 
     def sendLine(self, line):
-        #self.channel.write(line + '\r\n')
+        # self.channel.write(line + '\r\n')
         if self.channel == None:
             return
         self.channel.transport.write('%s\r\n' % line)
-    
-    def sendGroup(self, line, prompt = False, ex = None):
+
+    def sendGroup(self, line, prompt=False, ex=None):
         if self['소속'] == '':
             return
         g = GUILD[self['소속']]
@@ -327,10 +330,10 @@ class Player(Body):
             if ply.state == ACTIVE and ply['소속'] == self['소속'] and ply != ex and ply.checkConfig('방파말거부') == False:
                 if ply != self:
                     ply.sendLine('')
-                ply.sendLine('[1m《[36m%s[37mː[36m%s[37m》[0;37m ' % ( buf, self['이름'])+ line)
+                ply.sendLine('[1m《[36m%s[37mː[36m%s[37m》[0;37m ' % (buf, self['이름']) + line)
                 if prompt and ply != self:
                     ply.lpPrompt()
-                
+
     def sendFightScript(self, line):
         if self.checkConfig('수련모드') == False:
             self.channel.transport.write('%s\r\n' % line)
@@ -339,84 +342,84 @@ class Player(Body):
         if self.INTERACTIVE != 1:
             return
         line = '\r\n[0;37;40m[ ' + str(self.getHp()) + '/' + \
-            str(self.getMaxHp()) + \
-            ', ' + str(self.getMp()) + '/' + \
-            str(self.getMaxMp()) + ' ] \r'
+               str(self.getMaxHp()) + \
+               ', ' + str(self.getMp()) + '/' + \
+               str(self.getMaxMp()) + ' ] \r'
         self.write(line)
-        
+
     def input_to(self, func, *args):
         self.process_input = func
         self.process_input_args = args
 
     def view(self, ob):
-            ob.sendLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-            m = self.get('무림별호')
-            if m == '':
-                m = '무명객'
-            c = self.get('성격')
-            if c == '':
-                c = '없음'
-            s = '『%s』 %s' % (m, self.get('이름'))
-            ob.sendLine('[0m[44m[1m[37m◆ 이  름 ▷ %-24s ◆ 성격 ▷ 『%s』   [0m[37m[40m' % (s, c))
-            m = self.get('배우자')
-            if m == '':
-                m = '미혼'
-            s = '『%s』' % m
-            s1 = '%d살(%s)' %(self.get('나이'), self.get('성별'))
-            ob.sendLine('[0m[44m[1m[37m◆ 배우자 ▷ %-24s ◆ 나이 ▷ %-9s  [0m[37m[40m' % (s, s1))
-            m = self['소속']
-            if m != '':
-                s = '■ 소  속 ▷ 『%s』' % m
-                ob.sendLine('[0m[44m[1m[37m%-60s[0m[37m[40m' % s)
-                g = GUILD[self['소속']]
-                if '%s명칭' % self['직위'] in g:
-                    buf = g['%s명칭' % self['직위']]
-                else:
-                    buf = self['직위']
-                r = self['방파별호']
-                if r == '':
-                    s = '■ 직  위 ▷ 『%s』' % buf
-                else:
-                    s = '■ 직  위 ▷ 『%s(%s)』' % (buf, r)
-                ob.sendLine('[0m[44m[1m[37m%-60s[0m[37m[40m' % s)
+        ob.sendLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+        m = self.get('무림별호')
+        if m == '':
+            m = '무명객'
+        c = self.get('성격')
+        if c == '':
+            c = '없음'
+        s = '『%s』 %s' % (m, self.get('이름'))
+        ob.sendLine('[0m[44m[1m[37m◆ 이  름 ▷ %-24s ◆ 성격 ▷ 『%s』   [0m[37m[40m' % (s, c))
+        m = self.get('배우자')
+        if m == '':
+            m = '미혼'
+        s = '『%s』' % m
+        s1 = '%d살(%s)' % (self.get('나이'), self.get('성별'))
+        ob.sendLine('[0m[44m[1m[37m◆ 배우자 ▷ %-24s ◆ 나이 ▷ %-9s  [0m[37m[40m' % (s, s1))
+        m = self['소속']
+        if m != '':
+            s = '■ 소  속 ▷ 『%s』' % m
+            ob.sendLine('[0m[44m[1m[37m%-60s[0m[37m[40m' % s)
+            g = GUILD[self['소속']]
+            if '%s명칭' % self['직위'] in g:
+                buf = g['%s명칭' % self['직위']]
+            else:
+                buf = self['직위']
+            r = self['방파별호']
+            if r == '':
+                s = '■ 직  위 ▷ 『%s』' % buf
+            else:
+                s = '■ 직  위 ▷ 『%s(%s)』' % (buf, r)
+            ob.sendLine('[0m[44m[1m[37m%-60s[0m[37m[40m' % s)
 
-            ob.sendLine('──────────────────────────────')
-            c = 0
-            item_str = ''
-            for lv in ob.ItemLevelList:
-                for item in self.objs:
-                    if item.inUse and lv == item['계층']:
-                        c += 1
-                        item_str += '[' + ob.ItemUseLevel[item.get('계층')] + '] [36m' + item.get('이름') + '[37m\r\n'
-            ob.write(item_str)
-            if c == 0:
-                ob.sendLine('[36m☞ 혈혈단신 맨몸으로 강호를 주유중입니다.[37m')
-            ob.sendLine('──────────────────────────────')
-            ob.sendLine('★ %s' % self.GetHPString())
-            ob.sendLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-            
+        ob.sendLine('──────────────────────────────')
+        c = 0
+        item_str = ''
+        for lv in ob.ItemLevelList:
+            for item in self.objs:
+                if item.inUse and lv == item['계층']:
+                    c += 1
+                    item_str += '[' + ob.ItemUseLevel[item.get('계층')] + '] [36m' + item.get('이름') + '[37m\r\n'
+        ob.write(item_str)
+        if c == 0:
+            ob.sendLine('[36m☞ 혈혈단신 맨몸으로 강호를 주유중입니다.[37m')
+        ob.sendLine('──────────────────────────────')
+        ob.sendLine('★ %s' % self.GetHPString())
+        ob.sendLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
+
     def viewMapData(self):
         room = self.env
         if room == None:
             return
 
         # room Name
-        
+
         msg = '\r\n[1;30m[[0;37m[[[1;37m[][1m %s [1;37m[][0;37m]][1;30m][0;37m' % room.get('이름')
         if getInt(self['관리자등급']) >= 1000:
             msg += ' (%s)' % (room.index)
         self.sendLine(msg)
         # room Desc
         if not self.checkConfig('간략설명'):
-            self.sendLine ( '' )
-            self.sendLine (room.get('설명'))
+            self.sendLine('')
+            self.sendLine(room.get('설명'))
 
         # room Exit ↕↑↓
         if not self.checkConfig('나침반제거'):
             self.sendLine(room.longExitStr)
         else:
             self.sendLine(room.shortExitStr)
-            self.sendLine ( '' )
+            self.sendLine('')
 
         msg = '☞ '
         for obj in room.objs:
@@ -443,7 +446,7 @@ class Player(Body):
                     self.sendLine('%s%s 목숨을 건 사투를 벌이고 있습니다.' % (msg, obj.han_iga()))
                 elif obj.act == ACT_DEATH:
                     self.sendLine(obj.getNameA() + '의 싸늘한 시체가 있습니다.')
-        nStr = {} # { [], [], ... }
+        nStr = {}  # { [], [], ... }
         for obj in room.objs:
             if is_item(obj):
                 c = 0
@@ -457,9 +460,9 @@ class Player(Body):
         for iName in nStr:
             l = nStr[iName]
             if l[0] == 1:
-                self.sendLine( l[1].replace('$아이템$', '[36m' + iName + '[37m') )
+                self.sendLine(l[1].replace('$아이템$', '[36m' + iName + '[37m'))
             else:
-                self.sendLine( l[1].replace('$아이템$', '[36m' + iName + '[37m %d개' % l[0]) )
+                self.sendLine(l[1].replace('$아이템$', '[36m' + iName + '[37m %d개' % l[0]))
 
         for obj in room.objs:
             if is_player(obj) and obj != self:
@@ -467,7 +470,7 @@ class Player(Body):
                     continue
                 self.sendLine(obj.getDesc())
 
-    def getDesc(self, myself = False):
+    def getDesc(self, myself=False):
         msg = ''
         if myself == False:
             s = self['방파별호']
@@ -483,7 +486,7 @@ class Player(Body):
             msg += self.han_iga() + ' '
         if self['꼬리말'] != '':
             msg += str(self['꼬리말']) + ' '
-            
+
         # act 에 따라 설명을 달리해야함
         if self.act == ACT_STAND:
             msg += '서 있습니다.'
@@ -493,63 +496,63 @@ class Player(Body):
             msg += '목숨을 건 사투를 벌이고 있습니다.'
         elif self.act == ACT_DEATH:
             msg += '쓰러져 있습니다.'
-            
+
         return msg
-        
+
     def promptRoom(self):
         if self.env == None:
             return
         for obj in self.env.objs:
             if is_player(obj) and obj != self:
                 obj.lpPrompt()
-                    
-    def writeRoom(self, line, ex = None, noPrompt = False):
+
+    def writeRoom(self, line, ex=None, noPrompt=False):
         if self.env == None:
             return
         exList = []
         if ex != None and type(ex) != list:
-            exList = [ ex ]
+            exList = [ex]
         for obj in self.env.objs:
-            if is_player(obj) and obj != self  and obj not in exList:
+            if is_player(obj) and obj != self and obj not in exList:
                 obj.sendLine(line)
                 if noPrompt == False:
                     obj.lpPrompt()
-                
-    def sendRoom(self, line, ex = None, noPrompt = False):
+
+    def sendRoom(self, line, ex=None, noPrompt=False):
         if self.env == None:
             return
         exList = []
         if ex != None:
             if type(ex) != list:
-                exList = [ ex ]
+                exList = [ex]
             elif type(ex) == list:
                 exList = ex
         for obj in self.env.objs:
             if is_player(obj) and obj != self and obj not in exList:
                 obj.sendLine('\r\n' + line)
                 if noPrompt == False:
-                        obj.lpPrompt()
-                        
-    def sendFightScriptRoom(self, line, ex = None, noPrompt = False):
+                    obj.lpPrompt()
+
+    def sendFightScriptRoom(self, line, ex=None, noPrompt=False):
         if self.env == None:
             return
         exList = []
         if ex != None and type(ex) != list:
-            exList = [ ex ]
+            exList = [ex]
         for obj in self.env.objs:
             if is_player(obj) and obj != self and obj not in exList and obj.checkConfig('타인전투출력거부') == False:
                 obj.sendLine('\r\n' + line)
                 if noPrompt == False:
-                        obj.lpPrompt()
-            
+                    obj.lpPrompt()
+
     def autoMove(self, line):
         if line[1] == self.env:
             self.do_command(line[0])
         else:
             idDelayedCall = 0
 
-    def enterRoom(self, room, move = '', mode = ''):
-        if self.isMovable() == False and  mode != '소환' and mode != '도망':
+    def enterRoom(self, room, move='', mode=''):
+        if self.isMovable() == False and mode != '소환' and mode != '도망':
             self.sendLine('☞ 지금 이동하기에는 좋은 상황이 아니네요. ^_^')
             return False
 
@@ -590,14 +593,14 @@ class Player(Body):
         self.exitRoom(move, mode)
         if room != None:
             room.update()
-        #self.env = room
+        # self.env = room
         room.insert(self)
 
         self.viewMapData()
 
         for mob in room.objs:
             if is_mob(mob) and mob.get('이벤트 $%입장이벤트%') != '':
-                #mob.doEvent(player, '이벤트 $%입장이벤트%', [])
+                # mob.doEvent(player, '이벤트 $%입장이벤트%', [])
                 self.doEvent(mob, '이벤트 $%입장이벤트%', [])
 
         if self['투명상태'] != 1:
@@ -627,18 +630,18 @@ class Player(Body):
                     else:
                         buf = '☞ [[0;30;47m무명객[0;37;40m] '
                     msg = '%s %s [1;36m무림지존을 꿈꾸며 강호에 출두합니다.[0;37m' % (buf, self.han_iga())
-                    self.channel.sendToAllInOut(msg, ex = self)
+                    self.channel.sendToAllInOut(msg, ex=self)
                 if mode == '귀환':
                     self.writeRoom('\r\n%s 하늘에서 사뿐히 내려 앉습니다. \'척~~~\'' % self.han_iga())
                 elif mode == '소환':
                     self.writeRoom('\r\n%s 알수 없는 기운에 감싸여 나타납니다. \'고오오오~~~\'' % self.han_iga())
                 elif mode == '도망':
-                    self.writeRoom('\r\n%s 신형을 비틀거리며 간신히 도망옵니다. \'헉헉~~\' '  % self.han_iga())
+                    self.writeRoom('\r\n%s 신형을 비틀거리며 간신히 도망옵니다. \'헉헉~~\' ' % self.han_iga())
                 elif mode == '사망':
                     self.sendRoom('%s 손수레에 실려옵니다.' % self.han_iga())
                 else:
-                    #기인/선인/정사파에 따라 다름
-                    self.sendRoom('%s 왔습니다.'% self.han_iga())
+                    # 기인/선인/정사파에 따라 다름
+                    self.sendRoom('%s 왔습니다.' % self.han_iga())
 
         for attr in room.mapAttr:
             if attr.find('체력감소') == 0:
@@ -655,7 +658,7 @@ class Player(Body):
                     return True
                 break
         c = 0
-        #방에 있는 선공몹 처리
+        # 방에 있는 선공몹 처리
         if self['투명상태'] != 1:
             for obj in room.objs:
                 if is_mob(obj) and obj not in self.target and obj.act == ACT_STAND:
@@ -666,24 +669,24 @@ class Player(Body):
                         break;
         if c > 0:
             self.doSkill()
-            #self.lpPrompt()
+            # self.lpPrompt()
 
         auto = room.get('자동이동')
         if auto != '':
-            self.idDelayedCall = reactor.callLater( 1, self.autoMove, [auto.split()[0], room] )
-        
+            self.idDelayedCall = reactor.callLater(1, self.autoMove, [auto.split()[0], room])
+
         for f in self.follower:
             if f.env == prev and mode == '이동':
                 reactor.callLater(0, f.do_command, move)
 
         if auto == '' and len(self.target) == 0:
             reactor.callLater(0.1, self.moveNext)
-            #self.moveNext()
+            # self.moveNext()
 
         return True
 
-    def exitRoom(self, move = '', mode = ''):
-        if self.env != None  and self['투명상태'] != 1:
+    def exitRoom(self, move='', mode=''):
+        if self.env != None and self['투명상태'] != 1:
             txt = self.env.get('이동스크립:' + move)
             if txt != '':
                 # 무리 이동시 인원만큼 이동 후 프롬프트가 출력
@@ -709,29 +712,29 @@ class Player(Body):
                 elif mode == '숨겨진맵이동':
                     self.sendRoom('%s 갑자기 어디론가 사라집니다.' % self.han_iga())
                 else:
-                    msg = '%s %s쪽으로 갔습니다.\r\n'% ( self.han_iga(), move)
-                    self.sendRoom(msg[:-2] , ex = self.follower)
+                    msg = '%s %s쪽으로 갔습니다.\r\n' % (self.han_iga(), move)
+                    self.sendRoom(msg[:-2], ex=self.follower)
                     for f in self.follower:
                         if f.env == self.env and mode == '이동':
                             f.sendLine('\r\n' + msg + '당신이 %s쪽으로 %s 따라갑니다.' % (move, self.han_obj()))
             self.env.remove(self)
-        if self.env != None  and self['투명상태'] == 1:
+        if self.env != None and self['투명상태'] == 1:
             self.env.remove(self)
 
     def welcome(self):
         from lib.io import cat
         cat(self, 'data/text/logoMurim.txt')
-        self.sendLine(WHT+BBLK + '무림에서 불리우는 존함을 알려주세요. (처음 오시는 분은 [1m무명객[0;40m이라고 하세요)')
+        self.sendLine(WHT + BBLK + '무림에서 불리우는 존함을 알려주세요. (처음 오시는 분은 [1m무명객[0;40m이라고 하세요)')
         self.write('무림존함ː')
         self.input_to(self.get_name)
 
-    def lpPrompt(self, mode = False):
+    def lpPrompt(self, mode=False):
         if not self.checkConfig('엘피출력'):
             self.prompt(True)
             if mode:
                 self.sendLine('')
 
-    def prompt(self, mode = False):
+    def prompt(self, mode=False):
         if self.INTERACTIVE != 1:
             return
         if mode:
@@ -742,13 +745,13 @@ class Player(Body):
     def getDesc1(self):
         return self.get('설명1').replace('$아이템$', self.get('이름'))
 
-    def die(self, mode = True):
+    def die(self, mode=True):
         self.act = ACT_DEATH
         self._str = 0
         self._dex = 0
         self._arm = 0
         self.autoMoveList = []
-        
+
         self.unwearAll()
         if mode:
             self.sendLine('\r\n[1;37m당신이 쓰러집니다. \'쿠웅~~ 철퍼덕~~\'[0;37m')
@@ -789,14 +792,14 @@ class Player(Body):
 
     def delEvent(self, e):
         self.delAttr('이벤트설정리스트', e)
-        
+
     def checkArmed(self, level):
         for item in self.objs:
             if item.inUse and item.get('계층') == level:
                 return True
         return False
 
-    def checkItemIndex(self, index, cnt = 1):
+    def checkItemIndex(self, index, cnt=1):
         c = 0
         if index == '은전':
             m = self.get('은전')
@@ -821,7 +824,7 @@ class Player(Body):
                     return True
         return False
 
-    def checkItemName(self, name, cnt = 1):
+    def checkItemName(self, name, cnt=1):
         c = 0
         if name == '은전':
             if cnt < 1:
@@ -848,7 +851,7 @@ class Player(Body):
                     return True
         return False
 
-    def getItemIndex(self, index, cnt = 1):
+    def getItemIndex(self, index, cnt=1):
         c = 0
         for item in self.objs:
             if item.index == index:
@@ -857,7 +860,7 @@ class Player(Body):
                     return item
         return None
 
-    def getItemName(self, name, cnt = 1):
+    def getItemName(self, name, cnt=1):
         c = 0
         for item in self.objs:
             if item.getStrip('이름') == name:
@@ -866,7 +869,7 @@ class Player(Body):
                     return item
         return None
 
-    def addItem(self, index, cnt = 1, gamble = 0):
+    def addItem(self, index, cnt=1, gamble=0):
         c = 0
         if index == '은전':
             m = self.get('은전')
@@ -894,18 +897,18 @@ class Player(Body):
                     obj.setAttr('아이템속성', '줄수없음')
             self.insert(obj)
 
-    def delItem(self, index, cnt = 1):
+    def delItem(self, index, cnt=1):
         c = 0
         if index == '은전':
             m = self.get('은전')
             m -= cnt
-            self.set('은전',m)
+            self.set('은전', m)
             return
 
         if index == '금전':
             m = self.get('금전')
             m -= cnt
-            self.set('금전',m)
+            self.set('금전', m)
             return
 
         objs = copy.copy(self.objs)
@@ -930,7 +933,7 @@ class Player(Body):
                             elif op == '필살':
                                 self._critical -= option[op]
                             elif op == '운':
-                                 self._criticalChance -= option[op]
+                                self._criticalChance -= option[op]
                             elif op == '회피':
                                 self._miss -= option[op]
                             elif op == '명중':
@@ -939,7 +942,7 @@ class Player(Body):
                                 self._exp -= option[op]
                             elif op == '마법발견':
                                 self._magicChance -= option[op]
-                            
+
                 self.remove(item)
                 c += 1
                 if cnt == c:
@@ -950,7 +953,7 @@ class Player(Body):
         p1 = self['0 성격플킬']
         p2 = self['1 성격플킬']
         p3 = self['2 성격플킬']
-        
+
         if type == '완성':
             if self.get('무림별호') != '':
                 return True
@@ -976,7 +979,6 @@ class Player(Body):
         if line.strip() not in self.skillList:
             self.skillList.append(line.strip())
 
-
     def delMugong(self, line):
         m = line.strip()
         ms = self.get('무공이름').splitlines()
@@ -999,7 +1001,7 @@ class Player(Body):
         p1 = self.get('힘')
         p1 = p1 - 2000
         if p1 < 15:
-            p1 = 15        
+            p1 = 15
         self.set('힘', p1)
         self.set('레벨', 1)
         self.set('현재경험치', 0)
@@ -1037,7 +1039,7 @@ class Player(Body):
         if self.loginRetry > 2:
             self.channel.transport.loseConnection()
             return
-        #self.channel.transport.loseConnection()
+        # self.channel.transport.loseConnection()
         if len(name) == 0:
             self.write('\r\n무림존함ː')
             return
@@ -1045,7 +1047,7 @@ class Player(Body):
             self.write('한글 입력만 가능합니다.\r\n무림존함ː')
             return
         if name == '무명객':
-            #if self.checkMulti():
+            # if self.checkMulti():
             #    return
             self.input_to(self.doNothing)
             self.state = sDOUMI
@@ -1054,7 +1056,7 @@ class Player(Body):
             self.autoscript.start(DOUMI['초기도우미'].splitlines(), self)
             return
         if name == '나만바라바':
-            #if self.checkMulti():
+            # if self.checkMulti():
             #    return
             self.input_to(self.doNothing)
             from objs.doumi import DOUMI, autoScript
@@ -1075,18 +1077,18 @@ class Player(Body):
             return
 
         # ip 중복 검사/인증시 패스
-        #if self.checkMulti():
+        # if self.checkMulti():
         #    return
 
         curtime = time.time()
         c = getInt(self['강제종료'])
         if c != 0:
             if curtime - c < getInt(MAIN_CONFIG['재접속제한시간']):
-                self.sendLine('\r\n%d 초 뒤에 재접속하십시오.\r\n' % (getInt(MAIN_CONFIG['재접속제한시간']) - (curtime - c)) )
+                self.sendLine('\r\n%d 초 뒤에 재접속하십시오.\r\n' % (getInt(MAIN_CONFIG['재접속제한시간']) - (curtime - c)))
                 self.channel.transport.loseConnection()
                 return
-        
-        #self.set('이름', name)
+
+        # self.set('이름', name)
         self.write('존함암호ː')
         self.loginRetry = 0
         self.input_to(self.get_pass)
@@ -1119,12 +1121,12 @@ class Player(Body):
             return
         self.write('☞ 변경 하실 암호를 입력해주세요. \r\n존함암호ː')
         self.input_to(self.change_password)
-    
+
     def change_password(self, line, *args):
         self._pass = line
         self.write('☞ 한번 더 암호를 입력해주세요. \r\n암호확인ː')
         self.input_to(self.change_password1)
-    
+
     def change_password1(self, line, *args):
         if line != self._pass:
             self.sendLine('☞ 이전 입력과 다릅니다. 암호변경을 취소합니다.')
@@ -1135,7 +1137,7 @@ class Player(Body):
         self.write('☞ 암호가 변경되었습니다.')
         self.INTERACTIVE = 1
         self.input_to(self.parse_command)
-        
+
     def get_pass(self, line, *args):
         self.loginRetry += 1
         if len(line) == 0 or str(self.get('암호')) != line:
@@ -1153,7 +1155,7 @@ class Player(Body):
                 self.sendLine('☞ 이미 무림에서 활동중 입니다.\r\n')
                 self.channel.transport.loseConnection()
                 return
-        #self.channel.players.append(self)
+        # self.channel.players.append(self)
         self.showNotice()
 
     def doNothing(self, line, *args):
@@ -1161,7 +1163,7 @@ class Player(Body):
 
     def NextPage(self, line, *args):
         from twisted.internet import reactor
-        self.write('[2J') # CLEAR SCREEN
+        self.write('[2J')  # CLEAR SCREEN
         self.input_to(self.doNothing)
         reactor.callLater(3, self.newbie_msg, '')
         return
@@ -1191,11 +1193,11 @@ class Player(Body):
         self.init_body()
         item = getItem('368').deepclone()
         self.insert(item)
-        #self.channel.players.append(self)
+        # self.channel.players.append(self)
         self.input_to(self.doNothing)
         self.autoscript.run()
-        #self.write('\r\n왕대협이 말합니다. "%s라고 합니다."' % name + '\r\n노인이 말합니다. "음! 좋은 이름이군 그렇다면 암호는??"\r\n존함암호ː')
-        #self.input_to(self.getNewpass)
+        # self.write('\r\n왕대협이 말합니다. "%s라고 합니다."' % name + '\r\n노인이 말합니다. "음! 좋은 이름이군 그렇다면 암호는??"\r\n존함암호ː')
+        # self.input_to(self.getNewpass)
 
     def getNewpass(self, line, *args):
         if len(line) < 3:
@@ -1212,8 +1214,8 @@ class Player(Body):
             return
         self.input_to(self.doNothing)
         self.autoscript.run()
-        #self.write('\r\n노인이 말합니다. "그런데 그아이는 남자인가? 여자인가?"\r\n성별(남/여)ː')
-        #self.input_to(self.getSex)
+        # self.write('\r\n노인이 말합니다. "그런데 그아이는 남자인가? 여자인가?"\r\n성별(남/여)ː')
+        # self.input_to(self.getSex)
 
     def getSex(self, line, *args):
         if line not in ['남', '여']:
@@ -1222,7 +1224,7 @@ class Player(Body):
         self.set('성별', line)
         self.input_to(self.doNothing)
         self.autoscript.run()
-        
+
     def showNotice(self):
         self.write('[0m[37m[40m[H[2J')
         from lib.io import cat
@@ -1230,7 +1232,7 @@ class Player(Body):
         self.write('[엔터키를 누르세요]')
         self.state = NOTICE
         self.input_to(self.getStart)
-        
+
     def write_edit(self, line, *args):
         if line == '.':
             try:
@@ -1306,7 +1308,7 @@ class Player(Body):
         else:
             self._memoBody = self._memoBody + '\r\n' + line
         self.write(':')
-            
+
     def getStart(self, line, *args):
         self['_runaway'] = 0
         self.state = ACTIVE
@@ -1322,7 +1324,7 @@ class Player(Body):
             self.enterRoom(room, '시작', '시작')
         else:
             self.sendLine('시작맵 없음!!!')
-        
+
         l = len(self.memo)
 
         if l > 0:
@@ -1343,10 +1345,10 @@ class Player(Body):
 
             self.adultCH.append(self)
             self.sendLine('☞ 채널에 입장합니다.')
-            
+
         self.input_to(self.parse_command)
 
-    def do_command(self, line, noPrompt = False):
+    def do_command(self, line, noPrompt=False):
         self.parse_command(line)
         if noPrompt == False:
             self.lpPrompt()
@@ -1364,12 +1366,12 @@ class Player(Body):
         line = stripANSI(line)
         if len(line) == 0:
             return
-        
+
         if line == '!':
             line = self.prevCmd
         else:
             self.prevCmd = line
-            
+
         if line[-1] in (' ', '.', '!', '?'):
             if self.env.noComm():
                 self.sendLine('☞ 이지역에서는 어떠한 통신도 불가능합니다.')
@@ -1388,19 +1390,19 @@ class Player(Body):
         if self.env != None and cmd in self.env.limitCmds:
             self.sendLine('이곳에서 그 명령을 사용할 수 없습니다.')
             return
-            
+
         if cmd in self.alias:
             shortcut = self.alias[cmd]
             if argc > 1:
                 sub = line.strip().rsplit(None, 1)[0]
-                #shortcut = shortcut.replace('*', sub)
+                # shortcut = shortcut.replace('*', sub)
                 wlist0 = shortcut.split(';')
                 wlist = []
                 for w in wlist0:
-                    wlist.append(w.replace('*', sub)) 
+                    wlist.append(w.replace('*', sub))
             else:
                 wlist = shortcut.split(';')
-            
+
             line = wlist[0]
             cmds = line.split()
             if len(cmds) == 0:
@@ -1409,10 +1411,10 @@ class Player(Body):
             argc = len(cmds)
             param = line.rstrip(cmd)
             param = param.strip()
-            
+
             msg = ''
             for w in wlist[1:]:
-                #if w in s:
+                # if w in s:
                 #    self.sendLine('중첩된 줄임말은 사용할 수 없습니다.')
                 #    return
                 msg += w + '\r\n'
@@ -1421,11 +1423,11 @@ class Player(Body):
         try:
             if self.checkMobEvent(line) == True:
                 return
-        except :
+        except:
             traceback.print_exc(file=sys.stderr)
             print('Error in %s' % cmd)
             return
-            
+
         from objs.alias import alias
         if cmd in alias:
             cmd = alias[cmd]
@@ -1463,16 +1465,16 @@ class Player(Body):
                 return
             self.INTERACTIVE = 2
             self.sendLine('\r\n다음에 또 만나요~!!!')
-            #broadcast(self.get('이름') + '님이 나가셨습니다.', self)
-            #self.save()
-            #self.logout()
+            # broadcast(self.get('이름') + '님이 나가셨습니다.', self)
+            # self.save()
+            # self.logout()
 
             self.channel.transport.loseConnection()
             return
         elif cmd in Player.cmdList:
             try:
                 Player.cmdList[cmd].cmd(self, param)
-            except :
+            except:
                 traceback.print_exc(file=sys.stderr)
                 print('Error in %s' % cmd)
             return
@@ -1482,15 +1484,15 @@ class Player(Body):
                 return
             try:
                 self.doEmotion(cmd, param)
-                #Player.emotes[cmd].cmd(self, param)
-            except :
+                # Player.emotes[cmd].cmd(self, param)
+            except:
                 traceback.print_exc(file=sys.stderr)
                 print('Error in %s' % cmd)
             return
 
         obj = ''
         if self.env != None:
-            obj = self.env['오브젝트:'+cmd]
+            obj = self.env['오브젝트:' + cmd]
         if obj != '':
             self.sendLine(obj)
             return
@@ -1503,9 +1505,9 @@ class Player(Body):
         if line == '취소':
             self.sendLine('☞ 취소합니다. *^_^*')
             self.stopAutoScript()
-            return 
+            return
         self.sendLine('☞ 취소하시려면 『취소』를 입력 하세요. *^_^*')
-        return 
+        return
 
     def getLines(self, line, *args):
         limit = 5
@@ -1514,20 +1516,20 @@ class Player(Body):
         line = line.strip()
         if line == '':
             self.sendLine('☞ 취소하시려면 『취소』를 입력 하세요. *^_^*')
-            return 
+            return
         if line == '.':
             if len(self.temp_input) == 0:
                 self.sendLine('☞ 한줄 이상 입력하세요. *^_^*')
-                return 
+                return
             self.autoscript.run()
-            return 
+            return
         if len(line) > 42:
             self.sendLine('☞ 너무길어요. *^_^*')
             return
         if line == '취소':
             self.sendLine('☞ 취소합니다. *^_^*')
             self.stopAutoScript()
-            return 
+            return
         self.temp_input.append(line)
         if len(self.temp_input) >= limit:
             self.sendLine('☞ 입력을 마칩니다. *^_^*')
@@ -1539,11 +1541,11 @@ class Player(Body):
         line = line.strip()
         if line == '':
             self.sendLine('☞ 취소하시려면 『취소』를 입력 하세요. *^_^*')
-            return 
+            return
         if line == '취소':
             self.sendLine('☞ 취소합니다. *^_^*')
             self.stopAutoScript()
-            return 
+            return
         if len(stripANSI(line)) > limit:
             self.sendLine('☞ 너무길어요. *^_^*')
             return
@@ -1556,14 +1558,14 @@ class Player(Body):
         line = line.strip()
         if line == '':
             self.sendLine('☞ 취소하시려면 『취소』를 입력 하세요. *^_^*')
-            return 
+            return
         if ' ' in line:
             self.sendLine('☞ 공백이 포함되어 있습니다. 다시 입력하세요. *^_^*')
-            return 
+            return
         if line == '취소':
             self.sendLine('☞ 취소합니다. *^_^*')
             self.stopAutoScript()
-            return 
+            return
         if len(stripANSI(line)) > limit:
             self.sendLine('☞ 너무길어요. *^_^*')
             return
@@ -1584,14 +1586,14 @@ class Player(Body):
     def pressEnter1(self, line, *args):
         self.input_to(self.doNothing)
         self.autoscript.run()
-        
+
     def getKeyInput(self, line, *args):
         if line == args[0]:
             self.input_to(self.doNothing)
             self.autoscript.run()
         else:
             self.sendLine('『%s』을 입력 하세요\r\n>' % args)
-            
+
     def pressEnter(self, line, *args):
         self.INTERACTIVE = 1
         self.input_to(self.parse_command)
@@ -1606,49 +1608,49 @@ class Player(Body):
             buf2 = '%s %s' % (self.han_iga(), w['전투시작'])
         return buf1, buf2
 
-    def setFight(self, mob, mode = False):
+    def setFight(self, mob, mode=False):
         if self.act == ACT_DEATH:
             return
         self.fightMode = mode
         self.dex = 0
         if mode == True:
             if mob.act == ACT_STAND:
-                buf1, buf2 =  mob.getFightStartStr()
+                buf1, buf2 = mob.getFightStartStr()
                 self.sendLine('\r\n' + buf1)
-                self.writeRoom('\r\n' + buf1, noPrompt = True)
+                self.writeRoom('\r\n' + buf1, noPrompt=True)
             if self.act == ACT_STAND:
                 buf1, buf2 = self.getFightStartStr()
                 self.sendLine(buf1)
-                self.writeRoom(buf2, noPrompt = True)
+                self.writeRoom(buf2, noPrompt=True)
         else:
             self.target.append(mob)
             mob.target.append(self)
-            
+
             if self.doSkill():
                 self.sendLine('')
-                self.writeRoom('', noPrompt = True)
+                self.writeRoom('', noPrompt=True)
             if self.act == ACT_STAND:
                 buf1, buf2 = self.getFightStartStr()
                 self.sendLine(buf1)
                 if self.skill == None:
                     buf2 = '\r\n' + buf2
-                self.writeRoom(buf2, noPrompt = True)
+                self.writeRoom(buf2, noPrompt=True)
             if mob.act == ACT_STAND:
                 buf1, buf2 = mob.getFightStartStr()
                 self.sendLine(buf1)
-                self.writeRoom(buf1, noPrompt = True)
+                self.writeRoom(buf1, noPrompt=True)
             self.promptRoom()
-            
+
         self.act = ACT_FIGHT
         mob.act = ACT_FIGHT
         self.setTarget(mob)
         mob.setTarget(self)
-        
+
         if is_mob(mob):
             mob.stopSkill()
             self.startMobSkill(mob)
-        
-        #방에 있는 합공몹 처리(덩달이)
+
+        # 방에 있는 합공몹 처리(덩달이)
         for obj in self.env.objs:
             if is_mob(obj) and obj not in self.target and obj.act == ACT_STAND:
                 if obj.get('전투종류') == 1 or obj.get('전투종류') == 2:
@@ -1658,13 +1660,13 @@ class Player(Body):
                     self.sendLine(buf1)
                     obj.stopSkill()
                     self.startMobSkill(obj)
-        
+
     def startMobSkill(self, mob):
         if mob.setSkill() and self.checkConfig('수련모드') == False:
             buf1, buf2, buf3 = mob.makeFightScript(mob.skill['무공스크립'], self)
             self.sendLine(buf2)
             self.sendRoomFightScript(buf3)
-            
+
     def update(self):
         self._advance = False
 
@@ -1675,13 +1677,13 @@ class Player(Body):
         self.cmdCnt = 0
         self.tick += 1
         self['나이오름틱'] += 1
-        if self['나이오름틱'] >= MAIN_CONFIG['나이오름틱']: #24시간에 1살
+        if self['나이오름틱'] >= MAIN_CONFIG['나이오름틱']:  # 24시간에 1살
             self['나이오름틱'] = 0
             self['나이'] += 1
             if self['나이'] % 60 == 0:
                 self['최고내공'] += 60
             else:
-                self['최고내공'] +=1
+                self['최고내공'] += 1
             self.sendRoom('[1m' + self['이름'] + '의 단전에 회오리가 몰아치며 몸주위에 하얀 진기가 맴돕니다.[0;37m')
             self.sendLine('\r\n[1m당신의 단전에 회오리가 몰아치며 몸주위에 하얀 진기가 맴돕니다.[0;37m')
             self.lpPrompt()
@@ -1692,12 +1694,12 @@ class Player(Body):
         if self.tick % 600 == 0:
             self.save()
         if self.act == ACT_FIGHT:
-            #전투처리
+            # 전투처리
             self.doFight()
             if len(self.target) == 0:
                 self.doAfterFight()
         elif self.act == ACT_DEATH:
-            #사망처리
+            # 사망처리
             self.doDeath()
             return
         else:
@@ -1707,8 +1709,7 @@ class Player(Body):
                 self.clearTarget()
         if self.tick % 30 == 0:
             self.recover()
-            
-       
+
         if self.act == ACT_STAND or self.act == ACT_FIGHT:
             self.autoHpEat()
             self.autoMpEat()
@@ -1762,12 +1763,12 @@ class Player(Body):
         att = ''
         if '공격' in self.alias:
             att = self.alias['공격']
-          
+
         if att != '':
             self.do_command(att)
             if len(self.target) != 0:
                 return
-        
+
         next = self.autoMoveList.pop(0)
         self.do_command(next)
         if len(self.autoMoveList) == 0:
@@ -1775,7 +1776,7 @@ class Player(Body):
             self.lpPrompt()
 
     def doSkill(self):
-        #자동무공시전설정이 되어있는지도 체크필요
+        # 자동무공시전설정이 되어있는지도 체크필요
         if self.skill == None and self.checkConfig('자동무공시전'):
             sName = self['자동무공']
             if sName != '':
@@ -1785,7 +1786,7 @@ class Player(Body):
                     self.sendLine('[1m당신이 내공진기를 끌어 모으지만 기가 흩어져 버립니다.[0;37m')
                     self.stopSkill()
                     return
-                if  self.getHp() < (self.getMaxHp() * s.hp) / 100 or self.getHp() < (self.getMaxHp() * s.maxhp) / 100:
+                if self.getHp() < (self.getMaxHp() * s.hp) / 100 or self.getHp() < (self.getMaxHp() * s.maxhp) / 100:
                     self.sendLine('[1m당신의 내공진기가 흩어지며 기의 순환이 멈추어 버립니다.[0;37m')
                     self.stopSkill()
                     return
@@ -1793,8 +1794,8 @@ class Player(Body):
                 self['체력'] -= (self.getMaxHp() * s.hp) / 100
                 self.skill.init()
                 self.lpPrompt()
-                
-                #print self.skill.bonus
+
+                # print self.skill.bonus
                 self.addStr(self.skill.bonus, False)
                 buf1, buf2, buf3 = self.makeFightScript(self.skill['무공스크립'], self.target[0])
                 self.sendLine('\r\n' + buf1)
@@ -1814,7 +1815,7 @@ class Player(Body):
                 continue
             type = ''
             more = False
-            mob.dex += mob.getDex() +700
+            mob.dex += mob.getDex() + 700
             if mob.skill != None:
                 script, more, mob.dex = mob.skill.getScript(mob.dex)
                 vCheck = False
@@ -1824,7 +1825,7 @@ class Player(Body):
                         msg = s[r]
                         if type == '초식':
                             if self.checkConfig('수련모드') == False:
-                                #print mob['이름']
+                                # print mob['이름']
                                 buf1, buf2, buf3 = mob.makeFightScript(msg, self)
                                 self.sendFightScript(buf2)
                         elif type == '공격':
@@ -1842,9 +1843,9 @@ class Player(Body):
                                 vision = self['비전설정']
                                 if vision != '':
                                     if mob.skill.name == vision.replace('비전', '') or \
-                                        (mob.skill.name[:2] == '독' and mob.skill.name[2:].isdigit()):
-                                        dmg = int(dmg/2)
-                                   
+                                            (mob.skill.name[:2] == '독' and mob.skill.name[2:].isdigit()):
+                                        dmg = int(dmg / 2)
+
                                 tdmg += dmg
                                 if self.checkConfig('수련모드') == False:
                                     buf1, buf2, buf3 = mob.makeFightScript(msg, self)
@@ -1866,24 +1867,24 @@ class Player(Body):
                     else:
                         dmg, c1, c2 = mob.getAttackPoint(self)
                         tdmg += dmg
-                        
+
                         if self.checkConfig('수련모드') == False:
                             buf1, buf2, buf3 = mob.getAttackScript(self, dmg, c1, c2)
-                            self.sendFightScript(buf2 +  ' [1;31m%d[0;37m' % dmg)
+                            self.sendFightScript(buf2 + ' [1;31m%d[0;37m' % dmg)
                         self.addAnger()
                         if self.minusHP(dmg):
                             self.clearTarget()
                             return -1
             self.startMobSkill(mob)
         return tdmg
-        
+
     def fightNormal(self):
         pass
-        
-    def doFight(self, advance = False):
+
+    def doFight(self, advance=False):
         if advance and self._advance:
             return
-        #self.sendLine('%d' % self['힘경험치'])
+        # self.sendLine('%d' % self['힘경험치'])
         if len(self.target) == 0:
             self.act = ACT_STAND
             return
@@ -1896,7 +1897,7 @@ class Player(Body):
             self.dex += self.getDex() + 700
         else:
             self.dex = self.getDex()
-        
+
         # 혹시나 타겟이 다른룸에 있거나 활성화상태가 아닐때 타겟 정리
         target = copy.copy(self.target)
         for mob in target:
@@ -1905,7 +1906,7 @@ class Player(Body):
         if len(self.target) == 0:
             self.act == ACT_STAND
             return
-             
+
         target = copy.copy(self.target)
         mob = self.target[0]
         dmg = 1
@@ -1935,12 +1936,12 @@ class Player(Body):
                                         buf1, buf2, buf3 = self.makeFightScript(self.skill['실패'], mob)
                                         self.sendFightScript(buf1)
                                     self.checkItemSkill()
-                                    #실패
+                                    # 실패
                                     self.addDex(1)
-                                    #무공 성 올림 체크해야함
+                                    # 무공 성 올림 체크해야함
                                     self.weaponSkillUp()
                                 else:
-                                    
+
                                     dmg = self.getSkillPoint(mob)
                                     if self.checkConfig('수련모드') == False:
                                         buf1, buf2, buf3 = self.makeFightScript(msg, mob)
@@ -1948,9 +1949,9 @@ class Player(Body):
                                     self.checkItemSkill()
                                     self.addStr(1)
                                     self.weaponSkillUp()
-                                    if mob.minusHP(dmg, who = self['이름']):
+                                    if mob.minusHP(dmg, who=self['이름']):
                                         self.dex = 0
-                                        #self.clearTarget(mob)
+                                        # self.clearTarget(mob)
                                         if self.skill != None and self.skill.is_allAttack() == False:
                                             r = self.recoverDemage(tdmg)
                                             self['체력'] += r
@@ -1986,7 +1987,7 @@ class Player(Body):
                         self.addDex(1)
                         self.weaponSkillUp()
                     else:
-                        
+
                         dmg, c1, c2 = self.getAttackPoint(mob)
                         buf1, buf2, buf3 = self.getAttackScript(mob, dmg, c1, c2)
                         if self.checkConfig('수련모드') == False:
@@ -1994,13 +1995,13 @@ class Player(Body):
                         if is_player(mob) and mob.checkConfig('수련모드') == False:
                             mob.sendFightScript(buf2 + ' [1;31m%d[0;37m' % dmg)
                         self.checkItemSkill()
-                        #self.sendLine('당신은 ' + target[0].getName() + han_obj(target[0].getName())+ ' 후려칩니다. %d' % dmg)
+                        # self.sendLine('당신은 ' + target[0].getName() + han_obj(target[0].getName())+ ' 후려칩니다. %d' % dmg)
                         self.addStr(1)
                         self.weaponSkillUp()
-                        if target[0].minusHP(dmg, who = self['이름']):
+                        if target[0].minusHP(dmg, who=self['이름']):
                             r = self.recoverDemage(tdmg)
                             self['체력'] += r
-                            #self.clearTarget(target[0])
+                            # self.clearTarget(target[0])
                             if len(self.target) != 0:
                                 self.stopSkill()
                             self.lpPrompt()
@@ -2026,9 +2027,9 @@ class Player(Body):
                                     buf1, buf2, buf3 = self.makeFightScript(self.skill['실패'], mob)
                                     self.sendFightScript(buf1)
                                 self.checkItemSkill()
-                                #실패
+                                # 실패
                                 self.addDex(1)
-                                #무공 성 올림 체크해야함
+                                # 무공 성 올림 체크해야함
                                 self.weaponSkillUp()
                             else:
                                 dmg = self.getSkillPoint(mob)
@@ -2038,10 +2039,10 @@ class Player(Body):
                                 self.checkItemSkill()
                                 self.addStr(1)
                                 self.weaponSkillUp()
-                                if mob.minusHP(dmg, who = self['이름']):
+                                if mob.minusHP(dmg, who=self['이름']):
                                     r = self.recoverDemage(tdmg)
                                     self['체력'] += r
-                                    #self.clearTarget(mob)
+                                    # self.clearTarget(mob)
                                     self.lpPrompt()
                                     return
             if more == False and self.skill != None:
@@ -2073,10 +2074,10 @@ class Player(Body):
                         self.checkItemSkill()
                         self.addStr(1)
                         self.weaponSkillUp()
-                        if mob.minusHP(dmg, who = self['이름']):
+                        if mob.minusHP(dmg, who=self['이름']):
                             r = self.recoverDemage(tdmg)
                             self['체력'] += r
-                            #self.clearTarget(mob)
+                            # self.clearTarget(mob)
                             self.lpPrompt()
                             return
             if advance == False:
@@ -2110,18 +2111,18 @@ class Player(Body):
                     self.sendLine('[1m당신이 내공진기를 끌어 모으지만 기가 흩어져 버립니다.[0;37m')
                     self.stopSkill()
                     return
-                if  self.getHp() < (self.getMaxHp() * s.hp) / 100 or self.getHp() < (self.getMaxHp() * s.maxhp) / 100:
+                if self.getHp() < (self.getMaxHp() * s.hp) / 100 or self.getHp() < (self.getMaxHp() * s.maxhp) / 100:
                     self.sendLine('[1m당신의 내공진기가 흩어지며 기의 순환이 멈추어 버립니다.[0;37m')
                     self.stopSkill()
                     return
                 self['내공'] -= s.mp
                 self['체력'] -= (self.getMaxHp() * s.hp) / 100
                 self.skill.init()
-                #print self.skill.bonus
+                # print self.skill.bonus
                 self.addStr(self.skill.bonus)
                 buf1, buf2, buf3 = self.makeFightScript(self.skill['무공스크립'], self.target[0])
                 self.sendFightScript(buf1)
-                #self.sendRoomFightScript(buf3)
+                # self.sendRoomFightScript(buf3)
 
     def doDeath(self):
         if self.stepDeath == 0:
@@ -2174,13 +2175,13 @@ class Player(Body):
         self.stepDeath += 1
 
     def recover(self):
-        #체력회복
+        # 체력회복
         hp = self.getHp()
         maxhp = self.getMaxHp()
-        
+
         mp = self.getMp()
         maxmp = self.getMaxMp()
-        
+
         if self.act == ACT_STAND:
             # 10% 회복
             r = 0.1
@@ -2193,13 +2194,13 @@ class Player(Body):
         else:
             r = 0
         if hp < maxhp:
-            hp += int (maxhp * r)
+            hp += int(maxhp * r)
             if hp >= maxhp:
                 hp = maxhp
             self.set('체력', hp)
-        
+
         if mp < maxmp:
-            mp += int (maxmp * r)
+            mp += int(maxmp * r)
             if mp >= maxmp:
                 mp = maxmp
             self.set('내공', mp)
@@ -2214,7 +2215,7 @@ class Player(Body):
             return
         l = line.split(None, 1)
         obj = self.env.findObjName(l[0])
-        
+
         if obj == None or obj == self:
             buf1, buf2, buf3 = EMOTION.makeScript(kd[0], self.getNameA(), None, line)
             self.sendLine(buf1)
@@ -2232,24 +2233,24 @@ class Player(Body):
                 e = kd[2]
             buf1, buf2, buf3 = EMOTION.makeScript(e, self.getNameA(), obj.getNameA(), sub)
             self.sendLine(buf1)
-            self.sendRoom(buf3, ex = obj)
+            self.sendRoom(buf3, ex=obj)
             obj.sendLine('\r\n' + buf2)
             obj.lpPrompt()
         else:
             buf1, buf2, buf3 = EMOTION.makeScript(kd[0], self.getNameA(), None, line)
             self.sendLine(buf1)
             self.sendRoom(buf3)
-            
+
     def loadConfig(self):
         self.Configs = {}
         for cfg in self.CFG:
             self.Configs[cfg] = self._checkConfig(cfg)
-    
+
     def checkConfig(self, cfg):
         if cfg not in self.Configs:
             return False
         return self.Configs[cfg]
-        
+
     def _checkConfig(self, config):
         kl = self['설정상태'].splitlines()
         for k in kl:
@@ -2258,7 +2259,7 @@ class Player(Body):
                     return True
                 break
         return False
-        
+
     def setConfig(self, config):
         c = ''
         find = False
@@ -2277,22 +2278,22 @@ class Player(Body):
         if find == False:
             c += config + ' 1'
         self['설정상태'] = c
-        
+
         self.loadConfig()
-        
+
     def loadAlias(self):
         self.alias = {}
         s = self['줄임말리스트'].splitlines()
         for key in s:
             ss = key.split(None, 1)
             self.alias[ss[0]] = ss[1]
-        
+
     def buildAlias(self):
         msg = ''
         for key in self.alias:
             msg += key + ' ' + self.alias[key] + '\r\n'
         self['줄임말리스트'] = msg
-        
+
     def setAlias(self, key, data):
         if key in self.alias:
             self.sendLine('☞ 이미 설정되어 있는 줄임말입니다.')
@@ -2300,7 +2301,7 @@ class Player(Body):
         self.alias[key] = data
         self.buildAlias()
         return True
-    
+
     def delAlias(self, key):
         if key not in self.alias:
             self.sendLine('☞ 줄임말이 설정되어 있지 않아요. ^^')
@@ -2308,14 +2309,14 @@ class Player(Body):
         self.alias.__delitem__(key)
         self.buildAlias()
         return True
-    
-    def sendRoomFightScript(self, line, noPrompt = False, ex = []):
+
+    def sendRoomFightScript(self, line, noPrompt=False, ex=[]):
         for obj in self.env.objs:
             if is_player(obj) and obj != self and obj not in ex and obj.checkConfig('타인전투출력거부') == False:
                 obj.sendLine('\r\n' + line)
                 if noPrompt == False:
                     obj.lpPrompt()
-        
+
     def makeHome(self):
         room = Room()
         room.index = '사용자맵:%s' % self['이름']
@@ -2327,13 +2328,13 @@ class Player(Body):
         room.setAttr('맵속성', '사용자전투금지')
         room['주인'] = self['이름']
         room.save()
-        
+
+
 def is_player(obj):
     return isinstance(obj, Player)
 
 
 def init_commands():
-
     script = 'objs/event.py'
     l = {}
     g = {}
@@ -2362,14 +2363,14 @@ def init_commands():
     l = {}
     g = {}
     try:
-        #execfile(script, g, l)
+        # execfile(script, g, l)
         exec(compile(open(script, "rb").read(), script, 'exec'))
     except NameError:
         print('error load autoscript.py')
 
-    #Player.autoScript = l['autoScript']
+    # Player.autoScript = l['autoScript']
     Player.autoScript = locals()['autoScript']
-    
+
     cmdList = Player.cmdList
 
     from glob import glob
@@ -2383,6 +2384,5 @@ def init_commands():
             continue
 
         cmdClass = locals()['CmdObj']
-        cmdName =  split(script)[-1][:-3]
+        cmdName = split(script)[-1][:-3]
         cmdList[cmdName] = cmdClass()
-

@@ -22,7 +22,6 @@ gc.enable()
 init_commands()
 Emotion()
 
-#loadAllMap()
 loadAllMob()
 loadAllItem()
 
