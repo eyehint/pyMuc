@@ -177,33 +177,31 @@ def save_script(f, x):
     """
     if type(x) is not dict:
         return False
-    if type(f) is not file:
-        return False
 
-    for segName in x:
-        if type(x[segName]) != list:
-            f.write('[' + str(segName) + ']\n\n')
-            for keyName in x[segName]:
+    for seg_name in x:
+        if type(x[seg_name]) != list:
+            f.write('[' + str(seg_name) + ']\n\n')
+            for keyName in x[seg_name]:
                 f.write('#' + str(keyName) + '\n')
 
-                if type(x[segName][keyName]) == list:
-                    for keyData in x[segName][keyName]:
+                if type(x[seg_name][keyName]) == list:
+                    for keyData in x[seg_name][keyName]:
                         f.write(':' + str(keyData) + '\n')
                 else:
-                    if type(x[segName][keyName]) == int or type(x[segName][keyName]) == int:
-                        f.write(':' + str(x[segName][keyName]) + '\n')
+                    if type(x[seg_name][keyName]) == int or type(x[seg_name][keyName]) == int:
+                        f.write(':' + str(x[seg_name][keyName]) + '\n')
                     else:
-                        lines = x[segName][keyName].splitlines()
+                        lines = x[seg_name][keyName].splitlines()
                         for line in lines:
-                            # f.write(':' + str(x[segName][keyName]) + '\n')
+                            # f.write(':' + str(x[seg_name][keyName]) + '\n')
                             f.write(':' + line + '\n')
                 f.write('\n')
             f.seek(-2, os.SEEK_CUR)
             f.write('\n；\n')
         else:
-            seglist = x[segName]
+            seglist = x[seg_name]
             for segment in seglist:
-                f.write('[' + str(segName) + ']\n\n')
+                f.write('[' + str(seg_name) + ']\n\n')
                 for keyName in segment:
                     f.write('#' + str(keyName) + '\n')
 
@@ -220,9 +218,6 @@ def save_script(f, x):
 def save_object(f, x):
     if type(x) is not dict:
         return False
-    if type(f) is not file:
-        return False
-    f.write('# -*- coding: euc-kr -*-\n\n')
     f.write('obj = ')
     save_dict(f, x, 0)
 

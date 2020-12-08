@@ -3,7 +3,6 @@ from lib.func import getInt, stripANSI
 from lib.hangul import han_iga, han_obj, han_un
 
 class Object:
-
     def __init__(self):
         # 현재 오브젝트의 속성맵
         self.attr = {}

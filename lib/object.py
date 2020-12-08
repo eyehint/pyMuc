@@ -1,15 +1,18 @@
-from objs.object import Object
 from objs.world import World
+
 from include.path import *
-    
+
+
 def is_item(obj):
     from objs.item import Item
     return isinstance(obj, Item)
 
+
 def is_room(obj):
     from objs.room import Room
     return isinstance(obj, Room)
-    
+
+
 def is_player(obj):
     from objs.player import Player
     return isinstance(obj, Player)
@@ -37,8 +40,6 @@ def create_object(path):
 
     o = obj()
     o.set('path', path)
-    #o.create()
-    #o.init()
     return o
 
 # 낙양성/도구점
@@ -305,8 +306,6 @@ def save_script(f, x):
     """
     if type(x) is not dict:
         return False
-    if type(f) is not file:
-        return False
         
     for segName in x:
         if type(x[segName]) != list:
@@ -342,9 +341,6 @@ def save_script(f, x):
 def save_object(f, x):
     if type(x) is not dict:
         return False
-    if type(f) is not file:
-        return False
-    f.write('# -*- coding: euc-kr -*-\n\n')
     f.write('obj = ')
     save_dict(f, x, 0)
 
