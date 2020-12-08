@@ -1032,7 +1032,7 @@ class Player(Body):
         if len(name) == 0:
             self.write('\r\n무림존함ː')
             return
-        if is_han(name) == False:
+        if not is_han(name):
             self.write('한글 입력만 가능합니다.\r\n무림존함ː')
             return
         if name == '무명객':

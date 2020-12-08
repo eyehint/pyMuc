@@ -47,7 +47,7 @@ class Client(basic.LineOnlyReceiver):
 
     # def processLine(self, line):
     def lineReceived(self, line):
-        self.player.process_input(line, *self.player.process_input_args)
+        self.player.process_input(line.decode("utf-8"), *self.player.process_input_args)
         # if self.player.state == ACTIVE:
         self.player.prompt(True)
 
