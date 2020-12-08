@@ -46,7 +46,7 @@ def postPosition(line, name):
     pps = line[s:e + 1]
     sep = pps.find('/')
     pp1 = pps[1:sep]
-    pp = tossi.pick(name, f"{pp1})")
+    pp = tossi.pick(name, f"{pp1}")
     return line.replace(pps, pp)
 
 
@@ -58,5 +58,5 @@ def postPosition1(line):
     pps = line[s:e + 1]
     sep = pps.find('/')
     pp1 = pps[1:sep]
-    pp = tossi.pick(line[:s], f"{pp1})")
+    pp = tossi.pick(line[:s], f"{pp1}")
     return line.replace(pps, pp, 1)
