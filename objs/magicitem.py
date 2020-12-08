@@ -302,15 +302,15 @@ def applyMagic(self, level, num = 0, force = 0):
         return
     if self['종류'] != '무기' and self['종류'] != '방어구':
         return
-    if self['옵션'] != None and self['옵션'] != "":
+    if self['옵션'] is not None and self['옵션'] != "":
         return
     if force == 1:
         level += 500
     else:
-       if randint(0, 4) != 0:
-           return
+        if randint(0, 4) != 0:
+            return
     if num == 0:
-        num = randint(0, 5 * level / 10001 + 1)
+        num = randint(0, 5 * level // 10001 + 1)
     if randint(0, 10) == 10:
         num += 1
     if randint(0, 20) == 20:
