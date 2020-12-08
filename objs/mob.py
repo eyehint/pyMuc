@@ -368,7 +368,7 @@ class Mob(Body):
                 self.doRegen()
                 return True
         if self['몹종류'] == 6:
-            r = int(self['아이템리젠'])
+            r = getInt(self['아이템리젠'])
             if r < 180:
                 r = 180
             if curTime - self.timeofregen >= r:
