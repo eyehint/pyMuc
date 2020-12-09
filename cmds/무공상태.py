@@ -28,7 +28,7 @@ class CmdObj(Command):
             n = s['방어시간'] + s['방어시간증가치'] * (inc - 1)
             t = s.start_time
             cnt = len(target.strBar)
-            a = t * 10 / n
+            a = t * 10 // n
             if a < 0:
                 a = 0
             if a >= cnt:

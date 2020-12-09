@@ -247,7 +247,7 @@ class autoScript():
                         self.player.sendLine('* 무기강화를 종료합니다.')
                         self.player.stopAutoScript()
                         return
-                    d = int( (val - myVal) / 3 )
+                    d = int( (val - myVal) // 3 )
                     if d == 0:
                         d = 1     
                     myOp[op] = myVal + d

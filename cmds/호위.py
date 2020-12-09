@@ -23,7 +23,7 @@ class CmdObj(Command):
                     obj.hp = obj['체력']
                 guard = obj
                 c += 1
-                hp = (obj.hp * 100 )/ getItem(obj.index)['체력']
+                hp = (obj.hp * 100 )// getItem(obj.index)['체력']
                 
                 tmp += '[1;32m·[0;36m%2d.%s[0;37m ː %s (%d)\r\n' % (c, obj['이름'], ob.strBar[hp/10] , hp)
         

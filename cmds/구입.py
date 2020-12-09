@@ -37,7 +37,7 @@ class CmdObj(Command):
             self.buyGuardMob(ob, item)
             return
         c = 0
-        p = getInt(item['판매가격']) * 100 / percent
+        p = getInt(item['판매가격']) * 100 // percent
         for i in range(count):
             if ob.getItemCount() >= getInt(MAIN_CONFIG['사용자아이템갯수']):
                 if c == 0:

@@ -42,20 +42,20 @@ class CmdObj(Command):
         ob.sendLine(buf1 + '\r\n')
         msg += buf3 + '\r\n'
         for g in guard:
-            c = 100 + g['명중력'] - ( mob['레벨'] - ob['레벨'] + 90 ) / 3
+            c = 100 + g['명중력'] - ( mob['레벨'] - ob['레벨'] + 90 ) //3
             if g.hp < 1 or randint(0, 99) > c:
                 buf1, buf2, buf3 = ob.makeFightScript(msg3, mob, g)
                 ob.sendLine(buf1)
                 msg += buf3 + '\r\n'
             else:
                 if randint(0, 1) == 0:
-                    dmg = (ob['힘'] * g['공격력']) / 100 + randint(0, 9)
+                    dmg = (ob['힘'] * g['공격력']) // 100 + randint(0, 9)
                 else:
-                    dmg = (ob['힘'] * g['공격력']) / 100 - randint(0, 9)
+                    dmg = (ob['힘'] * g['공격력']) // 100 - randint(0, 9)
                     
                 if dmg < 1:
                     dmg = 1
-                g.hp -= (dmg * g['체력감소']) / 100
+                g.hp -= (dmg * g['체력감소']) // 100
                 if g.hp < 0:
                     g.hp = 0
                 buf1, buf2, buf3 = ob.makeFightScript(msg2, mob, g)

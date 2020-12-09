@@ -136,7 +136,7 @@ class Mob(Body):
 
     def getMp(self):
         if self._mp != 0:
-            mp = self.mp + self.mp * self._mp / 100
+            mp = self.mp + self.mp * self._mp // 100
             return mp
         return self.mp
 
@@ -144,7 +144,7 @@ class Mob(Body):
         if getInt(self['내공']) == 0:
             return 0
         if self._maxmp != 0:
-            mp = self['내공'] + self['내공'] * self._maxmp / 100
+            mp = self['내공'] + self['내공'] * self._maxmp // 100
             return float(mp)
         return self['내공']
 
@@ -442,8 +442,8 @@ class Mob(Body):
     def getExpGold(self, target):
         c1 = getInt(target['레벨'])
         c2 = getInt(self['레벨'])
-        a = ((c2 * c2) / 3) + 30
-        b = (a * (c2 - c1)) / 100
+        a = ((c2 * c2) // 3) + 30
+        b = (a * (c2 - c1)) // 100
 
         c = a + b
         # print c1, c2, a, b, c
@@ -464,9 +464,9 @@ class Mob(Body):
         c1 = getInt(self['레벨']) + 14
         c2 = randint(0, 4)
         if randint(0, 1) == 0:
-            c1 += c2;
+            c1 += c2
         else:
-            c1 -= c2;
+            c1 -= c2
         # print self['은전']
         c1 += getInt(self['은전'])
         if c1 < 1:
@@ -745,14 +745,13 @@ class Mob(Body):
         else:
             buf = self.weapon
         s = SCRIPT[buf + '전투스크립']
-        c = ((dmg - c1) * (len(s) - 1)) / (c2 - c1)
+        c = ((dmg - c1) * (len(s) - 1)) // (c2 - c1)
         # print dmg, c1, c2, c, len(s)
         i = len(s) - 1 - c
         if i < 0 or i > len(s) - 1:
             print('mob.getAttackScript')
             i = 0
         s = s[i]
-        # s = s[randint(0, len(s) - 1)]
 
         return self.makeFightScript(s, mob)
 
@@ -789,7 +788,7 @@ class Mob(Body):
         for skill in self.skillList:
             if skill[0]['종류'] != '전투':
                 continue
-            if self.hp > self['체력'] * skill[1] / 100:
+            if self.hp > self['체력'] * skill[1] // 100:
                 continue
             if skill[2] < randint(0, 100):
                 continue

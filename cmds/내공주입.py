@@ -14,7 +14,7 @@ class CmdObj(Command):
             maxhp = getItem(obj.index)['체력']
             if obj.hp >= maxhp:
                 continue
-            mp = ob['힘'] * obj['내공감소'] / 100
+            mp = ob['힘'] * obj['내공감소'] // 100
             if ob['내공'] - mp < 0:
                 if c == 0:
                     ob.sendLine('☞ 내가진기를 주입할 내공이 부족합니다.')
@@ -22,7 +22,7 @@ class CmdObj(Command):
                 break
             ob['내공'] -= mp
             c += 1
-            hp = maxhp * obj['체력증가'] / 100
+            hp = maxhp * obj['체력증가'] // 100
             obj.hp += hp
             if obj.hp >= maxhp:
                 obj.hp = maxhp

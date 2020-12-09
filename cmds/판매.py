@@ -41,7 +41,7 @@ class CmdObj(Command):
                 if item['옵션'] != None and len(item['옵션'].split('\n')) > 2:
                     continue
  
-                p = (getInt(item['판매가격']) * percent) / 100
+                p = (getInt(item['판매가격']) * percent) // 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
@@ -71,7 +71,7 @@ class CmdObj(Command):
                 if item['옵션'] != None and len(item['옵션'].split('\n')) > 3:
                     continue
  
-                p = (getInt(item['판매가격']) * percent) / 100
+                p = (getInt(item['판매가격']) * percent) // 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
@@ -101,7 +101,7 @@ class CmdObj(Command):
                 if item['옵션'] != None and len(item['옵션'].split('\n')) > 4:
                     continue
  
-                p = (getInt(item['판매가격']) * percent) / 100
+                p = (getInt(item['판매가격']) * percent) // 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
@@ -134,7 +134,7 @@ class CmdObj(Command):
                 elif item['옵션'] != None and len(item['옵션']) != 0:
                     continue
  
-                p = (getInt(item['판매가격']) * percent) / 100
+                p = (getInt(item['판매가격']) * percent) // 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
@@ -163,7 +163,7 @@ class CmdObj(Command):
                 if item['종류'] != '방어구' and item['종류'] != '무기':
                     continue
  
-                p = (getInt(item['판매가격']) * percent) / 100
+                p = (getInt(item['판매가격']) * percent) // 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
@@ -190,7 +190,7 @@ class CmdObj(Command):
                 if item.checkAttr('아이템속성', '팔지못함'):
                     continue
  
-                p = (getInt(item['판매가격']) * percent) / 100
+                p = (getInt(item['판매가격']) * percent) // 100
                 op = item.getOption()
                 if op != None:
                     p = int( p * (len(op) * 1.2) )
@@ -226,10 +226,10 @@ class CmdObj(Command):
         
         c = 0
         sum = 0
-        p = (getInt(item['판매가격']) * percent) / 100
+        p = (getInt(item['판매가격']) * percent) // 100
         obj = item
         for i in range(count):
-            p = (getInt(obj['판매가격']) * percent) / 100
+            p = (getInt(obj['판매가격']) * percent) // 100
             op = obj.getOption()
             if op != None:
                 p = int( p * (len(op) * 1.3) )

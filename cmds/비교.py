@@ -23,10 +23,10 @@ class CmdObj(Command):
         mT, c1, c2 = ob.getAttackPoint(obj)
         uT, c1, c2 = obj.getAttackPoint(ob)
         if is_player(obj):
-            mH = obj['최고체력'] / mT
+            mH = obj['최고체력'] // mT
         else:
-            mH = obj['체력'] / mT
-        uH = ob['최고체력'] / uT
+            mH = obj['체력'] // mT
+        uH = ob['최고체력'] // uT
         ob.sendLine('━━━━━━━━━━━━━━━')
         ob.sendLine('▶ [1m%s[0;37m%s의 상대비교' % ( obj['이름'] , han_wa(obj['이름']) ))
         ob.sendLine('───────────────')

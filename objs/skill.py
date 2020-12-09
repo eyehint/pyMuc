@@ -102,7 +102,7 @@ class Skill(Object):
         more = True
         start = self.end + 1
         self.curturn += 1
-        self.step = int(dex / 700)
+        self.step = int(dex // 700)
         if self.step > self.maxturn - start + 1:
             self.step = self.maxturn - start + 1
         if self.step > self.maxturn:

@@ -5,7 +5,7 @@ def status_ansi(ob):
     mp = ob.get('내공')
     maxmp = ob.get('최고내공')
 
-    hcnt = 20*hp/maxhp
+    hcnt = 20*hp//maxhp
     msg = '[1;1H' + HIR
     for i in range(hcnt):
         msg += '━'
@@ -13,7 +13,7 @@ def status_ansi(ob):
     for i in range(20-hcnt):
         msg += '━'
     
-    mcnt = 20*mp/maxmp
+    mcnt = 20*mp//maxmp
     msg += HIB
     for i in range(mcnt):
         msg += '━'

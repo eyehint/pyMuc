@@ -94,13 +94,13 @@ class Body(Object):
 
     def getMp(self):
         if self._mp != 0:
-            mp = self['내공'] + (self['내공'] * self._mp) / 100
+            mp = self['내공'] + (self['내공'] * self._mp) // 100
             return mp
         return self['내공']
 
     def getMaxMp(self):
         if self._maxmp != 0:
-            # mp = self['최고내공'] + (self['최고내공'] * self._maxmp) / 100
+            # mp = self['최고내공'] + (self['최고내공'] * self._maxmp) // 100
             # limit max 
             mp = self['최고내공'] + self._maxmp
             return mp
@@ -241,7 +241,7 @@ class Body(Object):
         cnt = len(scripts)
         if cnt == 0:
             return ''
-        s = scripts[(cnt - 1) - ((cnt - 1) * self.getHp()) / self.getMaxHp()]
+        s = scripts[(cnt - 1) - ((cnt - 1) * self.getHp()) // self.getMaxHp()]
         s = self['이름'] + postPosition(s, self['이름'])
         return s
 
@@ -271,7 +271,7 @@ class Body(Object):
 
     def getTotalExp(self):
         cc = self['레벨']
-        c = (((cc * cc) / 3) + 30) * (cc + 4)
+        c = (((cc * cc) // 3) + 30) * (cc + 4)
         n = MAIN_CONFIG['최고경험치']
         #        if cc >= 1800:
         #            return cc * 200000
@@ -284,12 +284,12 @@ class Body(Object):
         if c > n:
             N = 200
             if self['레벨'] >= 3000:
-                N = int(self['레벨'] / 10)
+                N = int(self['레벨'] // 10)
             c1 = getInt(self['레벨'])
             c2 = c1 + 200
 
-            a = ((c2 * c2) / 3) + 30
-            b = (a * (c2 - c1)) / 100
+            a = ((c2 * c2) // 3) + 30
+            b = (a * (c2 - c1)) // 100
             c = (a + b) * N
         return c
 
@@ -422,7 +422,7 @@ class Body(Object):
         bonus = self.getHit() * float(MAIN_CONFIG['명중확률'])
         bonus -= mob.getMiss() * float(MAIN_CONFIG['회피확률'])
 
-        return CHANCE - (((l2 - l1) + 90) / 3) + bonus
+        return CHANCE - (((l2 - l1) + 90) // 3) + bonus
 
     def getAttackChance(self, mob):
         l1 = self['레벨']
@@ -435,7 +435,7 @@ class Body(Object):
         CHANCE = 100
         bonus = self.getHit() * float(MAIN_CONFIG['명중확률'])
         bonus -= mob.getMiss() * float(MAIN_CONFIG['회피확률'])
-        return CHANCE - (((l2 - l1) + 90) / 3) + bonus
+        return CHANCE - (((l2 - l1) + 90) // 3) + bonus
 
     def getAttackPoint(self, mob):
         item = self.getWeapon()
@@ -453,7 +453,7 @@ class Body(Object):
         c1 = self.getStr() * 2
         if is_player(self):
             # c1 += math.sqrt( self.getStr() * self.getMaxMp() )
-            c1 += self.getMaxMp() / 4
+            c1 += self.getMaxMp() // 4
         c2 = self.getAttPower() - ss
         m1 = (c1 + c2) - (mob.getArm() + mob.getArmor())
         if m1 < 1:

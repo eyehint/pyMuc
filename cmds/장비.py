@@ -1,11 +1,11 @@
 from objs.cmd import Command
-
+from lib.hangul import postPosition1
 class CmdObj(Command):
 
     def cmd(self, ob, line):
         from lib.script import get_arm_script
         ob.sendLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━')
-        ob.sendLine('[0m[44m[1m[37m▷ %-51s[0m[37m[40m' % han_parse('당신', get_arm_script(ob)))
+        ob.sendLine('[0m[44m[1m[37m▷ %-51s[0m[37m[40m' % postPosition1('당신'+get_arm_script(ob)))
         ob.sendLine('───────────────────────────')
         c = 0
         item_str = ''

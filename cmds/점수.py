@@ -1,5 +1,6 @@
+from lib.hangul import postPosition1
 from objs.cmd import Command
-from include.ansi import *
+
 
 class CmdObj(Command):
 
@@ -69,13 +70,13 @@ class CmdObj(Command):
             write('★ %s%s [1m【%s】[0m 문파의 [1m%s%s[0m 입니다.' % \
                 ('당신', han_un('당신'), ob['소속'], buf, temp ))
         from lib.script import get_hp_script, get_mp_script
-        write( '★ ' + han_parse('당신', get_hp_script(ob)) )
+        write('★ ' + postPosition1('당신' + get_hp_script(ob)))
         p = ob.getInsureCount()
         if p == 0:
             ob.sendLine('★ 당신의 표국보험은 효력이 없습니다.')
         else:
             ob.sendLine('★ 당신은 %d번의 표국보험 혜택을 받으실 수 있습니다.' % p)
-        write( '★ ' + han_parse('당신', get_mp_script(ob)) )
+        write('★ ' + postPosition1('당신' + get_mp_script(ob)))
 
         p = getInt(ob['특성치'])
         if p != 0:

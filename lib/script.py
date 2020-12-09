@@ -74,7 +74,7 @@ def get_hp_script(ob):
     if curhp > maxhp:
         curhp = maxhp
     cnt = len(hp_script)
-    return hp_script[(cnt - 1) - ((cnt - 1) * curhp / maxhp)]
+    return hp_script[(cnt - 1) - ((cnt - 1) * curhp // maxhp)]
 
 
 arm_script = [

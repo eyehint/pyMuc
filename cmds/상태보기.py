@@ -1,5 +1,5 @@
 from objs.cmd import Command
-from include.ansi import *
+from lib.hangul import postPosition1
 
 class CmdObj(Command):
 
@@ -61,13 +61,13 @@ class CmdObj(Command):
         write('│[0m[47m[30m [은  전]                    %20d [0m[40m[37m│' % getInt(get('은전')))
         write('┕━━━━━━━━━━━━━━━━━━━━━━━━━┙')
         from lib.script import get_hp_script, get_mp_script
-        write( '★ ' + han_parse(get('이름'), get_hp_script(ob)) )
+        write( '★ ' + postPosition1(get('이름') + get_hp_script(ob)) )
         p = obj.getInsureCount()
         if p == 0:
             ob.sendLine('★ %s의 표국보험은 효력이 없습니다.' % obj.getNameA())
         else:
             ob.sendLine('★ %s %d번의 표국보험 혜택을 받으실 수 있습니다.' % (obj.han_iga(), p))
-        write( '★ ' + han_parse(get('이름'), get_mp_script(obj)) )
+        write( '★ ' + postPosition1(get('이름') + get_mp_script(obj)) )
 
         p = getInt(obj['특성치'])
         if p != 0:

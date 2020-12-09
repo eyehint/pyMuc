@@ -324,7 +324,7 @@ class Player(Body):
 
     def sendFightScript(self, line):
         if self.checkConfig('수련모드') == False:
-            self.channel.transport.write('%s\r\n' % line)
+            self.channel.transport.write(('%s\r\n' % line).encode("utf-8"))
 
     def fightPrompt(self):
         if self.INTERACTIVE != 1:

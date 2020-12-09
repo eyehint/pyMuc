@@ -140,11 +140,11 @@ class CmdObj(Command):
             if mob not in ob.target and mob['몹종류'] != 1:
                 ob.sendLine('☞ 강호에는 공격할 수 있는것과 없는것이 있지!')
                 return
-            if ob.getMp() < s.mp or ob['체력'] <  (ob['최고체력'] * s.hp) / 100 or ob['체력'] < (ob['최고체력'] * s.maxhp) / 100:
+            if ob.getMp() < s.mp or ob['체력'] <  (ob['최고체력'] * s.hp) // 100 or ob['체력'] < (ob['최고체력'] * s.maxhp) // 100:
                 ob.sendLine('[1;37m당신이 내공진기를 끌어 모으지만 기가 흩어져 버립니다.[0;37m')
                 return
             ob['내공'] -= s.mp
-            ob['체력'] -=  (ob['최고체력'] * s.hp) / 100
+            ob['체력'] -=  (ob['최고체력'] * s.hp) // 100
             ob.getSkill(s.name)
             ob.skill.init()
             
@@ -186,11 +186,11 @@ class CmdObj(Command):
             if ob.getMp() < s.mp:
                 ob.sendLine('[1m당신이 내공진기를 끌어 모으지만 기가 흩어져 버립니다.[0;37m')
                 return
-            if  ob['체력'] < (ob['최고체력'] * s.hp) / 100 or ob['체력'] < (ob['최고체력'] * s.maxhp) / 100:
+            if  ob['체력'] < (ob['최고체력'] * s.hp) // 100 or ob['체력'] < (ob['최고체력'] * s.maxhp) // 100:
                 ob.sendLine('[1m당신의 내공진기가 흩어지며 기의 순환이 멈추어 버립니다.[0;37m')
                 return
             ob['내공'] -= s.mp
-            ob['체력'] -= (ob['최고체력'] * s.hp) / 100
+            ob['체력'] -= (ob['최고체력'] * s.hp) // 100
             s = copy.copy(s)
             ob.skillUp(s)
             t = ob.skillMap[s.name][0]
@@ -211,13 +211,13 @@ class CmdObj(Command):
                 if s['계열'] == '내공흡수' and mob.getMp() > 0:
                     if chance >= randint(0, 100):
                         try:
-                            plus = mob.mp * against._mp / 100 * -1
+                            plus = mob.mp * against._mp // 100 * -1
                             if plus + ob['내공'] > ob['최고내공']:
                                 plus = ob['최고내공'] - ob['내공']
                             ob['내공'] += plus
                             mob.mp -= plus
                         except:
-                            plus = mob['내공'] * against._mp / 100 * -1
+                            plus = mob['내공'] * against._mp // 100 * -1
                             if plus + ob['내공'] > ob['최고내공']:
                                 plus = ob['최고내공'] - ob['내공']
                             ob['내공'] += plus

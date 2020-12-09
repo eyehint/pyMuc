@@ -1,33 +1,32 @@
-import os
-import glob
-import random
 import copy
+import glob
+import os
+import random
 import time
 
 from include.define import *
-
-from objs.object import Object
-from objs.mob import Mob, is_mob
-from objs.item import Item, is_item
-from objs.box import Box, is_box
-
-from lib.loader import load_script, save_script
 from lib.func import *
+from lib.loader import load_script, save_script
+from objs.box import Box, is_box
+from objs.item import is_item
+from objs.mob import is_mob
+from objs.object import Object
 
-class Room(Object): 
 
+class Room(Object):
     Zones = {}
-    reverseDir = { '동': '서',
-                   '서': '동',
-                   '남': '북',
-                   '북': '남',
-                   '북동': '남서',
-                   '북서': '남동',
-                   '남동': '북서',
-                   '남서': '북동',
-                   '위': '아래',
-                   '아래': '위', 
-                 }
+    reverseDir = {'동': '서',
+                  '서': '동',
+                  '남': '북',
+                  '북': '남',
+                  '북동': '남서',
+                  '북서': '남동',
+                  '남동': '북서',
+                  '남서': '북동',
+                  '위': '아래',
+                  '아래': '위',
+                  }
+
     def __init__(self):
         Object.__init__(self)
         self.lastup_time = 0
@@ -86,9 +85,9 @@ class Room(Object):
         self.exitList = []
         self.shortExitStr = ''
         self.longExitStr = ''
-        
+
         exits = self.get('출구')
-        lines = exits
+        lines = exits if type(exits) == list else [exits, ]
         for line in lines:
             s = line.split()
             c = len(s)
@@ -111,7 +110,7 @@ class Room(Object):
         if c == 0:
             str = '없음'
                 
-        self.shortExitStr = '\r\n[출구] : ' + str
+        self.shortExitStr = '\n[출구] : ' + str
 
         c = 0
         str1 = ''
@@ -123,7 +122,7 @@ class Room(Object):
             str1 = str1 + '[32m' + exitName +  '[37mː'
         str1 = str1[:-2]
         if c == 0:
-            str = '\r\n  ○  어느 쪽으로도 이동할 수 없습니다.\r\n'
+            str = '\n  ○  어느 쪽으로도 이동할 수 없습니다.\n'
         else:
             if '북서' in self.exitList:
                 str = '[32m↖[37m'
@@ -134,22 +133,21 @@ class Room(Object):
             else:
                 str = str + '  '
             if '북동' in self.exitList:
-                str = str + '[32m↗[37m\r\n'
+                str = str + '[32m↗[37m\n'
             else:
-                str = str + '\r\n'
+                str = str + '\n'
  
             if '서' in self.exitList:
                 str = str + '[32m◁[37m'
             else:
                 str = str + '  '
-            str = str + '○'
+            str += '○'
             if '동' in self.exitList:
                 str = str + '[32m▷[37m'
             else:
                 str = str + '  '
-            # print 출구
-            str += ' 〔' + str1 + '〕쪽으로 이동할 수 있습니다.\r\n'
-                
+            str += ' 〔' + str1 + '〕쪽으로 이동할 수 있습니다.\n'
+
             if '남서' in self.exitList:
                 str = str + '[32m↙[37m'
             else:
@@ -364,10 +362,10 @@ class Room(Object):
             for item in itemMap:
                 cnt = itemMap[item]
                 if cnt == 1:
-                    itemMsg += '%s 먼지가 되어 사라집니다.\r\n' % item
+                    itemMsg += '%s 먼지가 되어 사라집니다.\n' % item
                 else:
-                    itemMsg += '%s %d개가 먼지가 되어 사라집니다.\r\n' % (item[:-2], cnt)
-            self.writeRoom('\r\n' + itemMsg[:-2])
+                    itemMsg += '%s %d개가 먼지가 되어 사라집니다.\n' % (item[:-2], cnt)
+            self.writeRoom('\n' + itemMsg[:-2])
             updated = True 
         if updated:
             self.printPrompt()

@@ -12,6 +12,8 @@ class CmdObj(Command):
             return
 
         exits = ob.env['출구']
+        if type(exits) == str:
+            exits = [exits, ]
         nexists = ''
         c = 0
         for ex in exits:

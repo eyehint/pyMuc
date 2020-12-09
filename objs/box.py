@@ -171,7 +171,7 @@ class Box(Object):
         self['은전'] += money
         a = self['보관최대수량'] - self['보관수량']
         req = self['보관증가은전']
-        cnt = self['은전'] / req
+        cnt = self['은전'] // req
         if cnt == 0:
             return money
         if cnt > a:

@@ -327,7 +327,7 @@ def applyMagic(self, level, num = 0, force = 0):
     if num > 4:
         num = 4
 
-    level += level * (num - 1) / 4
+    level += level * (num - 1) // 4
 
     if level > 10000:
         level = 10000
@@ -348,8 +348,8 @@ def applyMagic(self, level, num = 0, force = 0):
         if maxval == 0:
             continue
         #val = randint(0, maxval)
-        m = level * maxval / 10000 
-        val = randint(int(m / 2), int(m * 1.5))
+        m = level * maxval // 10000
+        val = randint(int(m // 2), int(m * 1.5))
         if val > maxval:
             val = maxval
         if val == 0:
@@ -365,8 +365,8 @@ def applyMagic(self, level, num = 0, force = 0):
     self['레벨'] = l
     if self['종류'] == '방어구':
         de = self['방어력']  
-        d = int(l / 20)
-        d += randint(-d/10, d/10)
+        d = int(l // 20)
+        d += randint(-d//10, d//10)
 
         #if d > de * 3:
         #    z = True
