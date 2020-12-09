@@ -1,12 +1,12 @@
-import pickle
+from lib.loader import load_script, save_script
 
 class Rank():
     attr = {}
-    path = 'data/config/rank.dat'
+    path = 'data/config/rank.dat.json'
     def load(self):
         try:
-            f = open(self.path,)
-            self.attr = pickle.load(f)
+            with open(self.path) as fp:
+                self.attr = load_script(fp)
         except IOError:
             print('%s IOError' % self.path)
             return
@@ -16,12 +16,12 @@ class Rank():
         except:
             print('Error %s' % self.path)
             return
-        f.close()
-        
+
     def save(self):
         try:
-            f = open(self.path, 'w')
-            pickle.dump(self.attr, f)
+            with open(self.path, 'w', encoding="utf-8") as fp:
+                save_script(fp, self.attr)
+
         except IOError:
             print('%s IOError' % self.path)
             return
@@ -31,8 +31,7 @@ class Rank():
         except:
             print('Error %s' % self.path)
             return
-        f.close()
-          
+
     def write_rank(self, type, name, value, level):
         if type not in self.attr:
             rank = []

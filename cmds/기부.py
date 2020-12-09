@@ -32,8 +32,7 @@ class CmdObj(Command):
             msg += '\n'
 
         try:
-            f = open(mob.path, 'w')
+            with open(mob.path, 'w') as fp:
+                fp.write(msg)
         except:
             return False
-        f.write(msg)
-        f.close()

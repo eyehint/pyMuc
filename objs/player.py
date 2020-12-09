@@ -150,7 +150,6 @@ class Player(Body):
         self.channel.sendToAllInOut(msg, ex=self)
 
     def load(self, path):
-
         scr = load_script('data/user/' + path)
 
         if scr == None:

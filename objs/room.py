@@ -37,8 +37,7 @@ class Room(Object):
     def create(self, index):
         self.index = index
         self.zone = index[:index.find(':')]
-        self.path = 'data/map/' + index.replace(':', '/') + '.map'
-        #print(path)
+        self.path = 'data/map/' + index.replace(':', '/') + '.map.json'
         scr = load_script(self.path)
         if scr == None:
             return False
@@ -67,13 +66,12 @@ class Room(Object):
         o = {}
         o['맵정보'] = self.attr
         try:
-            f = open(path, 'w')
+            with open(path, 'w', encoding="utf-8") as fp:
+                save_script(fp, o)
+                return True
         except:
             return False
-        save_script(f, o)
-        f.close()
-        return True
-        
+
     def setHiddenExit(self):
         Exits = copy.copy(self.Exits)
         for exitName in Exits:
@@ -194,12 +192,8 @@ class Room(Object):
         e = self.Exits[exitName]
         if type(e) == list:
             return None
-            c = len(e)
-            num = random.randint(0, c - 1)
-            fileName = e[num]
         else:
             fileName = e
-        
         i = fileName.find(':')
         if i == -1:
             fileName = self.get('존이름') + ':' + fileName

@@ -1,25 +1,23 @@
+from lib.loader import load_script, save_script
 from objs.object import Object
 
-from lib.loader import load_script, save_script
 
 class Nickname(Object):
-    
     attr = {}
-    
+
     def __init__(self):
         self.load()
-    
+
     def save(self):
         o = {}
         o['무림별호'] = self.attr
         try:
-            f = open('data/config/nickname.cfg.json', 'w')
+            with open('data/config/nickname.cfg.json', 'w', encoding='utf-8') as fp:
+                save_script(fp, o)
+            return True
         except:
             return False
-        save_script(f, o)
-        f.close()
-        return True
-        
+
     def load(self):
         script = load_script('data/config/nickname.cfg.json')
         self.attr = script['무림별호']

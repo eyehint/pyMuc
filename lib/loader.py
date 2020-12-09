@@ -20,4 +20,4 @@ def save_script(fp, x):
     """
     if type(x) is not dict:
         return False
-    json.dump(x, fp)
+    json.dump(x, fp, sort_keys=True, ensure_ascii=False)

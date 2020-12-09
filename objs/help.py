@@ -17,7 +17,7 @@ class Help(Object):
         o = {}
         o['도움말'] = self.attr
         try:
-            f = open('data/config/help.cfg', 'w')
+            f = open('data/config/help.cfg.json', 'w', encoding="utf-8")
         except:
             return False
         save_script(f, o)
