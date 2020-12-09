@@ -13,6 +13,6 @@ class CmdObj(Command):
         ob.write('작성을 마치시려면 \'.\' 를 입력하세요.\r\n:')
         ob.INTERACTIVE = 0
         ob._lineData = ''
-        ob._lineDataTarget = 'mob/' + words[0] + '/'+ words[1] + '.mob'
+        ob._lineDataTarget = 'mob/' + words[0] + '/'+ words[1] + '.mob.json'
         ob.input_to(ob.write_edit)
 

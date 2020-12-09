@@ -10,7 +10,7 @@ class Config(Object):
     
     def load(self):
         self.attr = {}
-        scr = load_script('data/config/murim.cfg')
+        scr = load_script('data/config/murim.cfg.json')
         self.attr = scr['메인설정']
         
 MAIN_CONFIG = Config()

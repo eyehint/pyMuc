@@ -7,10 +7,10 @@ class Oneitem(Object):
     attr = {}
     
     def __init__(self):
-        script = load_script('data/config/oneitem_index.cfg')
+        script = load_script('data/config/oneitem_index.cfg.json')
         self.index = script['단일아이템인덱스']
         
-        script = load_script('data/config/oneitem.cfg')
+        script = load_script('data/config/oneitem.cfg.json')
         attr = script['단일아이템']
         
         for att in self.index:
@@ -26,7 +26,7 @@ class Oneitem(Object):
         o = {}
         o['단일아이템'] = self.attr
         try:
-            f = open('data/config/oneitem.cfg', 'w')
+            f = open('data/config/oneitem.cfg.json', 'w')
         except:
             return False
         save_script(f, o)

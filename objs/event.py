@@ -47,7 +47,6 @@ def doEvent(self, mob, key, words):
                 sline = sline.replace('$변수:1', words[1])
 
             func = line.split()[0]
-            # self.sendLine( line )
             if func == '$이벤트확인!':
                 if self.checkEvent(sline[13:].strip()) == True:
                     searchEnd = True

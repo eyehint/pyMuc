@@ -24,7 +24,7 @@ class Item(Object):
     def create(self, index):
         #print(path)
         self.index = index
-        self.path = 'data/item/' + index + '.itm'
+        self.path = 'data/item/' + index + '.itm.json'
         scr = load_script(self.path)
         if scr == None:
             return False
@@ -146,8 +146,8 @@ class Item(Object):
 def is_item(obj):
     return isinstance(obj, Item)
 
-def getItem(itemName):
 
+def getItem(itemName):
     try:
         item = Item.Items[itemName]
     except KeyError:
@@ -166,10 +166,10 @@ def loadAllItem():
     pwd = os.getcwd()
     c = 0
     os.chdir('data/item')
-    files = glob.glob('*.itm')
+    files = glob.glob('*.itm.json')
     os.chdir(pwd)
     for file in files:
-        item = getItem(file[:-4])
+        item = getItem(file[:-9])
         if item != None:
             c = c + 1
     

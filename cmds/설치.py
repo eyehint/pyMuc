@@ -51,7 +51,7 @@ class CmdObj(Command):
         box['설명2'] = item['설명2']
         box['주인'] = owner
         box.index = '%s_%s' % (owner, item['이름'])
-        box.path = 'data/box/%s.box' % box.index
+        box.path = 'data/box/%s.box.json' % box.index
         box.save()
         ob.env.insert(box)
         ob.sendLine('당신이 %s 설치합니다.' % item.han_obj())

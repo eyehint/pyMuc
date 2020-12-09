@@ -12,7 +12,7 @@ class Emotion(Object):
         
     def load(self):
         self.attr = {}
-        help = load_script('data/config/emotion.cfg')
+        help = load_script('data/config/emotion.cfg.json')
         e = help['감정표현']
         for key in e:
             keys = key.split()

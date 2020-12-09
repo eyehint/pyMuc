@@ -13,7 +13,7 @@ class Nickname(Object):
         o = {}
         o['무림별호'] = self.attr
         try:
-            f = open('data/config/nickname.cfg', 'w')
+            f = open('data/config/nickname.cfg.json', 'w')
         except:
             return False
         save_script(f, o)
@@ -21,7 +21,7 @@ class Nickname(Object):
         return True
         
     def load(self):
-        script = load_script('data/config/nickname.cfg')
+        script = load_script('data/config/nickname.cfg.json')
         self.attr = script['무림별호']
         
 NICKNAME = Nickname()

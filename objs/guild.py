@@ -1,11 +1,13 @@
 import pickle
 from objs.object import Object
 from lib.loader import load_script, save_script
+import json
+
 
 class Guild(Object):
     
     attr = {}
-    path = 'data/config/guild.dat'
+    path = 'data/config/guild.dat.json'
     def __init__(self):
         self.load()
         
@@ -26,8 +28,8 @@ class Guild(Object):
     
     def save(self):
         try:
-            f = open(self.path, 'w')
-            pickle.dump(self.attr, f)
+            with open(self.path, 'w') as fp:
+                json.dump(fp)
         except IOError:
             print('%s IOError' % self.path)
             return
@@ -37,7 +39,6 @@ class Guild(Object):
         except:
             print('Error %s' % self.path)
             return
-        f.close()
 
 GUILD = Guild()
 

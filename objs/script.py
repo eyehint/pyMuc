@@ -11,11 +11,7 @@ class Script(Object):
         
     def load(self):
         self.attr = {}
-        script = load_script('data/config/script.cfg')
+        script = load_script('data/config/script.cfg.json')
         self.attr = script['메인설정']
-        for attr in self.attr:
-            self.attr[attr] = self.attr[attr].splitlines()
 
 SCRIPT = Script()
-
-        

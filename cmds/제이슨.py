@@ -7,8 +7,7 @@ class CmdObj(Command):
             ob.sendLine('☞ 무슨 말인지 모르겠어요. *^_^*')
             return
         import json
-        j = json.dumps(ob.attr, sort_keys=True, indent=4, \
-            separators=(',', ': '), encoding='euc-kr')
+        j = json.dumps(ob.attr, sort_keys=True, indent=4, separators=(',', ': '))
         j1 = j.decode('euc-kr')
         print(j1)
         print(j)

@@ -1,15 +1,15 @@
 import copy
 from random import randint
+
+from include.define import *
+from lib.func import *
+from lib.hangul import *
+from objs.config import MAIN_CONFIG
 from objs.item import getItem
 from objs.object import Object
+from objs.oneitem import ONEITEM
+from objs.script import SCRIPT
 from objs.skill import MUGONG
-from objs.oneitem import Oneitem, ONEITEM
-from objs.script import Script, SCRIPT
-from objs.config import MAIN_CONFIG
-from lib.hangul import *
-from lib.func import *
-from include.define import *
-import math
 
 
 class Body(Object):

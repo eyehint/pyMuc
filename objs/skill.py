@@ -1,19 +1,16 @@
-from include.define import *
-
+from lib.loader import load_script
 from objs.object import Object
 
-from lib.loader import load_script, save_script
-from lib.func import *
-from lib.hangul import *
 
 class Skills(Object):
     attr = {}
+
     def __init__(self):
         self.load()
-        
+
     def load(self):
         self.attr = {}
-        skills = load_script('data/config/skill.cfg')
+        skills = load_script('data/config/skill.cfg.json')
         
         for s in skills:
             skill = Skill()
@@ -22,6 +19,7 @@ class Skills(Object):
             self.attr[s] = skill
             skill.parse()
         
+
 class Skill(Object):
     def __init__(self):
         Object.__init__(self)
@@ -47,51 +45,48 @@ class Skill(Object):
         
     def parse(self):
         self.getAttr()
-        
+
         if self['종류'] != '전투':
             return
-        #{1: [{'초식': '~~~~'}, {'초식': '!!!!!!!!'}], 2: [], 3:[], ...}
         self.pattern = {}
-        for line in self['공격'].splitlines():
+        self['공격'] = [self['공격'], ] if type(self['공격']) == str else self['공격']
+        for line in self['공격']:
             words = line.split(None, 2)
-            #print line
             turn = int(words[0])
-            type = words[1]
-            if type != '대기':
+            mu_type = words[1]
+            if mu_type != '대기':
                 msg = words[2]
             else:
                 msg = ''
             if turn not in self.pattern:
-                self.pattern[turn] = [{type:msg}]
+                self.pattern[turn] = [{mu_type: msg}]
             else:
-                self.pattern[turn].append({type:msg})
+                self.pattern[turn].append({mu_type: msg})
         self.maxturn = len(self.pattern)
-        
-        
+
     def getAttr(self):
-        for config in self['속성'].splitlines():
+        for config in self['속성']:
             if config.find('힘경험치증가') == 0:
-                self.bonus = getInt(config.split()[1])
+                self.bonus = self.getInt(config.split()[1])
             elif config.find('내공소모') == 0:
-                self.mp = getInt(config.split()[1])
+                self.mp = self.getInt(config.split()[1])
             elif config.find('체력소모') == 0:
-                self.hp = getInt(config.split()[1])
+                self.hp = self.getInt(config.split()[1])
             elif config.find('체력요구') == 0:
-                self.maxhp = getInt(config.split()[1])
+                self.maxhp = self.getInt(config.split()[1])
             elif config.find('전체무공') == 0:
                 self.all = True
             elif config.find('계열금지') == 0:
                 self.deny = config.split()[1]
-                #if len(attr) == 2:
-                #    self.deny = attr[1]
-        
-        for config in self['방어능력'].splitlines():
+
+        self['방어능력'] = [self['방어능력'], ] if type(self['방어능력']) == str else self['방어능력']
+        for config in self['방어능력']:
             if config.find('힘') == 0:
-                self._str = getInt(config.split()[1])
+                self._str = self.getInt(config.split()[1])
             elif config.find('민첩성') == 0:
-                self._dex = getInt(config.split()[1])
+                self._dex = self.getInt(config.split()[1])
             elif config.find('맷집') == 0:
-                self._arm = getInt(config.split()[1])
+                self._arm = self.getInt(config.split()[1])
             elif config.find('내공') == 0:
                 a, self._mp = getNumberPercent(config.split()[1])
             elif config.find('최고내공') == 0:
@@ -120,7 +115,6 @@ class Skill(Object):
         #print self.curturn, self.step, dex, start, self.end
         for i in range(start, self.end + 1):
             if i > self.maxturn:
-                print('break')
                 break
             if i not in self.pattern:
                 break

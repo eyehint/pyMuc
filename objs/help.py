@@ -10,7 +10,7 @@ class Help(Object):
         self.load()
         
     def load(self):
-        help = load_script('data/config/help.cfg')
+        help = load_script('data/config/help.cfg.json')
         self.attr = help['도움말']
 
     def save(self):

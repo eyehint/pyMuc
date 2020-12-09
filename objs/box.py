@@ -1,22 +1,17 @@
-import os
-import glob
-import time
-
-from objs.object import Object
-
-from lib.hangul import *
-from lib.loader import load_script, save_script
-from objs.item import Item, getItem, is_item
 from lib.func import *
+from lib.loader import load_script, save_script
+from objs.item import getItem
+from objs.object import Object
+import json
 
 class Box(Object):
-    
+
     def __init__(self):
         Object.__init__(self)
-        
+
     def __del__(self):
         pass
-        #self.save()
+        # self.save()
         #print 'Delete!!! ' + self.getName()
         
     def create(self, index):
@@ -95,11 +90,10 @@ class Box(Object):
         o['아이템'] = items
         
         try:
-            f = open(self.path, 'w')
+            with open(self.path, 'w') as fp:
+                save_script(fp, o)
         except:
             return False
-        save_script(f, o)
-        f.close()
         return True
         
     def viewShort(self):

@@ -1,5 +1,5 @@
 from objs.cmd import Command
-from lib.hangul import *
+from objs.mob import is_mob
 
 class CmdObj(Command):
     level = 2000
@@ -11,9 +11,7 @@ class CmdObj(Command):
         if len(line) == 0:
             ob.sendLine('☞ 사용법: [대상] 죽여') #
             return
-        
-            
-        #from lib.object import find_obj, is_mob
+
         mob = ob.env.findObjName(line)
 
         if mob == None:

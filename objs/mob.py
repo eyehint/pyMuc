@@ -47,12 +47,10 @@ class Mob(Body):
         Body.__init__(self)
 
     def create(self, index):
-        # print(path)
         self.index = index
-        self.path = 'data/mob/' + index.replace(':', '/') + '.mob'
+        self.path = 'data/mob/' + index.replace(':', '/') + '.mob.json'
         scr = load_script(self.path)
-
-        if scr == None:
+        if scr is None:
             return False
 
         try:
@@ -79,8 +77,12 @@ class Mob(Body):
                 self.regen = 360
         self.setMove()
 
-        l = self.get('사용아이템').splitlines()
-        for i in l:
+        use_item = self.get('사용아이템')
+        if type(use_item) == str:
+            use_item_list = [use_item, ] if use_item != "" else []
+        else:
+            use_item_list = use_item
+        for i in use_item_list:
             item = getItem(i.split()[0])
             if item == None:
                 continue
@@ -90,8 +92,8 @@ class Mob(Body):
                 self.weapon = item['전투스크립']
                 self.weaponItem = item
 
-        l = self['무공'].splitlines()
-        for m in l:
+        use_item_list = self['무공']
+        for m in use_item_list:
             words = m.split()
             if len(words) != 3:
                 continue
@@ -246,14 +248,14 @@ class Mob(Body):
         return ''
 
     def setMove(self):
-        rstr = str(self.get('이동'))
-
+        rstr = self.get('이동')
         if rstr == '':
             return
+        if type(rstr) == list:
+            rstr = " ".join(rstr)
         self.moveTick = getInt(self.get('이동틱'))
         if self.moveTick == 0:
             self.moveTick = 30
-
         mr = rstr.split()
         for r in mr:
             if r.find('-') != -1:
@@ -869,10 +871,8 @@ def getMob(path):
     i = path.find(':')
     if i == -1:
         return None
-
     zoneName = path[:i]
     mobName = path[i + 1:]
-
     try:
         zone = Mob.Mobs[zoneName]
     except KeyError:
@@ -898,20 +898,19 @@ def loadAllMob():
     c = 0
     curTime = time.time()
     dirs = os.listdir('data/mob')
-    for dir in dirs:
+    for directory in dirs:
         try:
-            os.chdir('data/mob/' + dir)
+            os.chdir('data/mob/' + directory)
         except:
             continue
-        files = glob.glob('*.mob')
-        # print files
+        files = glob.glob('*.mob.json')
         os.chdir(pwd)
         for file in files:
-            mob = getMob(dir + ':' + file[:-4])
+            mob = getMob(directory + ':' + file[:-9])
             if mob != None:
-                mob['존이름'] = dir
-                if dir[-1].isdigit():
-                    mob['난이도'] = int(dir[-1])
+                mob['존이름'] = directory
+                if directory[-1].isdigit():
+                    mob['난이도'] = int(directory[-1])
                 mob.setDifficulty()
                 c = c + 1
                 mob.place()

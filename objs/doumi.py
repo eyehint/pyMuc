@@ -14,7 +14,7 @@ class Doumi(Object):
 
     def load(self):
         self.attr = {}
-        s = load_script('data/config/doumi.cfg')
+        s = load_script('data/config/doumi.cfg.json')
         self.attr = s['도우미메인설정']
     
 class autoScript():
