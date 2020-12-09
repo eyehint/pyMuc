@@ -109,7 +109,7 @@ class Object:
     def findObjName(self, name, order = 1):
         n = 0
         for obj in self.objs:
-            if obj.get('이름') == name or name in obj.get('반응이름').splitlines():
+            if obj.get('이름') == name or name in obj.get('반응이름'):
                 if obj.checkAttr('아이템속성', '출력안함'):
                     continue
                 n += 1
@@ -120,7 +120,7 @@ class Object:
     def findObjInven(self, name, order = 1):
         n = 0
         for obj in self.objs:
-            if obj.get('이름') == name or name in obj.get('반응이름').splitlines():
+            if obj.get('이름') == name or name in obj.get('반응이름'):
                 if obj.inUse:
                     continue
                 n += 1
@@ -131,7 +131,7 @@ class Object:
     def findObjInUse(self, name, order = 1):
         n = 0
         for obj in self.objs:
-            if obj.get('이름') == name or name in obj.get('반응이름').splitlines():
+            if obj.get('이름') == name or name in obj.get('반응이름'):
                 if obj.inUse == False:
                     continue
                 n += 1
@@ -142,13 +142,13 @@ class Object:
     def checkAttr(self, key, attr):
         keydata = self.get(key)
         
-        if attr in keydata.splitlines():
+        if attr in keydata:
             return True
             
         return False
         
     def setAttr(self, key, attr):
-        lines = self[key].splitlines()
+        lines = self[key]
         if attr in lines:
             return
         at = ''
@@ -158,7 +158,7 @@ class Object:
         self[key] = at
         
     def delAttr(self, key, attr):
-        at = self[key].splitlines()
+        at = self[key]
         if attr in at:
             at.remove(attr)
             text = ''

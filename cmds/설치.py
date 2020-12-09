@@ -27,7 +27,7 @@ class CmdObj(Command):
         elif ob.env['주인'] != ob['이름']:
             ob.sendLine('☞ 이곳에 설치할 허가권이 없습니다.')
             return
-        if name in ob.env['설치리스트'].splitlines():
+        if name in ob.env['설치리스트']:
             ob.sendLine('☞ 이미 설치가 되어 있습니다. ^^')
             return
         

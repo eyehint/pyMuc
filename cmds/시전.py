@@ -163,7 +163,7 @@ class CmdObj(Command):
         else:
             if l == 1:
                 mob = ob
-            attr = s['속성'].splitlines()
+            attr = s['속성']
             if '자신금지' in attr and mob == ob:
                 ob.sendLine('☞ 자신에게 사용할 수 없는 무공입니다. ^^')
                 return

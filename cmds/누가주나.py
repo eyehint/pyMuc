@@ -20,13 +20,13 @@ class CmdObj(Command):
                 mob = zone[mobName]
                 s = mob['아이템'] 
                 if s != '':
-                    s = s.splitlines()
+                    s = s
                     for l in s:
                         if l.split(' ')[0] == line.strip() :
                             ob.sendLine(mob['이름'] + ' : ' + mob.index)
                 s = mob['사용아이템'] 
                 if s != '':
-                    s = s.splitlines()
+                    s = s
                     for l in s:
                         if l.split(' ')[0] == line.strip() :
                             ob.sendLine(mob['이름'] + ' : ' + mob.index)

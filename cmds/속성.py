@@ -21,7 +21,7 @@ class CmdObj(Command):
         l.sort()
         for at in l:
             msg += '#%s\r\n' % at
-            for m in str(target.attr[at]).splitlines():
+            for m in str(target.attr[at]):
                 msg += ':%s\r\n' % m
             msg += '\r\n'
             

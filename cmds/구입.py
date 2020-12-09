@@ -20,14 +20,14 @@ class CmdObj(Command):
             ob.sendLine('☞ 품목을 보여줄 상인이 없어요. ^^')
             return
         item = None
-        for l in mob['물건판매'].splitlines():
+        for l in mob['물건판매']:
             w = l.split()
             index = w[0]
             percent = int(w[1])
             item = getItem(index)
             if item == None:
                 continue
-            if item['이름'] == words[0] or words[0] in item['반응이름'].splitlines():
+            if item['이름'] == words[0] or words[0] in item['반응이름']:
                 found = True
                 break
         if found == False:
@@ -76,7 +76,7 @@ class CmdObj(Command):
             if chU == '정파' and chI != chU:
                 ob.sendLine('☞ 해당 호위는 정파원만 사용 가능합니다.')
                 return
-        lines = item['구매조건'].splitlines()
+        lines = item['구매조건']
         if len(lines) == 0:
             ob.sendLine('☞ 해당 호위를 살수가 없습니다.')
             return
@@ -95,7 +95,7 @@ class CmdObj(Command):
             ob.sendLine('☞ 해당 호위를 살수가 없습니다.(레벨)')
             return
         limit = 0
-        for attr in item['아이템속성'].splitlines():
+        for attr in item['아이템속성']:
             if attr.find('소지한계') == 0:
                 limit = getInt(attr.split()[1])
                 break

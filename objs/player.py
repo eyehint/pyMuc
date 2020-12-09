@@ -257,7 +257,7 @@ class Player(Body):
             obj = {}
             obj['인덱스'] = item.index
             obj['이름'] = item.get('이름')
-            obj['반응이름'] = item['반응이름'].splitlines()
+            obj['반응이름'] = item['반응이름']
             if item.get('공격력') != '':
                 obj['공격력'] = item.get('공격력')
             if item.get('방어력') != '':
@@ -267,9 +267,9 @@ class Player(Body):
             if item.inUse:
                 obj['상태'] = item.get('계층')
             if item.get('옵션') != '':
-                obj['옵션'] = item.get('옵션').splitlines()
+                obj['옵션'] = item.get('옵션')
             if item.get('아이템속성') != '':
-                obj['아이템속성'] = item.get('아이템속성').splitlines()
+                obj['아이템속성'] = item.get('아이템속성')
             if item.get('확장 이름') != '':
                 obj['확장 이름'] = item.get('확장 이름')
             if item.isOneItem():
@@ -970,7 +970,7 @@ class Player(Body):
 
     def delMugong(self, line):
         m = line.strip()
-        ms = self.get('무공이름').splitlines()
+        ms = self.get('무공이름')
         if line.strip() in self.skillList:
             self.skillList.remove(line.strip())
 
@@ -1042,7 +1042,7 @@ class Player(Body):
             self.state = sDOUMI
             from objs.doumi import DOUMI, autoScript
             self.autoscript = autoScript()
-            self.autoscript.start(DOUMI['초기도우미'].splitlines(), self)
+            self.autoscript.start(DOUMI['초기도우미'], self)
             return
         if name == '나만바라바':
             # if self.checkMulti():
@@ -1050,7 +1050,7 @@ class Player(Body):
             self.input_to(self.doNothing)
             from objs.doumi import DOUMI, autoScript
             self.autoscript = autoScript()
-            self.autoscript.start(DOUMI['빠른도우미'].splitlines(), self)
+            self.autoscript.start(DOUMI['빠른도우미'], self)
             return
 
         from client import Client
@@ -1265,7 +1265,7 @@ class Player(Body):
         self.write(':')
 
     def write_memo(self, line, *args):
-        l = len(self._memoBody.splitlines())
+        l = len(self._memoBody)
         if line == '.' or l >= 10:
             msg = ''
             found = False
@@ -2195,7 +2195,7 @@ class Player(Body):
             self.set('내공', mp)
 
     def doEmotion(self, cmd, line):
-        kd = EMOTION[cmd].splitlines()
+        kd = EMOTION[cmd]
         sub = line
         if line == '':
             buf1, buf2, buf3 = EMOTION.makeScript(kd[0], self.getNameA(), None, line)
@@ -2241,7 +2241,7 @@ class Player(Body):
         return self.Configs[cfg]
 
     def _checkConfig(self, config):
-        kl = self['설정상태'].splitlines()
+        kl = self['설정상태']
         for k in kl:
             if k.find(config) == 0:
                 if len(k.split()) > 1 and k.split()[1] == '1':
@@ -2252,7 +2252,7 @@ class Player(Body):
     def setConfig(self, config):
         c = ''
         find = False
-        kl = self['설정상태'].splitlines()
+        kl = self['설정상태']
         for k in kl:
             if k.find(config) == 0:
                 find = True
@@ -2272,7 +2272,7 @@ class Player(Body):
 
     def loadAlias(self):
         self.alias = {}
-        s = self['줄임말리스트'].splitlines()
+        s = self['줄임말리스트']
         for key in s:
             ss = key.split(None, 1)
             self.alias[ss[0]] = ss[1]

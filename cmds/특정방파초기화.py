@@ -19,7 +19,7 @@ class CmdObj(Command):
                     contimue
                 room.attr.__delitem__('방파주인')
                 room.save()
-                for r in room['방파입구'].splitlines():
+                for r in room['방파입구']:
                     if r.find(':') == -1:
                         path = room.zone + ':' + r
                     else:

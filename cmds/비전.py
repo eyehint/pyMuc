@@ -13,7 +13,7 @@ class CmdObj(Command):
                 ob.sendLine('☞ 비전 : [[1;37m%s[0;37m]' % ob['비전설정'])
                 return
         s = None
-        vision = ob['비전이름'].splitlines()
+        vision = ob['비전이름']
         if line not in vision:
             ob.sendLine('☞ 당신은 그런 비전을 배운적이 없습니다.')
             return

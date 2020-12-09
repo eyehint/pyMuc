@@ -122,7 +122,7 @@ class Mob(Body):
     def place(self):
         from objs.room import Room, is_room, getRoom
         keydata = self.getString('위치')
-        lines = keydata.splitlines()
+        lines = keydata
         for line in lines:
             for loc in line.split():
                 room = getRoom(self.get('존이름') + ':' + loc)
@@ -155,7 +155,7 @@ class Mob(Body):
         if d == '':
             d = 0
 
-        iList = self['아이템'].splitlines()
+        iList = self['아이템']
         for i in iList:
             c = 1
             words = i.split()
@@ -179,7 +179,7 @@ class Mob(Body):
                     obj.applyMagic(self['레벨'], 0)
                     self.insert(obj)
 
-        iList = self['사용아이템'].splitlines()
+        iList = self['사용아이템']
         for i in iList:
             c = 1
             words = i.split()
@@ -224,7 +224,7 @@ class Mob(Body):
         ob.sendLine(self.get('설명2'))
         ob.sendLine('──────────────────────────────')
 
-        l = self.get('사용아이템').splitlines()
+        l = self.get('사용아이템')
         for lv in self.ItemLevelList:
             for i in l:
                 item = getItem(i.split()[0])
@@ -495,7 +495,7 @@ class Mob(Body):
         if p2 < p3:
             return
 
-        herbs = MAIN_CONFIG['내공아이템리스트'].splitlines()
+        herbs = MAIN_CONFIG['내공아이템리스트']
         l = len(herbs)
         herb = getItem(herbs[randint(0, l - 1)]).clone()
         if len(self.target) != 0:
@@ -651,7 +651,7 @@ class Mob(Body):
                     break
 
     def getSayStr(self):
-        lines = self.get('자동스크립').splitlines()
+        lines = self.get('자동스크립')
         if len(lines) == 0:
             return ''
         return lines[randint(0, len(lines) - 1)]

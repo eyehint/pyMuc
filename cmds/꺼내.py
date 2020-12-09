@@ -141,7 +141,7 @@ class CmdObj(Command):
         c = 0
         nCnt = {}
         for item in objs:
-            if words[1] != item['이름'] and words[1] not in item['반응이름'].splitlines():
+            if words[1] != item['이름'] and words[1] not in item['반응이름']:
                 continue
             if ob.getItemWeight() + item['무게'] > ob.getStr() * 10:
                 if c == 0:

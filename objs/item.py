@@ -55,7 +55,7 @@ class Item(Object):
         ob.sendLine('─────────────────────')
         #ob.sendLine(self.get('설명2'))
         desc = self['설명2']
-        d = desc.splitlines()
+        d = desc
         for l in d:
             if l.find('방어력 - ') == 0:
                 ob.sendLine('방어력 - %d' % self['방어력'])
@@ -120,7 +120,7 @@ class Item(Object):
         if s == '':
             return None
         option = {}
-        lines = s.splitlines()
+        lines = s
         for l in lines:
             w = l.split()
             option[w[0]] = int(w[1])

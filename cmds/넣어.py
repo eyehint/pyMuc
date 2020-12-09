@@ -41,7 +41,7 @@ class CmdObj(Command):
                         ob.sendLine('☞ 보관함에 더 이상 넣을 수 없어요. ^^')
                         return
                     break
-                if item['종류'] not in box['보관종류'].splitlines():
+                if item['종류'] not in box['보관종류']:
                     continue
                 if item.checkAttr('아이템속성', '보관못함'):
                     continue
@@ -90,7 +90,7 @@ class CmdObj(Command):
                         ob.sendLine('☞ 보관함에 더 이상 넣을 수 없어요. ^^')
                         return
                     break
-                if item['종류'] not in box['보관종류'].splitlines():
+                if item['종류'] not in box['보관종류']:
                     continue
                 if item.checkAttr('아이템속성', '보관못함'):
                     continue
@@ -141,7 +141,7 @@ class CmdObj(Command):
                         ob.sendLine('☞ 보관함에 더 이상 넣을 수 없어요. ^^')
                         return
                     break
-                if item['종류'] not in box['보관종류'].splitlines():
+                if item['종류'] not in box['보관종류']:
                     continue
                 if item.checkAttr('아이템속성', '보관못함'):
                     continue
@@ -191,7 +191,7 @@ class CmdObj(Command):
                 ob.sendLine('☞ 그런 아이템이 소지품에 없어요.')
                 return
             
-        if item['종류'] not in box['보관종류'].splitlines():
+        if item['종류'] not in box['보관종류']:
             ob.sendLine('☞ 보관 할 수 없는 물품입니다. ^^')
             return
         
@@ -218,10 +218,10 @@ class CmdObj(Command):
         oCnt = 1
         for item in objs:
             if itm == None:
-                if words[1] != item['이름'] and words[1] not in item['반응이름'].splitlines():
+                if words[1] != item['이름'] and words[1] not in item['반응이름']:
                     continue
             else:
-                if name != item['이름'] and name not in item['반응이름'].splitlines():
+                if name != item['이름'] and name not in item['반응이름']:
                     continue
 
             if itm != None:
@@ -234,7 +234,7 @@ class CmdObj(Command):
                     ob.sendLine('☞ 보관함에 더 이상 넣을 수 없어요. ^^')
                     return
                 break
-            if item['종류'] not in box['보관종류'].splitlines():
+            if item['종류'] not in box['보관종류']:
                 continue
             if item.checkAttr('아이템속성', '보관못함'):
                 continue

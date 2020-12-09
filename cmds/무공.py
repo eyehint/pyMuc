@@ -41,7 +41,7 @@ class CmdObj(Command):
         
         ob.sendLine('[1m[40m[32m▷ 비전[0m[40m[37m')
         buf = target['비전수련']
-        lines = target['비전이름'].splitlines()
+        lines = target['비전이름']
         if buf == '' and len(lines) == 0:
             ob.sendLine('☞ 오의를 깨우친 무공이 없습니다.')
         else:

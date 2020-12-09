@@ -16,7 +16,7 @@ def doEvent(self, mob, key, words):
     searchEnd = False
     broadcast = False
     sub = {}
-    script = mob.get(key).splitlines()
+    script = mob.get(key)
     for line in script:
         if line.strip() == '':
             if searchEnd == False:
@@ -128,7 +128,7 @@ def doEvent(self, mob, key, words):
                     item.set('확장 이름', words[2])
                     item.setAttr('아이템속성', '팔지못함')
                     ac = item['반응이름']
-                    aclist = ac.splitlines()
+                    aclist = ac
                     aclist.append(words[2])
                     acline = ''
                     for a in aclist:
@@ -140,7 +140,7 @@ def doEvent(self, mob, key, words):
                 if item != None and len(words) == 3:
                     acname = item['확장 이름']
                     ac = item['반응이름']
-                    aclist = ac.splitlines()
+                    aclist = ac
                     aclist.remove(acname)
                     acline = ''
                     for a in aclist:
@@ -566,7 +566,7 @@ def doEvent(self, mob, key, words):
                 nCount = 0
                 w = self.findObjInven(words[1])
                 if w != None:
-                    mlist = w['무공이름'].splitlines()
+                    mlist = w['무공이름']
                     for m in mlist:
                         if m.split()[0] in self.skillList:
                             continue

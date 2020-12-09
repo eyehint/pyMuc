@@ -32,7 +32,7 @@ class CmdObj(Command):
         for obj in objs:
             if c >= i:
                 break
-            if name != obj.get('이름') and name not in obj.get('반응이름').splitlines():
+            if name != obj.get('이름') and name not in obj.get('반응이름'):
                 continue
             if obj.checkAttr('아이템속성', '출력안함'):
                 continue

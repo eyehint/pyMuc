@@ -11,7 +11,7 @@ class CmdObj(Command):
             ob.sendLine('☞ 사용법: [출구] 맴돌이')
             return
 
-        exits = ob.env['출구'].splitlines()
+        exits = ob.env['출구']
         nexists = ''
         c = 0
         for ex in exits:

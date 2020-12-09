@@ -47,7 +47,7 @@ class Room(Object):
         except:
             return False 
 
-        for boxName in self['설치리스트'].splitlines():
+        for boxName in self['설치리스트']:
             box = Box()
             if self['방파주인'] != '':
                 box.create('%s_%s' % (self['방파주인'], boxName))
@@ -90,7 +90,7 @@ class Room(Object):
         self.longExitStr = ''
         
         exits = self.get('출구')
-        lines = exits.splitlines()
+        lines = exits
         for line in lines:
             s = line.split()
             c = len(s)
@@ -312,12 +312,12 @@ class Room(Object):
                 c += 1
                 if c == order:
                     return obj
-            elif obj.get('이름') == name or name in obj.get('반응이름').splitlines():
+            elif obj.get('이름') == name or name in obj.get('반응이름'):
                 c += 1
                 if c == order:
                     return obj
             else:
-                for alias in obj.get('반응이름').splitlines():
+                for alias in obj.get('반응이름'):
                     if alias.find(name) == 0:
                         d += 1
                         if d == order:
@@ -392,7 +392,7 @@ class Room(Object):
         
     def loadAttr(self):
         self.mapAttr = []
-        attrs = self['맵속성'].splitlines()
+        attrs = self['맵속성']
         for attr in attrs:
             self.mapAttr.append(attr)
             if attr.find('인원제한') == 0:

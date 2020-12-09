@@ -14,6 +14,6 @@ class CmdObj(Command):
         if target == None:
             ob.sendLine('☞ 그런 대상이 없어요!')
             return
-        for l in target['이벤트설정리스트'].splitlines():
+        for l in target['이벤트설정리스트']:
             ob.sendLine(l)
 

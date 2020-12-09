@@ -11,7 +11,7 @@ class CmdObj(Command):
         for mob in ob.env.objs:
             if is_mob(mob) == False:
                 continue
-            if '의원' in mob['반응이름'].splitlines():
+            if '의원' in mob['반응이름']:
                 doctor = True
                 key = '조제 %s' % line
                 if key in mob.attr:
@@ -24,7 +24,7 @@ class CmdObj(Command):
             ob.sendLine('☞ 그러한 것을 조제할 의원이 없어요. ^^')
             return
         take = []
-        for l in mob[key].splitlines():
+        for l in mob[key]:
             words = l.split()
             if len(words) < 2:
                 continue

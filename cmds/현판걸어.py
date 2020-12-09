@@ -50,7 +50,7 @@ class CmdObj(Command):
         ob['직위'] = '방주'
         ob.env['방파주인'] = line
         ob.env.save()
-        for enter in ob.env['방파입구'].splitlines():
+        for enter in ob.env['방파입구']:
             if enter.find(':') == -1:
                 path = ob.env.zone + ':' + enter
             else:

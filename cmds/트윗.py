@@ -59,7 +59,7 @@ class CmdObj(Command):
         queue.put(_content)
 
     def checkConfig(self, ob, config):
-        kl = ob['설정상태'].splitlines()
+        kl = ob['설정상태']
         for k in kl:
             if k.find(config) == 0:
                 if len(k.split()) > 1 and k.split()[1] == '1':

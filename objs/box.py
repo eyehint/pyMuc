@@ -70,7 +70,7 @@ class Box(Object):
             obj = {}
             obj['인덱스'] = item.index
             obj['이름'] = item.get('이름')
-            obj['반응이름'] = item.get('반응이름').splitlines()
+            obj['반응이름'] = item.get('반응이름')
             if item.get('공격력') != '':
                 obj['공격력'] = item.get('공격력')
             if item.get('방어력') != '':
@@ -78,9 +78,9 @@ class Box(Object):
             if item.get('기량') != '':
                 obj['기량'] = item.get('기량')
             if item.get('옵션') != '':
-                obj['옵션'] = item.get('옵션').splitlines()
+                obj['옵션'] = item.get('옵션')
             if item.get('아이템속성') != '':
-                obj['아이템속성'] = item.get('아이템속성').splitlines()
+                obj['아이템속성'] = item.get('아이템속성')
             if item.get('확장 이름') != '':
                 obj['확장 이름'] = item.get('확장 이름')
             if item.get('시간') != '':

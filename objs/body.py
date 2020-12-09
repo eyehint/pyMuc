@@ -348,7 +348,7 @@ class Body(Object):
 
     def loadSkillUp(self):
         self.skillMap = {}
-        lines = self['무공숙련도'].splitlines()
+        lines = self['무공숙련도']
         for line in lines:
             words = line.split()
             self.skillMap[words[0]] = (int(words[1]), int(words[2]))
@@ -595,7 +595,7 @@ class Body(Object):
         m = self.getWeapon()
         if m == getItem('주먹'):
             return
-        mlist = m['무공이름'].splitlines()
+        mlist = m['무공이름']
         if len(mlist) == 0:
             return
         mName = m['이름']
@@ -634,7 +634,7 @@ class Body(Object):
             self.sendRoom(
                 '[1m[40m[37m%s 『[1m[40m[32m%s[1m[40m[37m』의 무공 구결을 깨우치기 시작합니다. \'ΔΨΞλΟ~\'[0m[40m[37m' % (
                 self.getNameA(), sName))
-            attr = m['아이템속성'].splitlines()
+            attr = m['아이템속성']
             for at in attr:
                 if at.find('무공배운후소멸') == 0:
                     m.inUse = False
@@ -648,7 +648,7 @@ class Body(Object):
             break
 
     def loadSkills(self):
-        for line in self['방어무공시전'].splitlines():
+        for line in self['방어무공시전']:
             words = line.split()
             s = MUGONG[words[0]]
             s = copy.copy(s)
@@ -667,8 +667,8 @@ class Body(Object):
             self.setAttr('방어무공시전', buf)
 
     def loadSkillList(self):
-        self.skillList = self['무공이름'].splitlines()
-        lines = self['무공이름수련리스트'].splitlines()
+        self.skillList = self['무공이름']
+        lines = self['무공이름수련리스트']
         for line in lines:
             words = line.split()
             self.itemSkillMap[words[0]] = int(words[1])
