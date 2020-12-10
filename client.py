@@ -10,7 +10,7 @@ from include.define import *
 
 class Client(basic.LineOnlyReceiver):
     players = []
-    delimiters = ['\r\n', '\r\000']
+    delimiters = ['\n', '\r\000']
     MAX_LENGTH = 256
 
     def connectionMade(self):
@@ -25,7 +25,7 @@ class Client(basic.LineOnlyReceiver):
         # self.transport.write(IAC+WONT+ECHO)
 
     def write(self, line):
-        return self.transport.write(line)
+        return self.transport.write(line.encode("utf-8"))
 
     def dataReceived(self, chunk):
         self.player.idle = time.time()
@@ -76,21 +76,21 @@ class Client(basic.LineOnlyReceiver):
     def sendToAll(self, line, ex=None, noPrompt=False):
         for user in self.players:
             if user.state == ACTIVE and user != ex:
-                user.sendLine('\r\n' + line)
+                user.sendLine('\n' + line)
                 if noPrompt == False:
                     user.lpPrompt()
 
     def sendToAll1(self, line, ex=None, noPrompt=False):
         for user in self.players:
             if user.state == ACTIVE and user != ex:
-                user.write('\r\n' + line)
+                user.write('\n' + line)
                 if noPrompt == False:
                     user.lpPrompt()
 
     def sendToAllInOut(self, line, ex=None):
         for user in self.players:
             if user.state == ACTIVE and user.checkConfig('입출입메세지거부') == False and user != ex:
-                user.sendLine('\r\n' + line)
+                user.sendLine('\n' + line)
                 user.lpPrompt()
 
     def echoON(self):
