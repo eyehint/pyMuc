@@ -1,3 +1,5 @@
+from lib.hangul import is_han
+
 class autoScript():
     def start(self, script, player):
         self.tick = 0
@@ -42,7 +44,7 @@ class autoScript():
                     self.player.stopAutoScript()
                     return
                 elif l[:3] == '$틱':
-                    tick = getInt(l[4:])
+                    tick = self.getInt(l[4:])
                     if tick != 0:
                         self.tick = tick * 0.1 * 1.5
                     self.lineNum += 1

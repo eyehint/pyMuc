@@ -1,3 +1,5 @@
+import json
+
 def log(line):
     import time
     print(time.strftime('[%Y-%m-%d %H:%M:%S] ', time.localtime()) + line)
@@ -69,7 +71,8 @@ def getNameOrder(name):
 
 def loadScriptFile(path):
     try:
-        f = open('data/script/' + path)
+        with open('data/script/' + path) as fp:
+            return json.load(fp)
+
     except IOError:
         return None
-    return f.readlines()

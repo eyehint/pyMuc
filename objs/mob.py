@@ -120,13 +120,13 @@ class Mob(Body):
         self.mp = getInt(self.get('내공'))
 
     def place(self):
-        from objs.room import Room, is_room, getRoom
+        from objs.room import getRoom
         keydata = self.getString('위치')
-        lines = keydata
+        lines = keydata if type(keydata) == list else [keydata, ]
         for line in lines:
             for loc in line.split():
                 room = getRoom(self.get('존이름') + ':' + loc)
-                if room != None:
+                if room is not None:
                     mob = self.clone()
                     mob.reset()
                     mob.origin = self.get('존이름') + ':' + loc
