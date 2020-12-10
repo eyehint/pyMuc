@@ -385,6 +385,8 @@ class Room(Object):
     def loadAttr(self):
         self.mapAttr = []
         attrs = self['맵속성']
+        if type(attrs) == str:
+            attrs = [attrs, ]
         for attr in attrs:
             self.mapAttr.append(attr)
             if attr.find('인원제한') == 0:

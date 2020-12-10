@@ -316,13 +316,12 @@ class Mob(Body):
     def enterRoom(self, room, dir):
         self.moveTime = time.time()
         # print self.get('이름') + ' ' + room.index + '/' + dir
-
         msg1 = self.get('퇴진스크립')
-        if msg1 == '':
+        if not msg1:
             msg1 = '$방향$쪽으로 갔습니다.'
         msg1 = msg1.replace('$방향$', dir)
         msg2 = self.get('진입스크립')
-        if msg2 == '':
+        if not msg2:
             msg2 = '$방향$쪽에서 왔습니다.'
         msg2 = msg2.replace('$방향$', room.reverseDir[dir])
         self.env.sendRoom('\r\n[33m' + self.get('이름') + '[37m' + han_iga(self.get('이름')) + ' ' + msg1)
