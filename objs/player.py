@@ -2277,10 +2277,7 @@ class Player(Body):
             self.alias[ss[0]] = ss[1]
 
     def buildAlias(self):
-        msg = ''
-        for key in self.alias:
-            msg += key + ' ' + self.alias[key] + '\r\n'
-        self['줄임말리스트'] = msg
+        self['줄임말리스트'] = [key + ' ' + self.alias[key] for key in self.alias]
 
     def setAlias(self, key, data):
         if key in self.alias:
