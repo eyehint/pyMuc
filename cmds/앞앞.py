@@ -1,10 +1,10 @@
 from objs.cmd import Command
-from include.ansi import *
+
 
 class CmdObj(Command):
     level = 2000
     def cmd(self, ob, line):
-        if getInt(ob['관리자등급']) < 2000:
+        if agetInt(ob['관리자등급']) < 2000:
             ob.sendLine('☞ 무슨 말인지 모르겠어요. *^_^*')
             return
         if line == '':

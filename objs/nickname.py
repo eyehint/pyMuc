@@ -23,4 +23,3 @@ class Nickname(Object):
         self.attr = script['무림별호']
         
 NICKNAME = Nickname()
-        

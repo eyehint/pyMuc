@@ -1039,16 +1039,16 @@ class Player(Body):
             #    return
             self.input_to(self.doNothing)
             self.state = sDOUMI
-            from objs.doumi import DOUMI, autoScript
-            self.autoscript = autoScript()
+            from objs.doumi import DOUMI, AutoScript
+            self.autoscript = AutoScript()
             self.autoscript.start(DOUMI['초기도우미'], self)
             return
         if name == '나만바라바':
             # if self.checkMulti():
             #    return
             self.input_to(self.doNothing)
-            from objs.doumi import DOUMI, autoScript
-            self.autoscript = autoScript()
+            from objs.doumi import DOUMI, AutoScript
+            self.autoscript = AutoScript()
             self.autoscript.start(DOUMI['빠른도우미'], self)
             return
 
@@ -2357,7 +2357,7 @@ def init_commands():
         print('error load autoscript.py')
 
     # Player.autoScript = l['autoScript']
-    Player.autoScript = locals()['autoScript']
+    Player.autoScript = locals()['AutoScript']
 
     cmdList = Player.cmdList
 

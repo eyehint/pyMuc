@@ -32,6 +32,10 @@ class Room(Object):
         self.lastup_time = 0
         self.limitNum = 0
         self.limitCmds = []
+        self.Exits = {}
+        self.exitList = []
+        self.shortExitStr = ''
+        self.longExitStr = ''
         
     def create(self, index):
         self.index = index
@@ -60,10 +64,9 @@ class Room(Object):
         self.setHiddenExit()
         
     def save(self, path = None):
-        if path == None:
+        if path is None:
             path = self.path
-        o = {}
-        o['맵정보'] = self.attr
+        o = {'맵정보': self.attr}
         try:
             with open(path, 'w', encoding="utf-8") as fp:
                 save_script(fp, o)
@@ -80,12 +83,6 @@ class Room(Object):
                 self.Exits[exitName[:-1]] = exit
                 
     def initExit(self):
-       
-        self.Exits = {}
-        self.exitList = []
-        self.shortExitStr = ''
-        self.longExitStr = ''
-
         exits = self.get('출구')
         lines = exits if type(exits) == list else [exits, ]
         for line in lines:
@@ -98,7 +95,7 @@ class Room(Object):
 
         self.sortExit()
         
-        str = ''
+        exit_str = ''
 
         c = 0
         for exitName in self.exitList:
@@ -106,62 +103,61 @@ class Room(Object):
                 #print '숨겨진 출구!'
                 continue
             c = c + 1
-            str = str + exitName + ' '
+            exit_str = exit_str + exitName + ' '
         if c == 0:
-            str = '없음'
+            exit_str = '없음'
                 
-        self.shortExitStr = '\n[출구] : ' + str
+        self.shortExitStr = '\n[출구] : ' + exit_str
 
         c = 0
         str1 = ''
         for exitName in self.exitList:
             if exitName[-1] == '$':
-                #print '숨겨진 출구!'
                 continue
             c = c + 1
             str1 = str1 + '[32m' + exitName +  '[37mː'
         str1 = str1[:-2]
         if c == 0:
-            str = '\n  ○  어느 쪽으로도 이동할 수 없습니다.\n'
+            exit_str = '\n  ○  어느 쪽으로도 이동할 수 없습니다.\n'
         else:
             if '북서' in self.exitList:
-                str = '[32m↖[37m'
+                exit_str = '[32m↖[37m'
             else:
-                str = '  '
+                exit_str = '  '
             if '북' in self.exitList:
-                str = str + '[32m△[37m'
+                exit_str = exit_str + '[32m△[37m'
             else:
-                str = str + '  '
+                exit_str = exit_str + '  '
             if '북동' in self.exitList:
-                str = str + '[32m↗[37m\n'
+                exit_str = exit_str + '[32m↗[37m\n'
             else:
-                str = str + '\n'
+                exit_str = exit_str + '\n'
  
             if '서' in self.exitList:
-                str = str + '[32m◁[37m'
+                exit_str = exit_str + '[32m◁[37m'
             else:
-                str = str + '  '
-            str += '○'
+                exit_str = exit_str + '  '
+            exit_str += '○'
             if '동' in self.exitList:
-                str = str + '[32m▷[37m'
+                exit_str = exit_str + '[32m▷[37m'
             else:
-                str = str + '  '
-            str += ' 〔' + str1 + '〕쪽으로 이동할 수 있습니다.\n'
+                exit_str = exit_str + '  '
+            exit_str += ' 〔' + str1 + '〕쪽으로 이동할 수 있습니다.\n'
 
             if '남서' in self.exitList:
-                str = str + '[32m↙[37m'
+                exit_str = exit_str + '[32m↙[37m'
             else:
-                str = str + '  '
+                exit_str = exit_str + '  '
             if '남' in self.exitList:
-                str = str + '[32m▽[37m'
+                exit_str = exit_str + '[32m▽[37m'
             else:
-                str = str + '  '
+                exit_str = exit_str + '  '
             if '남동' in self.exitList:
-                str = str + '[32m↘[37m'
+                exit_str = exit_str + '[32m↘[37m'
             else:
-                str = str + '  '
+                exit_str = exit_str + '  '
                 
-        self.longExitStr = str
+        self.longExitStr = exit_str
 
     def getExit(self, exitName):
         if exitName not in self.Exits:

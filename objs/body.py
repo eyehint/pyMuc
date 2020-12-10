@@ -73,6 +73,7 @@ class Body(Object):
         self._magicChance = 0
         self._exp = 0
         self.weaponItem = None
+        self.target = []
 
     def getStr(self):
         if self._str + self['힘'] < 0:
@@ -159,7 +160,6 @@ class Body(Object):
             self.target.append(ob)
 
     def clearTarget(self, ob=None):
-
         if ob != None:
             if ob in self.target:
                 self.target.remove(ob)

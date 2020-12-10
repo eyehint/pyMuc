@@ -55,6 +55,9 @@ class Object:
         except:
             return 0
         return getInt(keydata)
+
+    def getNameA(self):
+        return '[33m' + self.get('이름') + '[37m'
     
     def getString(self, key):
         try:

@@ -2,7 +2,7 @@ from lib.func import *
 from lib.loader import load_script, save_script
 from objs.item import getItem
 from objs.object import Object
-import json
+
 
 class Box(Object):
 
@@ -100,10 +100,6 @@ class Box(Object):
         return '%s (%d/%d)' % (self['이름'], len(self.objs), int(self['보관수량']))
         
     def view(self, ob):
-        p = int(self['보관수량'])
-        pm = self['보관증가은전']
-        pp = self['보관최대수량']
-        
         ob.sendLine('━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━')
         buf = '◁ %s의 %s ▷' % (self['주인'], self['이름'])
         ob.sendLine('[1m[44m[37m%-78s[0m[40m[37m' % buf)

@@ -1,7 +1,7 @@
 import gc
 
 from twisted.application import service, internet
-from twisted.internet import protocol
+from twisted.internet import protocol, reactor
 
 from client import Client
 from loop import Loop
@@ -22,4 +22,8 @@ Loop()
 factory = protocol.ServerFactory()
 factory.protocol = Client
 application = service.Application("pyMUC_Server")
-internet.TCPServer(9999, factory).setServiceParent(application)
+server = internet.TCPServer(9999, factory)
+server.setServiceParent(application)
+
+reactor.listenTCP(9999, factory)
+reactor.run()

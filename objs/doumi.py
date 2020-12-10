@@ -10,14 +10,24 @@ class Doumi(Object):
     attr = {}
 
     def __init__(self):
+        super().__init__()
         self.load()
 
     def load(self):
         self.attr = {}
         s = load_script('data/config/doumi.cfg.json')
         self.attr = s['도우미메인설정']
-    
-class autoScript():
+
+
+class AutoScript:
+    def __init__(self):
+        self.tick = 0.5
+        self.lineNum = 0
+        self.player = None
+        self.script = None
+        self.lastNum = 0
+        self.name = ''
+
     def start(self, script, player):
         self.tick = 0.5
         self.lineNum = 0
@@ -28,7 +38,7 @@ class autoScript():
         self.name = ''
         
     def run(self):
-        if self.player == None:
+        if self.player is None:
             return
         print_line = False
         while True:
@@ -80,7 +90,7 @@ class autoScript():
                 msg = line.replace('[공]', self.player['이름'])
                 self.player.sendLine(postPosition1(msg))
             self.lineNum += 1
-            if print_line == True:
+            if print_line:
                 continue
             reactor.callLater(self.tick, self.run)
             break

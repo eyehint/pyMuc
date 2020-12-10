@@ -510,7 +510,7 @@ def doEvent(self, mob, key, words):
                 scr = sline[13:].strip()
                 self.INTERACTIVE = 0
                 # from objs.autoscript import autoScript
-                self.autoscript = self.autoScript()
+                self.autoscript = self.AutoScript()
                 self.autoscript.start(loadScriptFile(scr), self)
                 return
             elif func == '$올숙확인':

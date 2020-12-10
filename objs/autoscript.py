@@ -1,6 +1,8 @@
 from lib.hangul import is_han
+from lib.func import getInt, stripANSI
 
-class autoScript():
+
+class AutoScript:
     def start(self, script, player):
         self.tick = 0
         self.lineNum = 0
@@ -9,10 +11,10 @@ class autoScript():
         self.lastNum = len(script)
         self.run()
         self.name = ''
-        
+
     def run(self):
         print((self.player['이름'] + ' %d/%d' %(self.lineNum, self.lastNum)))
-        if self.player == None:
+        if self.player is None:
             return
         printLine = False
         loopcount = 0
@@ -34,7 +36,7 @@ class autoScript():
                 continue
             elif line[0] == '$':
                 l = line.strip()
-                if  l == '$출력시작':
+                if l == '$출력시작':
                     printLine = True
                 elif l == '$출력끝':
                     printLine = False
@@ -44,7 +46,7 @@ class autoScript():
                     self.player.stopAutoScript()
                     return
                 elif l[:3] == '$틱':
-                    tick = self.getInt(l[4:])
+                    tick = getInt(l[4:])
                     if tick != 0:
                         self.tick = tick * 0.1 * 1.5
                     self.lineNum += 1
@@ -145,15 +147,6 @@ class autoScript():
                         self.player.temp_item['무공이름'] = '%s %s 1000000 10000000 10' % (mugong, type)
                     else:
                         self.player.temp_item[l[10:]] = self.player.temp_input
-                    #이름
-                    #반응이름
-                    #사용스크립
-                    #전투시작
-
-                    #무공이름
-                    #설명1
-                    #설명2
-                    pass
                 elif l[:13] == '$숙련도선택':
                     if self.player.temp_input == '1':
                         self.player.temp_move = 1
@@ -279,8 +272,6 @@ class autoScript():
                     pass
                 
             else:
-                #msg = line.replace('[공]', self.player['이름'])
-                #self.player.write(postPosition1(msg))
                 self.player.sendLine(line)
             self.lineNum += 1
             if printLine == True:
