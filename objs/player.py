@@ -1,4 +1,3 @@
-import sys
 import copy
 import sys
 import time
@@ -401,9 +400,10 @@ class Player(Body):
         if not self.checkConfig('간략설명'):
             self.sendLine('')
             self.sendLine(room.get('설명'))
-
+        print(vars(room))
         # room Exit ↕↑↓
         if not self.checkConfig('나침반제거'):
+            print(room.longExitStr)
             self.sendLine(room.longExitStr)
         else:
             self.sendLine(room.shortExitStr)
@@ -2249,7 +2249,7 @@ class Player(Body):
         return False
 
     def setConfig(self, config):
-        c = ''
+        c = []
         find = False
         kl = self['설정상태']
         for k in kl:
@@ -2258,15 +2258,13 @@ class Player(Body):
                 ks = k.split()
                 if len(ks) > 1:
                     if ks[1] == '1':
-                        c += ks[0] + ' 0\r\n'
+                        c.append(ks[0] + ' 0')
                     else:
-                        c += ks[0] + ' 1\r\n'
+                        c.append(ks[0] + ' 1')
                 continue
-            c += k + '\r\n'
-        if find == False:
-            c += config + ' 1'
+        if not find:
+            c.append(config + ' 1')
         self['설정상태'] = c
-
         self.loadConfig()
 
     def loadAlias(self):

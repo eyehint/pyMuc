@@ -3,7 +3,7 @@ from objs.cmd import Command
 class CmdObj(Command):
 
     def cmd(self, ob, line):
-        from objs.help import Help, HELP
+        from objs.help import HELP
         if line == '':
             ob.sendLine(HELP['도움말'])
         else:
