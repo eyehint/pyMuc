@@ -116,7 +116,7 @@ class Room(Object):
                 continue
             c = c + 1
             str1 = str1 + '[32m' + exitName +  '[37mː'
-        str1 = str1[:-2]
+        str1 = str1[:-1]
         if c == 0:
             exit_str = '\n  ○  어느 쪽으로도 이동할 수 없습니다.\n'
         else:
