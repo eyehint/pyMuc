@@ -399,21 +399,19 @@ class Player(Body):
         # room Desc
         if not self.checkConfig('간략설명'):
             self.sendLine('')
-            self.sendLine(room.get('설명'))
+            self.sendLine("\n".join(room.get('설명')))
         print(vars(room))
         # room Exit ↕↑↓
         if not self.checkConfig('나침반제거'):
-            print(room.longExitStr)
             self.sendLine(room.longExitStr)
         else:
             self.sendLine(room.shortExitStr)
             self.sendLine('')
-
         msg = '☞ '
         for obj in room.objs:
             if is_box(obj):
                 msg += obj.viewShort() + '    '
-        if len(msg) != 3:
+        if len(msg) != 2:
             self.sendLine(msg)
 
         for obj in room.objs:
